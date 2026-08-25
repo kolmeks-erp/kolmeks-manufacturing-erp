@@ -1,11 +1,14 @@
 const express = require('express');
 const router = express.Router();
+const dbService = require('../services/db.service');
 
 /**
  * GET /api/health
- * Health check endpoint verifying Express backend operation & system status.
+ * Public health check and telemetry endpoint
  */
-router.get('/health', (req, res) => {
+router.get('/health', async (req, res) => {
+  const dbHealth = await dbService.checkDatabaseHealth();
+
   res.status(200).json({
     success: true,
     status: 'online',
@@ -16,7 +19,9 @@ router.get('/health', (req, res) => {
     uptime: `${Math.floor(process.uptime())} seconds`,
     database: {
       provider: 'Supabase PostgreSQL',
-      status: 'configured',
+      connected: dbHealth.connected,
+      status: dbHealth.status,
+      message: dbHealth.message,
     },
   });
 });

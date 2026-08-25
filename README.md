@@ -23,6 +23,21 @@ The platform consists of two distinct separated subsystems:
 
 ---
 
+## 🗄️ Database Architecture & Migrations (Prompt 02)
+
+The database schema is organized into 32 PostgreSQL relational tables with full normalized relationships, B-Tree indexes, UUID primary keys, timestamp triggers (`updated_at`), non-negative quantity/price constraints, and Row Level Security (RLS).
+
+### Database Migration Files:
+- [`server/supabase/migrations/01_initial_schema.sql`](file:///d:/CHARUSAT/Projects/Kolmeks_ERP/server/supabase/migrations/01_initial_schema.sql): Complete SQL DDL for all 32 tables, triggers, constraints, indexes, and RLS policies.
+- [`server/supabase/seed.sql`](file:///d:/CHARUSAT/Projects/Kolmeks_ERP/server/supabase/seed.sql): Default application roles and clearly marked development demo seed data.
+
+### How to Apply Migration Schema to Supabase:
+1. Open your Supabase Project Dashboard -> **SQL Editor**.
+2. Copy and execute [`server/supabase/migrations/01_initial_schema.sql`](file:///d:/CHARUSAT/Projects/Kolmeks_ERP/server/supabase/migrations/01_initial_schema.sql).
+3. Copy and execute [`server/supabase/seed.sql`](file:///d:/CHARUSAT/Projects/Kolmeks_ERP/server/supabase/seed.sql) to seed default roles and development demo records.
+
+---
+
 ## 📂 Project Structure
 
 ```
@@ -41,8 +56,13 @@ Kolmeks_ERP/
 │   ├── src/
 │   │   ├── config/             # Supabase & app configuration
 │   │   ├── middleware/         # Centralized error handler & security middleware
-│   │   ├── routes/             # Express API routes
+│   │   ├── routes/             # Express API routes (/api/health)
+│   │   ├── scripts/            # CLI test utilities (test-db-connection.js)
+│   │   ├── services/           # Database service & data access layer (db.service.js)
 │   │   └── server.js           # Express app listener
+│   └── supabase/               # PostgreSQL Database Migrations & Seeds
+│       ├── migrations/         # 01_initial_schema.sql
+│       └── seed.sql            # Default roles & demo seed data
 └── README.md
 ```
 
@@ -55,8 +75,9 @@ Kolmeks_ERP/
 PORT=5000
 NODE_ENV=development
 SUPABASE_URL=https://your-supabase-project.supabase.co
-SUPABASE_ANON_KEY=your-supabase-anon-key
-SUPABASE_SERVICE_ROLE_KEY=your-supabase-service-role-key
+SUPABASE_PUBLISHABLE_KEY=your-supabase-publishable-key
+SUPABASE_SECRET_KEY=your-supabase-secret-key
+SUPABASE_JWKS_URL=https://your-supabase-project.supabase.co/rest/v1/rpc/jwks
 CLIENT_ORIGIN=http://localhost:5173
 ```
 
@@ -64,7 +85,7 @@ CLIENT_ORIGIN=http://localhost:5173
 ```env
 VITE_API_BASE_URL=http://localhost:5000/api
 VITE_SUPABASE_URL=https://your-supabase-project.supabase.co
-VITE_SUPABASE_ANON_KEY=your-supabase-anon-key
+VITE_SUPABASE_PUBLISHABLE_KEY=your-supabase-publishable-key
 ```
 
 ---
@@ -77,7 +98,8 @@ cd server
 npm install
 npm run dev
 ```
-- Health Check: `GET http://localhost:5000/api/health`
+- Health Check Telemetry: `GET http://localhost:5000/api/health`
+- Test DB Connection CLI: `node src/scripts/test-db-connection.js`
 
 ### 2. Frontend Setup
 ```bash
@@ -90,11 +112,6 @@ npm run dev
 
 ---
 
-## 📌 Implementation Status (Prompt 01)
-- [x] React + Vite + TypeScript Frontend architecture set up with industrial theme
-- [x] Express Backend initialized with `/api/health` check endpoint
-- [x] Public Layout (Header, Dropdowns, Responsive Mobile Drawer, Footer)
-- [x] Secure ERP Layout (`/secure-kolmeks-x0y0` with sidebar & header bar)
-- [x] Supabase integration architecture prepared
-- [x] Industrial design primitives built
-#
+## 📌 Implementation Status
+- [x] **Prompt 01**: React + Vite + TypeScript Frontend & Express Backend setup with public/ERP routing.
+- [x] **Prompt 02**: Supabase PostgreSQL database schema, migrations, RLS policies, indexing, seed data, and Express database service layer.
