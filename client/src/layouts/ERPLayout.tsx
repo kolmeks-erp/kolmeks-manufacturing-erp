@@ -28,10 +28,10 @@ import {
   Search,
   LogOut,
   User,
-  CheckCircle2,
-  Activity
+  Activity,
 } from 'lucide-react';
 import { ERP_SIDEBAR_MENU, ERP_BASE_PATH } from '../constants/navigation';
+import { useAuth } from '../context/AuthContext';
 
 const iconMap: Record<string, React.ElementType> = {
   LayoutDashboard,
@@ -56,6 +56,14 @@ const iconMap: Record<string, React.ElementType> = {
   Settings,
 };
 
+const formatRoleLabel = (roleName?: string | null): string => {
+  if (!roleName) return 'Staff User';
+  return roleName
+    .split('_')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+};
+
 export const ERPLayout: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -63,24 +71,43 @@ export const ERPLayout: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    // Logout handling placeholder
-    navigate(`${ERP_BASE_PATH}/login`);
+  const { profile, role, signOut } = useAuth();
+
+  const handleLogout = async () => {
+    setUserMenuOpen(false);
+    await signOut();
+    navigate(`${ERP_BASE_PATH}/login`, { replace: true });
   };
 
+  // Filter sidebar menu items based on current authenticated user role
+  const visibleMenuItems = ERP_SIDEBAR_MENU.filter((item) => {
+    if (!item.roles || item.roles.length === 0) return true;
+    return role ? item.roles.includes(role) : false;
+  });
+
+  const formattedRoleName = formatRoleLabel(role);
+  const displayName = profile?.full_name || 'Staff User';
+  const displayEmail = profile?.email || '';
+  const userInitials = displayName
+    .split(' ')
+    .map((part) => part.charAt(0))
+    .join('')
+    .substring(0, 2)
+    .toUpperCase();
+
   return (
-    <div className="min-h-screen flex bg-slate-100 font-sans text-slate-900">
+    <div className="min-h-screen flex bg-slate-100 dark:bg-slate-900 font-sans text-slate-900 dark:text-slate-100">
       {/* ERP Desktop Sidebar */}
       <aside
-        className={`hidden md:flex flex-col bg-industrial-950 text-slate-300 border-r border-slate-800 transition-all duration-300 z-30 ${
+        className={`hidden md:flex flex-col bg-[#0B1E36] text-slate-300 border-r border-slate-800 transition-all duration-300 z-30 ${
           collapsed ? 'w-20' : 'w-64'
         }`}
       >
         {/* Sidebar Header */}
-        <div className="h-16 px-4 flex items-center justify-between border-b border-slate-800 bg-industrial-950">
+        <div className="h-16 px-4 flex items-center justify-between border-b border-slate-800 bg-[#0B1E36]">
           <Link to={`${ERP_BASE_PATH}/dashboard`} className="flex items-center gap-3 overflow-hidden">
-            <div className="w-9 h-9 rounded bg-industrial-850 flex items-center justify-center text-white shrink-0">
-              <Factory className="w-5 h-5 text-industrial-500" />
+            <div className="w-9 h-9 rounded bg-[#0F2C59] flex items-center justify-center text-white shrink-0">
+              <Factory className="w-5 h-5 text-emerald-400" />
             </div>
             {!collapsed && (
               <div className="truncate">
@@ -102,7 +129,7 @@ export const ERPLayout: React.FC = () => {
 
         {/* Sidebar Menu Items */}
         <div className="flex-1 overflow-y-auto py-4 px-2 space-y-1">
-          {ERP_SIDEBAR_MENU.map((item) => {
+          {visibleMenuItems.map((item) => {
             const Icon = iconMap[item.iconName] || Factory;
             const isActive = location.pathname === item.path;
 
@@ -112,15 +139,15 @@ export const ERPLayout: React.FC = () => {
                 to={item.path}
                 className={`flex items-center gap-3 px-3 py-2.5 rounded-md text-xs font-semibold transition-all ${
                   isActive
-                    ? 'bg-industrial-850 text-white border-l-4 border-industrial-500 shadow-xs'
-                    : 'text-slate-400 hover:text-slate-100 hover:bg-slate-900/60'
+                    ? 'bg-[#0F2C59] text-white border-l-4 border-emerald-500 shadow-xs'
+                    : 'text-slate-400 hover:text-slate-100 hover:bg-slate-800/60'
                 }`}
                 title={collapsed ? item.label : undefined}
               >
-                <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-industrial-500' : 'text-slate-400'}`} />
+                <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-emerald-400' : 'text-slate-400'}`} />
                 {!collapsed && <span className="truncate flex-1">{item.label}</span>}
                 {!collapsed && item.badge && (
-                  <span className="px-1.5 py-0.5 text-[9px] font-bold rounded bg-industrial-700 text-white uppercase">
+                  <span className="px-1.5 py-0.5 text-[9px] font-bold rounded bg-emerald-600 text-white uppercase">
                     {item.badge}
                   </span>
                 )}
@@ -130,10 +157,10 @@ export const ERPLayout: React.FC = () => {
         </div>
 
         {/* Sidebar Footer System Health Indicator */}
-        <div className="p-3 border-t border-slate-800 bg-industrial-950">
+        <div className="p-3 border-t border-slate-800 bg-[#0B1E36]">
           <div className="flex items-center gap-2 text-[11px] text-slate-400">
             <Activity className="w-3.5 h-3.5 text-emerald-400 shrink-0 animate-pulse" />
-            {!collapsed && <span className="truncate font-mono">System Online (Supabase)</span>}
+            {!collapsed && <span className="truncate font-mono">System Online (Supabase Auth)</span>}
           </div>
         </div>
       </aside>
@@ -141,12 +168,12 @@ export const ERPLayout: React.FC = () => {
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* Top Header / Navbar */}
-        <header className="h-16 bg-white border-b border-slate-200 px-4 sm:px-6 flex items-center justify-between sticky top-0 z-20 shadow-xs">
+        <header className="h-16 bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 px-4 sm:px-6 flex items-center justify-between sticky top-0 z-20 shadow-xs">
           {/* Mobile Sidebar Toggle & Search */}
           <div className="flex items-center gap-4">
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="md:hidden p-2 rounded text-slate-600 hover:bg-slate-100"
+              className="md:hidden p-2 rounded text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700"
             >
               {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
@@ -157,54 +184,59 @@ export const ERPLayout: React.FC = () => {
               <input
                 type="text"
                 placeholder="Search RFQs, Products, Sales Orders..."
-                className="w-full pl-9 pr-4 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-md focus:bg-white focus:outline-none focus:border-industrial-700 transition-all"
+                className="w-full pl-9 pr-4 py-1.5 text-xs bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-md focus:bg-white dark:focus:bg-slate-800 focus:outline-none focus:border-emerald-500 transition-all text-slate-900 dark:text-slate-100"
               />
             </div>
           </div>
 
           {/* Right Header Actions */}
           <div className="flex items-center gap-4">
-            {/* Notification Badge Placeholder */}
+            {/* Notification Badge */}
             <Link
               to={`${ERP_BASE_PATH}/notifications`}
-              className="relative p-2 rounded-full text-slate-500 hover:text-slate-800 hover:bg-slate-100 transition-colors"
+              className="relative p-2 rounded-full text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
               title="System Notifications"
             >
               <Bell className="w-5 h-5" />
-              <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-industrial-700 ring-2 ring-white"></span>
+              <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-emerald-500 ring-2 ring-white dark:ring-slate-800"></span>
             </Link>
 
             {/* User Profile Dropdown */}
             <div className="relative">
               <button
                 onClick={() => setUserMenuOpen(!userMenuOpen)}
-                className="flex items-center gap-3 p-1 rounded-lg hover:bg-slate-100 transition-colors"
+                className="flex items-center gap-3 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
               >
-                <div className="w-8 h-8 rounded-md bg-industrial-900 text-white flex items-center justify-center font-bold text-xs">
-                  OP
+                <div className="w-8 h-8 rounded-md bg-[#0F2C59] text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-xs">
+                  {userInitials || <User className="w-4 h-4" />}
                 </div>
                 <div className="hidden sm:block text-left">
-                  <div className="text-xs font-bold text-slate-900">Kolmeks Admin</div>
-                  <div className="text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Operations Officer</div>
+                  <div className="text-xs font-bold text-slate-900 dark:text-slate-100">{displayName}</div>
+                  <div className="text-[10px] text-emerald-600 dark:text-emerald-400 uppercase tracking-wider font-bold">
+                    {formattedRoleName}
+                  </div>
                 </div>
               </button>
 
               {userMenuOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white border border-slate-200 rounded-md shadow-industrial-lg py-1 z-50">
-                  <div className="px-4 py-2 border-b border-slate-100">
-                    <p className="text-xs font-semibold text-slate-900">Kolmeks Operations</p>
-                    <p className="text-[10px] text-slate-500 truncate">ops@kolmeks.com</p>
+                <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md shadow-xl py-1 z-50">
+                  <div className="px-4 py-2 border-b border-slate-100 dark:border-slate-700">
+                    <p className="text-xs font-bold text-slate-900 dark:text-slate-100">{displayName}</p>
+                    <p className="text-[11px] text-slate-500 dark:text-slate-400 truncate">{displayEmail}</p>
+                    <span className="inline-block mt-1 px-2 py-0.5 text-[9px] font-bold rounded bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 uppercase">
+                      {formattedRoleName}
+                    </span>
                   </div>
                   <Link
                     to={`${ERP_BASE_PATH}/settings`}
                     onClick={() => setUserMenuOpen(false)}
-                    className="flex items-center gap-2 px-4 py-2 text-xs text-slate-700 hover:bg-slate-50"
+                    className="flex items-center gap-2 px-4 py-2 text-xs text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700"
                   >
                     <Settings className="w-3.5 h-3.5" /> System Settings
                   </Link>
                   <button
                     onClick={handleLogout}
-                    className="flex items-center gap-2 w-full text-left px-4 py-2 text-xs text-red-600 hover:bg-red-50 font-medium"
+                    className="flex items-center gap-2 w-full text-left px-4 py-2 text-xs text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 font-medium"
                   >
                     <LogOut className="w-3.5 h-3.5" /> Log Out
                   </button>
@@ -217,8 +249,8 @@ export const ERPLayout: React.FC = () => {
         {/* Mobile Navigation Menu Overlay */}
         {mobileOpen && (
           <div className="md:hidden fixed inset-0 z-40 flex">
-            <div className="fixed inset-0 bg-slate-900/50" onClick={() => setMobileOpen(false)} />
-            <div className="relative w-64 bg-industrial-950 text-slate-300 flex flex-col h-full z-50">
+            <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-xs" onClick={() => setMobileOpen(false)} />
+            <div className="relative w-64 bg-[#0B1E36] text-slate-300 flex flex-col h-full z-50">
               <div className="h-16 px-4 flex items-center justify-between border-b border-slate-800">
                 <span className="font-bold text-white text-sm">KOLMEKS ERP</span>
                 <button onClick={() => setMobileOpen(false)} className="text-slate-400">
@@ -226,7 +258,7 @@ export const ERPLayout: React.FC = () => {
                 </button>
               </div>
               <div className="flex-1 overflow-y-auto p-2 space-y-1">
-                {ERP_SIDEBAR_MENU.map((item) => {
+                {visibleMenuItems.map((item) => {
                   const Icon = iconMap[item.iconName] || Factory;
                   return (
                     <Link
@@ -235,7 +267,7 @@ export const ERPLayout: React.FC = () => {
                       onClick={() => setMobileOpen(false)}
                       className="flex items-center gap-3 px-3 py-2 rounded text-xs text-slate-300 hover:bg-slate-800"
                     >
-                      <Icon className="w-4 h-4 text-industrial-500" />
+                      <Icon className="w-4 h-4 text-emerald-400" />
                       <span>{item.label}</span>
                     </Link>
                   );

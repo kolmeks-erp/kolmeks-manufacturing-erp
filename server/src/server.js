@@ -7,6 +7,8 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const healthRoutes = require('./routes/health.routes');
+const authRoutes = require('./routes/auth.routes');
+const erpRoutes = require('./routes/erp.routes');
 const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
@@ -36,6 +38,8 @@ app.use(express.urlencoded({ extended: true }));
 
 // Register API Routes
 app.use('/api', healthRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/erp', erpRoutes);
 
 // Root Endpoint
 app.get('/', (req, res) => {
@@ -68,7 +72,7 @@ app.listen(PORT, () => {
   📡 Server Status : RUNNING
   🌐 Local URL     : http://localhost:${PORT}
   🏥 Health Check  : http://localhost:${PORT}/api/health
-  🗄️ Database API  : Supabase PostgreSQL Prepared
+  🔒 Auth Endpoint : http://localhost:${PORT}/api/auth/me
   ⚙️ Environment   : ${process.env.NODE_ENV || 'development'}
   ═════════════════════════════════════════════════════════════════
   `);

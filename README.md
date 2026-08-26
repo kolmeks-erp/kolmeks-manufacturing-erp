@@ -12,14 +12,65 @@ The platform consists of two distinct separated subsystems:
 
 ---
 
-## 🛠️ Technology Stack
+## 🔐 Authentication & Security Architecture (Prompt 03)
 
-- **Frontend**: React 18+, Vite, TypeScript, Tailwind CSS, React Router v6, Lucide React, Axios, TanStack Query, React Hook Form, Recharts.
-- **Backend**: Node.js, Express.js.
-- **Database & Auth**: Supabase PostgreSQL & Supabase Auth.
-- **Deployment Strategy**: Frontend (Vercel), Backend (Render).
+The application uses **Supabase Auth** for enterprise authentication coupled with custom PostgreSQL **profiles** and **roles** tables for Role-Based Access Control (RBAC).
 
-*Strict Architecture Rule: No MongoDB, No Mongoose, No Firebase.*
+```
+USER
+  ↓
+ERP LOGIN PAGE (/secure-kolmeks-x0y0/login)
+  ↓
+SUPABASE AUTH (JWT Access Token)
+  ↓
+REACT AUTH CONTEXT (Loads profile & role)
+  ↓
+PROTECTED ROUTE GUARD (Validates Session & Status)
+  ↓
+EXPRESS API (Verifies Bearer Token & Role Authorization)
+  ↓
+SUPABASE POSTGRESQL (RLS Enforcement)
+```
+
+### Key Security Principles:
+- **No Password Storage**: Passwords are handled strictly by Supabase Auth (`auth.users`). Passwords are never logged or stored in application tables.
+- **Backend Token Verification**: Express middleware (`auth.middleware.js`) verifies Supabase Bearer JWT tokens on every protected request. Client input roles are never trusted directly.
+- **Profile Status Check**: Users must have `status = 'active'` in `public.profiles` to access the ERP. Inactive or suspended accounts are denied entry.
+- **Role-Aware Navigation**: UI menu items and sub-routes filter based on centralized role configurations (`navigation.ts` & `rbac.middleware.js`).
+
+---
+
+## 👥 Roles & Authorization Matrix
+
+| Role | Role Name | System Access & Responsibilities |
+| :--- | :--- | :--- |
+| 🛡️ **Administrator** | `admin` | Full ERP access across all 32 tables, user management, and system settings. |
+| 💼 **Sales Manager** | `sales_manager` | Access to Customers, RFQs, Quotations, Sales Orders, and Sales Reports. |
+| 📦 **Purchase Manager** | `purchase_manager` | Access to Suppliers, Materials Master, Purchase Orders, and Inventory. |
+| ⚙️ **Production Manager** | `production_manager` | Access to Production Scheduling, CNC Machine Hub, Products, and Maintenance. |
+| 🔬 **Quality Manager** | `quality_manager` | Access to Quality Control (QC), CMM Measurements, and Production Inspection. |
+| 🏭 **Warehouse Manager** | `warehouse_manager` | Access to Inventory Control, Warehouses, Stock Movements, and Logistics Deliveries. |
+
+---
+
+## 👤 How to Create the First Administrator Account
+
+1. Open your **[Supabase Dashboard](https://supabase.com/dashboard)**.
+2. Navigate to **Authentication** ➔ **Users**.
+3. Click **Add User** ➔ **Create user**.
+4. Enter the user details:
+   - **Email**: `admin@kolmeks.fi` (or your staff email)
+   - **Password**: `<secure-password>`
+   - Check **Auto Confirm User**.
+5. Copy the generated User **UUID**.
+6. Open **SQL Editor** in Supabase and execute the following query to grant the `admin` role:
+   ```sql
+   UPDATE public.profiles
+   SET role_id = (SELECT id FROM public.roles WHERE name = 'admin' LIMIT 1),
+       status = 'active'
+   WHERE id = 'YOUR_USER_UUID_HERE';
+   ```
+7. Log into `/secure-kolmeks-x0y0/login` with your credentials.
 
 ---
 
@@ -28,13 +79,8 @@ The platform consists of two distinct separated subsystems:
 The database schema is organized into 32 PostgreSQL relational tables with full normalized relationships, B-Tree indexes, UUID primary keys, timestamp triggers (`updated_at`), non-negative quantity/price constraints, and Row Level Security (RLS).
 
 ### Database Migration Files:
-- [`server/supabase/migrations/01_initial_schema.sql`](file:///d:/CHARUSAT/Projects/Kolmeks_ERP/server/supabase/migrations/01_initial_schema.sql): Complete SQL DDL for all 32 tables, triggers, constraints, indexes, and RLS policies.
-- [`server/supabase/seed.sql`](file:///d:/CHARUSAT/Projects/Kolmeks_ERP/server/supabase/seed.sql): Default application roles and clearly marked development demo seed data.
-
-### How to Apply Migration Schema to Supabase:
-1. Open your Supabase Project Dashboard -> **SQL Editor**.
-2. Copy and execute [`server/supabase/migrations/01_initial_schema.sql`](file:///d:/CHARUSAT/Projects/Kolmeks_ERP/server/supabase/migrations/01_initial_schema.sql).
-3. Copy and execute [`server/supabase/seed.sql`](file:///d:/CHARUSAT/Projects/Kolmeks_ERP/server/supabase/seed.sql) to seed default roles and development demo records.
+- [`server/supabase/migrations/01_initial_schema.sql`](file:///d:/CHARUSAT/Projects/Kolmeks_ERP/server/supabase/migrations/01_initial_schema.sql): DDL for all 32 tables, triggers, constraints, indexes, and RLS policies.
+- [`server/supabase/seed.sql`](file:///d:/CHARUSAT/Projects/Kolmeks_ERP/server/supabase/seed.sql): Default application roles and development demo seed data.
 
 ---
 
@@ -44,25 +90,27 @@ The database schema is organized into 32 PostgreSQL relational tables with full 
 Kolmeks_ERP/
 ├── client/                     # React + Vite + TypeScript Frontend
 │   ├── src/
-│   │   ├── assets/             # Brand icons, logo, graphics
-│   │   ├── components/         # Reusable design system primitives (Button, Card, Input, etc.)
-│   │   ├── constants/          # App constants & navigation configs
-│   │   ├── layouts/            # PublicLayout & ERPLayout
-│   │   ├── pages/              # Public & ERP page views
-│   │   ├── routes/             # App Router mapping public & secure ERP routes
-│   │   ├── services/           # Axios HTTP client setup
-│   │   └── types/              # Global TypeScript interfaces
+│   │   ├── components/
+│   │   │   ├── auth/           # ProtectedRoute guard
+│   │   │   └── ui/             # Reusable UI primitives
+│   │   ├── constants/          # App constants & role navigation matrix
+│   │   ├── context/            # AuthContext & AuthProvider
+│   │   ├── layouts/            # PublicLayout & ERPLayout (with role-aware header/sidebar)
+│   │   ├── pages/
+│   │   │   ├── erp/            # ERPLoginPage, ERPDashboardPage, UnauthorizedPage
+│   │   │   └── public/         # Public corporate website pages
+│   │   ├── routes/             # AppRoutes (Public vs Protected ERP mapping)
+│   │   ├── services/           # Supabase client, auth.service, profile.service, Axios API
+│   │   └── types/              # UserRole, UserProfile, Navigation interfaces
 ├── server/                     # Express.js Backend API
 │   ├── src/
-│   │   ├── config/             # Supabase & app configuration
-│   │   ├── middleware/         # Centralized error handler & security middleware
-│   │   ├── routes/             # Express API routes (/api/health)
-│   │   ├── scripts/            # CLI test utilities (test-db-connection.js)
-│   │   ├── services/           # Database service & data access layer (db.service.js)
+│   │   ├── config/             # Supabase client & admin client configuration
+│   │   ├── middleware/         # auth.middleware, rbac.middleware, errorHandler
+│   │   ├── routes/             # health.routes, auth.routes, erp.routes
+│   │   ├── scripts/            # CLI test-db-connection.js
+│   │   ├── services/           # db.service.js
 │   │   └── server.js           # Express app listener
 │   └── supabase/               # PostgreSQL Database Migrations & Seeds
-│       ├── migrations/         # 01_initial_schema.sql
-│       └── seed.sql            # Default roles & demo seed data
 └── README.md
 ```
 
@@ -99,7 +147,7 @@ npm install
 npm run dev
 ```
 - Health Check Telemetry: `GET http://localhost:5000/api/health`
-- Test DB Connection CLI: `node src/scripts/test-db-connection.js`
+- Authenticated User Endpoint: `GET http://localhost:5000/api/auth/me`
 
 ### 2. Frontend Setup
 ```bash
@@ -107,11 +155,13 @@ cd client
 npm install
 npm run dev
 ```
-- Open `http://localhost:5173` for the Public Website
-- Open `http://localhost:5173/secure-kolmeks-x0y0` for the Secure ERP Portal
+- Public Corporate Website: `http://localhost:5173`
+- Secure ERP Login: `http://localhost:5173/secure-kolmeks-x0y0/login`
+- Secure ERP Dashboard: `http://localhost:5173/secure-kolmeks-x0y0/dashboard`
 
 ---
 
 ## 📌 Implementation Status
 - [x] **Prompt 01**: React + Vite + TypeScript Frontend & Express Backend setup with public/ERP routing.
 - [x] **Prompt 02**: Supabase PostgreSQL database schema, migrations, RLS policies, indexing, seed data, and Express database service layer.
+- [x] **Prompt 03**: Authentication & ERP Security Foundation (Supabase Auth, profiles/roles RBAC, protected routes, Express Bearer token middleware, and industrial login UI).

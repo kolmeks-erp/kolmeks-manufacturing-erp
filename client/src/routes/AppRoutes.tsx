@@ -21,13 +21,14 @@ import { RequestQuotePage } from '../pages/public/RequestQuotePage';
 import { ERPLoginPage } from '../pages/erp/ERPLoginPage';
 import { ERPDashboardPage } from '../pages/erp/ERPDashboardPage';
 import { ERPModuleShellPage } from '../pages/erp/ERPModuleShellPage';
+import { ProtectedRoute } from '../components/auth/ProtectedRoute';
 
 import { ERP_BASE_PATH } from '../constants/navigation';
 
 export const AppRoutes: React.FC = () => {
   return (
     <Routes>
-      {/* Public Corporate Website Routes */}
+      {/* Public Corporate Website Routes (Unprotected) */}
       <Route path="/" element={<PublicLayout />}>
         <Route index element={<HomePage />} />
         <Route path="about" element={<AboutPage />} />
@@ -48,29 +49,35 @@ export const AppRoutes: React.FC = () => {
       {/* Secure ERP Standalone Login Route */}
       <Route path={`${ERP_BASE_PATH}/login`} element={<ERPLoginPage />} />
 
-      {/* Secure Internal ERP Portal Routes */}
-      <Route path={ERP_BASE_PATH} element={<ERPLayout />}>
-        <Route index element={<Navigate to={`${ERP_BASE_PATH}/dashboard`} replace />} />
-        <Route path="dashboard" element={<ERPDashboardPage />} />
-        <Route path="products" element={<ERPModuleShellPage />} />
-        <Route path="materials" element={<ERPModuleShellPage />} />
-        <Route path="customers" element={<ERPModuleShellPage />} />
-        <Route path="suppliers" element={<ERPModuleShellPage />} />
-        <Route path="rfqs" element={<ERPModuleShellPage />} />
-        <Route path="quotations" element={<ERPModuleShellPage />} />
-        <Route path="sales-orders" element={<ERPModuleShellPage />} />
-        <Route path="purchase-orders" element={<ERPModuleShellPage />} />
-        <Route path="production" element={<ERPModuleShellPage />} />
-        <Route path="cnc-machines" element={<ERPModuleShellPage />} />
-        <Route path="inventory" element={<ERPModuleShellPage />} />
-        <Route path="quality-control" element={<ERPModuleShellPage />} />
-        <Route path="cmm" element={<ERPModuleShellPage />} />
-        <Route path="maintenance" element={<ERPModuleShellPage />} />
-        <Route path="deliveries" element={<ERPModuleShellPage />} />
-        <Route path="reports" element={<ERPModuleShellPage />} />
-        <Route path="users" element={<ERPModuleShellPage />} />
-        <Route path="notifications" element={<ERPModuleShellPage />} />
-        <Route path="settings" element={<ERPModuleShellPage />} />
+      {/* Protected Internal ERP Portal Routes */}
+      <Route element={<ProtectedRoute />}>
+        <Route path={ERP_BASE_PATH} element={<ERPLayout />}>
+          <Route index element={<Navigate to={`${ERP_BASE_PATH}/dashboard`} replace />} />
+          <Route path="dashboard" element={<ERPDashboardPage />} />
+          <Route path="products" element={<ERPModuleShellPage />} />
+          <Route path="materials" element={<ERPModuleShellPage />} />
+          <Route path="customers" element={<ERPModuleShellPage />} />
+          <Route path="suppliers" element={<ERPModuleShellPage />} />
+          <Route path="rfqs" element={<ERPModuleShellPage />} />
+          <Route path="quotations" element={<ERPModuleShellPage />} />
+          <Route path="sales-orders" element={<ERPModuleShellPage />} />
+          <Route path="purchase-orders" element={<ERPModuleShellPage />} />
+          <Route path="production" element={<ERPModuleShellPage />} />
+          <Route path="cnc-machines" element={<ERPModuleShellPage />} />
+          <Route path="inventory" element={<ERPModuleShellPage />} />
+          <Route path="quality-control" element={<ERPModuleShellPage />} />
+          <Route path="cmm" element={<ERPModuleShellPage />} />
+          <Route path="maintenance" element={<ERPModuleShellPage />} />
+          <Route path="deliveries" element={<ERPModuleShellPage />} />
+          <Route path="reports" element={<ERPModuleShellPage />} />
+          <Route path="notifications" element={<ERPModuleShellPage />} />
+
+          {/* Admin Restricted Routes */}
+          <Route element={<ProtectedRoute allowedRoles={['admin']} />}>
+            <Route path="users" element={<ERPModuleShellPage />} />
+            <Route path="settings" element={<ERPModuleShellPage />} />
+          </Route>
+        </Route>
       </Route>
 
       {/* Fallback Catch-all Route */}

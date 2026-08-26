@@ -6,6 +6,36 @@ export interface NavItem {
   badge?: string;
 }
 
+export type UserRoleName =
+  | 'admin'
+  | 'sales_manager'
+  | 'purchase_manager'
+  | 'production_manager'
+  | 'quality_manager'
+  | 'warehouse_manager';
+
+export interface UserRole {
+  id: string;
+  name: UserRoleName;
+  description?: string;
+  created_at?: string;
+  updated_at?: string;
+}
+
+export interface UserProfile {
+  id: string; // References auth.users(id)
+  full_name: string;
+  email: string;
+  phone?: string;
+  role_id?: string;
+  role?: UserRole;
+  department?: string;
+  profile_image?: string;
+  status: 'active' | 'inactive' | 'suspended';
+  created_at?: string;
+  updated_at?: string;
+}
+
 export interface ERPMenuItem {
   id: string;
   label: string;
@@ -13,6 +43,7 @@ export interface ERPMenuItem {
   iconName: string;
   category?: 'core' | 'operations' | 'quality' | 'admin';
   badge?: string;
+  roles?: UserRoleName[]; // Allowed roles for role-aware sidebar navigation
 }
 
 export interface HealthCheckResponse {
@@ -25,6 +56,8 @@ export interface HealthCheckResponse {
   uptime: string;
   database: {
     provider: string;
+    connected?: boolean;
     status: string;
+    message?: string;
   };
 }
