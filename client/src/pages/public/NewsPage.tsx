@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Container } from '../../components/ui/Container';
 import { SEO } from '../../components/public/SEO';
 import { Breadcrumbs } from '../../components/public/Breadcrumbs';
 import { HeroSection } from '../../components/public/HeroSection';
-import { VisualPlaceholder } from '../../components/public/VisualPlaceholder';
 import { Button } from '../../components/ui/Button';
 import { SectionHeading } from '../../components/ui/SectionHeading';
-import { Newspaper, Calendar, ArrowRight, Tag, BookOpen, Layers } from 'lucide-react';
+import { NewsCard } from '../../components/public/NewsCard';
+import { Calendar, Tag, ArrowRight, BookOpen, Layers } from 'lucide-react';
 import newsHeroImg from '../../assets/images/kolmeks-news-hero.webp';
 
 export interface ArticleData {
@@ -26,7 +26,7 @@ export const articlesData: ArticleData[] = [
     slug: 'enhancing-cnc-machining-efficiency',
     title: 'Enhancing CNC Machining Efficiency for OEM Components',
     date: 'August 14, 2026',
-    category: 'Manufacturing Insights',
+    category: 'Manufacturing',
     summary: 'Exploring multi-axis turning strategies, toolpath optimization, and setup reduction techniques in industrial component production.',
     excerpt: 'Exploring multi-axis turning strategies, toolpath optimization, and setup reduction techniques in industrial component production.',
     readTime: '4 min read',
@@ -36,7 +36,7 @@ export const articlesData: ArticleData[] = [
     slug: 'material-traceability-in-sub-assembly',
     title: 'The Role of Material Traceability in Industrial Sub-Assembly',
     date: 'July 28, 2026',
-    category: 'Quality Control',
+    category: 'Quality',
     summary: 'How EN 10204 3.1 material certificates and heat batch identification protect OEM component reliability.',
     excerpt: 'How EN 10204 3.1 material certificates and heat batch identification protect OEM component reliability.',
     readTime: '5 min read',
@@ -54,23 +54,39 @@ export const articlesData: ArticleData[] = [
   },
 ];
 
+export const categoriesList = [
+  'All',
+  'Company',
+  'Engineering',
+  'Manufacturing',
+  'Technology',
+  'Quality',
+  'Industry',
+];
+
 export const NewsPage: React.FC = () => {
+  const [selectedCategory, setSelectedCategory] = useState('All');
+
+  const filteredArticles = selectedCategory === 'All'
+    ? articlesData
+    : articlesData.filter((art) => art.category === selectedCategory);
+
   return (
     <div className="space-y-16 lg:space-y-24 bg-slate-50/50 pb-12">
       <SEO
-        title="Kolmeks | News & Technical Articles"
+        title="Kolmeks | News & Insights"
         description="Stay updated with technical articles, manufacturing insights, CNC machining updates, and component quality practices at Kolmeks."
       />
 
       {/* Hero Section */}
       <HeroSection
         eyebrow="NEWS & INSIGHTS"
-        title="Manufacturing Articles & Technical Insights."
-        description="Stay informed with manufacturing insights, technical articles, and updates on CNC machining, quality control, and component engineering."
-        primaryCtaText="Read Articles"
-        primaryCtaLink="#articles"
-        secondaryCtaText="Request a Quote"
-        secondaryCtaLink="/request-quote"
+        title="Manufacturing, Engineering and Kolmeks Updates."
+        description="Stay informed with technical articles, manufacturing insights, engineering developments, and news updates across component production."
+        primaryCtaText="Explore Capabilities"
+        primaryCtaLink="/cnc-machining"
+        secondaryCtaText="Contact Us"
+        secondaryCtaLink="/contact"
         imageUrl={newsHeroImg}
       />
 
@@ -78,56 +94,76 @@ export const NewsPage: React.FC = () => {
       <Container className="-mt-8 lg:-mt-14 relative z-20">
         <Breadcrumbs
           items={[
-            { label: 'News & Articles' },
+            { label: 'News & Insights' },
           ]}
         />
       </Container>
 
-      {/* Articles Grid */}
-      <section id="articles" className="py-4">
-        <Container className="space-y-10">
+      {/* Main Content Area */}
+      <section className="py-4">
+        <Container className="space-y-8">
           <SectionHeading
-            eyebrow="LATEST PUBLICATION"
+            eyebrow="PUBLICATIONS"
             title="Technical Articles & Insights."
-            description="Explore educational articles on component manufacturing, metrology, and supply chain coordination."
+            description="Educational articles on component manufacturing, metrology, quality control, and supply chain coordination."
           />
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {articlesData.map((art: ArticleData) => (
-              <div
-                key={art.slug}
-                className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-xs hover:border-blue-600 transition-colors flex flex-col justify-between"
+          {/* Category Filters */}
+          <div className="flex flex-wrap items-center gap-2 pb-2">
+            {categoriesList.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setSelectedCategory(cat)}
+                className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-colors border ${
+                  selectedCategory === cat
+                    ? 'bg-blue-600 text-white border-blue-600'
+                    : 'bg-white text-slate-600 border-slate-200 hover:border-blue-400'
+                }`}
               >
-                <div className="p-6 space-y-4">
-                  <div className="flex items-center justify-between text-xs font-mono text-slate-500">
-                    <span className="inline-flex items-center gap-1 font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded">
-                      <Tag className="w-3 h-3" /> {art.category}
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <Calendar className="w-3.5 h-3.5" /> {art.date}
-                    </span>
-                  </div>
-
-                  <h3 className="text-xl font-bold text-slate-900 leading-snug">
-                    {art.title}
-                  </h3>
-
-                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                    {art.excerpt}
-                  </p>
-                </div>
-
-                <div className="p-6 pt-0 border-t border-slate-100 mt-4 flex items-center justify-between">
-                  <span className="text-xs font-mono text-slate-400">{art.readTime}</span>
-                  <Link
-                    to={`/news/${art.slug}`}
-                    className="inline-flex items-center text-xs font-bold text-blue-700 hover:text-blue-900 gap-1"
-                  >
-                    Read Full Article <ArrowRight className="w-3.5 h-3.5" />
-                  </Link>
-                </div>
-              </div>
+                {cat}
+              </button>
             ))}
+          </div>
+
+          {/* Articles Grid or Empty State */}
+          {filteredArticles.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {filteredArticles.map((art: ArticleData) => (
+                <NewsCard key={art.slug} article={art} />
+              ))}
+            </div>
+          ) : (
+            <div className="p-12 bg-white border border-slate-200 rounded-2xl text-center space-y-3">
+              <BookOpen className="w-8 h-8 text-slate-400 mx-auto" />
+              <h3 className="text-lg font-bold text-slate-900">No Articles Available in This Category</h3>
+              <p className="text-xs text-slate-500">Articles in category "{selectedCategory}" will be published when available.</p>
+            </div>
+          )}
+        </Container>
+      </section>
+
+      {/* News CTA */}
+      <section className="py-4">
+        <Container>
+          <div className="bg-[#0B1E36] text-white p-8 sm:p-12 rounded-2xl border border-slate-800 text-center space-y-6">
+            <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight">
+              Stay Connected With Kolmeks.
+            </h2>
+            <p className="text-slate-300 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+              Explore our manufacturing capabilities or get in touch with our engineering team to discuss your project requirements.
+            </p>
+            <div className="flex flex-wrap justify-center items-center gap-4 pt-2">
+              <Link to="/cnc-machining">
+                <Button variant="primary" size="lg" rightIcon={<ArrowRight className="w-4 h-4" />}>
+                  Explore Capabilities
+                </Button>
+              </Link>
+              <Link to="/contact">
+                <Button variant="outline" size="lg" className="border-slate-700 bg-[#0F2C59] text-white hover:bg-slate-800">
+                  Contact Us
+                </Button>
+              </Link>
+            </div>
           </div>
         </Container>
       </section>
