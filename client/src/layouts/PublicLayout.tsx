@@ -18,6 +18,7 @@ import {
 import { PUBLIC_NAV_ITEMS, ERP_BASE_PATH } from '../constants/navigation';
 import { Container } from '../components/ui/Container';
 import { Button } from '../components/ui/Button';
+import { KolmeksLogo } from '../components/ui/KolmeksLogo';
 
 export const PublicLayout: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -60,18 +61,8 @@ export const PublicLayout: React.FC = () => {
       <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs">
         <Container className="flex items-center justify-between h-20">
           {/* Brand Logo */}
-          <Link to="/" className="flex items-center gap-3 group" aria-label="Kolmeks Home">
-            <div className="w-10 h-10 rounded-lg bg-[#0B1E36] flex items-center justify-center text-white shadow-md group-hover:bg-[#0F2C59] transition-colors">
-              <Factory className="w-6 h-6 text-blue-500" />
-            </div>
-            <div>
-              <span className="text-xl font-black tracking-tight text-[#0B1E36] block leading-tight">
-                KOLMEKS
-              </span>
-              <span className="text-[10px] font-bold tracking-widest text-slate-500 uppercase block font-mono">
-                Manufacturing & Engineering
-              </span>
-            </div>
+          <Link to="/" className="flex items-center group" aria-label="Kolmeks Home">
+            <KolmeksLogo size="md" />
           </Link>
 
           {/* Desktop Navigation Links */}
@@ -262,12 +253,9 @@ export const PublicLayout: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
             {/* Brand Column */}
             <div className="lg:col-span-2 space-y-4">
-              <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-lg bg-[#0F2C59] flex items-center justify-center text-white">
-                  <Factory className="w-5 h-5 text-blue-400" />
-                </div>
-                <span className="text-xl font-black text-white tracking-tight">KOLMEKS</span>
-              </div>
+              <Link to="/" className="inline-block">
+                <KolmeksLogo variant="dark-bg" size="md" />
+              </Link>
               <p className="text-sm text-slate-400 max-w-sm leading-relaxed">
                 Global contract manufacturing partner specializing in precision CNC component fabrication, sub-assemblies, electric motor components, and industrial logistics.
               </p>

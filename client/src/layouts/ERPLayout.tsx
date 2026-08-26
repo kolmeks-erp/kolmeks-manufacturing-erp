@@ -32,6 +32,7 @@ import {
 } from 'lucide-react';
 import { ERP_SIDEBAR_MENU, ERP_BASE_PATH } from '../constants/navigation';
 import { useAuth } from '../context/AuthContext';
+import { KolmeksLogo } from '../components/ui/KolmeksLogo';
 
 const iconMap: Record<string, React.ElementType> = {
   LayoutDashboard,
@@ -106,17 +107,7 @@ export const ERPLayout: React.FC = () => {
         {/* Sidebar Header */}
         <div className="h-16 px-4 flex items-center justify-between border-b border-slate-800 bg-[#0B1E36]">
           <Link to={`${ERP_BASE_PATH}/dashboard`} className="flex items-center gap-3 overflow-hidden">
-            <div className="w-9 h-9 rounded bg-[#0F2C59] flex items-center justify-center text-white shrink-0">
-              <Factory className="w-5 h-5 text-emerald-400" />
-            </div>
-            {!collapsed && (
-              <div className="truncate">
-                <span className="font-bold text-sm tracking-tight text-white block leading-tight">
-                  KOLMEKS ERP
-                </span>
-                <span className="text-[10px] text-slate-400 font-mono block">v1.0 Operations</span>
-              </div>
-            )}
+            <KolmeksLogo variant="dark-bg" size="sm" />
           </Link>
           <button
             onClick={() => setCollapsed(!collapsed)}
@@ -252,7 +243,7 @@ export const ERPLayout: React.FC = () => {
             <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-xs" onClick={() => setMobileOpen(false)} />
             <div className="relative w-64 bg-[#0B1E36] text-slate-300 flex flex-col h-full z-50">
               <div className="h-16 px-4 flex items-center justify-between border-b border-slate-800">
-                <span className="font-bold text-white text-sm">KOLMEKS ERP</span>
+                <KolmeksLogo variant="dark-bg" size="sm" />
                 <button onClick={() => setMobileOpen(false)} className="text-slate-400">
                   <X className="w-5 h-5" />
                 </button>

@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { ShieldCheck, Lock, Mail, AlertCircle, KeyRound } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { ERP_BASE_PATH } from '../../constants/navigation';
+import { KolmeksLogo } from '../../components/ui/KolmeksLogo';
 
 interface LoginFormInputs {
   email: string;
@@ -77,13 +78,10 @@ export const ERPLoginPage: React.FC = () => {
     <div className="min-h-screen bg-[#0B1E36] flex flex-col justify-center py-12 sm:px-6 lg:px-8 text-slate-100">
       {/* Brand Header */}
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
-        <div className="inline-flex items-center justify-center space-x-3 mb-3">
-          <div className="w-10 h-10 bg-emerald-500 rounded flex items-center justify-center text-[#0B1E36] font-extrabold text-xl shadow-lg">
-            K
-          </div>
-          <span className="text-2xl font-bold tracking-wider uppercase text-white">KOLMEKS</span>
+        <div className="inline-flex items-center justify-center mb-3">
+          <KolmeksLogo variant="dark-bg" size="lg" />
         </div>
-        <h2 className="text-xl font-semibold text-slate-200 uppercase tracking-widest">
+        <h2 className="text-xl font-semibold text-slate-200 uppercase tracking-widest mt-2">
           Internal Manufacturing Portal
         </h2>
         <p className="mt-1 text-xs text-slate-400">Authorized Personnel & ERP Staff Access Only</p>

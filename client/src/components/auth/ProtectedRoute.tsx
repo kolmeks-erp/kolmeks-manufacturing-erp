@@ -4,6 +4,7 @@ import { useAuth } from '../../context/AuthContext';
 import { UserRoleName } from '../../types';
 import { ERP_BASE_PATH } from '../../constants/navigation';
 import { UnauthorizedPage } from '../../pages/erp/UnauthorizedPage';
+import { KolmeksLogo } from '../ui/KolmeksLogo';
 
 interface ProtectedRouteProps {
   allowedRoles?: UserRoleName[];
@@ -20,7 +21,7 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ allowedRoles, ch
       <div className="min-h-screen bg-[#0B1E36] flex flex-col items-center justify-center p-4 text-white">
         <div className="flex items-center space-x-3 mb-4">
           <div className="w-8 h-8 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
-          <span className="text-xl font-bold tracking-wider uppercase text-slate-100">KOLMEKS ERP</span>
+          <KolmeksLogo variant="dark-bg" size="sm" />
         </div>
         <p className="text-slate-400 text-sm animate-pulse">Checking secure session...</p>
       </div>

@@ -15,6 +15,16 @@ export const SEO: React.FC<SEOProps> = ({
     const fullTitle = title.includes('Kolmeks') ? title : `${title} | Kolmeks Manufacturing`;
     document.title = fullTitle;
 
+    // Favicon icon Link
+    let iconLink = document.querySelector('link[rel="icon"]') as HTMLLinkElement;
+    if (!iconLink) {
+      iconLink = document.createElement('link');
+      iconLink.setAttribute('rel', 'icon');
+      document.head.appendChild(iconLink);
+    }
+    iconLink.setAttribute('type', 'image/png');
+    iconLink.setAttribute('href', '/favicon.png');
+
     // Meta Description
     let metaDescription = document.querySelector('meta[name="description"]');
     if (!metaDescription) {
