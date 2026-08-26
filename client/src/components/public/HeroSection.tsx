@@ -5,6 +5,7 @@ import { Container } from '../ui/Container';
 import { Button } from '../ui/Button';
 import { Badge } from '../ui/Badge';
 import { VisualPlaceholder } from './VisualPlaceholder';
+import defaultHeroImg from '../../assets/images/kolmeks-contract-manufacturing-hero.webp';
 
 interface HeroSectionProps {
   eyebrow?: string;
@@ -14,6 +15,7 @@ interface HeroSectionProps {
   primaryCtaLink?: string;
   secondaryCtaText?: string;
   secondaryCtaLink?: string;
+  imageUrl?: string;
 }
 
 export const HeroSection: React.FC<HeroSectionProps> = ({
@@ -24,6 +26,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   primaryCtaLink = '/request-quote',
   secondaryCtaText = 'Explore Capabilities',
   secondaryCtaLink = '/cnc-machining',
+  imageUrl = defaultHeroImg,
 }) => {
   return (
     <section className="relative bg-[#0B1E36] text-white py-16 sm:py-24 lg:py-28 overflow-hidden border-b border-slate-800">
@@ -98,7 +101,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             <VisualPlaceholder
               title="PRECISION MACHINING & ASSEMBLY"
               subtitle="Contract Manufacturing Operations"
-              badge="STRUCTURAL VISUAL PLACEHOLDER"
+              badge="PRODUCTION OPERATIONS"
+              imageUrl={imageUrl}
             />
           </div>
         </div>

@@ -4,6 +4,7 @@ import { ArrowRight, CheckCircle2 } from 'lucide-react';
 import { Container } from '../ui/Container';
 import { Button } from '../ui/Button';
 import { VisualPlaceholder } from './VisualPlaceholder';
+import aboutHeroImg from '../../assets/images/kolmeks-about-hero.webp';
 
 export const AboutSection: React.FC = () => {
   return (
@@ -13,9 +14,10 @@ export const AboutSection: React.FC = () => {
           {/* Visual Side */}
           <div className="lg:col-span-6 relative">
             <VisualPlaceholder
-              title="KOLMEKS MANUFACTURING HUB"
-              subtitle="Precision Machining & Component Assembly"
-              badge="VERIFIED STRUCTURAL PLACEHOLDER"
+              title="KOLMEKS ENGINEERING TEAM"
+              subtitle="Precision Machining & Technical Blueprint Review"
+              badge="ENGINEERING OPERATIONS"
+              imageUrl={aboutHeroImg}
             />
             {/* Technical Blueprint Accent Lines */}
             <div className="hidden sm:block absolute -bottom-4 -right-4 bg-slate-900 text-white p-3 rounded-lg border border-slate-700 shadow-lg font-mono text-[11px]">
