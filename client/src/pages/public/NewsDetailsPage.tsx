@@ -6,12 +6,12 @@ import { Breadcrumbs } from '../../components/public/Breadcrumbs';
 import { PageHeader } from '../../components/public/PageHeader';
 import { CTASection } from '../../components/public/CTASection';
 import { Button } from '../../components/ui/Button';
-import { articlesData } from './NewsPage';
+import { articlesData, ArticleData } from './NewsPage';
 import { Calendar, Tag, ArrowLeft } from 'lucide-react';
 
 export const NewsDetailsPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
-  const article = articlesData.find((a) => a.slug === slug) || articlesData[0];
+  const article: ArticleData = articlesData.find((a) => a.slug === slug) || articlesData[0];
 
   return (
     <div className="space-y-12">
@@ -39,7 +39,7 @@ export const NewsDetailsPage: React.FC = () => {
           </div>
 
           <div className="prose prose-slate max-w-none text-slate-700 leading-relaxed text-base space-y-6">
-            {article.content.split('\n\n').map((paragraph, idx) => (
+            {article.content.split('\n\n').map((paragraph: string, idx: number) => (
               <p key={idx}>{paragraph}</p>
             ))}
           </div>

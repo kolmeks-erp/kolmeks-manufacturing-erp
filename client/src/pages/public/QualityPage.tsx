@@ -20,41 +20,72 @@ import {
   Cpu,
   Cog,
   Truck,
+  Compass,
+  ArrowDown,
+  Layers,
+  Sparkles,
 } from 'lucide-react';
 import qualityHeroImg from '../../assets/images/kolmeks-quality-hero.webp';
 import qualityMeasurementImg from '../../assets/images/kolmeks-quality-measurement.webp';
 import qualityInspectionImg from '../../assets/images/kolmeks-quality-inspection-process.webp';
 
 export const QualityPage: React.FC = () => {
-  const qualityPillars = [
+  const qualityRelationship = [
+    { title: 'Customer Requirements', desc: 'Understanding defined tolerances, surface finishes, and delivery expectations.' },
+    { title: 'Engineering Information', desc: 'Translating drawings and CAD models into clear process sequences.' },
+    { title: 'Material Selection', desc: 'Procuring certified raw stock that matches mechanical specifications.' },
+    { title: 'Manufacturing Process', desc: 'Executing CNC machining and sub-assembly routines consistently.' },
+    { title: 'Inspection & Audit', desc: 'Evaluating manufactured parts against engineering requirements.' },
+    { title: 'Final Verification', desc: 'Confirming packaging protection and documentation completeness before shipping.' },
+  ];
+
+  const qualityPrinciples = [
     {
-      icon: Ruler,
-      title: 'Dimensional Verification',
-      description: 'Verifying critical features, linear dimensions, and hole patterns using calibrated measurement instruments.',
+      number: '01',
+      title: 'Defined Requirements',
+      desc: 'Manufacturing begins with understanding the required specifications and tolerances.',
     },
     {
-      icon: Gauge,
-      title: 'Surface Finish Inspection',
-      description: 'Measuring surface roughness (Ra) on bearing journals, seal faces, and precision mating surfaces.',
+      number: '02',
+      title: 'Process Control',
+      desc: 'Manufacturing processes should be controlled consistently across production runs.',
     },
     {
-      icon: FileCheck2,
-      title: 'Material Traceability',
-      description: 'Verifying raw material mill test certificates (EN 10204 3.1) and maintaining heat batch tracking.',
+      number: '03',
+      title: 'Inspection',
+      desc: 'Components can be evaluated against relevant engineering drawing requirements.',
     },
     {
-      icon: SearchCheck,
-      title: 'First Article & Lot Audit',
-      description: 'Conducting first-article inspection (FAI) and sampling audits prior to full batch production.',
+      number: '04',
+      title: 'Continuous Improvement',
+      desc: 'Manufacturing processes can be reviewed and improved over time to enhance reliability.',
     },
   ];
 
-  const qualityStandards = [
-    'ISO 9001 quality management system principles',
-    'Full material heat traceability and 3.1 mill test certificates',
-    'Calibrated digital micrometers, calipers, and height gauges',
-    '3D Coordinate Measuring Machine (CMM) dimensional audits',
-    'Final visual, burr, and surface cleanliness inspection',
+  const inspectionSteps = [
+    { number: '01', title: 'Requirement Review', desc: 'Verify drawing tolerances, features, and critical callouts.' },
+    { number: '02', title: 'Component Inspection', desc: 'Position parts on inspection granite surface or setup fixture.' },
+    { number: '03', title: 'Measurement', desc: 'Take dimensional readings using appropriate measuring tools.' },
+    { number: '04', title: 'Result Evaluation', desc: 'Compare measured data against drawing upper/lower limits.' },
+    { number: '05', title: 'Documentation', desc: 'Record inspection data or quality verification logs.' },
+    { number: '06', title: 'Final Verification', desc: 'Confirm part condition and clear for protective packaging.' },
+  ];
+
+  const traceabilityElements = [
+    { title: 'Component Identification', desc: 'Batch tagging or part number marking to track manufactured lots.' },
+    { title: 'Manufacturing Information', desc: 'Recording machine IDs, operator logs, and production timestamps.' },
+    { title: 'Inspection Records', desc: 'Archiving dimensional measurement readings and audit logs.' },
+    { title: 'Material Information', desc: 'Linking components back to raw stock mill test certificates.' },
+    { title: 'Quality Documentation', desc: 'Providing certificate of compliance documents when requested.' },
+  ];
+
+  const manufacturingJourney = [
+    { step: '01', label: 'Engineering' },
+    { step: '02', label: 'Material' },
+    { step: '03', label: 'Machining' },
+    { step: '04', label: 'Assembly' },
+    { step: '05', label: 'Inspection' },
+    { step: '06', label: 'Delivery' },
   ];
 
   const connectedCapabilities = [
@@ -91,19 +122,19 @@ export const QualityPage: React.FC = () => {
   return (
     <div className="space-y-16 lg:space-y-24 bg-slate-50/50 pb-12">
       <SEO
-        title="Kolmeks | Quality & Testing"
-        description="Comprehensive quality assurance, dimensional inspection, material traceability, and CMM metrology for component manufacturing."
+        title="Kolmeks | Quality & Precision Manufacturing"
+        description="Learn about quality control principles, dimensional measurement tools, inspection workflows, component traceability, and manufacturing verification."
       />
 
       {/* Hero Section */}
       <HeroSection
-        eyebrow="QUALITY & TESTING"
-        title="Precision Quality & Metrology Verification."
-        description="Quality is integral to every machining and assembly process at Kolmeks. We maintain strict dimensional auditing, material certification tracking, and continuous quality control across all component manufacturing orders."
+        eyebrow="QUALITY"
+        title="Precision You Can Measure."
+        description="Quality is an essential phase of component manufacturing. Producing reliable engineered parts requires evaluating components against defined technical drawings, maintaining process consistency, and verifying dimensions."
         primaryCtaText="Request a Quote"
         primaryCtaLink="/request-quote"
-        secondaryCtaText="Explore Capabilities"
-        secondaryCtaLink="/contract-manufacturing"
+        secondaryCtaText="Explore CNC Machining"
+        secondaryCtaLink="/cnc-machining"
         imageUrl={qualityHeroImg}
       />
 
@@ -111,88 +142,105 @@ export const QualityPage: React.FC = () => {
       <Container className="-mt-8 lg:-mt-14 relative z-20">
         <Breadcrumbs
           items={[
-            { label: 'Company', href: '/about' },
-            { label: 'Quality & Testing' },
+            { label: 'Quality' },
           ]}
         />
       </Container>
 
-      {/* Overview Section */}
+      {/* Quality Introduction */}
       <section className="py-4 bg-white border-y border-slate-200/80">
         <Container>
           <div className="max-w-4xl mx-auto space-y-6">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-mono font-bold uppercase">
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" /> QUALITY ASSURANCE
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" /> DEFINED REQUIREMENTS
             </div>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
-              Zero Defect Commitment Across Every Batch.
+              Quality Begins With Defined Requirements.
             </h2>
             <p className="text-base sm:text-lg text-slate-600 leading-relaxed">
-              Industrial clients require component consistency and drawing compliance. Our quality protocols combine advanced CMM probe measurement with manual gauge auditing to ensure every component meets specified geometric tolerances.
+              Industrial component quality relies on alignment between customer specifications, engineering planning, certified raw materials, controlled manufacturing processes, thorough inspection, and final packaging verification.
             </p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-4">
+              {qualityRelationship.map((item, idx) => (
+                <div key={idx} className="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-1">
+                  <h3 className="font-bold text-slate-900 text-sm flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                    {item.title}
+                  </h3>
+                  <p className="text-xs text-slate-600 leading-relaxed">{item.desc}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </Container>
       </section>
 
-      {/* Quality Pillars Grid */}
+      {/* Quality Principles Grid */}
       <section className="py-4">
         <Container className="space-y-10">
           <SectionHeading
-            eyebrow="METROLOGY & AUDITING"
-            title="Quality Control Disciplines."
-            description="Systematic quality auditing performed throughout raw material intake, machining, and final packing."
+            eyebrow="QUALITY FOUNDATION"
+            title="Four Principles of Manufacturing Quality."
+            description="Core principles guiding component manufacturing, dimensional verification, and process evaluation."
           />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {qualityPillars.map((item, idx) => {
-              const IconComp = item.icon;
-              return (
-                <div
-                  key={idx}
-                  className="p-6 bg-white border border-slate-200 rounded-xl space-y-3 shadow-xs hover:border-emerald-600 transition-colors"
-                >
-                  <div className="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center font-bold">
-                    <IconComp className="w-5 h-5" />
-                  </div>
-                  <h3 className="text-xl font-bold text-slate-900">{item.title}</h3>
-                  <p className="text-sm text-slate-600 leading-relaxed">{item.description}</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {qualityPrinciples.map((pr, idx) => (
+              <div key={idx} className="p-6 bg-white border border-slate-200 rounded-xl space-y-3 shadow-xs hover:border-emerald-600 transition-colors">
+                <div className="text-xs font-mono font-bold text-emerald-600">
+                  PRINCIPLE {pr.number}
                 </div>
-              );
-            })}
+                <h3 className="text-lg font-bold text-slate-900">{pr.title}</h3>
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                  {pr.desc}
+                </p>
+              </div>
+            ))}
           </div>
         </Container>
       </section>
 
-      {/* Measurement Metrology Visual Section */}
+      {/* Quality Measurement Section */}
       <section className="py-12 bg-white border-y border-slate-200">
         <Container>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             <div className="lg:col-span-6 space-y-6">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-800 text-xs font-mono font-bold uppercase">
-                <Ruler className="w-3.5 h-3.5 text-blue-600" /> METROLOGY INSTRUMENTS
+                <Ruler className="w-3.5 h-3.5 text-blue-600" /> PRECISION MEASUREMENT
               </div>
               <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">
-                Calibrated Instruments & Digital Measurement.
+                The Details Matter.
               </h2>
               <p className="text-base text-slate-600 leading-relaxed">
-                Precision measurement relies on calibrated digital calipers, micrometers, and bore gauges. Every measuring tool undergoes regular calibration traceability checks to ensure measurement accuracy.
+                Precision manufacturing may involve measurement tools such as digital calipers, outside micrometers, bore gauges, height gauges, dial indicators, and coordinate measurement equipment to verify feature geometries.
               </p>
 
-              <div className="space-y-3 pt-2 text-sm text-slate-700 font-medium">
-                {qualityStandards.map((std, idx) => (
-                  <div key={idx} className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                    <span>{std}</span>
-                  </div>
-                ))}
+              <div className="space-y-3 pt-2 text-xs font-medium text-slate-700">
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
+                  <span>Dimensional inspection of diameters, lengths, and hole positions</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
+                  <span>Surface roughness (Ra) measurement on bearing journals</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
+                  <span>Concentricity and runout checks on rotational shafts</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
+                  <span>Visual audit for burrs, sharp edges, and surface finish</span>
+                </div>
               </div>
             </div>
 
             <div className="lg:col-span-6">
               <VisualPlaceholder
-                title="CALIBRATED MEASUREMENT & GAGING"
-                subtitle="Digital Micrometer & Caliper Measurement"
-                badge="METROLOGY INSPECTION"
+                title="DIMENSIONAL MEASUREMENT & INSTRUMENTATION"
+                subtitle="Micrometers, Calipers & Feature Gauging"
+                badge="PRECISION MEASUREMENT"
                 imageUrl={qualityMeasurementImg}
               />
             </div>
@@ -200,44 +248,93 @@ export const QualityPage: React.FC = () => {
         </Container>
       </section>
 
-      {/* Quality Process Inspection Image Section */}
+      {/* Conceptual Inspection Process */}
       <section className="py-12 bg-[#0B1E36] text-white border-y border-slate-800">
+        <Container className="space-y-10">
+          <SectionHeading
+            eyebrow="INSPECTION PROCESS"
+            title="Checking the Component Against the Requirement."
+            description="Conceptual sequence for evaluating component dimensions against technical drawings."
+            centered={true}
+            className="[&_h2]:text-white [&_p]:text-slate-300"
+          />
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4">
+            {inspectionSteps.map((step) => (
+              <div
+                key={step.number}
+                className="p-4 rounded-xl bg-[#0F2C59]/80 border border-slate-700/80 space-y-2 hover:border-emerald-400 transition-colors"
+              >
+                <div className="text-xs font-mono font-bold text-emerald-400">
+                  STEP {step.number}
+                </div>
+                <h3 className="text-sm font-bold text-white">{step.title}</h3>
+                <p className="text-xs text-slate-300 leading-relaxed">{step.desc}</p>
+              </div>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      {/* Traceability Section */}
+      <section className="py-12 bg-white border-y border-slate-200">
         <Container>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             <div className="lg:col-span-6">
               <VisualPlaceholder
-                title="IN-PROCESS COMPONENT AUDIT"
-                subtitle="Continuous Shop-Floor Quality Verification"
-                badge="QUALITY INSPECTION"
+                title="SHOP-FLOOR QUALITY & TRACEABILITY AUDIT"
+                subtitle="Material Certificates & Measurement Records"
+                badge="COMPONENT TRACEABILITY"
                 imageUrl={qualityInspectionImg}
               />
             </div>
 
             <div className="lg:col-span-6 space-y-6">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-mono font-bold uppercase">
-                <SearchCheck className="w-3.5 h-3.5 text-emerald-400" /> SHOP-FLOOR QUALITY
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-mono font-bold uppercase">
+                <FileCheck2 className="w-3.5 h-3.5 text-emerald-600" /> MATERIAL TRACEABILITY
               </div>
-              <h2 className="text-3xl font-extrabold text-white tracking-tight">
-                In-Process Inspections & Audit Trails.
+              <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">
+                Traceability Across Component Production.
               </h2>
-              <p className="text-base text-slate-300 leading-relaxed">
-                Machinists and quality engineers verify component dimensions after initial CNC setup and perform continuous sampling throughout production runs to prevent batch deviations.
+              <p className="text-base text-slate-600 leading-relaxed">
+                Maintaining component traceability connects finished parts back to raw material certificates, manufacturing batch numbers, and inspection records.
               </p>
 
-              <div className="space-y-3 pt-2 text-sm text-slate-300 font-medium">
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                  <span>First-article inspection (FAI) report generation</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                  <span>In-process feature sampling during CNC production</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                  <span>Final pre-packaging visual and dimensional sign-off</span>
-                </div>
+              <div className="space-y-3 pt-2 text-xs font-medium text-slate-700">
+                {traceabilityElements.map((elem, idx) => (
+                  <div key={idx} className="flex items-start gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                    <div>
+                      <span className="font-bold text-slate-900">{elem.title}: </span>
+                      <span className="text-slate-600">{elem.desc}</span>
+                    </div>
+                  </div>
+                ))}
               </div>
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      {/* Quality Throughout Manufacturing Flow */}
+      <section className="py-4">
+        <Container className="space-y-8">
+          <SectionHeading
+            eyebrow="MANUFACTURING JOURNEY"
+            title="Quality Throughout Manufacturing."
+            description="Quality considerations exist across every stage of component production—not only at final inspection."
+          />
+
+          <div className="p-8 bg-white border border-slate-200 rounded-2xl shadow-xs space-y-6">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 text-center">
+              {manufacturingJourney.map((j, idx) => (
+                <div key={idx} className="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-1">
+                  <div className="text-[10px] font-mono font-bold text-emerald-600 uppercase">
+                    PHASE {j.step}
+                  </div>
+                  <h3 className="font-bold text-slate-900 text-sm">{j.label}</h3>
+                </div>
+              ))}
             </div>
           </div>
         </Container>
@@ -249,7 +346,7 @@ export const QualityPage: React.FC = () => {
           <SectionHeading
             eyebrow="CONNECTED CAPABILITIES"
             title="Explore Related Capabilities."
-            description="Quality control supports all CNC machining, assembly, and contract manufacturing services."
+            description="Quality assurance supports all CNC machining, sub-assembly, and contract manufacturing services."
           />
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -260,15 +357,15 @@ export const QualityPage: React.FC = () => {
         </Container>
       </section>
 
-      {/* Final CTA */}
+      {/* Final Quality CTA */}
       <section className="py-4">
         <Container>
           <div className="bg-[#0B1E36] text-white p-8 sm:p-12 rounded-2xl border border-slate-800 text-center space-y-6">
             <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight">
-              Have Specific Quality & Inspection Requirements?
+              Have a Quality-Critical Manufacturing Requirement?
             </h2>
             <p className="text-slate-300 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
-              Submit your engineering drawings and inspection criteria to discuss component manufacturing with our team.
+              Talk with our team to discuss your component specifications, inspection requirements, and manufacturing drawings.
             </p>
             <div className="flex flex-wrap justify-center items-center gap-4 pt-2">
               <Link to="/request-quote">

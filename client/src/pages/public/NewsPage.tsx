@@ -4,41 +4,53 @@ import { Container } from '../../components/ui/Container';
 import { SEO } from '../../components/public/SEO';
 import { Breadcrumbs } from '../../components/public/Breadcrumbs';
 import { HeroSection } from '../../components/public/HeroSection';
-import { SectionHeading } from '../../components/ui/SectionHeading';
+import { VisualPlaceholder } from '../../components/public/VisualPlaceholder';
 import { Button } from '../../components/ui/Button';
-import { Card, CardContent } from '../../components/ui/Card';
-import { Newspaper, Calendar, ArrowRight, Tag } from 'lucide-react';
+import { SectionHeading } from '../../components/ui/SectionHeading';
+import { Newspaper, Calendar, ArrowRight, Tag, BookOpen, Layers } from 'lucide-react';
+import newsHeroImg from '../../assets/images/kolmeks-news-hero.webp';
 
-export const articlesData = [
+export interface ArticleData {
+  slug: string;
+  title: string;
+  date: string;
+  category: string;
+  summary: string;
+  excerpt: string;
+  readTime: string;
+  content: string;
+}
+
+export const articlesData: ArticleData[] = [
   {
-    slug: 'cnc-machining-expansion',
-    title: 'Kolmeks Expands Multi-Axis CNC Machining Capacity',
+    slug: 'enhancing-cnc-machining-efficiency',
+    title: 'Enhancing CNC Machining Efficiency for OEM Components',
     date: 'August 14, 2026',
-    category: 'Operations & Technology',
-    summary: 'Integration of new multi-axis CNC milling centers enhances component production throughput and complex geometry machining.',
-    content: `Kolmeks has expanded its manufacturing operations with the addition of multi-axis CNC machining centers. This strategic investment strengthens our contract manufacturing capability, enabling higher component throughput and tight-tolerance machining for industrial pump and electric motor components.
-
-The new machining technology allows complex rotational and prismatic parts to be processed with fewer setups, reducing lead times and enhancing dimensional accuracy across OEM production batches.`,
+    category: 'Manufacturing Insights',
+    summary: 'Exploring multi-axis turning strategies, toolpath optimization, and setup reduction techniques in industrial component production.',
+    excerpt: 'Exploring multi-axis turning strategies, toolpath optimization, and setup reduction techniques in industrial component production.',
+    readTime: '4 min read',
+    content: `High-efficiency CNC machining requires careful alignment of machine kinematics, cutting tool geometry, and CAD/CAM programming strategies. When producing complex rotational and prismatic components for industrial equipment, minimizing non-cutting cycle time is key.\n\nMulti-axis machining centers allow complex component geometries—such as pump casings, motor end shields, and valve bodies—to be machined in fewer setups. This setup consolidation improves dimensional accuracy by eliminating cumulative clamping errors across multiple setups.\n\nFurthermore, standardized tooling packages and rigid workholding fixtures allow machinists to maintain consistent chip loads and predictable surface roughness (Ra) across large component batches. Combining rigid tooling with automated in-process probing ensures every feature remains well within drawing tolerances.`,
   },
   {
-    slug: 'cmm-quality-upgrades',
-    title: 'Enhanced 3D CMM Quality Control Inspections',
+    slug: 'material-traceability-in-sub-assembly',
+    title: 'The Role of Material Traceability in Industrial Sub-Assembly',
     date: 'July 28, 2026',
-    category: 'Quality & Testing',
-    summary: 'Upgraded Coordinate Measuring Machine (CMM) probing software enables faster 3D CAD comparison reports for OEM partners.',
-    content: `To support zero-defect quality objectives, Kolmeks has upgraded its quality inspection laboratory with advanced 3D CMM coordinate measuring software. The system provides real-time CAD model probing comparisons and detailed inspection documentation for critical mechanical components.
-
-These enhancements streamline first-article inspection (FAI) routines and support complete batch traceability across all contract manufacturing runs.`,
+    category: 'Quality Control',
+    summary: 'How EN 10204 3.1 material certificates and heat batch identification protect OEM component reliability.',
+    excerpt: 'How EN 10204 3.1 material certificates and heat batch identification protect OEM component reliability.',
+    readTime: '5 min read',
+    content: `Material traceability is the backbone of industrial quality assurance. In critical applications—such as hydraulic systems, power generation equipment, and fluid pumps—component failure can cause costly operational downtime.\n\nTraceability begins at raw material intake. Every bar stock shipment, casting, or forging is inspected and matched against EN 10204 3.1 mill test certificates. These certificates document chemical composition, tensile strength, yield points, and heat treatment batches.\n\nDuring machining and sub-assembly, parts are tracked using batch identification tags and router traveler documentation. Should an operational anomaly occur in the field, complete traceability allows engineers to immediately isolate affected material heats and verify manufacturing inspection records.`,
   },
   {
-    slug: 'sustainable-manufacturing',
-    title: 'Sustainable Metal Recycling & Coolant Efficiency',
+    slug: 'electric-motor-component-precision',
+    title: 'Precision Considerations for Electric Motor Shafts & Housings',
     date: 'June 19, 2026',
-    category: 'Sustainability',
-    summary: 'Implementation of closed-loop coolant filtration and automated metal chip briquetting reduces environmental footprint.',
-    content: `As part of our commitment to responsible industrial manufacturing, Kolmeks has implemented closed-loop machining coolant filtration systems and automated metal chip briquetting.
-
-By recycling 100% of aluminum, steel, and brass swarf generated during CNC machining cycles, we minimize waste and optimize raw material utilization across our facility.`,
+    category: 'Engineering',
+    summary: 'Analyzing rotational balance, journal bearing tolerances, and concentricity requirements in electric motor component manufacturing.',
+    excerpt: 'Analyzing rotational balance, journal bearing tolerances, and concentricity requirements in electric motor component manufacturing.',
+    readTime: '6 min read',
+    content: `Electric motors rely on precise mechanical alignment between the rotor shaft, bearing journals, and stator housing bore to maintain high efficiency and quiet operation.\n\nKey manufacturing considerations include strict concentricity between shaft bearing journals, precise keyway milling, and controlled total indicator reading (TIR) runout. Even minor eccentricity can induce vibration, premature bearing wear, and acoustic noise.\n\nUsing multi-tasking CNC turning centers equipped with live tooling, rotor shafts can be turned, grooved, and keyway-milled in a single chucking operation. This guarantees coaxiality between all rotational surfaces and simplifies downstream motor assembly.`,
   },
 ];
 
@@ -46,62 +58,75 @@ export const NewsPage: React.FC = () => {
   return (
     <div className="space-y-16 lg:space-y-24 bg-slate-50/50 pb-12">
       <SEO
-        title="Kolmeks | News & Insights"
-        description="Latest manufacturing announcements, CNC technology updates, and corporate news from Kolmeks."
+        title="Kolmeks | News & Technical Articles"
+        description="Stay updated with technical articles, manufacturing insights, CNC machining updates, and component quality practices at Kolmeks."
       />
 
       {/* Hero Section */}
       <HeroSection
-        eyebrow="NEWS & ANNOUNCEMENTS"
-        title="Latest Corporate & Technical News."
-        description="Stay updated with Kolmeks manufacturing announcements, technology upgrades, quality enhancements, and industry insights."
-        primaryCtaText="Contact Us"
-        primaryCtaLink="/contact"
+        eyebrow="NEWS & INSIGHTS"
+        title="Manufacturing Articles & Technical Insights."
+        description="Stay informed with manufacturing insights, technical articles, and updates on CNC machining, quality control, and component engineering."
+        primaryCtaText="Read Articles"
+        primaryCtaLink="#articles"
+        secondaryCtaText="Request a Quote"
+        secondaryCtaLink="/request-quote"
+        imageUrl={newsHeroImg}
       />
 
       {/* Breadcrumbs Bar */}
       <Container className="-mt-8 lg:-mt-14 relative z-20">
-        <Breadcrumbs items={[{ label: 'News' }]} />
+        <Breadcrumbs
+          items={[
+            { label: 'News & Articles' },
+          ]}
+        />
       </Container>
 
-      {/* News Feed Grid */}
-      <section className="py-4">
+      {/* Articles Grid */}
+      <section id="articles" className="py-4">
         <Container className="space-y-10">
           <SectionHeading
-            eyebrow="CORPORATE UPDATES"
-            title="Press Releases & Articles."
-            description="Explore our latest manufacturing developments."
+            eyebrow="LATEST PUBLICATION"
+            title="Technical Articles & Insights."
+            description="Explore educational articles on component manufacturing, metrology, and supply chain coordination."
           />
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {articlesData.map((article) => (
-              <Card key={article.slug} variant="industrial" className="hover:border-blue-600 transition-colors">
-                <CardContent className="p-6 space-y-4 flex flex-col justify-between h-full">
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between text-xs font-mono text-slate-500">
-                      <span className="flex items-center gap-1 text-blue-600 font-bold bg-blue-50 px-2 py-0.5 rounded">
-                        <Tag className="w-3 h-3" /> {article.category}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <Calendar className="w-3 h-3 text-slate-400" /> {article.date}
-                      </span>
-                    </div>
-
-                    <h3 className="text-lg font-bold text-slate-900 leading-snug">{article.title}</h3>
-
-                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">{article.summary}</p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {articlesData.map((art: ArticleData) => (
+              <div
+                key={art.slug}
+                className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-xs hover:border-blue-600 transition-colors flex flex-col justify-between"
+              >
+                <div className="p-6 space-y-4">
+                  <div className="flex items-center justify-between text-xs font-mono text-slate-500">
+                    <span className="inline-flex items-center gap-1 font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded">
+                      <Tag className="w-3 h-3" /> {art.category}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <Calendar className="w-3.5 h-3.5" /> {art.date}
+                    </span>
                   </div>
 
-                  <div className="pt-4 border-t border-slate-100">
-                    <Link
-                      to={`/news/${article.slug}`}
-                      className="inline-flex items-center text-xs font-bold text-blue-600 hover:text-blue-800 gap-1"
-                    >
-                      Read Full Article <ArrowRight className="w-3.5 h-3.5" />
-                    </Link>
-                  </div>
-                </CardContent>
-              </Card>
+                  <h3 className="text-xl font-bold text-slate-900 leading-snug">
+                    {art.title}
+                  </h3>
+
+                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                    {art.excerpt}
+                  </p>
+                </div>
+
+                <div className="p-6 pt-0 border-t border-slate-100 mt-4 flex items-center justify-between">
+                  <span className="text-xs font-mono text-slate-400">{art.readTime}</span>
+                  <Link
+                    to={`/news/${art.slug}`}
+                    className="inline-flex items-center text-xs font-bold text-blue-700 hover:text-blue-900 gap-1"
+                  >
+                    Read Full Article <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
+                </div>
+              </div>
             ))}
           </div>
         </Container>
