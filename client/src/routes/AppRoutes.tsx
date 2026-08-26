@@ -17,6 +17,7 @@ import { NewsPage } from '../pages/public/NewsPage';
 import { NewsDetailsPage } from '../pages/public/NewsDetailsPage';
 import { ContactPage } from '../pages/public/ContactPage';
 import { RequestQuotePage } from '../pages/public/RequestQuotePage';
+import { PublicNotFoundPage } from '../pages/public/PublicNotFoundPage';
 
 import { ERPLoginPage } from '../pages/erp/ERPLoginPage';
 import { ERPDashboardPage } from '../pages/erp/ERPDashboardPage';
@@ -44,6 +45,7 @@ export const AppRoutes: React.FC = () => {
         <Route path="news/:slug" element={<NewsDetailsPage />} />
         <Route path="contact" element={<ContactPage />} />
         <Route path="request-quote" element={<RequestQuotePage />} />
+        <Route path="404" element={<PublicNotFoundPage />} />
       </Route>
 
       {/* Secure ERP Standalone Login Route */}
@@ -80,8 +82,8 @@ export const AppRoutes: React.FC = () => {
         </Route>
       </Route>
 
-      {/* Fallback Catch-all Route */}
-      <Route path="*" element={<Navigate to="/" replace />} />
+      {/* Fallback Catch-all Route to Public 404 */}
+      <Route path="*" element={<Navigate to="/404" replace />} />
     </Routes>
   );
 };

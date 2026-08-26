@@ -1,59 +1,74 @@
 import React from 'react';
 import { Container } from '../../components/ui/Container';
-import { SectionHeading } from '../../components/ui/SectionHeading';
-import { Card, CardContent } from '../../components/ui/Card';
+import { SEO } from '../../components/public/SEO';
+import { PageHeader } from '../../components/public/PageHeader';
 import { Input } from '../../components/ui/Input';
 import { Textarea } from '../../components/ui/Textarea';
 import { Button } from '../../components/ui/Button';
-import { Mail, Phone, MapPin } from 'lucide-react';
+import { Mail, MapPin, Send } from 'lucide-react';
 
 export const ContactPage: React.FC = () => {
   return (
-    <div className="py-12">
-      <Container>
-        <SectionHeading
-          eyebrow="Get in Touch"
-          title="Contact Kolmeks Team"
-          description="Connect with our engineering and sales representatives for technical inquiries."
-        />
+    <div className="space-y-12">
+      <SEO
+        title="Contact Us | Kolmeks Sales & Technical Engineering"
+        description="Get in touch with Kolmeks sales engineers for contract manufacturing inquiries, technical questions, and global support."
+      />
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="space-y-6">
-            <Card variant="industrial">
-              <CardContent className="p-6 space-y-3">
-                <MapPin className="w-5 h-5 text-industrial-700" />
-                <h4 className="font-bold text-slate-900 text-sm">Headquarters</h4>
-                <p className="text-xs text-slate-600">Industrial Engineering Zone, Kolmeks Production Hub</p>
-              </CardContent>
-            </Card>
+      <PageHeader
+        eyebrow="COMMUNICATION"
+        title="Contact Kolmeks Manufacturing"
+        description="Our sales engineers and technical team are available to discuss your component manufacturing requirements."
+        breadcrumbs={[{ label: 'Contact Us' }]}
+      />
 
-            <Card variant="industrial">
-              <CardContent className="p-6 space-y-3">
-                <Mail className="w-5 h-5 text-industrial-700" />
-                <h4 className="font-bold text-slate-900 text-sm">Email Inquiries</h4>
-                <p className="text-xs text-slate-600">info@kolmeks-manufacturing.com</p>
-              </CardContent>
-            </Card>
-          </div>
+      <section className="py-8 bg-white">
+        <Container className="max-w-5xl">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+            {/* Contact Details */}
+            <div className="lg:col-span-5 space-y-6">
+              <h2 className="text-2xl font-bold text-slate-900">Direct Inquiries</h2>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                For sales, manufacturing partnerships, technical drawings, or general corporate inquiries, please reach out to our team.
+              </p>
 
-          <div className="lg:col-span-2">
-            <Card variant="default">
-              <CardContent className="p-6 space-y-4">
-                <h3 className="text-base font-bold text-slate-900">Send an Inquiry</h3>
-                <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <Input label="Full Name" placeholder="John Doe" />
-                    <Input label="Email Address" type="email" placeholder="john@company.com" />
+              <div className="space-y-4 pt-2 font-mono text-xs text-slate-700">
+                <div className="p-4 bg-slate-50 border border-slate-200 rounded-lg flex items-center gap-3">
+                  <Mail className="w-5 h-5 text-blue-600 shrink-0" />
+                  <div>
+                    <div className="font-bold text-slate-900">Email Contact</div>
+                    <div>contact@kolmeks-manufacturing.com</div>
                   </div>
-                  <Input label="Company Name" placeholder="Global Industrial Corp" />
-                  <Textarea label="Message" placeholder="How can Kolmeks assist your manufacturing needs?" />
-                  <Button variant="primary">Submit Message</Button>
-                </form>
-              </CardContent>
-            </Card>
+                </div>
+
+                <div className="p-4 bg-slate-50 border border-slate-200 rounded-lg flex items-center gap-3">
+                  <MapPin className="w-5 h-5 text-blue-600 shrink-0" />
+                  <div>
+                    <div className="font-bold text-slate-900">Global Operations Hub</div>
+                    <div>Industrial Manufacturing Zone</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Contact Form Shell */}
+            <div className="lg:col-span-7 bg-slate-50 p-8 rounded-2xl border border-slate-200 space-y-6">
+              <h3 className="text-xl font-bold text-slate-900">Send a Message</h3>
+              <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <Input label="Full Name" placeholder="John Doe" required />
+                  <Input label="Company Email" type="email" placeholder="john@company.com" required />
+                </div>
+                <Input label="Company Name" placeholder="Acme Industrial Inc." />
+                <Textarea label="Message / Inquiry Details" placeholder="Describe your manufacturing inquiry or technical requirements..." rows={4} required />
+                <Button variant="primary" type="submit" leftIcon={<Send className="w-4 h-4" />}>
+                  Send Message
+                </Button>
+              </form>
+            </div>
           </div>
-        </div>
-      </Container>
+        </Container>
+      </section>
     </div>
   );
 };

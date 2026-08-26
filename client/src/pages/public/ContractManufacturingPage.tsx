@@ -1,51 +1,64 @@
 import React from 'react';
 import { Container } from '../../components/ui/Container';
-import { SectionHeading } from '../../components/ui/SectionHeading';
-import { Card, CardContent } from '../../components/ui/Card';
-import { Button } from '../../components/ui/Button';
-import { Link } from 'react-router-dom';
-import { Factory, CheckCircle2, ArrowRight } from 'lucide-react';
+import { SEO } from '../../components/public/SEO';
+import { PageHeader } from '../../components/public/PageHeader';
+import { CTASection } from '../../components/public/CTASection';
+import { ProcessSection } from '../../components/public/ProcessSection';
+import { Factory, CheckCircle2, ShieldCheck } from 'lucide-react';
 
 export const ContractManufacturingPage: React.FC = () => {
   return (
-    <div className="py-12 space-y-12">
-      <Container>
-        <SectionHeading
-          eyebrow="Capability"
-          title="Contract Manufacturing Services"
-          description="Turnkey component manufacturing, sub-assemblies, and dedicated production lines."
-        />
+    <div className="space-y-12">
+      <SEO
+        title="Contract Manufacturing | Kolmeks Production Solutions"
+        description="Turnkey contract manufacturing solutions for OEM clients, including component machining, dedicated lines, and sub-assembly."
+      />
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Card variant="default">
-            <CardContent className="p-6 space-y-3">
-              <Factory className="w-8 h-8 text-industrial-700" />
-              <h3 className="text-base font-bold text-slate-900">Custom Metal Fabrication</h3>
-              <p className="text-xs text-slate-600">High-capacity production tailored to exact OEM drawings and specifications.</p>
-            </CardContent>
-          </Card>
-          <Card variant="default">
-            <CardContent className="p-6 space-y-3">
-              <CheckCircle2 className="w-8 h-8 text-industrial-700" />
-              <h3 className="text-base font-bold text-slate-900">Full Testing & Inspection</h3>
-              <p className="text-xs text-slate-600">End-of-line testing, pressure verification, and CMM dimension reports.</p>
-            </CardContent>
-          </Card>
-          <Card variant="default">
-            <CardContent className="p-6 space-y-3">
-              <ArrowRight className="w-8 h-8 text-industrial-700" />
-              <h3 className="text-base font-bold text-slate-900">Scalable Production Lines</h3>
-              <p className="text-xs text-slate-600">Flexible batch sizes from prototypes to high-volume recurring orders.</p>
-            </CardContent>
-          </Card>
-        </div>
+      <PageHeader
+        eyebrow="CAPABILITIES"
+        title="Contract Manufacturing & OEM Production"
+        description="Turnkey contract manufacturing solutions designed for high-volume component production and electro-mechanical assembly."
+        breadcrumbs={[
+          { label: 'Capabilities', href: '/contract-manufacturing' },
+          { label: 'Contract Manufacturing' },
+        ]}
+      />
 
-        <div className="pt-6 flex justify-center">
-          <Link to="/request-quote">
-            <Button variant="primary" size="lg">Request Contract Manufacturing Quote</Button>
-          </Link>
-        </div>
-      </Container>
+      <section className="py-8 bg-white">
+        <Container className="max-w-4xl space-y-8">
+          <div className="space-y-4">
+            <h2 className="text-2xl font-bold text-slate-900">
+              Full-Scope Component Production & Sub-Assembly
+            </h2>
+            <p className="text-base text-slate-600 leading-relaxed">
+              Kolmeks offers contract manufacturing services for original equipment manufacturers seeking a reliable, quality-focused manufacturing partner. We manage the entire manufacturing lifecycle, from material sourcing to CNC machining, quality testing, and logistics delivery.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+            <div className="p-6 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+              <h3 className="font-bold text-slate-900 flex items-center gap-2">
+                <CheckCircle2 className="w-5 h-5 text-blue-600" /> Dedicated Production Lines
+              </h3>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                Tailored manufacturing lines configured to match specific client volume and technical requirements.
+              </p>
+            </div>
+            <div className="p-6 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+              <h3 className="font-bold text-slate-900 flex items-center gap-2">
+                <ShieldCheck className="w-5 h-5 text-blue-600" /> Integrated Quality Controls
+              </h3>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                In-line measurement, Coordinate Measuring Machine (CMM) audits, and zero-defect quality protocols.
+              </p>
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      <ProcessSection />
+
+      <CTASection />
     </div>
   );
 };

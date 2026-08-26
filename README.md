@@ -12,6 +12,34 @@ The platform consists of two distinct separated subsystems:
 
 ---
 
+## 🎨 Public Website Design System & Foundation (Prompt 04)
+
+The public corporate web application features a high-precision industrial aesthetic communicating engineering rigor, manufacturing capability, and quality consistency.
+
+### Key Visual & Architectural Tokens:
+- **Palette**: Deep Industrial Blue (`#0B1E36`, `#0F2C59`), Professional Blue accents (`#1D4ED8`), Light Neutral (`#F8FAFC`), Charcoal (`#0F172A`), and Emerald Green (`#10B981`) quality indicators.
+- **Typography Hierarchy**: Modern sans-serif system with defined utilities (`h1`, `h2`, `h3`, `h4`, `body`, `caption`, `mono`).
+- **Responsive Layout**: Reusable `Container` component preventing unwanted line stretching across wide viewports.
+- **Top Engineering Banner**: ISO certified operations highlight & link to internal ERP portal.
+- **Navbar Dropdown**: Keyboard-accessible capabilities menu (`Contract Manufacturing`, `CNC Machining`, `Assembly`, `Electric Motors`, `Supply Chain`) and prominent `Request a Quote` CTA.
+- **Mobile Menu Drawer**: Expandable capabilities section with smooth slide drawer.
+
+### Reusable Public UI Components (`client/src/components/public/`):
+- `HeroSection`: Reusable hero with eyebrow, main heading, description, CTAs, and industrial SVG graphic panel.
+- `CapabilityCard`: Industrial competency card with hover effects and action link.
+- `ProcessSection`: 6-step manufacturing execution workflow (Engineering ➔ Material Sourcing ➔ CNC Machining ➔ Quality Inspection ➔ Assembly ➔ Logistics Delivery).
+- `QualitySection`: Quality assurance focus section ("Precision You Can Measure") detailing CMM inspection and raw material traceability.
+- `GlobalPresenceSection`: International presence foundation with location cards (using verified placeholders).
+- `IndustriesSection`: Target industrial sectors highlight (OEM Machinery, Transportation, Electrical, Automation, Energy).
+- `WhyKolmeksSection`: Engineering value propositions section.
+- `StatCard`: Metrics card for verified operational statistics.
+- `CTASection`: Banner driving visitors to `/request-quote` and `/contact`.
+- `PageHeader`: Inner page header with eyebrow badge, title, description, and breadcrumbs.
+- `Breadcrumbs`: Accessible navigation path for inner pages.
+- `SEO`: Document title and meta tag manager.
+
+---
+
 ## 🔐 Authentication & Security Architecture (Prompt 03)
 
 The application uses **Supabase Auth** for enterprise authentication coupled with custom PostgreSQL **profiles** and **roles** tables for Role-Based Access Control (RBAC).
@@ -32,12 +60,6 @@ EXPRESS API (Verifies Bearer Token & Role Authorization)
 SUPABASE POSTGRESQL (RLS Enforcement)
 ```
 
-### Key Security Principles:
-- **No Password Storage**: Passwords are handled strictly by Supabase Auth (`auth.users`). Passwords are never logged or stored in application tables.
-- **Backend Token Verification**: Express middleware (`auth.middleware.js`) verifies Supabase Bearer JWT tokens on every protected request. Client input roles are never trusted directly.
-- **Profile Status Check**: Users must have `status = 'active'` in `public.profiles` to access the ERP. Inactive or suspended accounts are denied entry.
-- **Role-Aware Navigation**: UI menu items and sub-routes filter based on centralized role configurations (`navigation.ts` & `rbac.middleware.js`).
-
 ---
 
 ## 👥 Roles & Authorization Matrix
@@ -53,34 +75,9 @@ SUPABASE POSTGRESQL (RLS Enforcement)
 
 ---
 
-## 👤 How to Create the First Administrator Account
-
-1. Open your **[Supabase Dashboard](https://supabase.com/dashboard)**.
-2. Navigate to **Authentication** ➔ **Users**.
-3. Click **Add User** ➔ **Create user**.
-4. Enter the user details:
-   - **Email**: `admin@kolmeks.fi` (or your staff email)
-   - **Password**: `<secure-password>`
-   - Check **Auto Confirm User**.
-5. Copy the generated User **UUID**.
-6. Open **SQL Editor** in Supabase and execute the following query to grant the `admin` role:
-   ```sql
-   UPDATE public.profiles
-   SET role_id = (SELECT id FROM public.roles WHERE name = 'admin' LIMIT 1),
-       status = 'active'
-   WHERE id = 'YOUR_USER_UUID_HERE';
-   ```
-7. Log into `/secure-kolmeks-x0y0/login` with your credentials.
-
----
-
 ## 🗄️ Database Architecture & Migrations (Prompt 02)
 
-The database schema is organized into 32 PostgreSQL relational tables with full normalized relationships, B-Tree indexes, UUID primary keys, timestamp triggers (`updated_at`), non-negative quantity/price constraints, and Row Level Security (RLS).
-
-### Database Migration Files:
-- [`server/supabase/migrations/01_initial_schema.sql`](file:///d:/CHARUSAT/Projects/Kolmeks_ERP/server/supabase/migrations/01_initial_schema.sql): DDL for all 32 tables, triggers, constraints, indexes, and RLS policies.
-- [`server/supabase/seed.sql`](file:///d:/CHARUSAT/Projects/Kolmeks_ERP/server/supabase/seed.sql): Default application roles and development demo seed data.
+The database schema is organized into 32 PostgreSQL relational tables with normalized relationships, B-Tree indexes, UUID primary keys, timestamp triggers (`updated_at`), non-negative constraints, and Row Level Security (RLS).
 
 ---
 
@@ -92,13 +89,14 @@ Kolmeks_ERP/
 │   ├── src/
 │   │   ├── components/
 │   │   │   ├── auth/           # ProtectedRoute guard
-│   │   │   └── ui/             # Reusable UI primitives
-│   │   ├── constants/          # App constants & role navigation matrix
+│   │   │   ├── public/         # HeroSection, CapabilityCard, ProcessSection, QualitySection, PageHeader, SEO
+│   │   │   └── ui/             # Container, Button, Card, Badge, Input, Select, Textarea
+│   │   ├── constants/          # Navigation matrix & public nav config
 │   │   ├── context/            # AuthContext & AuthProvider
-│   │   ├── layouts/            # PublicLayout & ERPLayout (with role-aware header/sidebar)
+│   │   ├── layouts/            # PublicLayout & ERPLayout
 │   │   ├── pages/
 │   │   │   ├── erp/            # ERPLoginPage, ERPDashboardPage, UnauthorizedPage
-│   │   │   └── public/         # Public corporate website pages
+│   │   │   └── public/         # HomePage, AboutPage, CncMachiningPage, QualityPage, ContactPage, RequestQuotePage, PublicNotFoundPage
 │   │   ├── routes/             # AppRoutes (Public vs Protected ERP mapping)
 │   │   ├── services/           # Supabase client, auth.service, profile.service, Axios API
 │   │   └── types/              # UserRole, UserProfile, Navigation interfaces
@@ -107,8 +105,6 @@ Kolmeks_ERP/
 │   │   ├── config/             # Supabase client & admin client configuration
 │   │   ├── middleware/         # auth.middleware, rbac.middleware, errorHandler
 │   │   ├── routes/             # health.routes, auth.routes, erp.routes
-│   │   ├── scripts/            # CLI test-db-connection.js
-│   │   ├── services/           # db.service.js
 │   │   └── server.js           # Express app listener
 │   └── supabase/               # PostgreSQL Database Migrations & Seeds
 └── README.md
@@ -156,6 +152,7 @@ npm install
 npm run dev
 ```
 - Public Corporate Website: `http://localhost:5173`
+- Request a Quote Page: `http://localhost:5173/request-quote`
 - Secure ERP Login: `http://localhost:5173/secure-kolmeks-x0y0/login`
 - Secure ERP Dashboard: `http://localhost:5173/secure-kolmeks-x0y0/dashboard`
 
@@ -165,3 +162,4 @@ npm run dev
 - [x] **Prompt 01**: React + Vite + TypeScript Frontend & Express Backend setup with public/ERP routing.
 - [x] **Prompt 02**: Supabase PostgreSQL database schema, migrations, RLS policies, indexing, seed data, and Express database service layer.
 - [x] **Prompt 03**: Authentication & ERP Security Foundation (Supabase Auth, profiles/roles RBAC, protected routes, Express Bearer token middleware, and industrial login UI).
+- [x] **Prompt 04**: Public Website Design System & Foundation (PublicLayout, navbar dropdown, mobile menu, multi-column footer, modular components, Home page assembly, 13 public route shells, 404 page, and SEO metadata manager).

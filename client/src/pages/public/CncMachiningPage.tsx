@@ -1,50 +1,57 @@
 import React from 'react';
 import { Container } from '../../components/ui/Container';
-import { SectionHeading } from '../../components/ui/SectionHeading';
-import { Card, CardContent } from '../../components/ui/Card';
-import { Button } from '../../components/ui/Button';
-import { Link } from 'react-router-dom';
-import { Cpu, Check } from 'lucide-react';
+import { SEO } from '../../components/public/SEO';
+import { PageHeader } from '../../components/public/PageHeader';
+import { CTASection } from '../../components/public/CTASection';
+import { Cpu, ShieldCheck, CheckCircle2 } from 'lucide-react';
 
 export const CncMachiningPage: React.FC = () => {
   return (
-    <div className="py-12 space-y-12">
-      <Container>
-        <SectionHeading
-          eyebrow="Precision Engineering"
-          title="CNC Milling & Turning Operations"
-          description="5-Axis CNC machining centers delivering extreme tolerances for critical industrial components."
-        />
+    <div className="space-y-12">
+      <SEO
+        title="CNC Machining | High Precision Milling & Turning"
+        description="High-precision 5-axis CNC milling, automatic turning, and tight tolerance component fabrication for industrial machinery."
+      />
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <Card variant="industrial">
-            <CardContent className="p-6 space-y-4">
-              <Cpu className="w-8 h-8 text-industrial-700" />
-              <h3 className="text-lg font-bold text-slate-900">CNC Machining Capabilities</h3>
-              <ul className="space-y-2 text-xs text-slate-700">
-                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-emerald-600" /> Multi-axis CNC Milling (3, 4, and 5-axis)</li>
-                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-emerald-600" /> CNC Turning & Automatic Lathe Centers</li>
-                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-emerald-600" /> Cast iron, stainless steel, aluminum & brass machining</li>
-                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-emerald-600" /> Integrated CMM measuring cell connection</li>
-              </ul>
-            </CardContent>
-          </Card>
+      <PageHeader
+        eyebrow="PRECISION FABRICATION"
+        title="High-Precision CNC Milling & Turning"
+        description="Multi-axis CNC machining capabilities delivering sub-micron dimensional accuracy for complex industrial metal components."
+        breadcrumbs={[
+          { label: 'Capabilities', href: '/cnc-machining' },
+          { label: 'CNC Machining' },
+        ]}
+      />
 
-          <div className="bg-industrial-950 text-white rounded-lg p-6 flex flex-col justify-between">
-            <div>
-              <h4 className="text-base font-bold text-white mb-2">High Precision Tolerances</h4>
-              <p className="text-xs text-slate-300 leading-relaxed">
-                Our CNC machine hub operates under strict thermal stabilization protocols, linked directly into our Kolmeks ERP telemetry.
-              </p>
+      <section className="py-8 bg-white">
+        <Container className="max-w-4xl space-y-8">
+          <div className="space-y-4">
+            <h2 className="text-2xl font-bold text-slate-900">
+              Advanced Multi-Axis CNC Machine Capabilities
+            </h2>
+            <p className="text-base text-slate-600 leading-relaxed">
+              Our CNC machining center utilizes modern 5-axis milling, precision lathes, and automated turning cells to produce complex metal components engineered from cast iron, aluminum alloys, stainless steel, and specialty copper.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+            <div className="p-5 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+              <div className="text-sm font-bold text-[#0B1E36]">5-Axis Milling</div>
+              <div className="text-xs text-slate-600">Complex geometry machining with reduced setups and tight tolerance repeatability.</div>
             </div>
-            <div className="pt-4">
-              <Link to="/request-quote">
-                <Button variant="primary" className="w-full">Get CNC Machining Quotation</Button>
-              </Link>
+            <div className="p-5 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+              <div className="text-sm font-bold text-[#0B1E36]">Automatic Turning</div>
+              <div className="text-xs text-slate-600">High-speed cylindrical turning for shafts, rotors, housings, and precision fittings.</div>
+            </div>
+            <div className="p-5 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+              <div className="text-sm font-bold text-[#0B1E36]">Surface Finishing</div>
+              <div className="text-xs text-slate-600">Grinding, deburring, and surface roughness compliance per technical specifications.</div>
             </div>
           </div>
-        </div>
-      </Container>
+        </Container>
+      </section>
+
+      <CTASection />
     </div>
   );
 };

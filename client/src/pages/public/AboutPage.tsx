@@ -1,64 +1,83 @@
 import React from 'react';
 import { Container } from '../../components/ui/Container';
-import { SectionHeading } from '../../components/ui/SectionHeading';
-import { Card, CardContent } from '../../components/ui/Card';
-import { Factory, ShieldCheck, Globe, Users } from 'lucide-react';
+import { SEO } from '../../components/public/SEO';
+import { PageHeader } from '../../components/public/PageHeader';
+import { CTASection } from '../../components/public/CTASection';
+import { Factory, ShieldCheck, Cpu, Users } from 'lucide-react';
 
 export const AboutPage: React.FC = () => {
   return (
-    <div className="py-12 space-y-12">
-      <Container>
-        <SectionHeading
-          eyebrow="Company Overview"
-          title="About Kolmeks Manufacturing"
-          description="A trusted international engineering partner in contract manufacturing, precision machining, and electric component solutions."
-        />
+    <div className="space-y-12">
+      <SEO
+        title="About Kolmeks | Manufacturing & Engineering Excellence"
+        description="Learn about Kolmeks contract manufacturing, precision engineering values, ISO quality standards, and OEM component partnerships."
+      />
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-          <div className="space-y-4 text-slate-700 leading-relaxed text-sm">
-            <p>
-              Kolmeks is a long-standing manufacturing group providing custom engineering, precision CNC machining, and motor component solutions to global industrial clients.
+      <PageHeader
+        eyebrow="ABOUT KOLMEKS"
+        title="Engineering Excellence & Manufacturing Reliability"
+        description="A trusted international contract manufacturing partner specializing in precision CNC component fabrication, sub-assemblies, and motor components."
+        breadcrumbs={[{ label: 'About Us' }]}
+      />
+
+      <section className="py-8 bg-white">
+        <Container className="max-w-4xl space-y-12">
+          {/* Mission & Overview */}
+          <div className="space-y-4">
+            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900">
+              Our Manufacturing Commitment
+            </h2>
+            <p className="text-base text-slate-600 leading-relaxed">
+              Kolmeks is dedicated to delivering engineering precision and contract manufacturing excellence. We partner closely with original equipment manufacturers (OEMs) across Europe and international markets to provide component machining, electro-mechanical sub-assemblies, and specialized motor parts.
             </p>
-            <p>
-              Our production facilities combine advanced automation, CMM coordinate measuring quality controls, and a fully integrated ERP platform to maintain zero-defect standards across complex supply chains.
-            </p>
-            <div className="p-4 bg-industrial-50 rounded-lg border border-industrial-200 text-xs font-mono text-industrial-900">
-              Note: Detailed company statistics, facility sizes, and certifications will be verified and updated in future project stages.
+          </div>
+
+          {/* Core Values Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
+            <div className="p-6 rounded-xl border border-slate-200 bg-slate-50 space-y-3">
+              <div className="w-10 h-10 rounded bg-[#0B1E36] text-white flex items-center justify-center">
+                <Cpu className="w-5 h-5" />
+              </div>
+              <h3 className="text-lg font-bold text-slate-900">Engineering Rigor</h3>
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                Applying rigorous Design for Manufacturability (DFM) principles to optimize production efficiency and component durability.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-xl border border-slate-200 bg-slate-50 space-y-3">
+              <div className="w-10 h-10 rounded bg-[#0B1E36] text-white flex items-center justify-center">
+                <ShieldCheck className="w-5 h-5" />
+              </div>
+              <h3 className="text-lg font-bold text-slate-900">Quality Consistency</h3>
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                Adhering to ISO-certified quality management protocols, CMM coordinate measuring, and complete raw material traceability.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-xl border border-slate-200 bg-slate-50 space-y-3">
+              <div className="w-10 h-10 rounded bg-[#0B1E36] text-white flex items-center justify-center">
+                <Factory className="w-5 h-5" />
+              </div>
+              <h3 className="text-lg font-bold text-slate-900">Turnkey Capacity</h3>
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                Single-source responsibility from material procurement to CNC machining, testing, sub-assembly, and packaging.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-xl border border-slate-200 bg-slate-50 space-y-3">
+              <div className="w-10 h-10 rounded bg-[#0B1E36] text-white flex items-center justify-center">
+                <Users className="w-5 h-5" />
+              </div>
+              <h3 className="text-lg font-bold text-slate-900">Customer Collaboration</h3>
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                Transparent communication, dedicated technical account management, and synchronized ERP order tracking.
+              </p>
             </div>
           </div>
+        </Container>
+      </section>
 
-          <div className="grid grid-cols-2 gap-4">
-            <Card variant="industrial">
-              <CardContent className="p-5 space-y-2">
-                <Factory className="w-6 h-6 text-industrial-700" />
-                <h4 className="font-bold text-slate-900 text-sm">Contract Manufacturing</h4>
-                <p className="text-xs text-slate-500">End-to-end component production and sub-assemblies.</p>
-              </CardContent>
-            </Card>
-            <Card variant="industrial">
-              <CardContent className="p-5 space-y-2">
-                <ShieldCheck className="w-6 h-6 text-industrial-700" />
-                <h4 className="font-bold text-slate-900 text-sm">Quality Assurance</h4>
-                <p className="text-xs text-slate-500">CMM laser verification & ISO standards compliance.</p>
-              </CardContent>
-            </Card>
-            <Card variant="industrial">
-              <CardContent className="p-5 space-y-2">
-                <Globe className="w-6 h-6 text-industrial-700" />
-                <h4 className="font-bold text-slate-900 text-sm">Global Reach</h4>
-                <p className="text-xs text-slate-500">Logistics solutions serving international OEM clients.</p>
-              </CardContent>
-            </Card>
-            <Card variant="industrial">
-              <CardContent className="p-5 space-y-2">
-                <Users className="w-6 h-6 text-industrial-700" />
-                <h4 className="font-bold text-slate-900 text-sm">Engineering Team</h4>
-                <p className="text-xs text-slate-500">Experienced manufacturing engineers and toolmakers.</p>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </Container>
+      <CTASection />
     </div>
   );
 };

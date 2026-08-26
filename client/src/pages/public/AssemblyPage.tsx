@@ -1,27 +1,39 @@
 import React from 'react';
 import { Container } from '../../components/ui/Container';
-import { SectionHeading } from '../../components/ui/SectionHeading';
-import { Card, CardContent } from '../../components/ui/Card';
-import { Boxes } from 'lucide-react';
+import { SEO } from '../../components/public/SEO';
+import { PageHeader } from '../../components/public/PageHeader';
+import { CTASection } from '../../components/public/CTASection';
 
 export const AssemblyPage: React.FC = () => {
   return (
-    <div className="py-12 space-y-12">
-      <Container>
-        <SectionHeading
-          eyebrow="Integration"
-          title="Component & Sub-Assembly Services"
-          description="Modular assembly lines, leak testing, electrical wiring, and final packaging."
-        />
-        <Card variant="default">
-          <CardContent className="p-6 space-y-4">
-            <Boxes className="w-8 h-8 text-industrial-700" />
-            <p className="text-sm text-slate-600">
-              Kolmeks provides comprehensive assembly services allowing industrial customers to streamline their supply chain by receiving pre-tested complete assemblies.
-            </p>
-          </CardContent>
-        </Card>
-      </Container>
+    <div className="space-y-12">
+      <SEO
+        title="Component Assembly | Electro-Mechanical Sub-Assemblies"
+        description="Full electro-mechanical component sub-assemblies, pressure testing, and final quality validation."
+      />
+
+      <PageHeader
+        eyebrow="CAPABILITIES"
+        title="Component & Electro-Mechanical Sub-Assembly"
+        description="Comprehensive sub-assembly services, pressure testing, and functional component testing."
+        breadcrumbs={[
+          { label: 'Capabilities', href: '/assembly' },
+          { label: 'Component Assembly' },
+        ]}
+      />
+
+      <section className="py-8 bg-white">
+        <Container className="max-w-4xl space-y-6">
+          <h2 className="text-2xl font-bold text-slate-900">
+            Integrated Assembly & Testing Protocols
+          </h2>
+          <p className="text-base text-slate-600 leading-relaxed">
+            Kolmeks provides sub-assembly services for complex mechanical, hydraulic, and electrical components. Our assembly team integrates precision machined parts, bearings, seals, stators, and fasteners under strict standard operating procedures (SOPs).
+          </p>
+        </Container>
+      </section>
+
+      <CTASection />
     </div>
   );
 };

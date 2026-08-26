@@ -4,11 +4,25 @@
 
 @layer base {
   body {
-    @apply bg-slate-50 text-slate-900 font-sans antialiased;
+    @apply bg-slate-50 text-slate-900 font-sans antialiased selection:bg-industrial-850 selection:text-white;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
 
-  /* Custom scrollbar for ERP tables and sidebar */
+  /* Typography Hierarchy Utilities */
+  h1, .h1 {
+    @apply text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 leading-tight;
+  }
+  h2, .h2 {
+    @apply text-2xl sm:text-4xl font-bold tracking-tight text-slate-900 leading-snug;
+  }
+  h3, .h3 {
+    @apply text-xl sm:text-2xl font-bold tracking-tight text-slate-900;
+  }
+  h4, .h4 {
+    @apply text-lg font-semibold text-slate-900;
+  }
+
+  /* Custom scrollbar for tables, sidebars, and dialogs */
   ::-webkit-scrollbar {
     width: 6px;
     height: 6px;
@@ -29,7 +43,13 @@
   .industrial-grid-bg {
     background-size: 32px 32px;
     background-image: 
-      linear-gradient(to right, rgba(15, 44, 89, 0.04) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(15, 44, 89, 0.04) 1px, transparent 1px);
+      linear-gradient(to right, rgba(15, 44, 89, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(15, 44, 89, 0.05) 1px, transparent 1px);
+  }
+  .industrial-grid-dark {
+    background-size: 32px 32px;
+    background-image: 
+      linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
   }
 }
