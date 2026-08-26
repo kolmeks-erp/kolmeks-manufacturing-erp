@@ -3,25 +3,45 @@ import React, { useEffect } from 'react';
 interface SEOProps {
   title?: string;
   description?: string;
+  type?: string;
 }
 
 export const SEO: React.FC<SEOProps> = ({
   title = 'Kolmeks | Precision Manufacturing & Engineering',
-  description = 'Global contract manufacturing partner specializing in CNC machining, component assembly, electric motor windings, and industrial supply chain solutions.',
+  description = 'Explore Kolmeks contract manufacturing capabilities, precision engineering, quality focus, and industrial component solutions.',
+  type = 'website',
 }) => {
   useEffect(() => {
-    document.title = title.includes('Kolmeks') ? title : `${title} | Kolmeks Manufacturing`;
-    
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute('content', description);
-    } else {
-      const meta = document.createElement('meta');
-      meta.name = 'description';
-      meta.content = description;
-      document.head.appendChild(meta);
+    const fullTitle = title.includes('Kolmeks') ? title : `${title} | Kolmeks Manufacturing`;
+    document.title = fullTitle;
+
+    // Meta Description
+    let metaDescription = document.querySelector('meta[name="description"]');
+    if (!metaDescription) {
+      metaDescription = document.createElement('meta');
+      metaDescription.setAttribute('name', 'description');
+      document.head.appendChild(metaDescription);
     }
-  }, [title, description]);
+    metaDescription.setAttribute('content', description);
+
+    // Open Graph Meta Tags
+    const ogTags = [
+      { property: 'og:title', content: fullTitle },
+      { property: 'og:description', content: description },
+      { property: 'og:type', content: type },
+      { property: 'og:url', content: window.location.href },
+    ];
+
+    ogTags.forEach(({ property, content }) => {
+      let ogMeta = document.querySelector(`meta[property="${property}"]`);
+      if (!ogMeta) {
+        ogMeta = document.createElement('meta');
+        ogMeta.setAttribute('property', property);
+        document.head.appendChild(ogMeta);
+      }
+      ogMeta.setAttribute('content', content);
+    });
+  }, [title, description, type]);
 
   return null;
 };

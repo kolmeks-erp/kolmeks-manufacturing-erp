@@ -5,6 +5,7 @@ import { Container } from '../ui/Container';
 import { Button } from '../ui/Button';
 
 interface CTASectionProps {
+  eyebrow?: string;
   title?: string;
   description?: string;
   primaryButtonText?: string;
@@ -14,11 +15,12 @@ interface CTASectionProps {
 }
 
 export const CTASection: React.FC<CTASectionProps> = ({
-  title = 'Have a Contract Manufacturing Requirement?',
-  description = 'Our technical sales engineers are ready to analyze your technical drawings, specifications, and volume requirements.',
+  eyebrow = "LET'S BUILD TOGETHER",
+  title = 'Have a Manufacturing Requirement?',
+  description = 'Our sales engineers and technical team are available to review your drawings, material specifications, and batch volume targets.',
   primaryButtonText = 'Request a Quote',
   primaryButtonHref = '/request-quote',
-  secondaryButtonText = 'Contact Sales Team',
+  secondaryButtonText = 'Contact Us',
   secondaryButtonHref = '/contact',
 }) => {
   return (
@@ -29,7 +31,7 @@ export const CTASection: React.FC<CTASectionProps> = ({
 
           <div className="space-y-4 max-w-2xl relative z-10">
             <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-400">
-              COMMENCE PRODUCTION DISCUSSIONS
+              {eyebrow}
             </span>
 
             <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white leading-tight">

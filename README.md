@@ -12,31 +12,28 @@ The platform consists of two distinct separated subsystems:
 
 ---
 
-## 🎨 Public Website Design System & Foundation (Prompt 04)
+## 🏭 Complete Professional Home Page (Prompt 05)
 
-The public corporate web application features a high-precision industrial aesthetic communicating engineering rigor, manufacturing capability, and quality consistency.
+The Home Page is structured as a complete, high-precision B2B industrial landing page consisting of 12 flowing sections in exact order:
 
-### Key Visual & Architectural Tokens:
-- **Palette**: Deep Industrial Blue (`#0B1E36`, `#0F2C59`), Professional Blue accents (`#1D4ED8`), Light Neutral (`#F8FAFC`), Charcoal (`#0F172A`), and Emerald Green (`#10B981`) quality indicators.
-- **Typography Hierarchy**: Modern sans-serif system with defined utilities (`h1`, `h2`, `h3`, `h4`, `body`, `caption`, `mono`).
-- **Responsive Layout**: Reusable `Container` component preventing unwanted line stretching across wide viewports.
-- **Top Engineering Banner**: ISO certified operations highlight & link to internal ERP portal.
-- **Navbar Dropdown**: Keyboard-accessible capabilities menu (`Contract Manufacturing`, `CNC Machining`, `Assembly`, `Electric Motors`, `Supply Chain`) and prominent `Request a Quote` CTA.
-- **Mobile Menu Drawer**: Expandable capabilities section with smooth slide drawer.
+1. **Navbar** (From `PublicLayout.tsx` with top banner, capabilities dropdown, and `Request a Quote` CTA).
+2. **Hero Section** (`PRECISION MANUFACTURING` eyebrow, main heading, supporting text, primary CTA `/request-quote`, secondary CTA `/cnc-machining`, micro-positioning keywords, and modular `VisualPlaceholder`).
+3. **Trust / Positioning Strip** (`PositioningStrip.tsx` with `Precision Manufacturing`, `Engineering Expertise`, `Quality Focus`, `Reliable Supply`).
+4. **About / Company Introduction** (`AboutSection.tsx` asymmetric layout with technical blueprint indicators and `/about` CTA).
+5. **Capabilities Section** (Grid of `CapabilityCard` items for Contract Manufacturing, CNC Machining, Sub-Assembly, Electric Motors, and Supply Chain + Section CTA).
+6. **Manufacturing Process Workflow** (`ProcessSection.tsx` 6-step conceptual timeline: Engineering ➔ Material Sourcing ➔ Machining ➔ Quality Inspection ➔ Assembly ➔ Delivery).
+7. **Precision / Quality Section** (`QualitySection.tsx` "Precision You Can Measure" visual area, CMM inspection, and traceability highlights).
+8. **Global Presence Section** (`GlobalPresenceSection.tsx` SVG world map graphic foundation with `LOCATION DATA TO BE VERIFIED` badges and `LocationCard` grid).
+9. **Industries & Applications** (`IndustriesSection.tsx` targeting OEM Machinery, Transportation, Electrical, Automation, Fluid & Pump, Energy).
+10. **Why Kolmeks Editorial Section** (`WhyKolmeksSection.tsx` 01 to 06 numbered principles on engineering expertise, precision, quality focus, supply chain, collaboration, and global coordination).
+11. **Statistics Area** (Structural metrics cards using `StatCard` clearly marked for verified operational data).
+12. **Final Customer Call-to-Action** (`CTASection.tsx` high-impact industrial banner driving visitors to `/request-quote` and `/contact`).
+13. **Footer** (Multi-column corporate footer from `PublicLayout.tsx`).
 
-### Reusable Public UI Components (`client/src/components/public/`):
-- `HeroSection`: Reusable hero with eyebrow, main heading, description, CTAs, and industrial SVG graphic panel.
-- `CapabilityCard`: Industrial competency card with hover effects and action link.
-- `ProcessSection`: 6-step manufacturing execution workflow (Engineering ➔ Material Sourcing ➔ CNC Machining ➔ Quality Inspection ➔ Assembly ➔ Logistics Delivery).
-- `QualitySection`: Quality assurance focus section ("Precision You Can Measure") detailing CMM inspection and raw material traceability.
-- `GlobalPresenceSection`: International presence foundation with location cards (using verified placeholders).
-- `IndustriesSection`: Target industrial sectors highlight (OEM Machinery, Transportation, Electrical, Automation, Energy).
-- `WhyKolmeksSection`: Engineering value propositions section.
-- `StatCard`: Metrics card for verified operational statistics.
-- `CTASection`: Banner driving visitors to `/request-quote` and `/contact`.
-- `PageHeader`: Inner page header with eyebrow badge, title, description, and breadcrumbs.
-- `Breadcrumbs`: Accessible navigation path for inner pages.
-- `SEO`: Document title and meta tag manager.
+### Content & Media Architecture:
+- Structured data stored in `client/src/data/homeContent.ts` to keep JSX components modular and clean.
+- Modular visual placeholder frame (`VisualPlaceholder.tsx`) ensuring effortless image swapping when approved company media is provided in later prompts.
+- Open Graph metadata integration in `SEO.tsx` (`og:title`, `og:description`, `og:type`, `og:url`).
 
 ---
 
@@ -89,9 +86,10 @@ Kolmeks_ERP/
 │   ├── src/
 │   │   ├── components/
 │   │   │   ├── auth/           # ProtectedRoute guard
-│   │   │   ├── public/         # HeroSection, CapabilityCard, ProcessSection, QualitySection, PageHeader, SEO
+│   │   │   ├── public/         # HeroSection, PositioningStrip, AboutSection, CapabilityCard, LocationCard, ProcessSection, QualitySection, GlobalPresenceSection, VisualPlaceholder, SEO
 │   │   │   └── ui/             # Container, Button, Card, Badge, Input, Select, Textarea
 │   │   ├── constants/          # Navigation matrix & public nav config
+│   │   ├── data/               # Structured homeContent.ts configuration
 │   │   ├── context/            # AuthContext & AuthProvider
 │   │   ├── layouts/            # PublicLayout & ERPLayout
 │   │   ├── pages/
@@ -163,3 +161,4 @@ npm run dev
 - [x] **Prompt 02**: Supabase PostgreSQL database schema, migrations, RLS policies, indexing, seed data, and Express database service layer.
 - [x] **Prompt 03**: Authentication & ERP Security Foundation (Supabase Auth, profiles/roles RBAC, protected routes, Express Bearer token middleware, and industrial login UI).
 - [x] **Prompt 04**: Public Website Design System & Foundation (PublicLayout, navbar dropdown, mobile menu, multi-column footer, modular components, Home page assembly, 13 public route shells, 404 page, and SEO metadata manager).
+- [x] **Prompt 05**: Complete Professional Home Page (12 sequential sections, positioning strip, asymmetric About section, LocationCard grid, SVG world map foundation, editorial Why Kolmeks, VisualPlaceholder system, Open Graph metadata, and full B2B industrial responsiveness).

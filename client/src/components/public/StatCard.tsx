@@ -14,7 +14,7 @@ export const StatCard: React.FC<StatCardProps> = ({
   isPlaceholder = true,
 }) => {
   return (
-    <div className="p-6 bg-white rounded-xl border border-slate-200 text-center space-y-2 shadow-xs">
+    <div className="p-6 bg-white rounded-xl border border-slate-200 text-center space-y-2 shadow-xs hover:border-blue-600 transition-colors">
       <div className="text-3xl sm:text-4xl font-extrabold font-mono text-[#0B1E36]">
         {value}
       </div>
