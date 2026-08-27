@@ -9,6 +9,7 @@ dotenv.config();
 const healthRoutes = require('./routes/health.routes');
 const authRoutes = require('./routes/auth.routes');
 const erpRoutes = require('./routes/erp.routes');
+const rfqRoutes = require('./routes/rfq.routes');
 const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
@@ -40,6 +41,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api', healthRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/erp', erpRoutes);
+app.use('/api/rfq', rfqRoutes);
 
 // Root Endpoint
 app.get('/', (req, res) => {

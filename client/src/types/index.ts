@@ -41,7 +41,7 @@ export interface ERPMenuItem {
   label: string;
   path: string;
   iconName: string;
-  category?: 'core' | 'operations' | 'quality' | 'admin';
+  category?: 'core' | 'operations' | 'quality' | 'admin' | 'Sales' | 'Procurement' | 'Products' | 'Inventory' | 'Production' | 'Quality' | 'Machines' | 'Management' | string;
   badge?: string;
   roles?: UserRoleName[]; // Allowed roles for role-aware sidebar navigation
 }

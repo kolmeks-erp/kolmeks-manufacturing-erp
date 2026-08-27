@@ -33,27 +33,37 @@ const ALL_ROLES: UserRoleName[] = [
 ];
 
 export const ERP_SIDEBAR_MENU: ERPMenuItem[] = [
+  // Dashboard Core
   { id: 'dashboard', label: 'Executive Dashboard', path: `${ERP_BASE_PATH}/dashboard`, iconName: 'LayoutDashboard', category: 'core', roles: ALL_ROLES },
-  { id: 'products', label: 'Products Catalog', path: `${ERP_BASE_PATH}/products`, iconName: 'Package', category: 'core', roles: ['admin', 'production_manager', 'sales_manager', 'quality_manager'] },
-  { id: 'materials', label: 'Materials Master', path: `${ERP_BASE_PATH}/materials`, iconName: 'Boxes', category: 'core', roles: ['admin', 'purchase_manager', 'production_manager'] },
-  { id: 'customers', label: 'Customers', path: `${ERP_BASE_PATH}/customers`, iconName: 'Users', category: 'core', roles: ['admin', 'sales_manager'] },
-  { id: 'suppliers', label: 'Suppliers', path: `${ERP_BASE_PATH}/suppliers`, iconName: 'Truck', category: 'core', roles: ['admin', 'purchase_manager', 'warehouse_manager'] },
   
-  { id: 'rfqs', label: 'RFQs Management', path: `${ERP_BASE_PATH}/rfqs`, iconName: 'FileText', category: 'operations', badge: 'New', roles: ['admin', 'sales_manager'] },
-  { id: 'quotations', label: 'Quotations', path: `${ERP_BASE_PATH}/quotations`, iconName: 'FileSpreadsheet', category: 'operations', roles: ['admin', 'sales_manager'] },
-  { id: 'sales-orders', label: 'Sales Orders', path: `${ERP_BASE_PATH}/sales-orders`, iconName: 'ShoppingCart', category: 'operations', roles: ['admin', 'sales_manager'] },
-  { id: 'purchase-orders', label: 'Purchase Orders', path: `${ERP_BASE_PATH}/purchase-orders`, iconName: 'Receipt', category: 'operations', roles: ['admin', 'purchase_manager', 'warehouse_manager'] },
-  { id: 'production', label: 'Production Scheduling', path: `${ERP_BASE_PATH}/production`, iconName: 'Factory', category: 'operations', roles: ['admin', 'production_manager', 'quality_manager'] },
-  { id: 'cnc-machines', label: 'CNC Machine Hub', path: `${ERP_BASE_PATH}/cnc-machines`, iconName: 'Cpu', category: 'operations', roles: ['admin', 'production_manager'] },
-  { id: 'inventory', label: 'Inventory Control', path: `${ERP_BASE_PATH}/inventory`, iconName: 'Warehouse', category: 'operations', roles: ['admin', 'warehouse_manager', 'purchase_manager', 'production_manager'] },
+  // Sales Section
+  { id: 'rfqs', label: 'RFQs Management', path: `${ERP_BASE_PATH}/rfqs`, iconName: 'FileText', category: 'Sales', badge: 'Live', roles: ['admin', 'sales_manager'] },
+  { id: 'quotations', label: 'Quotations', path: `${ERP_BASE_PATH}/quotations`, iconName: 'FileSpreadsheet', category: 'Sales', roles: ['admin', 'sales_manager'] },
+  { id: 'customers', label: 'Customers', path: `${ERP_BASE_PATH}/customers`, iconName: 'Users', category: 'Sales', roles: ['admin', 'sales_manager'] },
 
-  { id: 'quality-control', label: 'Quality Control (QC)', path: `${ERP_BASE_PATH}/quality-control`, iconName: 'ShieldCheck', category: 'quality', roles: ['admin', 'quality_manager'] },
-  { id: 'cmm', label: 'CMM Measurements', path: `${ERP_BASE_PATH}/cmm`, iconName: 'Ruler', category: 'quality', roles: ['admin', 'quality_manager'] },
-  { id: 'maintenance', label: 'Machine Maintenance', path: `${ERP_BASE_PATH}/maintenance`, iconName: 'Wrench', category: 'operations', roles: ['admin', 'production_manager'] },
-  { id: 'deliveries', label: 'Logistics & Deliveries', path: `${ERP_BASE_PATH}/deliveries`, iconName: 'Navigation', category: 'operations', roles: ['admin', 'warehouse_manager', 'sales_manager'] },
+  // Procurement Section
+  { id: 'suppliers', label: 'Suppliers', path: `${ERP_BASE_PATH}/suppliers`, iconName: 'Truck', category: 'Procurement', roles: ['admin', 'purchase_manager', 'warehouse_manager'] },
+  { id: 'purchase-orders', label: 'Purchase Orders', path: `${ERP_BASE_PATH}/purchase-orders`, iconName: 'Receipt', category: 'Procurement', roles: ['admin', 'purchase_manager', 'warehouse_manager'] },
 
-  { id: 'reports', label: 'Manufacturing Reports', path: `${ERP_BASE_PATH}/reports`, iconName: 'BarChart3', category: 'admin', roles: ALL_ROLES },
-  { id: 'users', label: 'User Roles & Access', path: `${ERP_BASE_PATH}/users`, iconName: 'UserCheck', category: 'admin', roles: ['admin'] },
-  { id: 'notifications', label: 'Notifications Hub', path: `${ERP_BASE_PATH}/notifications`, iconName: 'Bell', category: 'admin', roles: ALL_ROLES },
-  { id: 'settings', label: 'System Settings', path: `${ERP_BASE_PATH}/settings`, iconName: 'Settings', category: 'admin', roles: ['admin'] },
+  // Products Section
+  { id: 'products', label: 'Products', path: `${ERP_BASE_PATH}/products`, iconName: 'Package', category: 'Products', roles: ['admin', 'production_manager', 'sales_manager', 'quality_manager'] },
+  { id: 'materials', label: 'Categories & Materials', path: `${ERP_BASE_PATH}/materials`, iconName: 'Boxes', category: 'Products', roles: ['admin', 'purchase_manager', 'production_manager'] },
+
+  // Inventory Section
+  { id: 'inventory', label: 'Inventory', path: `${ERP_BASE_PATH}/inventory`, iconName: 'Warehouse', category: 'Inventory', roles: ['admin', 'warehouse_manager', 'purchase_manager', 'production_manager'] },
+
+  // Production Section
+  { id: 'production', label: 'Production Orders', path: `${ERP_BASE_PATH}/production`, iconName: 'Factory', category: 'Production', roles: ['admin', 'production_manager', 'quality_manager'] },
+
+  // Quality Section
+  { id: 'quality-control', label: 'Quality Inspections', path: `${ERP_BASE_PATH}/quality-control`, iconName: 'ShieldCheck', category: 'Quality', roles: ['admin', 'quality_manager'] },
+
+  // Machines Section
+  { id: 'cnc-machines', label: 'Machines Hub', path: `${ERP_BASE_PATH}/cnc-machines`, iconName: 'Cpu', category: 'Machines', roles: ['admin', 'production_manager'] },
+  { id: 'maintenance', label: 'Maintenance', path: `${ERP_BASE_PATH}/maintenance`, iconName: 'Wrench', category: 'Machines', roles: ['admin', 'production_manager'] },
+
+  // System & Management
+  { id: 'users', label: 'Employees & Access', path: `${ERP_BASE_PATH}/users`, iconName: 'UserCheck', category: 'Management', roles: ['admin'] },
+  { id: 'reports', label: 'Reports', path: `${ERP_BASE_PATH}/reports`, iconName: 'BarChart3', category: 'Management', roles: ALL_ROLES },
+  { id: 'settings', label: 'Settings', path: `${ERP_BASE_PATH}/settings`, iconName: 'Settings', category: 'Management', roles: ['admin'] },
 ];
