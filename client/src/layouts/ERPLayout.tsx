@@ -120,8 +120,8 @@ export const ERPLayout: React.FC = () => {
       >
         {/* LOGO HEADER */}
         <div className="h-16 flex items-center justify-between px-4 border-b border-slate-800/80 shrink-0">
-          <Link to={`${ERP_BASE_PATH}/dashboard`} className="flex items-center gap-3 overflow-hidden">
-            <KolmeksLogo className="h-7 w-auto shrink-0 filter drop-shadow brightness-110" />
+          <Link to={`${ERP_BASE_PATH}/dashboard`} className="flex items-center gap-2 overflow-hidden">
+            <KolmeksLogo variant="dark-bg" size="sm" />
             {!collapsed && (
               <span className="font-mono text-[10px] uppercase font-bold tracking-widest text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/30">
                 ERP v2.4

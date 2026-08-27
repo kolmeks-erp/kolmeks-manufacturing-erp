@@ -23,11 +23,11 @@ export const KolmeksLogo: React.FC<KolmeksLogoProps> = ({
 
   const selectedHeight = heightClasses[size];
 
-  // On dark backgrounds, we wrap the logo in a clean white rounded container if variant is 'dark-bg' or 'light'
+  // High contrast display for dark background sidebars/headers
   if (variant === 'dark-bg' || variant === 'light') {
     return (
-      <div className={`inline-flex items-center gap-3 ${className}`}>
-        <div className="bg-white px-2.5 py-1 rounded-lg shadow-sm flex items-center shrink-0">
+      <div className={`inline-flex items-center gap-2.5 ${className}`}>
+        <div className="bg-white/95 backdrop-blur-xs px-2.5 py-1 rounded-lg shadow-sm flex items-center shrink-0 border border-white/20">
           <img
             src={logoImg}
             alt="KOLMEKS Logo"
