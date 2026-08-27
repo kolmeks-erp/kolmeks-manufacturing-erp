@@ -45,7 +45,9 @@ export const ERP_SIDEBAR_MENU: ERPMenuItem[] = [
 
   // Procurement Section
   { id: 'suppliers', label: 'Suppliers', path: `${ERP_BASE_PATH}/suppliers`, iconName: 'Truck', category: 'Procurement', badge: 'Live', roles: ['admin', 'purchase_manager', 'warehouse_manager'] },
-  { id: 'purchase-orders', label: 'Purchase Orders', path: `${ERP_BASE_PATH}/purchase-orders`, iconName: 'Receipt', category: 'Procurement', roles: ['admin', 'purchase_manager', 'warehouse_manager'] },
+  { id: 'purchase-requisitions', label: 'Purchase Requisitions', path: `${ERP_BASE_PATH}/purchase-requisitions`, iconName: 'ClipboardList', category: 'Procurement', badge: 'Live', roles: ['admin', 'purchase_manager', 'warehouse_manager', 'executive'] },
+  { id: 'purchase-orders', label: 'Purchase Orders', path: `${ERP_BASE_PATH}/purchase-orders`, iconName: 'Receipt', category: 'Procurement', badge: 'Live', roles: ['admin', 'purchase_manager', 'warehouse_manager', 'executive'] },
+  { id: 'goods-receipts', label: 'Goods Receipts (GRN)', path: `${ERP_BASE_PATH}/goods-receipts`, iconName: 'PackageCheck', category: 'Procurement', badge: 'Live', roles: ['admin', 'purchase_manager', 'warehouse_manager', 'executive'] },
 
   // Products Section
   { id: 'products', label: 'Products Master', path: `${ERP_BASE_PATH}/products`, iconName: 'Package', category: 'Products', badge: 'Live', roles: ['admin', 'production_manager', 'sales_manager', 'quality_manager'] },

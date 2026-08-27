@@ -122,7 +122,51 @@ router.get('/dashboard-summary', authenticateUser, async (req, res) => {
       .select('*', { count: 'exact', head: true })
       .ilike('status', 'completed');
 
-    // 8. Query recent 5 RFQs
+    // 8. Query Procurement Requisitions & POs Metrics
+    const { count: totalRequisitions } = await supabaseAdmin
+      .from('purchase_requisitions')
+      .select('*', { count: 'exact', head: true });
+
+    const { count: pendingPRApproval } = await supabaseAdmin
+      .from('purchase_requisitions')
+      .select('*', { count: 'exact', head: true })
+      .in('status', ['SUBMITTED', 'UNDER_REVIEW', 'submitted', 'under_review']);
+
+    const { count: approvedRequisitions } = await supabaseAdmin
+      .from('purchase_requisitions')
+      .select('*', { count: 'exact', head: true })
+      .in('status', ['APPROVED', 'approved']);
+
+    const { count: totalPurchaseOrders } = await supabaseAdmin
+      .from('purchase_orders')
+      .select('*', { count: 'exact', head: true });
+
+    const { count: pendingPOApproval } = await supabaseAdmin
+      .from('purchase_orders')
+      .select('*', { count: 'exact', head: true })
+      .in('status', ['DRAFT', 'PENDING_APPROVAL', 'draft', 'pending_approval']);
+
+    const { count: openPurchaseOrders } = await supabaseAdmin
+      .from('purchase_orders')
+      .select('*', { count: 'exact', head: true })
+      .in('status', ['APPROVED', 'SENT', 'ACKNOWLEDGED', 'PARTIALLY_RECEIVED', 'ordered', 'partially_received']);
+
+    // 9. Query Goods Receipts Metrics
+    const { count: totalGRNs } = await supabaseAdmin
+      .from('goods_receipts')
+      .select('*', { count: 'exact', head: true });
+
+    const { count: completedGRNs } = await supabaseAdmin
+      .from('goods_receipts')
+      .select('*', { count: 'exact', head: true })
+      .ilike('status', 'completed');
+
+    const { count: inProgressGRNs } = await supabaseAdmin
+      .from('goods_receipts')
+      .select('*', { count: 'exact', head: true })
+      .in('status', ['DRAFT', 'IN_PROGRESS', 'draft', 'in_progress']);
+
+    // 10. Query recent 5 RFQs
     const { data: recentRfqs, error: recentError } = await supabaseAdmin
       .from('rfqs')
       .select('id, rfq_number, company, full_name, email, requirement_type, component_name, quantity, unit, status, created_at')
@@ -162,13 +206,21 @@ router.get('/dashboard-summary', authenticateUser, async (req, res) => {
         confirmedSalesOrders: confirmedSalesOrders || 0,
         inProductionSalesOrders: inProductionSalesOrders || 0,
         completedSalesOrders: completedSalesOrders || 0,
+        totalRequisitions: totalRequisitions || 0,
+        pendingPRApproval: pendingPRApproval || 0,
+        approvedRequisitions: approvedRequisitions || 0,
+        totalPurchaseOrders: totalPurchaseOrders || 0,
+        pendingPOApproval: pendingPOApproval || 0,
+        openPurchaseOrders: openPurchaseOrders || 0,
+        totalGRNs: totalGRNs || 0,
+        completedGRNs: completedGRNs || 0,
+        inProgressGRNs: inProgressGRNs || 0,
         activeQuotations: (approvedQuotations || 0) + (sentQuotations || 0),
-        openSalesOrders: 0,
         lowStockItems: 0,
         productionOrders: 0,
         qualityIssues: 0,
         machinesAttention: 0,
-        pendingPurchaseOrders: 0,
+        pendingPurchaseOrders: pendingPOApproval || 0,
       },
       recentRfqs: recentRfqs || [],
     });

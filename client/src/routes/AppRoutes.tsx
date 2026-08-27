@@ -52,6 +52,17 @@ import { SalesOrderListPage } from '../pages/erp/sales-orders/SalesOrderListPage
 import { SalesOrderFormPage } from '../pages/erp/sales-orders/SalesOrderFormPage';
 import { SalesOrderDetailPage } from '../pages/erp/sales-orders/SalesOrderDetailPage';
 
+import { PurchaseRequisitionListPage } from '../pages/erp/procurement/PurchaseRequisitionListPage';
+import { PurchaseRequisitionFormPage } from '../pages/erp/procurement/PurchaseRequisitionFormPage';
+import { PurchaseRequisitionDetailPage } from '../pages/erp/procurement/PurchaseRequisitionDetailPage';
+import { PurchaseOrderListPage } from '../pages/erp/procurement/PurchaseOrderListPage';
+import { PurchaseOrderFormPage } from '../pages/erp/procurement/PurchaseOrderFormPage';
+import { PurchaseOrderDetailPage } from '../pages/erp/procurement/PurchaseOrderDetailPage';
+
+import { GoodsReceiptListPage } from '../pages/erp/grn/GoodsReceiptListPage';
+import { GoodsReceiptFormPage } from '../pages/erp/grn/GoodsReceiptFormPage';
+import { GoodsReceiptDetailPage } from '../pages/erp/grn/GoodsReceiptDetailPage';
+
 import { ProtectedRoute } from '../components/auth/ProtectedRoute';
 import { ERP_BASE_PATH } from '../constants/navigation';
 
@@ -86,7 +97,6 @@ export const AppRoutes: React.FC = () => {
           <Route index element={<Navigate to={`${ERP_BASE_PATH}/dashboard`} replace />} />
           <Route path="dashboard" element={<ERPDashboardPage />} />
           <Route path="materials" element={<ERPModuleShellPage />} />
-          <Route path="purchase-orders" element={<ERPModuleShellPage />} />
           <Route path="production" element={<ERPModuleShellPage />} />
           <Route path="cnc-machines" element={<ERPModuleShellPage />} />
           <Route path="inventory" element={<ERPModuleShellPage />} />
@@ -96,6 +106,30 @@ export const AppRoutes: React.FC = () => {
           <Route path="deliveries" element={<ERPModuleShellPage />} />
           <Route path="reports" element={<ERPModuleShellPage />} />
           <Route path="notifications" element={<ERPModuleShellPage />} />
+
+          {/* Purchase Requisitions Authorized Routes */}
+          <Route element={<ProtectedRoute allowedRoles={['admin', 'purchase_manager', 'warehouse_manager', 'executive']} />}>
+            <Route path="purchase-requisitions" element={<PurchaseRequisitionListPage />} />
+            <Route path="purchase-requisitions/new" element={<PurchaseRequisitionFormPage />} />
+            <Route path="purchase-requisitions/:id" element={<PurchaseRequisitionDetailPage />} />
+            <Route path="purchase-requisitions/:id/edit" element={<PurchaseRequisitionFormPage />} />
+          </Route>
+
+          {/* Purchase Orders Authorized Routes */}
+          <Route element={<ProtectedRoute allowedRoles={['admin', 'purchase_manager', 'warehouse_manager', 'executive']} />}>
+            <Route path="purchase-orders" element={<PurchaseOrderListPage />} />
+            <Route path="purchase-orders/new" element={<PurchaseOrderFormPage />} />
+            <Route path="purchase-orders/:id" element={<PurchaseOrderDetailPage />} />
+            <Route path="purchase-orders/:id/edit" element={<PurchaseOrderFormPage />} />
+          </Route>
+
+          {/* Goods Receipts (GRN) Authorized Routes */}
+          <Route element={<ProtectedRoute allowedRoles={['admin', 'warehouse_manager', 'purchase_manager', 'quality_manager', 'executive']} />}>
+            <Route path="goods-receipts" element={<GoodsReceiptListPage />} />
+            <Route path="goods-receipts/new" element={<GoodsReceiptFormPage />} />
+            <Route path="goods-receipts/:id" element={<GoodsReceiptDetailPage />} />
+            <Route path="goods-receipts/:id/edit" element={<GoodsReceiptFormPage />} />
+          </Route>
 
           {/* RFQs Authorized Routes */}
           <Route element={<ProtectedRoute allowedRoles={['admin', 'sales_manager', 'production_manager', 'quality_manager']} />}>
