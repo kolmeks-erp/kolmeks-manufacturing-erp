@@ -114,6 +114,15 @@ CREATE POLICY service_role_all_employees ON public.employees FOR ALL TO service_
 DROP POLICY IF EXISTS authenticated_read_departments ON public.departments;
 CREATE POLICY authenticated_read_departments ON public.departments FOR SELECT TO authenticated USING (true);
 
+-- Authenticated Staff View Roles Policy (Allows frontend client to read user role name)
+DROP POLICY IF EXISTS authenticated_read_roles ON public.roles;
+CREATE POLICY authenticated_read_roles ON public.roles FOR SELECT TO authenticated USING (true);
+
+-- Authenticated Staff View Profiles Policy
+DROP POLICY IF EXISTS authenticated_read_profiles ON public.profiles;
+CREATE POLICY authenticated_read_profiles ON public.profiles FOR SELECT TO authenticated USING (true);
+
 -- Authenticated Staff Read Employees Policy (Strictly authenticated staff)
 DROP POLICY IF EXISTS authenticated_read_employees ON public.employees;
 CREATE POLICY authenticated_read_employees ON public.employees FOR SELECT TO authenticated USING (true);
+
