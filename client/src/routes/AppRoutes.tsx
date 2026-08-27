@@ -22,6 +22,10 @@ import { PublicNotFoundPage } from '../pages/public/PublicNotFoundPage';
 import { ERPLoginPage } from '../pages/erp/ERPLoginPage';
 import { ERPDashboardPage } from '../pages/erp/ERPDashboardPage';
 import { ERPModuleShellPage } from '../pages/erp/ERPModuleShellPage';
+import { EmployeeListPage } from '../pages/erp/employees/EmployeeListPage';
+import { EmployeeCreatePage } from '../pages/erp/employees/EmployeeCreatePage';
+import { EmployeeDetailPage } from '../pages/erp/employees/EmployeeDetailPage';
+import { EmployeeEditPage } from '../pages/erp/employees/EmployeeEditPage';
 import { ProtectedRoute } from '../components/auth/ProtectedRoute';
 
 import { ERP_BASE_PATH } from '../constants/navigation';
@@ -73,6 +77,14 @@ export const AppRoutes: React.FC = () => {
           <Route path="deliveries" element={<ERPModuleShellPage />} />
           <Route path="reports" element={<ERPModuleShellPage />} />
           <Route path="notifications" element={<ERPModuleShellPage />} />
+
+          {/* HR & Admin Authorized Routes */}
+          <Route element={<ProtectedRoute allowedRoles={['admin', 'hr']} />}>
+            <Route path="employees" element={<EmployeeListPage />} />
+            <Route path="employees/new" element={<EmployeeCreatePage />} />
+            <Route path="employees/:id" element={<EmployeeDetailPage />} />
+            <Route path="employees/:id/edit" element={<EmployeeEditPage />} />
+          </Route>
 
           {/* Admin Restricted Routes */}
           <Route element={<ProtectedRoute allowedRoles={['admin']} />}>

@@ -8,6 +8,7 @@ export interface NavItem {
 
 export type UserRoleName =
   | 'admin'
+  | 'hr'
   | 'sales_manager'
   | 'purchase_manager'
   | 'production_manager'

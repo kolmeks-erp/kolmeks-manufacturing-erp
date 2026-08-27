@@ -10,6 +10,7 @@ const healthRoutes = require('./routes/health.routes');
 const authRoutes = require('./routes/auth.routes');
 const erpRoutes = require('./routes/erp.routes');
 const rfqRoutes = require('./routes/rfq.routes');
+const employeeRoutes = require('./routes/employee.routes');
 const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
@@ -42,6 +43,7 @@ app.use('/api', healthRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/erp', erpRoutes);
 app.use('/api/rfq', rfqRoutes);
+app.use('/api/employees', employeeRoutes);
 
 // Root Endpoint
 app.get('/', (req, res) => {

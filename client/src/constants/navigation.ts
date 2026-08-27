@@ -25,6 +25,7 @@ export const PUBLIC_NAV_ITEMS: NavItem[] = [
 
 const ALL_ROLES: UserRoleName[] = [
   'admin',
+  'hr',
   'sales_manager',
   'purchase_manager',
   'production_manager',
@@ -63,6 +64,7 @@ export const ERP_SIDEBAR_MENU: ERPMenuItem[] = [
   { id: 'maintenance', label: 'Maintenance', path: `${ERP_BASE_PATH}/maintenance`, iconName: 'Wrench', category: 'Machines', roles: ['admin', 'production_manager'] },
 
   // System & Management
+  { id: 'employees', label: 'Employees & HR', path: `${ERP_BASE_PATH}/employees`, iconName: 'Users', category: 'Management', badge: 'Live', roles: ['admin', 'hr'] },
   { id: 'users', label: 'Employees & Access', path: `${ERP_BASE_PATH}/users`, iconName: 'UserCheck', category: 'Management', roles: ['admin'] },
   { id: 'reports', label: 'Reports', path: `${ERP_BASE_PATH}/reports`, iconName: 'BarChart3', category: 'Management', roles: ALL_ROLES },
   { id: 'settings', label: 'Settings', path: `${ERP_BASE_PATH}/settings`, iconName: 'Settings', category: 'Management', roles: ['admin'] },
