@@ -71,6 +71,32 @@ import { StockTransferFormPage } from '../pages/erp/inventory/StockTransferFormP
 import { WarehouseListPage } from '../pages/erp/warehouses/WarehouseListPage';
 import { WarehouseDetailPage } from '../pages/erp/warehouses/WarehouseDetailPage';
 
+import { ProductionDashboardPage } from '../pages/erp/production/ProductionDashboardPage';
+import { ProductionOrderListPage } from '../pages/erp/production/ProductionOrderListPage';
+import { ProductionOrderFormPage } from '../pages/erp/production/ProductionOrderFormPage';
+import { ProductionOrderDetailPage } from '../pages/erp/production/ProductionOrderDetailPage';
+import { BOMListPage } from '../pages/erp/production/BOMListPage';
+import { BOMFormPage } from '../pages/erp/production/BOMFormPage';
+import { BOMDetailPage } from '../pages/erp/production/BOMDetailPage';
+import { RoutingListPage } from '../pages/erp/production/RoutingListPage';
+import { RoutingFormPage } from '../pages/erp/production/RoutingFormPage';
+import { RoutingDetailPage } from '../pages/erp/production/RoutingDetailPage';
+import { WorkCenterListPage } from '../pages/erp/production/WorkCenterListPage';
+import { MachineListPage } from '../pages/erp/production/MachineListPage';
+import { OperationBoardPage } from '../pages/erp/production/OperationBoardPage';
+
+import QualityDashboardPage from '../pages/erp/quality/QualityDashboardPage';
+import InspectionListPage from '../pages/erp/quality/InspectionListPage';
+import InspectionFormPage from '../pages/erp/quality/InspectionFormPage';
+import InspectionDetailPage from '../pages/erp/quality/InspectionDetailPage';
+import InspectionPlanListPage from '../pages/erp/quality/InspectionPlanListPage';
+import InspectionPlanFormPage from '../pages/erp/quality/InspectionPlanFormPage';
+import InspectionPlanDetailPage from '../pages/erp/quality/InspectionPlanDetailPage';
+import NCRListPage from '../pages/erp/quality/NCRListPage';
+import NCRFormPage from '../pages/erp/quality/NCRFormPage';
+import NCRDetailPage from '../pages/erp/quality/NCRDetailPage';
+import QualityHoldListPage from '../pages/erp/quality/QualityHoldListPage';
+
 import { ProtectedRoute } from '../components/auth/ProtectedRoute';
 import { ERP_BASE_PATH } from '../constants/navigation';
 
@@ -154,6 +180,38 @@ export const AppRoutes: React.FC = () => {
             <Route path="inventory/:productId" element={<InventoryDetailPage />} />
             <Route path="warehouses" element={<WarehouseListPage />} />
             <Route path="warehouses/:id" element={<WarehouseDetailPage />} />
+          </Route>
+
+          {/* Production & Operations Authorized Routes */}
+          <Route element={<ProtectedRoute allowedRoles={['admin', 'production_manager', 'quality_manager', 'warehouse_manager', 'executive']} />}>
+            <Route path="production" element={<ProductionDashboardPage />} />
+            <Route path="production/orders" element={<ProductionOrderListPage />} />
+            <Route path="production/orders/new" element={<ProductionOrderFormPage />} />
+            <Route path="production/orders/:id" element={<ProductionOrderDetailPage />} />
+            <Route path="production/boms" element={<BOMListPage />} />
+            <Route path="production/boms/new" element={<BOMFormPage />} />
+            <Route path="production/boms/:id" element={<BOMDetailPage />} />
+            <Route path="production/routings" element={<RoutingListPage />} />
+            <Route path="production/routings/new" element={<RoutingFormPage />} />
+            <Route path="production/routings/:id" element={<RoutingDetailPage />} />
+            <Route path="production/work-centers" element={<WorkCenterListPage />} />
+            <Route path="production/machines" element={<MachineListPage />} />
+            <Route path="production/operations-board" element={<OperationBoardPage />} />
+          </Route>
+
+          {/* Quality Management Authorized Routes */}
+          <Route element={<ProtectedRoute allowedRoles={['admin', 'quality_manager', 'quality_engineer', 'quality_inspector', 'production_manager', 'warehouse_manager', 'executive']} />}>
+            <Route path="quality" element={<QualityDashboardPage />} />
+            <Route path="quality/inspections" element={<InspectionListPage />} />
+            <Route path="quality/inspections/new" element={<InspectionFormPage />} />
+            <Route path="quality/inspections/:id" element={<InspectionDetailPage />} />
+            <Route path="quality/inspection-plans" element={<InspectionPlanListPage />} />
+            <Route path="quality/inspection-plans/new" element={<InspectionPlanFormPage />} />
+            <Route path="quality/inspection-plans/:id" element={<InspectionPlanDetailPage />} />
+            <Route path="quality/ncr" element={<NCRListPage />} />
+            <Route path="quality/ncr/new" element={<NCRFormPage />} />
+            <Route path="quality/ncr/:id" element={<NCRDetailPage />} />
+            <Route path="quality/holds" element={<QualityHoldListPage />} />
           </Route>
 
           {/* Commercial Quotations Authorized Routes */}

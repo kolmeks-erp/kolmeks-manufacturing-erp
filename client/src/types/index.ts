@@ -13,6 +13,8 @@ export type UserRoleName =
   | 'purchase_manager'
   | 'production_manager'
   | 'quality_manager'
+  | 'quality_engineer'
+  | 'quality_inspector'
   | 'warehouse_manager'
   | 'executive';
 

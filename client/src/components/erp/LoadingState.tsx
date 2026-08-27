@@ -2,15 +2,18 @@ import React from 'react';
 
 interface LoadingStateProps {
   label?: string;
+  message?: string;
   rows?: number;
   className?: string;
 }
 
 export const LoadingState: React.FC<LoadingStateProps> = ({
-  label = 'Loading operational telemetry...',
+  label,
+  message = 'Loading operational telemetry...',
   rows = 3,
   className = '',
 }) => {
+  const displayText = label || message;
   return (
     <div className={`p-6 bg-white rounded-2xl border border-slate-200 space-y-4 animate-pulse ${className}`}>
       <div className="flex items-center justify-between">
@@ -22,7 +25,7 @@ export const LoadingState: React.FC<LoadingStateProps> = ({
           <div key={idx} className="h-10 bg-slate-100 rounded-lg w-full" />
         ))}
       </div>
-      <p className="text-[11px] text-slate-400 font-mono text-center pt-2">{label}</p>
+      <p className="text-[11px] text-slate-400 font-mono text-center pt-2">{displayText}</p>
     </div>
   );
 };

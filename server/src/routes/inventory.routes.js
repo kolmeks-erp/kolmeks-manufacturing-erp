@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const inventoryController = require('../controllers/inventory.controller');
-const { authenticateUser, authorizeRoles } = require('../middleware/auth.middleware');
+const { authenticateUser } = require('../middleware/auth.middleware');
+const { authorizeRoles } = require('../middleware/rbac.middleware');
 
 const AUTHORIZED_ROLES = [
   'admin',

@@ -60,13 +60,22 @@ export const ERP_SIDEBAR_MENU: ERPMenuItem[] = [
   { id: 'warehouses', label: 'Warehouses & Bins', path: `${ERP_BASE_PATH}/warehouses`, iconName: 'Building2', category: 'Inventory', badge: 'Live', roles: ['admin', 'warehouse_manager', 'purchase_manager', 'production_manager', 'executive'] },
 
   // Production Section
-  { id: 'production', label: 'Production Orders', path: `${ERP_BASE_PATH}/production`, iconName: 'Factory', category: 'Production', roles: ['admin', 'production_manager', 'quality_manager'] },
+  { id: 'production-dashboard', label: 'Production Overview', path: `${ERP_BASE_PATH}/production`, iconName: 'Factory', category: 'Production', badge: 'Live', roles: ['admin', 'production_manager', 'quality_manager', 'warehouse_manager', 'executive'] },
+  { id: 'production-orders', label: 'Production Orders', path: `${ERP_BASE_PATH}/production/orders`, iconName: 'Layers', category: 'Production', badge: 'Live', roles: ['admin', 'production_manager', 'quality_manager', 'warehouse_manager', 'executive'] },
+  { id: 'production-boms', label: 'Bills of Materials (BOM)', path: `${ERP_BASE_PATH}/production/boms`, iconName: 'FolderTree', category: 'Production', badge: 'Live', roles: ['admin', 'production_manager', 'quality_manager', 'executive'] },
+  { id: 'production-routings', label: 'Routings & Operations', path: `${ERP_BASE_PATH}/production/routings`, iconName: 'GitFork', category: 'Production', badge: 'Live', roles: ['admin', 'production_manager', 'quality_manager', 'executive'] },
+  { id: 'production-dispatch', label: 'Shop Floor Dispatch', path: `${ERP_BASE_PATH}/production/operations-board`, iconName: 'Play', category: 'Production', badge: 'Live', roles: ['admin', 'production_manager', 'warehouse_manager'] },
 
-  // Quality Section
-  { id: 'quality-control', label: 'Quality Inspections', path: `${ERP_BASE_PATH}/quality-control`, iconName: 'ShieldCheck', category: 'Quality', roles: ['admin', 'quality_manager'] },
+  // Quality Management Section
+  { id: 'quality-dashboard', label: 'Quality Overview', path: `${ERP_BASE_PATH}/quality`, iconName: 'ShieldCheck', category: 'Quality', badge: 'Live', roles: ['admin', 'quality_manager', 'production_manager', 'warehouse_manager', 'executive'] },
+  { id: 'quality-inspections', label: 'Inspections', path: `${ERP_BASE_PATH}/quality/inspections`, iconName: 'ClipboardCheck', category: 'Quality', badge: 'Live', roles: ['admin', 'quality_manager', 'production_manager', 'warehouse_manager', 'executive'] },
+  { id: 'quality-plans', label: 'Inspection Plans', path: `${ERP_BASE_PATH}/quality/inspection-plans`, iconName: 'FileSpreadsheet', category: 'Quality', badge: 'Live', roles: ['admin', 'quality_manager', 'production_manager', 'executive'] },
+  { id: 'quality-ncr', label: 'Non-Conformance (NCR)', path: `${ERP_BASE_PATH}/quality/ncr`, iconName: 'AlertTriangle', category: 'Quality', badge: 'Live', roles: ['admin', 'quality_manager', 'production_manager', 'warehouse_manager', 'executive'] },
+  { id: 'quality-holds', label: 'Quality Holds', path: `${ERP_BASE_PATH}/quality/holds`, iconName: 'Lock', category: 'Quality', badge: 'Live', roles: ['admin', 'quality_manager', 'production_manager', 'warehouse_manager', 'executive'] },
 
-  // Machines Section
-  { id: 'cnc-machines', label: 'Machines Hub', path: `${ERP_BASE_PATH}/cnc-machines`, iconName: 'Cpu', category: 'Machines', roles: ['admin', 'production_manager'] },
+  // Machines & Capacity Section
+  { id: 'work-centers', label: 'Work Centers', path: `${ERP_BASE_PATH}/production/work-centers`, iconName: 'Building2', category: 'Machines', badge: 'Live', roles: ['admin', 'production_manager'] },
+  { id: 'cnc-machines', label: 'Machine Master', path: `${ERP_BASE_PATH}/production/machines`, iconName: 'Cpu', category: 'Machines', badge: 'Live', roles: ['admin', 'production_manager'] },
   { id: 'maintenance', label: 'Maintenance', path: `${ERP_BASE_PATH}/maintenance`, iconName: 'Wrench', category: 'Machines', roles: ['admin', 'production_manager'] },
 
   // System & Management

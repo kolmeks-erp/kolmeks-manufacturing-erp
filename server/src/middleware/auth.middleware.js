@@ -95,6 +95,9 @@ const authenticateUser = async (req, res, next) => {
   }
 };
 
+const { authorizeRoles } = require('./rbac.middleware');
+
 module.exports = {
   authenticateUser,
+  authorizeRoles,
 };
