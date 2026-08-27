@@ -18,6 +18,8 @@ const quotationRoutes = require('./routes/quotation.routes');
 const salesOrderRoutes = require('./routes/sales_order.routes');
 const procurementRoutes = require('./routes/procurement.routes');
 const grnRoutes = require('./routes/grn.routes');
+const warehouseRoutes = require('./routes/warehouse.routes');
+const inventoryRoutes = require('./routes/inventory.routes');
 const { publicRouter: rfqPublicRoutes, erpRouter: rfqErpRoutes } = require('./routes/rfq.routes');
 const errorHandler = require('./middleware/errorHandler');
 
@@ -60,6 +62,8 @@ app.use('/api/quotations', quotationRoutes);
 app.use('/api/sales-orders', salesOrderRoutes);
 app.use('/api', procurementRoutes);
 app.use('/api', grnRoutes);
+app.use('/api/warehouses', warehouseRoutes);
+app.use('/api/inventory', inventoryRoutes);
 
 // Root Endpoint
 app.get('/', (req, res) => {

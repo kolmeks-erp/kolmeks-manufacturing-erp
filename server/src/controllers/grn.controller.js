@@ -878,9 +878,93 @@ async function completeGoodsReceipt(req, res) {
       .update({ status: newPOStatus, updated_at: new Date().toISOString() })
       .eq('id', grn.purchase_order_id);
 
+    // AUTO-POST ACCEPTED GRN ITEMS TO INVENTORY LEDGER
+    try {
+      let warehouseId = grn.warehouse_id;
+      if (!warehouseId) {
+        const { data: defaultWh } = await supabaseAdmin
+          .from('warehouses')
+          .select('id')
+          .eq('status', 'active')
+          .order('created_at', { ascending: true })
+          .limit(1)
+          .maybeSingle();
+        warehouseId = defaultWh?.id;
+      }
+
+      if (warehouseId) {
+        for (const item of (grnItems || [])) {
+          const acceptedQty = Number(item.accepted_quantity || 0);
+          if (acceptedQty > 0 && item.product_id) {
+            // Idempotency check: verify if already posted
+            const { data: existingTxn } = await supabaseAdmin
+              .from('inventory_transactions')
+              .select('id')
+              .eq('reference_type', 'GRN')
+              .eq('reference_id', grn.id)
+              .eq('product_id', item.product_id)
+              .eq('movement_type', 'RECEIPT')
+              .maybeSingle();
+
+            if (!existingTxn) {
+              const { data: existingInv } = await supabaseAdmin
+                .from('inventory')
+                .select('*')
+                .eq('product_id', item.product_id)
+                .eq('warehouse_id', warehouseId)
+                .is('location_id', null)
+                .maybeSingle();
+
+              const currentOnHand = Number(existingInv?.on_hand_quantity || 0);
+              const newOnHand = currentOnHand + acceptedQty;
+
+              if (existingInv) {
+                await supabaseAdmin
+                  .from('inventory')
+                  .update({
+                    on_hand_quantity: newOnHand,
+                    available_quantity: Math.max(0, newOnHand - Number(existingInv.reserved_quantity || 0)),
+                    status: 'in_stock',
+                    updated_at: new Date().toISOString(),
+                  })
+                  .eq('id', existingInv.id);
+              } else {
+                await supabaseAdmin
+                  .from('inventory')
+                  .insert({
+                    product_id: item.product_id,
+                    warehouse_id: warehouseId,
+                    on_hand_quantity: newOnHand,
+                    available_quantity: newOnHand,
+                    status: 'in_stock',
+                  });
+              }
+
+              await supabaseAdmin
+                .from('inventory_transactions')
+                .insert({
+                  product_id: item.product_id,
+                  warehouse_id: warehouseId,
+                  movement_type: 'RECEIPT',
+                  quantity: acceptedQty,
+                  unit: item.unit || 'pcs',
+                  reference_type: 'GRN',
+                  reference_id: grn.id,
+                  reason: 'GRN Receipt',
+                  notes: `Auto-posted from GRN ${grn.grn_number}`,
+                  performed_by: req.profile?.id || null,
+                });
+            }
+          }
+        }
+      }
+    } catch (invPostErr) {
+      console.error('Error auto-posting GRN to inventory:', invPostErr);
+    }
+
     // Audit logs
     await logGRNActivity(id, req.profile, 'COMPLETED', {
-      message: `Completed Goods Receipt ${grn.grn_number}. Purchase Order updated to ${newPOStatus}.`,
+      message: `Completed Goods Receipt ${grn.grn_number}. Purchase Order updated to ${newPOStatus}. Inventory ledger updated.`,
     });
 
     try {

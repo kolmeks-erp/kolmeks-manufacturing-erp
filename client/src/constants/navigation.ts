@@ -55,7 +55,9 @@ export const ERP_SIDEBAR_MENU: ERPMenuItem[] = [
   { id: 'materials', label: 'Raw Materials', path: `${ERP_BASE_PATH}/materials`, iconName: 'Boxes', category: 'Products', roles: ['admin', 'purchase_manager', 'production_manager'] },
 
   // Inventory Section
-  { id: 'inventory', label: 'Inventory', path: `${ERP_BASE_PATH}/inventory`, iconName: 'Warehouse', category: 'Inventory', roles: ['admin', 'warehouse_manager', 'purchase_manager', 'production_manager'] },
+  { id: 'inventory', label: 'Inventory Balances', path: `${ERP_BASE_PATH}/inventory`, iconName: 'Boxes', category: 'Inventory', badge: 'Live', roles: ['admin', 'warehouse_manager', 'purchase_manager', 'production_manager', 'executive'] },
+  { id: 'stock-movements', label: 'Stock Movements', path: `${ERP_BASE_PATH}/inventory/movements`, iconName: 'History', category: 'Inventory', badge: 'Live', roles: ['admin', 'warehouse_manager', 'purchase_manager', 'production_manager', 'executive'] },
+  { id: 'warehouses', label: 'Warehouses & Bins', path: `${ERP_BASE_PATH}/warehouses`, iconName: 'Building2', category: 'Inventory', badge: 'Live', roles: ['admin', 'warehouse_manager', 'purchase_manager', 'production_manager', 'executive'] },
 
   // Production Section
   { id: 'production', label: 'Production Orders', path: `${ERP_BASE_PATH}/production`, iconName: 'Factory', category: 'Production', roles: ['admin', 'production_manager', 'quality_manager'] },

@@ -63,6 +63,14 @@ import { GoodsReceiptListPage } from '../pages/erp/grn/GoodsReceiptListPage';
 import { GoodsReceiptFormPage } from '../pages/erp/grn/GoodsReceiptFormPage';
 import { GoodsReceiptDetailPage } from '../pages/erp/grn/GoodsReceiptDetailPage';
 
+import { InventoryListPage } from '../pages/erp/inventory/InventoryListPage';
+import { InventoryDetailPage } from '../pages/erp/inventory/InventoryDetailPage';
+import { StockMovementListPage } from '../pages/erp/inventory/StockMovementListPage';
+import { StockAdjustmentFormPage } from '../pages/erp/inventory/StockAdjustmentFormPage';
+import { StockTransferFormPage } from '../pages/erp/inventory/StockTransferFormPage';
+import { WarehouseListPage } from '../pages/erp/warehouses/WarehouseListPage';
+import { WarehouseDetailPage } from '../pages/erp/warehouses/WarehouseDetailPage';
+
 import { ProtectedRoute } from '../components/auth/ProtectedRoute';
 import { ERP_BASE_PATH } from '../constants/navigation';
 
@@ -135,6 +143,17 @@ export const AppRoutes: React.FC = () => {
           <Route element={<ProtectedRoute allowedRoles={['admin', 'sales_manager', 'production_manager', 'quality_manager']} />}>
             <Route path="rfqs" element={<RFQListPage />} />
             <Route path="rfqs/:id" element={<RFQDetailPage />} />
+          </Route>
+
+          {/* Inventory & Warehouse Management Authorized Routes */}
+          <Route element={<ProtectedRoute allowedRoles={['admin', 'warehouse_manager', 'purchase_manager', 'production_manager', 'executive']} />}>
+            <Route path="inventory" element={<InventoryListPage />} />
+            <Route path="inventory/movements" element={<StockMovementListPage />} />
+            <Route path="inventory/adjustments/new" element={<StockAdjustmentFormPage />} />
+            <Route path="inventory/transfers/new" element={<StockTransferFormPage />} />
+            <Route path="inventory/:productId" element={<InventoryDetailPage />} />
+            <Route path="warehouses" element={<WarehouseListPage />} />
+            <Route path="warehouses/:id" element={<WarehouseDetailPage />} />
           </Route>
 
           {/* Commercial Quotations Authorized Routes */}
