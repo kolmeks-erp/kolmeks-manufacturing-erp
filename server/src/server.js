@@ -11,6 +11,12 @@ const authRoutes = require('./routes/auth.routes');
 const erpRoutes = require('./routes/erp.routes');
 const rfqRoutes = require('./routes/rfq.routes');
 const employeeRoutes = require('./routes/employee.routes');
+const productRoutes = require('./routes/product.routes');
+const customerRoutes = require('./routes/customer.routes');
+const supplierRoutes = require('./routes/supplier.routes');
+const quotationRoutes = require('./routes/quotation.routes');
+const salesOrderRoutes = require('./routes/sales_order.routes');
+const { publicRouter: rfqPublicRoutes, erpRouter: rfqErpRoutes } = require('./routes/rfq.routes');
 const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
@@ -42,8 +48,14 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api', healthRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/erp', erpRoutes);
-app.use('/api/rfq', rfqRoutes);
+app.use('/api/rfq', rfqPublicRoutes);
+app.use('/api/rfqs', rfqErpRoutes);
 app.use('/api/employees', employeeRoutes);
+app.use('/api/products', productRoutes);
+app.use('/api/customers', customerRoutes);
+app.use('/api/suppliers', supplierRoutes);
+app.use('/api/quotations', quotationRoutes);
+app.use('/api/sales-orders', salesOrderRoutes);
 
 // Root Endpoint
 app.get('/', (req, res) => {

@@ -20,9 +20,109 @@ router.get('/dashboard-summary', authenticateUser, async (req, res) => {
     const { count: newRfqs, error: newCountError } = await supabaseAdmin
       .from('rfqs')
       .select('*', { count: 'exact', head: true })
-      .eq('status', 'new');
+      .ilike('status', 'new');
 
-    // 3. Query recent 5 RFQs
+    const { count: underReviewRfqs } = await supabaseAdmin
+      .from('rfqs')
+      .select('*', { count: 'exact', head: true })
+      .ilike('status', 'under_review');
+
+    const { count: quotedRfqs } = await supabaseAdmin
+      .from('rfqs')
+      .select('*', { count: 'exact', head: true })
+      .ilike('status', 'quoted');
+
+    const { count: closedRfqs } = await supabaseAdmin
+      .from('rfqs')
+      .select('*', { count: 'exact', head: true })
+      .ilike('status', 'closed');
+
+    // 3. Query total and active products count
+    const { count: totalProducts } = await supabaseAdmin
+      .from('products')
+      .select('*', { count: 'exact', head: true });
+
+    const { count: activeProducts } = await supabaseAdmin
+      .from('products')
+      .select('*', { count: 'exact', head: true })
+      .eq('status', 'active');
+
+    // 4. Query total and active customers count
+    const { count: totalCustomers } = await supabaseAdmin
+      .from('customers')
+      .select('*', { count: 'exact', head: true });
+
+    const { count: activeCustomers } = await supabaseAdmin
+      .from('customers')
+      .select('*', { count: 'exact', head: true })
+      .eq('status', 'active');
+
+    // 5. Query total and active suppliers count
+    const { count: totalSuppliers } = await supabaseAdmin
+      .from('suppliers')
+      .select('*', { count: 'exact', head: true });
+
+    const { count: activeSuppliers } = await supabaseAdmin
+      .from('suppliers')
+      .select('*', { count: 'exact', head: true })
+      .eq('status', 'active');
+
+    // 6. Query total and status counts for quotations
+    const { count: totalQuotations } = await supabaseAdmin
+      .from('quotations')
+      .select('*', { count: 'exact', head: true });
+
+    const { count: draftQuotations } = await supabaseAdmin
+      .from('quotations')
+      .select('*', { count: 'exact', head: true })
+      .ilike('status', 'draft');
+
+    const { count: underReviewQuotations } = await supabaseAdmin
+      .from('quotations')
+      .select('*', { count: 'exact', head: true })
+      .ilike('status', 'under_review');
+
+    const { count: approvedQuotations } = await supabaseAdmin
+      .from('quotations')
+      .select('*', { count: 'exact', head: true })
+      .ilike('status', 'approved');
+
+    const { count: sentQuotations } = await supabaseAdmin
+      .from('quotations')
+      .select('*', { count: 'exact', head: true })
+      .ilike('status', 'sent');
+
+    const { count: acceptedQuotations } = await supabaseAdmin
+      .from('quotations')
+      .select('*', { count: 'exact', head: true })
+      .ilike('status', 'accepted');
+
+    // 7. Query Sales Orders Metrics
+    const { count: totalSalesOrders } = await supabaseAdmin
+      .from('sales_orders')
+      .select('*', { count: 'exact', head: true });
+
+    const { count: draftSalesOrders } = await supabaseAdmin
+      .from('sales_orders')
+      .select('*', { count: 'exact', head: true })
+      .ilike('status', 'draft');
+
+    const { count: confirmedSalesOrders } = await supabaseAdmin
+      .from('sales_orders')
+      .select('*', { count: 'exact', head: true })
+      .ilike('status', 'confirmed');
+
+    const { count: inProductionSalesOrders } = await supabaseAdmin
+      .from('sales_orders')
+      .select('*', { count: 'exact', head: true })
+      .ilike('status', 'in_production');
+
+    const { count: completedSalesOrders } = await supabaseAdmin
+      .from('sales_orders')
+      .select('*', { count: 'exact', head: true })
+      .ilike('status', 'completed');
+
+    // 8. Query recent 5 RFQs
     const { data: recentRfqs, error: recentError } = await supabaseAdmin
       .from('rfqs')
       .select('id, rfq_number, company, full_name, email, requirement_type, component_name, quantity, unit, status, created_at')
@@ -42,7 +142,27 @@ router.get('/dashboard-summary', authenticateUser, async (req, res) => {
       metrics: {
         totalRfqs: totalRfqs || 0,
         newRfqs: newRfqs || 0,
-        activeQuotations: 0,
+        underReviewRfqs: underReviewRfqs || 0,
+        quotedRfqs: quotedRfqs || 0,
+        closedRfqs: closedRfqs || 0,
+        totalProducts: totalProducts || 0,
+        activeProducts: activeProducts || 0,
+        totalCustomers: totalCustomers || 0,
+        activeCustomers: activeCustomers || 0,
+        totalSuppliers: totalSuppliers || 0,
+        activeSuppliers: activeSuppliers || 0,
+        totalQuotations: totalQuotations || 0,
+        draftQuotations: draftQuotations || 0,
+        underReviewQuotations: underReviewQuotations || 0,
+        approvedQuotations: approvedQuotations || 0,
+        sentQuotations: sentQuotations || 0,
+        acceptedQuotations: acceptedQuotations || 0,
+        totalSalesOrders: totalSalesOrders || 0,
+        draftSalesOrders: draftSalesOrders || 0,
+        confirmedSalesOrders: confirmedSalesOrders || 0,
+        inProductionSalesOrders: inProductionSalesOrders || 0,
+        completedSalesOrders: completedSalesOrders || 0,
+        activeQuotations: (approvedQuotations || 0) + (sentQuotations || 0),
         openSalesOrders: 0,
         lowStockItems: 0,
         productionOrders: 0,

@@ -4,6 +4,8 @@ import {
   FileSpreadsheet,
   ShoppingCart,
   Boxes,
+  Users,
+  Truck,
   Factory,
   ShieldCheck,
   Cpu,
@@ -13,6 +15,12 @@ import {
 interface MetricsData {
   totalRfqs: number;
   newRfqs: number;
+  totalProducts?: number;
+  activeProducts?: number;
+  totalCustomers?: number;
+  activeCustomers?: number;
+  totalSuppliers?: number;
+  activeSuppliers?: number;
   activeQuotations: number;
   openSalesOrders: number;
   lowStockItems: number;
@@ -39,6 +47,33 @@ export const DashboardKPIGrid: React.FC<DashboardKPIGridProps> = ({ metrics, isL
       hasData: true,
     },
     {
+      title: 'Products Master',
+      value: metrics && metrics.totalProducts !== undefined ? metrics.totalProducts.toString() : '0',
+      subtext: metrics?.activeProducts !== undefined ? `${metrics.activeProducts} active product(s)` : 'Connected to Products database',
+      icon: Boxes,
+      color: 'text-emerald-600',
+      bgColor: 'bg-emerald-50',
+      hasData: true,
+    },
+    {
+      title: 'Customers Master',
+      value: metrics && metrics.totalCustomers !== undefined ? metrics.totalCustomers.toString() : '0',
+      subtext: metrics?.activeCustomers !== undefined ? `${metrics.activeCustomers} active client(s)` : 'Connected to Customer database',
+      icon: Users,
+      color: 'text-purple-600',
+      bgColor: 'bg-purple-50',
+      hasData: true,
+    },
+    {
+      title: 'Suppliers Master',
+      value: metrics && metrics.totalSuppliers !== undefined ? metrics.totalSuppliers.toString() : '0',
+      subtext: metrics?.activeSuppliers !== undefined ? `${metrics.activeSuppliers} active vendor(s)` : 'Connected to Supplier database',
+      icon: Truck,
+      color: 'text-amber-600',
+      bgColor: 'bg-amber-50',
+      hasData: true,
+    },
+    {
       title: 'Active Quotations',
       value: 'No data available',
       subtext: 'Quotations module pending',
@@ -52,15 +87,6 @@ export const DashboardKPIGrid: React.FC<DashboardKPIGridProps> = ({ metrics, isL
       value: 'No data available',
       subtext: 'Sales orders module pending',
       icon: ShoppingCart,
-      color: 'text-slate-400',
-      bgColor: 'bg-slate-100',
-      hasData: false,
-    },
-    {
-      title: 'Low Stock Items',
-      value: 'No data available',
-      subtext: 'Inventory control pending',
-      icon: Boxes,
       color: 'text-slate-400',
       bgColor: 'bg-slate-100',
       hasData: false,

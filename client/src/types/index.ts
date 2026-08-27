@@ -13,7 +13,8 @@ export type UserRoleName =
   | 'purchase_manager'
   | 'production_manager'
   | 'quality_manager'
-  | 'warehouse_manager';
+  | 'warehouse_manager'
+  | 'executive';
 
 export interface UserRole {
   id: string;
