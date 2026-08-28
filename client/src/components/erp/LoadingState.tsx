@@ -29,3 +29,6 @@ export const LoadingState: React.FC<LoadingStateProps> = ({
     </div>
   );
 };
+
+export default LoadingState;
+

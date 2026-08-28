@@ -6,7 +6,7 @@ import LoadingState from '../../../components/erp/LoadingState';
 import ErrorState from '../../../components/erp/ErrorState';
 import { maintenanceService } from '../../../services/maintenance.service';
 import { Asset, MaintenanceType, Priority } from '../../../types/maintenance';
-import apiClient from '../../../services/apiClient';
+import { apiClient } from '../../../services/api';
 
 interface ProfileOption {
   id: string;

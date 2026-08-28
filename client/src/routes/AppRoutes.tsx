@@ -110,6 +110,19 @@ import MaintenanceRequestListPage from '../pages/erp/maintenance/MaintenanceRequ
 import DowntimeListPage from '../pages/erp/maintenance/DowntimeListPage';
 import MaintenanceHistoryPage from '../pages/erp/maintenance/MaintenanceHistoryPage';
 
+import HRDashboardPage from '../pages/erp/hr/HRDashboardPage';
+import HREmployeeListPage from '../pages/erp/hr/HREmployeeListPage';
+import HRAttendanceListPage from '../pages/erp/hr/HRAttendanceListPage';
+import HRLeaveListPage from '../pages/erp/hr/HRLeaveListPage';
+import HRLeaveRequestListPage from '../pages/erp/hr/HRLeaveRequestListPage';
+import HRLeaveTypeListPage from '../pages/erp/hr/HRLeaveTypeListPage';
+import HRShiftListPage from '../pages/erp/hr/HRShiftListPage';
+import HRHolidayListPage from '../pages/erp/hr/HRHolidayListPage';
+
+import MyHRDashboardPage from '../pages/erp/hr/MyHRDashboardPage';
+import MyAttendancePage from '../pages/erp/hr/MyAttendancePage';
+import MyLeavePage from '../pages/erp/hr/MyLeavePage';
+
 import { ProtectedRoute } from '../components/auth/ProtectedRoute';
 import { ERP_BASE_PATH } from '../constants/navigation';
 
@@ -287,13 +300,27 @@ export const AppRoutes: React.FC = () => {
             <Route path="product-categories" element={<ProductCategoryListPage />} />
           </Route>
 
-          {/* HR & Admin Authorized Routes */}
+          {/* HR & Operations Authorized Routes */}
           <Route element={<ProtectedRoute allowedRoles={['admin', 'hr']} />}>
             <Route path="employees" element={<EmployeeListPage />} />
             <Route path="employees/new" element={<EmployeeCreatePage />} />
             <Route path="employees/:id" element={<EmployeeDetailPage />} />
             <Route path="employees/:id/edit" element={<EmployeeEditPage />} />
+
+            <Route path="hr" element={<HRDashboardPage />} />
+            <Route path="hr/employees" element={<HREmployeeListPage />} />
+            <Route path="hr/attendance" element={<HRAttendanceListPage />} />
+            <Route path="hr/leave" element={<HRLeaveListPage />} />
+            <Route path="hr/leave/requests" element={<HRLeaveRequestListPage />} />
+            <Route path="hr/leave/types" element={<HRLeaveTypeListPage />} />
+            <Route path="hr/shifts" element={<HRShiftListPage />} />
+            <Route path="hr/holidays" element={<HRHolidayListPage />} />
           </Route>
+
+          {/* Employee Self-Service (My HR) Routes — Accessible to All Staff */}
+          <Route path="my-hr" element={<MyHRDashboardPage />} />
+          <Route path="my-hr/attendance" element={<MyAttendancePage />} />
+          <Route path="my-hr/leave" element={<MyLeavePage />} />
 
           {/* Admin Restricted Routes */}
           <Route element={<ProtectedRoute allowedRoles={['admin']} />}>

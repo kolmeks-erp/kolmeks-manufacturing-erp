@@ -38,3 +38,5 @@ export const ErrorState: React.FC<ErrorStateProps> = ({
     </div>
   );
 };
+
+export default ErrorState;

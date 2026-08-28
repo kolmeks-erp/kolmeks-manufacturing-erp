@@ -86,8 +86,23 @@ export const ERP_SIDEBAR_MENU: ERPMenuItem[] = [
   { id: 'work-centers', label: 'Work Centers', path: `${ERP_BASE_PATH}/production/work-centers`, iconName: 'Building2', category: 'Machines', badge: 'Live', roles: ['admin', 'production_manager'] },
   { id: 'cnc-machines', label: 'Machine Master', path: `${ERP_BASE_PATH}/production/machines`, iconName: 'Cpu', category: 'Machines', badge: 'Live', roles: ['admin', 'production_manager'] },
 
+  // HR Operations Section
+  { id: 'hr-dashboard', label: 'HR Operations', path: `${ERP_BASE_PATH}/hr`, iconName: 'Users', category: 'HR & Operations', badge: 'Live', roles: ['admin', 'hr'] },
+  { id: 'hr-employees', label: 'Workforce Directory', path: `${ERP_BASE_PATH}/hr/employees`, iconName: 'UserCheck', category: 'HR & Operations', badge: 'Live', roles: ['admin', 'hr'] },
+  { id: 'hr-attendance', label: 'Attendance Registry', path: `${ERP_BASE_PATH}/hr/attendance`, iconName: 'Clock', category: 'HR & Operations', badge: 'Live', roles: ['admin', 'hr'] },
+  { id: 'hr-leave-requests', label: 'Leave Requests Queue', path: `${ERP_BASE_PATH}/hr/leave/requests`, iconName: 'CalendarRange', category: 'HR & Operations', badge: 'Live', roles: ['admin', 'hr'] },
+  { id: 'hr-leave-balances', label: 'Leave Entitlements', path: `${ERP_BASE_PATH}/hr/leave`, iconName: 'Calendar', category: 'HR & Operations', badge: 'Live', roles: ['admin', 'hr'] },
+  { id: 'hr-leave-types', label: 'Leave Policies', path: `${ERP_BASE_PATH}/hr/leave/types`, iconName: 'FileSpreadsheet', category: 'HR & Operations', badge: 'Live', roles: ['admin', 'hr'] },
+  { id: 'hr-shifts', label: 'Shift Management', path: `${ERP_BASE_PATH}/hr/shifts`, iconName: 'Timer', category: 'HR & Operations', badge: 'Live', roles: ['admin', 'hr'] },
+  { id: 'hr-holidays', label: 'Plant Holiday Calendar', path: `${ERP_BASE_PATH}/hr/holidays`, iconName: 'Calendar', category: 'HR & Operations', badge: 'Live', roles: ['admin', 'hr'] },
+
+  // Employee Self-Service Section
+  { id: 'my-hr', label: 'Employee Portal (My HR)', path: `${ERP_BASE_PATH}/my-hr`, iconName: 'UserCheck', category: 'Self Service', badge: 'Live', roles: ALL_ROLES },
+  { id: 'my-attendance', label: 'My Attendance Logs', path: `${ERP_BASE_PATH}/my-hr/attendance`, iconName: 'Clock', category: 'Self Service', badge: 'Live', roles: ALL_ROLES },
+  { id: 'my-leave', label: 'My Leave Applications', path: `${ERP_BASE_PATH}/my-hr/leave`, iconName: 'Calendar', category: 'Self Service', badge: 'Live', roles: ALL_ROLES },
+
   // System & Management
-  { id: 'employees', label: 'Employees & HR', path: `${ERP_BASE_PATH}/employees`, iconName: 'Users', category: 'Management', badge: 'Live', roles: ['admin', 'hr'] },
+  { id: 'employees', label: 'Employees & HR Master', path: `${ERP_BASE_PATH}/employees`, iconName: 'Users', category: 'Management', badge: 'Live', roles: ['admin', 'hr'] },
   { id: 'users', label: 'Employees & Access', path: `${ERP_BASE_PATH}/users`, iconName: 'UserCheck', category: 'Management', roles: ['admin'] },
   { id: 'reports', label: 'Reports', path: `${ERP_BASE_PATH}/reports`, iconName: 'BarChart3', category: 'Management', roles: ALL_ROLES },
   { id: 'settings', label: 'Settings', path: `${ERP_BASE_PATH}/settings`, iconName: 'Settings', category: 'Management', roles: ['admin'] },
