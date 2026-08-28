@@ -97,6 +97,19 @@ import NCRFormPage from '../pages/erp/quality/NCRFormPage';
 import NCRDetailPage from '../pages/erp/quality/NCRDetailPage';
 import QualityHoldListPage from '../pages/erp/quality/QualityHoldListPage';
 
+import MaintenanceDashboardPage from '../pages/erp/maintenance/MaintenanceDashboardPage';
+import AssetListPage from '../pages/erp/maintenance/AssetListPage';
+import AssetFormPage from '../pages/erp/maintenance/AssetFormPage';
+import AssetDetailPage from '../pages/erp/maintenance/AssetDetailPage';
+import WorkOrderListPage from '../pages/erp/maintenance/WorkOrderListPage';
+import WorkOrderFormPage from '../pages/erp/maintenance/WorkOrderFormPage';
+import WorkOrderDetailPage from '../pages/erp/maintenance/WorkOrderDetailPage';
+import MaintenanceScheduleListPage from '../pages/erp/maintenance/MaintenanceScheduleListPage';
+import MaintenanceScheduleFormPage from '../pages/erp/maintenance/MaintenanceScheduleFormPage';
+import MaintenanceRequestListPage from '../pages/erp/maintenance/MaintenanceRequestListPage';
+import DowntimeListPage from '../pages/erp/maintenance/DowntimeListPage';
+import MaintenanceHistoryPage from '../pages/erp/maintenance/MaintenanceHistoryPage';
+
 import { ProtectedRoute } from '../components/auth/ProtectedRoute';
 import { ERP_BASE_PATH } from '../constants/navigation';
 
@@ -212,6 +225,23 @@ export const AppRoutes: React.FC = () => {
             <Route path="quality/ncr/new" element={<NCRFormPage />} />
             <Route path="quality/ncr/:id" element={<NCRDetailPage />} />
             <Route path="quality/holds" element={<QualityHoldListPage />} />
+          </Route>
+
+          {/* Maintenance & Asset Management Authorized Routes */}
+          <Route element={<ProtectedRoute allowedRoles={['admin', 'maintenance_manager', 'maintenance_technician', 'production_manager', 'quality_manager', 'executive']} />}>
+            <Route path="maintenance" element={<MaintenanceDashboardPage />} />
+            <Route path="maintenance/assets" element={<AssetListPage />} />
+            <Route path="maintenance/assets/new" element={<AssetFormPage />} />
+            <Route path="maintenance/assets/:id" element={<AssetDetailPage />} />
+            <Route path="maintenance/assets/:id/edit" element={<AssetFormPage />} />
+            <Route path="maintenance/work-orders" element={<WorkOrderListPage />} />
+            <Route path="maintenance/work-orders/new" element={<WorkOrderFormPage />} />
+            <Route path="maintenance/work-orders/:id" element={<WorkOrderDetailPage />} />
+            <Route path="maintenance/schedules" element={<MaintenanceScheduleListPage />} />
+            <Route path="maintenance/schedules/new" element={<MaintenanceScheduleFormPage />} />
+            <Route path="maintenance/requests" element={<MaintenanceRequestListPage />} />
+            <Route path="maintenance/downtime" element={<DowntimeListPage />} />
+            <Route path="maintenance/history" element={<MaintenanceHistoryPage />} />
           </Route>
 
           {/* Commercial Quotations Authorized Routes */}

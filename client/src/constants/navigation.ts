@@ -73,10 +73,18 @@ export const ERP_SIDEBAR_MENU: ERPMenuItem[] = [
   { id: 'quality-ncr', label: 'Non-Conformance (NCR)', path: `${ERP_BASE_PATH}/quality/ncr`, iconName: 'AlertTriangle', category: 'Quality', badge: 'Live', roles: ['admin', 'quality_manager', 'production_manager', 'warehouse_manager', 'executive'] },
   { id: 'quality-holds', label: 'Quality Holds', path: `${ERP_BASE_PATH}/quality/holds`, iconName: 'Lock', category: 'Quality', badge: 'Live', roles: ['admin', 'quality_manager', 'production_manager', 'warehouse_manager', 'executive'] },
 
+  // Maintenance & Asset Management Section
+  { id: 'maintenance-dashboard', label: 'Maintenance Overview', path: `${ERP_BASE_PATH}/maintenance`, iconName: 'Wrench', category: 'Maintenance', badge: 'Live', roles: ['admin', 'maintenance_manager', 'maintenance_technician', 'production_manager', 'quality_manager', 'executive'] },
+  { id: 'maintenance-assets', label: 'Asset Master', path: `${ERP_BASE_PATH}/maintenance/assets`, iconName: 'Layers', category: 'Maintenance', badge: 'Live', roles: ['admin', 'maintenance_manager', 'maintenance_technician', 'production_manager', 'executive'] },
+  { id: 'maintenance-work-orders', label: 'Work Orders', path: `${ERP_BASE_PATH}/maintenance/work-orders`, iconName: 'ClipboardList', category: 'Maintenance', badge: 'Live', roles: ['admin', 'maintenance_manager', 'maintenance_technician', 'production_manager', 'executive'] },
+  { id: 'maintenance-schedules', label: 'PM Schedules', path: `${ERP_BASE_PATH}/maintenance/schedules`, iconName: 'Clock', category: 'Maintenance', badge: 'Live', roles: ['admin', 'maintenance_manager', 'production_manager', 'executive'] },
+  { id: 'maintenance-requests', label: 'Issue Tickets', path: `${ERP_BASE_PATH}/maintenance/requests`, iconName: 'AlertTriangle', category: 'Maintenance', badge: 'Live', roles: ['admin', 'maintenance_manager', 'maintenance_technician', 'production_manager', 'executive'] },
+  { id: 'maintenance-downtime', label: 'Downtime Monitor', path: `${ERP_BASE_PATH}/maintenance/downtime`, iconName: 'Timer', category: 'Maintenance', badge: 'Live', roles: ['admin', 'maintenance_manager', 'production_manager', 'executive'] },
+  { id: 'maintenance-history', label: 'Audit History', path: `${ERP_BASE_PATH}/maintenance/history`, iconName: 'ShieldCheck', category: 'Maintenance', badge: 'Live', roles: ['admin', 'maintenance_manager', 'production_manager', 'executive'] },
+
   // Machines & Capacity Section
   { id: 'work-centers', label: 'Work Centers', path: `${ERP_BASE_PATH}/production/work-centers`, iconName: 'Building2', category: 'Machines', badge: 'Live', roles: ['admin', 'production_manager'] },
   { id: 'cnc-machines', label: 'Machine Master', path: `${ERP_BASE_PATH}/production/machines`, iconName: 'Cpu', category: 'Machines', badge: 'Live', roles: ['admin', 'production_manager'] },
-  { id: 'maintenance', label: 'Maintenance', path: `${ERP_BASE_PATH}/maintenance`, iconName: 'Wrench', category: 'Machines', roles: ['admin', 'production_manager'] },
 
   // System & Management
   { id: 'employees', label: 'Employees & HR', path: `${ERP_BASE_PATH}/employees`, iconName: 'Users', category: 'Management', badge: 'Live', roles: ['admin', 'hr'] },
