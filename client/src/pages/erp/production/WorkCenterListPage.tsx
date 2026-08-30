@@ -59,32 +59,32 @@ export const WorkCenterListPage: React.FC = () => {
     <div className="space-y-6 animate-fadeIn">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 mb-2">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200 mb-2">
             <Factory className="w-3.5 h-3.5" />
             <span>Shop Floor Capacity</span>
           </div>
-          <h1 className="text-2xl font-bold text-white tracking-tight">Work Centers</h1>
-          <p className="text-slate-400 text-sm">Manage shop floor machining departments, capacity, and active machines.</p>
+          <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Work Centers</h1>
+          <p className="text-slate-600 text-sm">Manage shop floor machining departments, capacity, and active machines.</p>
         </div>
 
         <button
           onClick={() => setShowModal(true)}
-          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-medium text-sm transition-all shadow-lg shadow-indigo-600/25"
+          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-sm transition-all shadow-md"
         >
           <Plus className="w-4 h-4" />
           <span>Add Work Center</span>
         </button>
       </div>
 
-      <div className="bg-slate-900/60 border border-slate-800/80 backdrop-blur-xl p-4 rounded-2xl flex items-center justify-between">
+      <div className="bg-white border border-slate-200 shadow-xs p-4 rounded-2xl flex items-center justify-between">
         <div className="relative flex-1 max-w-md">
-          <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500" />
+          <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
           <input
             type="text"
             placeholder="Search work centers..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 rounded-xl bg-slate-950/60 border border-slate-800 text-slate-200 text-sm focus:outline-none focus:border-indigo-500"
+            className="w-full pl-10 pr-4 py-2 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm focus:outline-none focus:border-indigo-500 placeholder:text-slate-400"
           />
         </div>
       </div>
@@ -97,30 +97,30 @@ export const WorkCenterListPage: React.FC = () => {
           <div className="col-span-full py-12 text-center text-slate-500">No work centers defined.</div>
         ) : (
           workCenters.map((wc) => (
-            <div key={wc.id} className="bg-slate-900/60 border border-slate-800/80 p-5 rounded-2xl space-y-3 hover:border-slate-700 transition-all">
+            <div key={wc.id} className="bg-white border border-slate-200 shadow-xs p-5 rounded-2xl space-y-3 hover:border-slate-300 transition-all">
               <div className="flex items-center justify-between">
-                <span className="font-mono text-xs font-bold text-indigo-400 px-2.5 py-1 rounded bg-indigo-500/10 border border-indigo-500/20">
+                <span className="font-mono text-xs font-bold text-indigo-700 px-2.5 py-1 rounded bg-indigo-50 border border-indigo-200">
                   {wc.code}
                 </span>
-                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
                   {wc.status}
                 </span>
               </div>
 
               <div>
-                <h3 className="font-bold text-white text-base">{wc.name}</h3>
-                <p className="text-slate-400 text-xs mt-1">{wc.description || 'No description provided.'}</p>
+                <h3 className="font-bold text-slate-900 text-base">{wc.name}</h3>
+                <p className="text-slate-500 text-xs mt-1">{wc.description || 'No description provided.'}</p>
               </div>
 
-              <div className="grid grid-cols-2 gap-2 border-t border-slate-800/80 pt-3 text-xs">
+              <div className="grid grid-cols-2 gap-2 border-t border-slate-100 pt-3 text-xs">
                 <div>
-                  <span className="text-slate-500">Type:</span>
-                  <div className="text-slate-200 font-medium">{wc.type}</div>
+                  <span className="text-slate-400">Type:</span>
+                  <div className="text-slate-800 font-medium">{wc.type}</div>
                 </div>
                 <div>
-                  <span className="text-slate-500">Machines:</span>
-                  <div className="text-cyan-400 font-bold flex items-center gap-1">
-                    <Cpu className="w-3.5 h-3.5" />
+                  <span className="text-slate-400">Machines:</span>
+                  <div className="text-cyan-700 font-bold flex items-center gap-1">
+                    <Cpu className="w-3.5 h-3.5 text-cyan-600" />
                     <span>{wc.machine_count || 0} Machines</span>
                   </div>
                 </div>
@@ -132,62 +132,62 @@ export const WorkCenterListPage: React.FC = () => {
 
       {/* Modal */}
       {showModal && (
-        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
-            <h3 className="text-lg font-bold text-white">Create Work Center</h3>
+        <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white border border-slate-200 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-xl">
+            <h3 className="text-lg font-bold text-slate-900">Create Work Center</h3>
             <form onSubmit={handleCreate} className="space-y-4">
               <div>
-                <label className="block text-xs text-slate-400 mb-1">Code *</label>
+                <label className="block text-xs font-medium text-slate-700 mb-1">Code *</label>
                 <input
                   type="text"
                   required
                   placeholder="e.g. WC-CNC-001"
                   value={code}
                   onChange={(e) => setCode(e.target.value)}
-                  className="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 text-sm"
+                  className="w-full px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm focus:outline-none focus:border-indigo-500"
                 />
               </div>
               <div>
-                <label className="block text-xs text-slate-400 mb-1">Name *</label>
+                <label className="block text-xs font-medium text-slate-700 mb-1">Name *</label>
                 <input
                   type="text"
                   required
                   placeholder="e.g. CNC Turning Department"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 text-sm"
+                  className="w-full px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm focus:outline-none focus:border-indigo-500"
                 />
               </div>
               <div>
-                <label className="block text-xs text-slate-400 mb-1">Type</label>
+                <label className="block text-xs font-medium text-slate-700 mb-1">Type</label>
                 <input
                   type="text"
                   value={type}
                   onChange={(e) => setType(e.target.value)}
-                  className="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 text-sm"
+                  className="w-full px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm focus:outline-none focus:border-indigo-500"
                 />
               </div>
               <div>
-                <label className="block text-xs text-slate-400 mb-1">Description</label>
+                <label className="block text-xs font-medium text-slate-700 mb-1">Description</label>
                 <textarea
                   rows={2}
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  className="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 text-sm"
+                  className="w-full px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm focus:outline-none focus:border-indigo-500"
                 />
               </div>
               <div className="flex justify-end gap-3 pt-2">
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
-                  className="px-4 py-2 rounded-xl bg-slate-800 text-slate-300 text-xs"
+                  className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-medium border border-slate-200"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={actionLoading}
-                  className="px-4 py-2 rounded-xl bg-indigo-600 text-white text-xs font-medium"
+                  className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-medium"
                 >
                   Create Work Center
                 </button>

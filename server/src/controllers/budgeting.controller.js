@@ -17,7 +17,7 @@ const budgetingController = {
         .select(`
           *,
           parent:cost_centers!parent_id(id, code, name),
-          manager:employees!manager_id(id, first_name, last_name, employee_code, department)
+          manager:employees!manager_id(id, first_name, last_name, employee_code, department_id)
         `)
         .order('code', { ascending: true });
 
@@ -55,7 +55,7 @@ const budgetingController = {
         .select(`
           *,
           parent:cost_centers!parent_id(id, code, name),
-          manager:employees!manager_id(id, first_name, last_name, employee_code, department)
+          manager:employees!manager_id(id, first_name, last_name, employee_code, department_id)
         `)
         .eq('id', id)
         .single();
@@ -247,7 +247,7 @@ const budgetingController = {
         .select(`
           *,
           period:financial_periods(id, period_name, start_date, end_date, status),
-          owner:employees!owner_id(id, first_name, last_name, employee_code, department)
+          owner:employees!owner_id(id, first_name, last_name, employee_code, department_id)
         `)
         .order('created_at', { ascending: false });
 
@@ -283,7 +283,7 @@ const budgetingController = {
         .select(`
           *,
           period:financial_periods(id, period_name, start_date, end_date),
-          owner:employees!owner_id(id, first_name, last_name, employee_code, department)
+          owner:employees!owner_id(id, first_name, last_name, employee_code, department_id)
         `)
         .in('status', ['SUBMITTED', 'UNDER_REVIEW'])
         .order('submitted_at', { ascending: true });
@@ -305,7 +305,7 @@ const budgetingController = {
         .select(`
           *,
           period:financial_periods(*),
-          owner:employees!owner_id(id, first_name, last_name, employee_code, department),
+          owner:employees!owner_id(id, first_name, last_name, employee_code, department_id),
           lines:budget_lines(
             *,
             account:chart_of_accounts(id, account_code, account_name, account_type, normal_balance),

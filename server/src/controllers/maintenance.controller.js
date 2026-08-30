@@ -506,7 +506,7 @@ const getMaintenanceRequests = async (req, res) => {
       .select(`
         *,
         assets (id, asset_code, name, location),
-        reported_profile:profiles!maintenance_requests_reported_by_fkey (id, first_name, last_name, email)
+        reported_profile:profiles!reported_by (id, first_name, last_name, email)
       `);
 
     if (assetId) query = query.eq('asset_id', assetId);
@@ -727,7 +727,7 @@ const getWorkOrderById = async (req, res) => {
       .from('maintenance_parts')
       .select(`
         *,
-        products (id, code, name),
+        products (id, product_code, name),
         warehouses (id, code, name),
         storage_locations (id, location_code, name)
       `)
@@ -1327,7 +1327,7 @@ const getMaintenanceHistory = async (req, res) => {
         assigned_profile:profiles!maintenance_work_orders_assigned_to_fkey (id, first_name, last_name, email),
         maintenance_parts (
           id, quantity, unit_cost, total_cost,
-          products (id, code, name)
+          products (id, product_code, name)
         )
       `)
       .eq('status', 'COMPLETED')

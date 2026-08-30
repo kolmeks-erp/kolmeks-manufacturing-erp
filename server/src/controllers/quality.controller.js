@@ -50,7 +50,7 @@ const getInspections = async (req, res) => {
       .from('quality_inspections')
       .select(`
         *,
-        products (id, code, name),
+        products (id, product_code, name),
         suppliers (id, supplier_code, company_name),
         goods_receipts (id, grn_number),
         production_orders (id, production_order_number),
@@ -398,7 +398,7 @@ const getInspectionPlans = async (req, res) => {
       .from('inspection_plans')
       .select(`
         *,
-        products (id, code, name),
+        products (id, product_code, name),
         inspection_plan_items (count)
       `);
 
@@ -506,7 +506,7 @@ const getNCRs = async (req, res) => {
       .from('non_conformance_reports')
       .select(`
         *,
-        products (id, code, name),
+        products (id, product_code, name),
         suppliers (id, supplier_code, company_name),
         quality_inspections (id, inspection_number),
         assigned_profile:profiles!non_conformance_reports_assigned_to_fkey (id, first_name, last_name, email)
@@ -736,7 +736,7 @@ const getQualityHolds = async (req, res) => {
       .from('quality_holds')
       .select(`
         *,
-        products (id, code, name),
+        products (id, product_code, name),
         goods_receipts (id, grn_number),
         production_orders (id, production_order_number),
         placed_profile:profiles!quality_holds_placed_by_fkey (id, first_name, last_name, email)

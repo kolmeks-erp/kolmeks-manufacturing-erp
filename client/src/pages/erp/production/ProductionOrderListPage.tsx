@@ -141,17 +141,17 @@ export const ProductionOrderListPage: React.FC = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 mb-2">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200 mb-2">
             <Layers className="w-3.5 h-3.5" />
             <span>Manufacturing Work Orders</span>
           </div>
-          <h1 className="text-2xl font-bold text-white tracking-tight">Production Orders</h1>
-          <p className="text-slate-400 text-sm">Manage shop floor execution, planned quantities, and manufacturing progress.</p>
+          <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Production Orders</h1>
+          <p className="text-slate-600 text-sm">Manage shop floor execution, planned quantities, and manufacturing progress.</p>
         </div>
 
         <button
           onClick={() => navigate(`${ERP_BASE_PATH}/production/orders/new`)}
-          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-medium text-sm transition-all shadow-lg shadow-indigo-600/25 active:scale-[0.98]"
+          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-sm transition-all shadow-md active:scale-[0.98]"
         >
           <Plus className="w-4 h-4" />
           <span>Create Production Order</span>
@@ -159,16 +159,16 @@ export const ProductionOrderListPage: React.FC = () => {
       </div>
 
       {/* Search & Filter Toolbar */}
-      <div className="bg-slate-900/60 border border-slate-800/80 backdrop-blur-xl p-4 rounded-2xl flex flex-col md:flex-row gap-4 justify-between items-stretch md:items-center">
+      <div className="bg-white border border-slate-200 shadow-xs p-4 rounded-2xl flex flex-col md:flex-row gap-4 justify-between items-stretch md:items-center">
         {/* Search */}
         <div className="relative flex-1">
-          <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500" />
+          <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
           <input
             type="text"
             placeholder="Search by MO number, product, or sales order..."
             value={search}
             onChange={(e) => handleFilterChange('search', e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-950/60 border border-slate-800 text-slate-200 text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all placeholder:text-slate-600"
+            className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all placeholder:text-slate-400"
           />
         </div>
 
@@ -177,7 +177,7 @@ export const ProductionOrderListPage: React.FC = () => {
           <select
             value={status}
             onChange={(e) => handleFilterChange('status', e.target.value)}
-            className="px-3.5 py-2.5 rounded-xl bg-slate-950/60 border border-slate-800 text-slate-300 text-sm focus:outline-none focus:border-indigo-500"
+            className="px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-800 text-sm focus:outline-none focus:border-indigo-500"
           >
             <option value="">All Statuses</option>
             <option value="DRAFT">DRAFT</option>
@@ -192,7 +192,7 @@ export const ProductionOrderListPage: React.FC = () => {
           <select
             value={priority}
             onChange={(e) => handleFilterChange('priority', e.target.value)}
-            className="px-3.5 py-2.5 rounded-xl bg-slate-950/60 border border-slate-800 text-slate-300 text-sm focus:outline-none focus:border-indigo-500"
+            className="px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-800 text-sm focus:outline-none focus:border-indigo-500"
           >
             <option value="">All Priorities</option>
             <option value="URGENT">URGENT</option>
@@ -204,10 +204,10 @@ export const ProductionOrderListPage: React.FC = () => {
       </div>
 
       {/* Orders Table */}
-      <div className="bg-slate-900/60 border border-slate-800/80 backdrop-blur-xl rounded-2xl overflow-hidden">
+      <div className="bg-white border border-slate-200 shadow-xs rounded-2xl overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm text-slate-300">
-            <thead className="bg-slate-950/60 text-slate-400 text-xs font-semibold uppercase tracking-wider border-b border-slate-800">
+          <table className="w-full text-left text-sm text-slate-700">
+            <thead className="bg-slate-50 text-slate-600 text-xs font-semibold uppercase tracking-wider border-b border-slate-200">
               <tr>
                 <th className="px-5 py-4">Order Number</th>
                 <th className="px-5 py-4">Product Details</th>
@@ -218,12 +218,12 @@ export const ProductionOrderListPage: React.FC = () => {
                 <th className="px-5 py-4 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/60">
+            <tbody className="divide-y divide-slate-100">
               {loading ? (
                 <tr>
                   <td colSpan={7} className="px-5 py-12 text-center text-slate-500">
                     <div className="flex items-center justify-center gap-2">
-                      <div className="w-5 h-5 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
+                      <div className="w-5 h-5 border-2 border-indigo-600 border-t-transparent rounded-full animate-spin"></div>
                       <span>Loading production orders...</span>
                     </div>
                   </td>
@@ -241,35 +241,35 @@ export const ProductionOrderListPage: React.FC = () => {
                   const pct = planned > 0 ? Math.min(100, Math.round((completed / planned) * 100)) : 0;
 
                   return (
-                    <tr key={ord.id} className="hover:bg-slate-800/30 transition-colors">
-                      <td className="px-5 py-4 font-mono font-medium text-indigo-400">
+                    <tr key={ord.id} className="hover:bg-slate-50 transition-colors">
+                      <td className="px-5 py-4 font-mono font-medium text-indigo-600">
                         {ord.production_order_number}
                       </td>
                       <td className="px-5 py-4">
-                        <div className="font-semibold text-white">{ord.product?.name || 'Unknown Product'}</div>
-                        <div className="text-xs text-slate-400 font-mono">
+                        <div className="font-semibold text-slate-900">{ord.product?.name || 'Unknown Product'}</div>
+                        <div className="text-xs text-slate-500 font-mono">
                           Code: {ord.product?.product_code}
                         </div>
                       </td>
                       <td className="px-5 py-4">
                         {ord.sales_order ? (
                           <div>
-                            <div className="font-mono text-xs text-indigo-300 font-medium">{ord.sales_order.order_number}</div>
-                            <div className="text-xs text-slate-400">{ord.sales_order.customer?.company_name}</div>
+                            <div className="font-mono text-xs text-indigo-700 font-medium">{ord.sales_order.order_number}</div>
+                            <div className="text-xs text-slate-500">{ord.sales_order.customer?.company_name}</div>
                           </div>
                         ) : (
-                          <span className="text-xs text-slate-500 font-italic">Standalone Order</span>
+                          <span className="text-xs text-slate-400 italic">Standalone Order</span>
                         )}
                       </td>
                       <td className="px-5 py-4">
                         <div className="w-48 mx-auto space-y-1">
                           <div className="flex items-center justify-between text-xs font-mono">
-                            <span className="text-slate-400">{completed} / {planned} {ord.product?.unit || 'pcs'}</span>
-                            <span className="text-indigo-400 font-semibold">{pct}%</span>
+                            <span className="text-slate-600">{completed} / {planned} {ord.product?.unit || 'pcs'}</span>
+                            <span className="text-indigo-600 font-semibold">{pct}%</span>
                           </div>
-                          <div className="h-2 w-full bg-slate-950 rounded-full overflow-hidden border border-slate-800">
+                          <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden border border-slate-200">
                             <div
-                              className="h-full bg-gradient-to-r from-indigo-500 to-emerald-400 transition-all"
+                              className="h-full bg-gradient-to-r from-indigo-500 to-emerald-500 transition-all"
                               style={{ width: `${pct}%` }}
                             ></div>
                           </div>
@@ -280,7 +280,7 @@ export const ProductionOrderListPage: React.FC = () => {
                       <td className="px-5 py-4 text-right">
                         <button
                           onClick={() => navigate(`${ERP_BASE_PATH}/production/orders/${ord.id}`)}
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-300 text-xs font-medium border border-indigo-500/20 transition-all"
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-xs font-medium border border-indigo-200 transition-all"
                         >
                           <Eye className="w-3.5 h-3.5" />
                           <span>View Details</span>
@@ -295,24 +295,24 @@ export const ProductionOrderListPage: React.FC = () => {
         </div>
 
         {/* Pagination Footer */}
-        <div className="px-5 py-4 bg-slate-950/60 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+        <div className="px-5 py-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between text-xs text-slate-600">
           <div>
-            Showing <span className="text-white font-medium">{orders.length}</span> of <span className="text-white font-medium">{totalRecords}</span> records
+            Showing <span className="text-slate-900 font-semibold">{orders.length}</span> of <span className="text-slate-900 font-semibold">{totalRecords}</span> records
           </div>
 
           <div className="flex items-center gap-2">
             <button
               disabled={page <= 1}
               onClick={() => handleFilterChange('page', String(page - 1))}
-              className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 disabled:opacity-40 disabled:cursor-not-allowed text-white transition-all"
+              className="p-1.5 rounded-lg bg-white border border-slate-200 hover:bg-slate-100 disabled:opacity-40 disabled:cursor-not-allowed text-slate-700 transition-all"
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
-            <span>Page {page} of {totalPages}</span>
+            <span className="font-medium text-slate-700">Page {page} of {totalPages}</span>
             <button
               disabled={page >= totalPages}
               onClick={() => handleFilterChange('page', String(page + 1))}
-              className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 disabled:opacity-40 disabled:cursor-not-allowed text-white transition-all"
+              className="p-1.5 rounded-lg bg-white border border-slate-200 hover:bg-slate-100 disabled:opacity-40 disabled:cursor-not-allowed text-slate-700 transition-all"
             >
               <ChevronRight className="w-4 h-4" />
             </button>
