@@ -54,7 +54,7 @@ const getInspections = async (req, res) => {
         suppliers (id, supplier_code, company_name),
         goods_receipts (id, grn_number),
         production_orders (id, production_order_number),
-        inspected_by_profile:profiles!inspected_by (id, first_name, last_name, email)
+        inspected_by_profile:profiles!inspected_by (id, full_name, email)
       `, { count: 'exact' });
 
     if (type) query = query.eq('inspection_type', type);
@@ -104,7 +104,7 @@ const getInspectionById = async (req, res) => {
         production_orders (*),
         production_operations (*),
         inspection_plans (*),
-        inspected_by_profile:profiles!inspected_by (id, first_name, last_name, email)
+        inspected_by_profile:profiles!inspected_by (id, full_name, email)
       `)
       .eq('id', id)
       .single();
@@ -509,7 +509,7 @@ const getNCRs = async (req, res) => {
         products (id, product_code, name),
         suppliers (id, supplier_code, company_name),
         quality_inspections (id, inspection_number),
-        assigned_profile:profiles!assigned_to (id, first_name, last_name, email)
+        assigned_profile:profiles!assigned_to (id, full_name, email)
       `);
 
     if (status) query = query.eq('status', status);
@@ -547,7 +547,7 @@ const getNCRById = async (req, res) => {
         quality_inspections (*),
         goods_receipts (*),
         production_orders (*),
-        assigned_profile:profiles!assigned_to (id, first_name, last_name, email)
+        assigned_profile:profiles!assigned_to (id, full_name, email)
       `)
       .eq('id', id)
       .single();
@@ -739,7 +739,7 @@ const getQualityHolds = async (req, res) => {
         products (id, product_code, name),
         goods_receipts (id, grn_number),
         production_orders (id, production_order_number),
-        placed_profile:profiles!placed_by (id, first_name, last_name, email)
+        placed_profile:profiles!placed_by (id, full_name, email)
       `);
 
     if (status) query = query.eq('status', status);
