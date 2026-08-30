@@ -54,6 +54,7 @@ import {
 } from 'lucide-react';
 import { ERP_SIDEBAR_MENU, ERP_BASE_PATH } from '../constants/navigation';
 import { useAuth } from '../context/AuthContext';
+import { useSystemSettings } from '../context/SystemSettingsContext';
 import { KolmeksLogo } from '../components/ui/KolmeksLogo';
 import { Breadcrumbs } from '../components/erp/Breadcrumbs';
 
@@ -123,6 +124,7 @@ export const ERPLayout: React.FC<ERPLayoutProps> = ({ children }) => {
   const navigate = useNavigate();
 
   const { profile, role, signOut } = useAuth();
+  const { isCategoryEnabled } = useSystemSettings();
 
   const handleLogout = async () => {
     setUserMenuOpen(false);
@@ -130,8 +132,11 @@ export const ERPLayout: React.FC<ERPLayoutProps> = ({ children }) => {
     navigate(`${ERP_BASE_PATH}/login`, { replace: true });
   };
 
-  // Filter sidebar menu items based on current authenticated user role
+  // Filter sidebar menu items based on current authenticated user role AND system feature flags
   const visibleMenuItems = ERP_SIDEBAR_MENU.filter((item) => {
+    if (item.category && !isCategoryEnabled(item.category)) {
+      return false;
+    }
     if (!item.roles || item.roles.length === 0) return true;
     return role ? item.roles.includes(role) : false;
   });
@@ -348,6 +353,17 @@ export const ERPLayout: React.FC<ERPLayoutProps> = ({ children }) => {
                     <User className="w-4 h-4 text-slate-400" />
                     <span>My Profile & Settings</span>
                   </Link>
+
+                  {role === 'admin' && (
+                    <Link
+                      to={`${ERP_BASE_PATH}/master-admin`}
+                      onClick={() => setUserMenuOpen(false)}
+                      className="flex items-center gap-2 px-4 py-2 text-xs text-indigo-700 font-bold hover:bg-indigo-50"
+                    >
+                      <Settings className="w-4 h-4 text-indigo-600" />
+                      <span>Master Governance & Toggles</span>
+                    </Link>
+                  )}
 
                   <button
                     type="button"

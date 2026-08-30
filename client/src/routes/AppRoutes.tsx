@@ -166,10 +166,13 @@ import { CostCenterDetailPage } from '../pages/erp/finance/CostCenterDetailPage'
 
 import { ProtectedRoute } from '../components/auth/ProtectedRoute';
 import { ERP_BASE_PATH } from '../constants/navigation';
+import { SystemSettingsProvider, useSystemSettings } from '../context/SystemSettingsContext';
+import { MasterAdminControlPage } from '../pages/erp/admin/MasterAdminControlPage';
 
 export const AppRoutes: React.FC = () => {
   return (
-    <Routes>
+    <SystemSettingsProvider>
+      <Routes>
       {/* Public Corporate Website Routes (Unprotected) */}
       <Route path="/" element={<PublicLayout />}>
         <Route index element={<HomePage />} />
@@ -428,6 +431,7 @@ export const AppRoutes: React.FC = () => {
           <Route element={<ProtectedRoute allowedRoles={['admin']} />}>
             <Route path="users" element={<ERPModuleShellPage />} />
             <Route path="settings" element={<ERPModuleShellPage />} />
+            <Route path="master-admin" element={<MasterAdminControlPage />} />
           </Route>
         </Route>
       </Route>
@@ -435,5 +439,6 @@ export const AppRoutes: React.FC = () => {
       {/* Fallback Catch-all Route to Public 404 */}
       <Route path="*" element={<Navigate to="/404" replace />} />
     </Routes>
+  </SystemSettingsProvider>
   );
 };
