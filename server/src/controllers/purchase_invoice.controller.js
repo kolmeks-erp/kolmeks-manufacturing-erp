@@ -15,7 +15,7 @@ const purchaseInvoiceController = {
         .from('purchase_invoices')
         .select(`
           *,
-          supplier:suppliers(id, supplier_name, supplier_code),
+          supplier:suppliers(id, company_name),
           purchase_order:purchase_orders(id, po_number),
           grn:goods_receipts(id, grn_number)
         `)
@@ -54,7 +54,7 @@ const purchaseInvoiceController = {
         .from('purchase_invoices')
         .select(`
           *,
-          supplier:suppliers(id, supplier_name, supplier_code, payment_terms),
+          supplier:suppliers(id, company_name, payment_terms),
           purchase_order:purchase_orders(id, po_number, status),
           grn:goods_receipts(id, grn_number, status),
           journal_entry:journal_entries(id, entry_number, status)
@@ -147,7 +147,7 @@ const purchaseInvoiceController = {
       // 2. Validate Supplier
       const { data: supplier, error: suppErr } = await supabase
         .from('suppliers')
-        .select('id, supplier_name')
+        .select('id, company_name')
         .eq('id', supplier_id)
         .single();
 
@@ -335,7 +335,7 @@ const purchaseInvoiceController = {
 
       const { data: inv, error: fetchErr } = await supabase
         .from('purchase_invoices')
-        .select('*, supplier:suppliers(supplier_name)')
+        .select('*, supplier:suppliers(company_name)')
         .eq('id', id)
         .single();
 
@@ -393,7 +393,7 @@ const purchaseInvoiceController = {
         period_id: period?.id || null,
         entry_type: 'PURCHASE_INVOICE',
         source_reference: inv.internal_invoice_number,
-        description: `Purchase Invoice posting for ${inv.supplier?.supplier_name || 'Supplier'} (${inv.supplier_invoice_number})`,
+        description: `Purchase Invoice posting for ${inv.supplier?.company_name || 'Supplier'} (${inv.supplier_invoice_number})`,
         status: 'POSTED',
         total_debit: inv.total_amount,
         total_credit: inv.total_amount,
@@ -424,7 +424,7 @@ const purchaseInvoiceController = {
           journal_entry_id: createdJE.id,
           account_id: apAccount.id,
           line_order: 2,
-          description: `Accounts Payable liability - Supplier ${inv.supplier?.supplier_name}`,
+          description: `Accounts Payable liability - Supplier ${inv.supplier?.company_name}`,
           debit_amount: 0.0,
           credit_amount: inv.total_amount,
         },
@@ -716,7 +716,7 @@ const purchaseInvoiceController = {
         .from('supplier_payments')
         .select(`
           *,
-          supplier:suppliers(id, supplier_name, supplier_code)
+          supplier:suppliers(id, company_name)
         `)
         .order('created_at', { ascending: false });
 
@@ -744,7 +744,7 @@ const purchaseInvoiceController = {
         .from('supplier_payments')
         .select(`
           *,
-          supplier:suppliers(id, supplier_name, supplier_code),
+          supplier:suppliers(id, company_name),
           journal_entry:journal_entries(id, entry_number)
         `)
         .eq('id', id)
@@ -877,7 +877,7 @@ const purchaseInvoiceController = {
         .from('purchase_invoices')
         .select(`
           *,
-          supplier:suppliers(id, supplier_name, supplier_code),
+          supplier:suppliers(id, company_name),
           purchase_order:purchase_orders(id, po_number),
           grn:goods_receipts(id, grn_number)
         `)
@@ -934,7 +934,7 @@ const purchaseInvoiceController = {
         .from('purchase_invoices')
         .select(`
           id, internal_invoice_number, supplier_invoice_number, invoice_date, due_date, outstanding_amount, status,
-          supplier:suppliers(id, supplier_name, supplier_code)
+          supplier:suppliers(id, company_name)
         `)
         .gt('outstanding_amount', 0)
         .not('status', 'in', '("VOIDED","CANCELLED")');
@@ -982,7 +982,7 @@ const purchaseInvoiceController = {
         if (!supplierMap[suppId]) {
           supplierMap[suppId] = {
             supplier_id: suppId,
-            supplier_name: inv.supplier?.supplier_name || 'Unknown Supplier',
+            supplier_name: inv.supplier?.company_name || 'Unknown Supplier',
             supplier_code: inv.supplier?.supplier_code || '',
             current: 0,
             days_1_30: 0,

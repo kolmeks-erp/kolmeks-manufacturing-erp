@@ -51,7 +51,7 @@ const getInspections = async (req, res) => {
       .select(`
         *,
         products (id, product_code, name),
-        suppliers (id, supplier_code, company_name),
+        suppliers (id, company_name),
         goods_receipts (id, grn_number),
         production_orders (id, production_order_number),
         inspected_by_profile:profiles!inspected_by (id, full_name, email)
@@ -507,7 +507,7 @@ const getNCRs = async (req, res) => {
       .select(`
         *,
         products (id, product_code, name),
-        suppliers (id, supplier_code, company_name),
+        suppliers (id, company_name),
         quality_inspections (id, inspection_number),
         assigned_profile:profiles!assigned_to (id, full_name, email)
       `);

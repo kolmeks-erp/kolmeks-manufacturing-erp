@@ -7,11 +7,11 @@ const getEmployeeForUser = async (user) => {
   if (!user) return null;
 
   // 1. Try matching by auth_user_id
-  let { data: emp, error } = await supabaseAdmin
+  let { data: emp } = await supabaseAdmin
     .from('employees')
     .select('*, department:departments(id, code, name), shift:shifts(*)')
     .eq('auth_user_id', user.id)
-    .single();
+    .maybeSingle();
 
   if (emp) return emp;
 
@@ -21,7 +21,7 @@ const getEmployeeForUser = async (user) => {
       .from('employees')
       .select('*, department:departments(id, code, name), shift:shifts(*)')
       .eq('email', user.email.toLowerCase())
-      .single();
+      .maybeSingle();
 
     if (empByEmail) {
       // Link auth_user_id for future quick lookups
@@ -30,6 +30,33 @@ const getEmployeeForUser = async (user) => {
         .update({ auth_user_id: user.id })
         .eq('id', empByEmail.id);
       return empByEmail;
+    }
+
+    // 3. Auto-create linked employee record for user if missing
+    try {
+      const email = user.email.toLowerCase();
+      const empCode = `EMP-${Math.floor(1000 + Math.random() * 9000)}`;
+      const nameParts = (user.email.split('@')[0] || 'Staff User').split('.');
+      const firstName = nameParts[0] ? nameParts[0].charAt(0).toUpperCase() + nameParts[0].slice(1) : 'Admin';
+      const lastName = nameParts[1] ? nameParts[1].charAt(0).toUpperCase() + nameParts[1].slice(1) : 'User';
+
+      const { data: newEmp } = await supabaseAdmin
+        .from('employees')
+        .insert({
+          auth_user_id: user.id,
+          employee_code: empCode,
+          first_name: firstName,
+          last_name: lastName,
+          email: email,
+          hire_date: new Date().toISOString().split('T')[0],
+          status: 'ACTIVE'
+        })
+        .select('*, department:departments(id, code, name), shift:shifts(*)')
+        .single();
+
+      if (newEmp) return newEmp;
+    } catch (createErr) {
+      console.warn('Auto-create employee failed:', createErr.message);
     }
   }
 

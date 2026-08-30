@@ -100,39 +100,39 @@ export const MachineListPage: React.FC = () => {
     <div className="space-y-6 animate-fadeIn">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 mb-2">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-cyan-50 text-cyan-700 border border-cyan-200 mb-2">
             <Cpu className="w-3.5 h-3.5" />
             <span>Plant Assets & Telemetry</span>
           </div>
-          <h1 className="text-2xl font-bold text-white tracking-tight">Machine Master</h1>
-          <p className="text-slate-400 text-sm">Register CNC machines, monitor operational status, and assign to work centers.</p>
+          <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Machine Master</h1>
+          <p className="text-slate-500 text-sm">Register CNC machines, monitor operational status, and assign to work centers.</p>
         </div>
 
         <button
           onClick={() => setShowModal(true)}
-          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-medium text-sm transition-all shadow-lg shadow-cyan-600/20"
+          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-cyan-600 hover:bg-cyan-700 text-white font-medium text-sm transition-all shadow-sm"
         >
           <Plus className="w-4 h-4" />
           <span>Register Machine</span>
         </button>
       </div>
 
-      <div className="bg-slate-900/60 border border-slate-800/80 backdrop-blur-xl p-4 rounded-2xl flex flex-col md:flex-row gap-4 justify-between items-stretch md:items-center">
+      <div className="bg-white border border-slate-200 p-4 rounded-xl shadow-sm flex flex-col md:flex-row gap-4 justify-between items-stretch md:items-center">
         <div className="relative flex-1 max-w-md">
-          <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500" />
+          <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
           <input
             type="text"
             placeholder="Search by code, machine name, or model..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 rounded-xl bg-slate-950/60 border border-slate-800 text-slate-200 text-sm focus:outline-none focus:border-cyan-500"
+            className="w-full pl-10 pr-4 py-2 rounded-lg bg-slate-50 border border-slate-300 text-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500"
           />
         </div>
 
         <select
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value)}
-          className="px-3.5 py-2 rounded-xl bg-slate-950/60 border border-slate-800 text-slate-300 text-sm focus:outline-none focus:border-cyan-500"
+          className="px-3.5 py-2 rounded-lg bg-slate-50 border border-slate-300 text-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500"
         >
           <option value="">All Statuses</option>
           <option value="AVAILABLE">AVAILABLE</option>
@@ -145,30 +145,30 @@ export const MachineListPage: React.FC = () => {
       {/* Grid Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {loading ? (
-          <div className="col-span-full py-12 text-center text-slate-500">Loading machines...</div>
+          <div className="col-span-full py-12 text-center text-slate-500 bg-white rounded-xl border border-slate-200">Loading machines...</div>
         ) : machines.length === 0 ? (
-          <div className="col-span-full py-12 text-center text-slate-500">No machines registered.</div>
+          <div className="col-span-full py-12 text-center text-slate-500 bg-white rounded-xl border border-slate-200">No machines registered.</div>
         ) : (
           machines.map((m) => (
-            <div key={m.id} className="bg-slate-900/60 border border-slate-800/80 p-5 rounded-2xl space-y-4 hover:border-slate-700 transition-all">
+            <div key={m.id} className="bg-white border border-slate-200 p-5 rounded-xl space-y-4 hover:shadow-md transition-all shadow-sm">
               <div className="flex items-center justify-between">
-                <span className="font-mono text-xs font-bold text-cyan-400 px-2.5 py-1 rounded bg-cyan-500/10 border border-cyan-500/20">
+                <span className="font-mono text-xs font-bold text-cyan-700 px-2.5 py-1 rounded bg-cyan-50 border border-cyan-200">
                   {m.code}
                 </span>
                 {renderStatusBadge(m.status)}
               </div>
 
               <div>
-                <h3 className="font-bold text-white text-base">{m.name}</h3>
-                <div className="text-xs text-slate-400 mt-1">{m.manufacturer} {m.model} ({m.machine_type})</div>
+                <h3 className="font-bold text-slate-900 text-base">{m.name}</h3>
+                <div className="text-xs text-slate-500 mt-1">{m.manufacturer} {m.model} ({m.machine_type})</div>
               </div>
 
-              <div className="text-xs text-slate-400 border-t border-slate-800/80 pt-3 flex items-center justify-between">
-                <span>Work Center: <strong className="text-slate-200">{m.work_center?.name || 'Unassigned'}</strong></span>
+              <div className="text-xs text-slate-500 border-t border-slate-100 pt-3 flex items-center justify-between">
+                <span>Work Center: <strong className="text-slate-800">{m.work_center?.name || 'Unassigned'}</strong></span>
                 <select
                   value={m.status}
                   onChange={(e) => handleStatusChange(m.id, e.target.value as MachineStatus)}
-                  className="px-2 py-1 rounded bg-slate-950 border border-slate-800 text-[11px] text-slate-300"
+                  className="px-2 py-1 rounded bg-slate-50 border border-slate-300 text-[11px] text-slate-700 focus:ring-1 focus:ring-cyan-500"
                 >
                   <option value="AVAILABLE">AVAILABLE</option>
                   <option value="RUNNING">RUNNING</option>
@@ -183,60 +183,60 @@ export const MachineListPage: React.FC = () => {
 
       {/* Modal */}
       {showModal && (
-        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
-            <h3 className="text-lg font-bold text-white">Register CNC Machine</h3>
+        <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white border border-slate-200 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-xl">
+            <h3 className="text-lg font-bold text-slate-900">Register CNC Machine</h3>
             <form onSubmit={handleCreate} className="space-y-4">
               <div>
-                <label className="block text-xs text-slate-400 mb-1">Code *</label>
+                <label className="block text-xs font-semibold text-slate-700 mb-1">Code *</label>
                 <input
                   type="text"
                   required
                   placeholder="e.g. CNC-LATHE-01"
                   value={code}
                   onChange={(e) => setCode(e.target.value)}
-                  className="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 text-sm"
+                  className="w-full px-3.5 py-2 rounded-lg bg-slate-50 border border-slate-300 text-slate-900 text-sm focus:ring-2 focus:ring-cyan-500"
                 />
               </div>
               <div>
-                <label className="block text-xs text-slate-400 mb-1">Name *</label>
+                <label className="block text-xs font-semibold text-slate-700 mb-1">Name *</label>
                 <input
                   type="text"
                   required
                   placeholder="e.g. Okuma LB3000 EX II CNC Lathe"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 text-sm"
+                  className="w-full px-3.5 py-2 rounded-lg bg-slate-50 border border-slate-300 text-slate-900 text-sm focus:ring-2 focus:ring-cyan-500"
                 />
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs text-slate-400 mb-1">Manufacturer</label>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">Manufacturer</label>
                   <input
                     type="text"
                     placeholder="Okuma, Haas..."
                     value={manufacturer}
                     onChange={(e) => setManufacturer(e.target.value)}
-                    className="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 text-sm"
+                    className="w-full px-3.5 py-2 rounded-lg bg-slate-50 border border-slate-300 text-slate-900 text-sm focus:ring-2 focus:ring-cyan-500"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs text-slate-400 mb-1">Model</label>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">Model</label>
                   <input
                     type="text"
                     placeholder="LB3000..."
                     value={model}
                     onChange={(e) => setModel(e.target.value)}
-                    className="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 text-sm"
+                    className="w-full px-3.5 py-2 rounded-lg bg-slate-50 border border-slate-300 text-slate-900 text-sm focus:ring-2 focus:ring-cyan-500"
                   />
                 </div>
               </div>
               <div>
-                <label className="block text-xs text-slate-400 mb-1">Assigned Work Center</label>
+                <label className="block text-xs font-semibold text-slate-700 mb-1">Assigned Work Center</label>
                 <select
                   value={workCenterId}
                   onChange={(e) => setWorkCenterId(e.target.value)}
-                  className="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 text-sm"
+                  className="w-full px-3.5 py-2 rounded-lg bg-slate-50 border border-slate-300 text-slate-900 text-sm focus:ring-2 focus:ring-cyan-500"
                 >
                   <option value="">Unassigned</option>
                   {workCenters.map((wc) => (
@@ -250,14 +250,14 @@ export const MachineListPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
-                  className="px-4 py-2 rounded-xl bg-slate-800 text-slate-300 text-xs"
+                  className="px-4 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-medium"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={actionLoading}
-                  className="px-4 py-2 rounded-xl bg-cyan-600 text-white text-xs font-medium"
+                  className="px-4 py-2 rounded-lg bg-cyan-600 hover:bg-cyan-700 text-white text-xs font-medium shadow-sm"
                 >
                   Save Machine
                 </button>
