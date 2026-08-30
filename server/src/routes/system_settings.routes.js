@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { authenticateUser } = require('../middleware/auth.middleware');
+const { authenticateUser, authorizeRoles } = require('../middleware/auth.middleware');
 const {
   getSystemFeatureFlags,
   toggleFeatureFlag,
@@ -11,8 +11,9 @@ const {
 // 1. Get active feature flags (Public/Authenticated)
 router.get('/feature-flags', getSystemFeatureFlags);
 
-// All admin modification endpoints require authentication
+// All admin modification endpoints require authentication AND Admin role authorization
 router.use(authenticateUser);
+router.use(authorizeRoles('admin'));
 
 // 2. Toggle ERP module ON/OFF (Admin / Master Admin)
 router.put('/feature-flags/toggle', toggleFeatureFlag);
