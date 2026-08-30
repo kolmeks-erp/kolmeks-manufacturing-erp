@@ -4,7 +4,8 @@ import { AlertTriangle } from 'lucide-react';
 
 interface ConfirmDialogProps {
   isOpen: boolean;
-  onClose: () => void;
+  onClose?: () => void;
+  onCancel?: () => void;
   onConfirm: () => void;
   title: string;
   message: string;
@@ -16,6 +17,7 @@ interface ConfirmDialogProps {
 export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
   isOpen,
   onClose,
+  onCancel,
   onConfirm,
   title,
   message,
@@ -23,8 +25,9 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
   cancelText = 'Cancel',
   isDangerous = false,
 }) => {
+  const handleClose = onClose || onCancel || (() => {});
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title={title}>
+    <Modal isOpen={isOpen} onClose={handleClose} title={title}>
       <div className="space-y-4">
         <div className="flex items-start gap-4">
           <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${
@@ -38,7 +41,7 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
         <div className="pt-4 border-t border-slate-100 flex items-center justify-end gap-3">
           <button
             type="button"
-            onClick={onClose}
+            onClick={handleClose}
             className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-lg transition-colors"
           >
             {cancelText}
@@ -47,7 +50,7 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
             type="button"
             onClick={() => {
               onConfirm();
-              onClose();
+              handleClose();
             }}
             className={`px-4 py-2 text-white text-xs font-bold rounded-lg transition-colors ${
               isDangerous ? 'bg-red-600 hover:bg-red-700' : 'bg-[#0B1E36] hover:bg-[#0F2C59]'
@@ -60,3 +63,5 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
     </Modal>
   );
 };
+
+export default ConfirmDialog;

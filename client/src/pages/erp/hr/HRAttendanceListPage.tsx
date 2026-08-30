@@ -21,11 +21,11 @@ const HRAttendanceListPage: React.FC = () => {
     try {
       setLoading(true);
       setError(null);
-      const data = await hrOperationsService.getAttendanceList({
+      const res = await hrOperationsService.getAttendanceRecords({
         status: statusFilter || undefined,
         attendance_date: dateFilter || undefined,
       });
-      setRecords(data || []);
+      setRecords(res?.data || []);
     } catch (err: any) {
       setError(err?.response?.data?.message || 'Failed to load factory attendance registry.');
     } finally {

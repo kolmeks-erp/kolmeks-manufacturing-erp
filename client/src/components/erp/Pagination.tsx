@@ -4,16 +4,16 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 interface PaginationProps {
   currentPage: number;
   totalPages: number;
-  totalItems: number;
-  itemsPerPage: number;
+  totalItems?: number;
+  itemsPerPage?: number;
   onPageChange: (page: number) => void;
 }
 
 export const Pagination: React.FC<PaginationProps> = ({
   currentPage,
   totalPages,
-  totalItems,
-  itemsPerPage,
+  totalItems = 0,
+  itemsPerPage = 10,
   onPageChange,
 }) => {
   const startItem = totalItems === 0 ? 0 : (currentPage - 1) * itemsPerPage + 1;

@@ -5,6 +5,7 @@ import StatusBadge from '../../../components/common/StatusBadge';
 import LoadingState from '../../../components/erp/LoadingState';
 import ErrorState from '../../../components/erp/ErrorState';
 import { hrOperationsService } from '../../../services/hr_operations.service';
+import { employeeService } from '../../../services/employee.service';
 import { Shift } from '../../../types/hr_operations';
 import { Users, Clock, ShieldAlert } from 'lucide-react';
 
@@ -37,11 +38,11 @@ const HREmployeeListPage: React.FC = () => {
     try {
       setLoading(true);
       setError(null);
-      const [empData, shiftData] = await Promise.all([
-        hrOperationsService.getEmployees(),
+      const [empRes, shiftData] = await Promise.all([
+        employeeService.getEmployees(),
         hrOperationsService.getShifts(),
       ]);
-      setEmployees(empData || []);
+      setEmployees((empRes?.data as any) || []);
       setShifts(shiftData || []);
     } catch (err: any) {
       setError(err?.response?.data?.message || 'Failed to load employee directory.');
@@ -60,7 +61,7 @@ const HREmployeeListPage: React.FC = () => {
 
     try {
       setSubmitting(true);
-      await hrOperationsService.assignShift({
+      await hrOperationsService.assignEmployeeShift({
         employee_id: selectedEmployee.id,
         shift_id: assignedShiftId,
       });

@@ -1,4 +1,4 @@
-import { Employee } from './index';
+import { Employee } from './employee';
 
 export type AttendanceStatus =
   | 'PRESENT'
@@ -96,6 +96,8 @@ export interface LeaveType {
   description?: string;
   paid: boolean;
   default_days: number;
+  default_days_per_year?: number;
+  carry_forward_allowed?: boolean;
   requires_approval: boolean;
   status: 'ACTIVE' | 'INACTIVE';
   created_at?: string;

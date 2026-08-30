@@ -101,7 +101,7 @@ const WorkOrderFormPage: React.FC = () => {
       const validChecklists = checklists.filter(c => c.title.trim() !== '');
       const created = await maintenanceService.createWorkOrder({
         ...formData,
-        checklists: validChecklists
+        checklists: validChecklists as any
       });
       navigate(`/secure-kolmeks-x0y0/maintenance/work-orders/${created.id}`);
     } catch (err: any) {

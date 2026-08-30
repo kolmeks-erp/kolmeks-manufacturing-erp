@@ -122,3 +122,5 @@ export class ProductService {
     return response.data.data;
   }
 }
+
+export const productService = ProductService;

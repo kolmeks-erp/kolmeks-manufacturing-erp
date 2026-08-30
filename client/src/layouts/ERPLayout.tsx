@@ -39,6 +39,18 @@ import {
   LogOut,
   User,
   ChevronDown,
+  DollarSign,
+  BookOpen,
+  Calendar,
+  Scale,
+  TrendingUp,
+  PieChart,
+  TrendingDown,
+  FileCheck,
+  ClipboardList,
+  Clock,
+  Timer,
+  CalendarRange,
 } from 'lucide-react';
 import { ERP_SIDEBAR_MENU, ERP_BASE_PATH } from '../constants/navigation';
 import { useAuth } from '../context/AuthContext';
@@ -76,6 +88,18 @@ const iconMap: Record<string, React.ElementType> = {
   FolderTree,
   GitFork,
   Play,
+  DollarSign,
+  BookOpen,
+  Calendar,
+  Scale,
+  TrendingUp,
+  PieChart,
+  TrendingDown,
+  FileCheck,
+  ClipboardList,
+  Clock,
+  Timer,
+  CalendarRange,
 };
 
 const formatRoleLabel = (roleName?: string | null): string => {

@@ -123,6 +123,47 @@ import MyHRDashboardPage from '../pages/erp/hr/MyHRDashboardPage';
 import MyAttendancePage from '../pages/erp/hr/MyAttendancePage';
 import MyLeavePage from '../pages/erp/hr/MyLeavePage';
 
+import FinanceDashboardPage from '../pages/erp/finance/FinanceDashboardPage';
+import ChartOfAccountsPage from '../pages/erp/finance/ChartOfAccountsPage';
+import AccountDetailPage from '../pages/erp/finance/AccountDetailPage';
+import JournalEntryListPage from '../pages/erp/finance/JournalEntryListPage';
+import JournalEntryFormPage from '../pages/erp/finance/JournalEntryFormPage';
+import JournalEntryDetailPage from '../pages/erp/finance/JournalEntryDetailPage';
+import FinancialPeriodListPage from '../pages/erp/finance/FinancialPeriodListPage';
+import GeneralLedgerPage from '../pages/erp/finance/GeneralLedgerPage';
+import TrialBalancePage from '../pages/erp/finance/TrialBalancePage';
+import { ProfitLossPage } from '../pages/erp/finance/ProfitLossPage';
+import { BalanceSheetPage } from '../pages/erp/finance/BalanceSheetPage';
+
+import { InvoiceListPage } from '../pages/erp/sales-invoices/InvoiceListPage';
+import { InvoiceFormPage } from '../pages/erp/sales-invoices/InvoiceFormPage';
+import { InvoiceDetailPage } from '../pages/erp/sales-invoices/InvoiceDetailPage';
+import { CustomerReceivablesPage } from '../pages/erp/finance/CustomerReceivablesPage';
+import { PaymentListPage } from '../pages/erp/finance/PaymentListPage';
+import { PaymentFormPage } from '../pages/erp/finance/PaymentFormPage';
+import { PaymentDetailPage } from '../pages/erp/finance/PaymentDetailPage';
+import { ReceivableAgingPage } from '../pages/erp/finance/ReceivableAgingPage';
+import { CustomerStatementPage } from '../pages/erp/finance/CustomerStatementPage';
+
+import { PurchaseInvoiceListPage } from '../pages/erp/purchase-invoices/PurchaseInvoiceListPage';
+import { PurchaseInvoiceFormPage } from '../pages/erp/purchase-invoices/PurchaseInvoiceFormPage';
+import { PurchaseInvoiceDetailPage } from '../pages/erp/purchase-invoices/PurchaseInvoiceDetailPage';
+import { SupplierPayablesPage } from '../pages/erp/finance/SupplierPayablesPage';
+import { SupplierPaymentListPage } from '../pages/erp/finance/SupplierPaymentListPage';
+import { SupplierPaymentFormPage } from '../pages/erp/finance/SupplierPaymentFormPage';
+import { SupplierPaymentDetailPage } from '../pages/erp/finance/SupplierPaymentDetailPage';
+import { PayableAgingPage } from '../pages/erp/finance/PayableAgingPage';
+import { SupplierStatementPage } from '../pages/erp/finance/SupplierStatementPage';
+
+import { BudgetDashboardPage } from '../pages/erp/finance/BudgetDashboardPage';
+import { BudgetListPage } from '../pages/erp/finance/BudgetListPage';
+import { BudgetFormPage } from '../pages/erp/finance/BudgetFormPage';
+import { BudgetDetailPage } from '../pages/erp/finance/BudgetDetailPage';
+import { BudgetVariancePage } from '../pages/erp/finance/BudgetVariancePage';
+import { BudgetApprovalsPage } from '../pages/erp/finance/BudgetApprovalsPage';
+import { CostCenterListPage } from '../pages/erp/finance/CostCenterListPage';
+import { CostCenterDetailPage } from '../pages/erp/finance/CostCenterDetailPage';
+
 import { ProtectedRoute } from '../components/auth/ProtectedRoute';
 import { ERP_BASE_PATH } from '../constants/navigation';
 
@@ -321,6 +362,67 @@ export const AppRoutes: React.FC = () => {
           <Route path="my-hr" element={<MyHRDashboardPage />} />
           <Route path="my-hr/attendance" element={<MyAttendancePage />} />
           <Route path="my-hr/leave" element={<MyLeavePage />} />
+
+          {/* Commercial Sales Invoices Authorized Routes */}
+          <Route element={<ProtectedRoute allowedRoles={['admin', 'sales_manager', 'finance', 'accountant', 'executive']} />}>
+            <Route path="sales/invoices" element={<InvoiceListPage />} />
+            <Route path="sales/invoices/new" element={<InvoiceFormPage />} />
+            <Route path="sales/invoices/:id" element={<InvoiceDetailPage />} />
+          </Route>
+
+          {/* Procurement Purchase Invoices Authorized Routes */}
+          <Route element={<ProtectedRoute allowedRoles={['admin', 'purchase_manager', 'finance', 'accountant', 'executive']} />}>
+            <Route path="purchases/invoices" element={<PurchaseInvoiceListPage />} />
+            <Route path="purchases/invoices/new" element={<PurchaseInvoiceFormPage />} />
+            <Route path="purchases/invoices/:id" element={<PurchaseInvoiceDetailPage />} />
+          </Route>
+
+          {/* Finance & Accounting Authorized Routes */}
+          <Route element={<ProtectedRoute allowedRoles={['admin', 'finance', 'accountant', 'manager']} />}>
+            <Route path="finance" element={<FinanceDashboardPage />} />
+
+            {/* Budgeting & Cost Management Routes */}
+            <Route path="finance/budgets" element={<BudgetDashboardPage />} />
+            <Route path="finance/budgets/list" element={<BudgetListPage />} />
+            <Route path="finance/budgets/new" element={<BudgetFormPage />} />
+            <Route path="finance/budgets/approvals" element={<BudgetApprovalsPage />} />
+            <Route path="finance/budgets/:id" element={<BudgetDetailPage />} />
+            <Route path="finance/budgets/:id/variance" element={<BudgetVariancePage />} />
+
+            {/* Cost Center Routes */}
+            <Route path="finance/cost-centers" element={<CostCenterListPage />} />
+            <Route path="finance/cost-centers/:id" element={<CostCenterDetailPage />} />
+
+            <Route path="finance/receivables" element={<CustomerReceivablesPage />} />
+            <Route path="finance/receivables/aging" element={<ReceivableAgingPage />} />
+            <Route path="finance/receivables/customer/:id" element={<CustomerStatementPage />} />
+            <Route path="finance/receivables/customer/:id/statement" element={<CustomerStatementPage />} />
+            <Route path="finance/customers/:id/statement" element={<CustomerStatementPage />} />
+            <Route path="finance/payments" element={<PaymentListPage />} />
+            <Route path="finance/payments/new" element={<PaymentFormPage />} />
+            <Route path="finance/payments/:id" element={<PaymentDetailPage />} />
+
+            {/* Accounts Payable & Supplier Payments */}
+            <Route path="finance/payables" element={<SupplierPayablesPage />} />
+            <Route path="finance/payables/aging" element={<PayableAgingPage />} />
+            <Route path="finance/payables/supplier/:id" element={<SupplierStatementPage />} />
+            <Route path="finance/payables/supplier/:id/statement" element={<SupplierStatementPage />} />
+            <Route path="finance/suppliers/:id/statement" element={<SupplierStatementPage />} />
+            <Route path="finance/supplier-payments" element={<SupplierPaymentListPage />} />
+            <Route path="finance/supplier-payments/new" element={<SupplierPaymentFormPage />} />
+            <Route path="finance/supplier-payments/:id" element={<SupplierPaymentDetailPage />} />
+
+            <Route path="finance/accounts" element={<ChartOfAccountsPage />} />
+            <Route path="finance/accounts/:id" element={<AccountDetailPage />} />
+            <Route path="finance/journal-entries" element={<JournalEntryListPage />} />
+            <Route path="finance/journal-entries/new" element={<JournalEntryFormPage />} />
+            <Route path="finance/journal-entries/:id" element={<JournalEntryDetailPage />} />
+            <Route path="finance/periods" element={<FinancialPeriodListPage />} />
+            <Route path="finance/general-ledger" element={<GeneralLedgerPage />} />
+            <Route path="finance/trial-balance" element={<TrialBalancePage />} />
+            <Route path="finance/profit-loss" element={<ProfitLossPage />} />
+            <Route path="finance/balance-sheet" element={<BalanceSheetPage />} />
+          </Route>
 
           {/* Admin Restricted Routes */}
           <Route element={<ProtectedRoute allowedRoles={['admin']} />}>

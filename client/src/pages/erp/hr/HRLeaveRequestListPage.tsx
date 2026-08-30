@@ -28,7 +28,7 @@ const HRLeaveRequestListPage: React.FC = () => {
       const data = await hrOperationsService.getLeaveRequests({
         status: statusFilter || undefined,
       });
-      setRequests(data || []);
+      setRequests(data?.data || (Array.isArray(data) ? data : []));
     } catch (err: any) {
       setError(err?.response?.data?.message || 'Failed to load leave requests queue.');
     } finally {

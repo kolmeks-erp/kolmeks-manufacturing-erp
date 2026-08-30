@@ -28,10 +28,10 @@ const MyLeavePage: React.FC = () => {
       setLoading(true);
       setError(null);
       const [reqData, typeData] = await Promise.all([
-        hrOperationsService.getMyLeaveRequests(),
+        hrOperationsService.getMyLeave(),
         hrOperationsService.getLeaveTypes(),
       ]);
-      setRequests(reqData || []);
+      setRequests(reqData?.requests || []);
       setLeaveTypes(typeData || []);
       if (typeData && typeData.length > 0 && !leaveTypeId) {
         setLeaveTypeId(typeData[0].id);
@@ -115,7 +115,7 @@ const MyLeavePage: React.FC = () => {
     {
       header: 'Manager Comments',
       accessor: (row: LeaveRequest) => (
-        <span className="text-slate-400 text-xs">{row.rejection_reason || row.approval_comments || 'N/A'}</span>
+        <span className="text-slate-400 text-xs">{row.rejection_reason || 'N/A'}</span>
       ),
     },
   ];

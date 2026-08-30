@@ -24,6 +24,10 @@ const productionRoutes = require('./routes/production.routes');
 const qualityRoutes = require('./routes/quality.routes');
 const maintenanceRoutes = require('./routes/maintenance.routes');
 const hrRoutes = require('./routes/hr_operations.routes');
+const financeRoutes = require('./routes/finance.routes');
+const salesInvoiceRoutes = require('./routes/sales_invoice.routes');
+const purchaseInvoiceRoutes = require('./routes/purchase_invoice.routes');
+const budgetingRoutes = require('./routes/budgeting.routes');
 const { publicRouter: rfqPublicRoutes, erpRouter: rfqErpRoutes } = require('./routes/rfq.routes');
 const errorHandler = require('./middleware/errorHandler');
 
@@ -72,6 +76,11 @@ app.use('/api/production', productionRoutes);
 app.use('/api/quality', qualityRoutes);
 app.use('/api/maintenance', maintenanceRoutes);
 app.use('/api/hr', hrRoutes);
+app.use('/api/finance', financeRoutes);
+app.use('/api/sales', salesInvoiceRoutes);
+app.use('/api/finance', salesInvoiceRoutes);
+app.use('/api', purchaseInvoiceRoutes);
+app.use('/api', budgetingRoutes);
 
 // Root Endpoint
 app.get('/', (req, res) => {

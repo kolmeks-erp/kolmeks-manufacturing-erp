@@ -4,6 +4,7 @@ import DataTable from '../../../components/common/DataTable';
 import LoadingState from '../../../components/erp/LoadingState';
 import ErrorState from '../../../components/erp/ErrorState';
 import { hrOperationsService } from '../../../services/hr_operations.service';
+import { employeeService } from '../../../services/employee.service';
 import { LeaveBalance, LeaveType } from '../../../types/hr_operations';
 import { Calendar, Plus } from 'lucide-react';
 
@@ -32,14 +33,14 @@ const HRLeaveListPage: React.FC = () => {
     try {
       setLoading(true);
       setError(null);
-      const [balData, typeData, empData] = await Promise.all([
+      const [balData, typeData, empRes] = await Promise.all([
         hrOperationsService.getLeaveBalances(),
         hrOperationsService.getLeaveTypes(),
-        hrOperationsService.getEmployees(),
+        employeeService.getEmployees(),
       ]);
       setBalances(balData || []);
       setLeaveTypes(typeData || []);
-      setEmployees(empData || []);
+      setEmployees((empRes?.data as any) || []);
     } catch (err: any) {
       setError(err?.response?.data?.message || 'Failed to load leave balances.');
     } finally {
@@ -57,7 +58,7 @@ const HRLeaveListPage: React.FC = () => {
 
     try {
       setSubmitting(true);
-      await hrOperationsService.allocateLeaveQuota({
+      await hrOperationsService.allocateLeaveBalance({
         employee_id: selectedEmpId,
         leave_type_id: selectedLeaveTypeId,
         allocated_days: parseFloat(allocatedDays) || 0,

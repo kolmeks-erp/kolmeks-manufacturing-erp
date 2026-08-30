@@ -26,6 +26,10 @@ export const PUBLIC_NAV_ITEMS: NavItem[] = [
 const ALL_ROLES: UserRoleName[] = [
   'admin',
   'hr',
+  'finance',
+  'finance_manager',
+  'accountant',
+  'manager',
   'sales_manager',
   'purchase_manager',
   'production_manager',
@@ -41,6 +45,7 @@ export const ERP_SIDEBAR_MENU: ERPMenuItem[] = [
   { id: 'rfqs', label: 'RFQs Management', path: `${ERP_BASE_PATH}/rfqs`, iconName: 'FileText', category: 'Sales', badge: 'Live', roles: ['admin', 'sales_manager', 'production_manager', 'quality_manager'] },
   { id: 'quotations', label: 'Quotations', path: `${ERP_BASE_PATH}/quotations`, iconName: 'FileSpreadsheet', category: 'Sales', badge: 'Live', roles: ['admin', 'sales_manager'] },
   { id: 'sales-orders', label: 'Sales Orders', path: `${ERP_BASE_PATH}/sales-orders`, iconName: 'FileCheck', category: 'Sales', badge: 'Live', roles: ['admin', 'sales_manager', 'executive'] },
+  { id: 'sales-invoices', label: 'Sales Invoices', path: `${ERP_BASE_PATH}/sales/invoices`, iconName: 'FileText', category: 'Sales', badge: 'Live', roles: ['admin', 'sales_manager', 'finance', 'accountant', 'executive'] },
   { id: 'customers', label: 'Customers', path: `${ERP_BASE_PATH}/customers`, iconName: 'Users', category: 'Sales', badge: 'Live', roles: ['admin', 'sales_manager'] },
 
   // Procurement Section
@@ -48,6 +53,7 @@ export const ERP_SIDEBAR_MENU: ERPMenuItem[] = [
   { id: 'purchase-requisitions', label: 'Purchase Requisitions', path: `${ERP_BASE_PATH}/purchase-requisitions`, iconName: 'ClipboardList', category: 'Procurement', badge: 'Live', roles: ['admin', 'purchase_manager', 'warehouse_manager', 'executive'] },
   { id: 'purchase-orders', label: 'Purchase Orders', path: `${ERP_BASE_PATH}/purchase-orders`, iconName: 'Receipt', category: 'Procurement', badge: 'Live', roles: ['admin', 'purchase_manager', 'warehouse_manager', 'executive'] },
   { id: 'goods-receipts', label: 'Goods Receipts (GRN)', path: `${ERP_BASE_PATH}/goods-receipts`, iconName: 'PackageCheck', category: 'Procurement', badge: 'Live', roles: ['admin', 'purchase_manager', 'warehouse_manager', 'executive'] },
+  { id: 'purchase-invoices', label: 'Purchase Invoices', path: `${ERP_BASE_PATH}/purchases/invoices`, iconName: 'FileText', category: 'Procurement', badge: 'Live', roles: ['admin', 'purchase_manager', 'finance', 'accountant', 'executive'] },
 
   // Products Section
   { id: 'products', label: 'Products Master', path: `${ERP_BASE_PATH}/products`, iconName: 'Package', category: 'Products', badge: 'Live', roles: ['admin', 'production_manager', 'sales_manager', 'quality_manager'] },
@@ -95,6 +101,26 @@ export const ERP_SIDEBAR_MENU: ERPMenuItem[] = [
   { id: 'hr-leave-types', label: 'Leave Policies', path: `${ERP_BASE_PATH}/hr/leave/types`, iconName: 'FileSpreadsheet', category: 'HR & Operations', badge: 'Live', roles: ['admin', 'hr'] },
   { id: 'hr-shifts', label: 'Shift Management', path: `${ERP_BASE_PATH}/hr/shifts`, iconName: 'Timer', category: 'HR & Operations', badge: 'Live', roles: ['admin', 'hr'] },
   { id: 'hr-holidays', label: 'Plant Holiday Calendar', path: `${ERP_BASE_PATH}/hr/holidays`, iconName: 'Calendar', category: 'HR & Operations', badge: 'Live', roles: ['admin', 'hr'] },
+
+  // Finance & Accounting Section
+  { id: 'finance-dashboard', label: 'Finance Dashboard', path: `${ERP_BASE_PATH}/finance`, iconName: 'DollarSign', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'accountant', 'manager'] },
+  { id: 'finance-budgets', label: 'Budgets Overview', path: `${ERP_BASE_PATH}/finance/budgets`, iconName: 'PieChart', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'accountant', 'manager', 'executive'] },
+  { id: 'finance-budget-list', label: 'Budget Register', path: `${ERP_BASE_PATH}/finance/budgets/list`, iconName: 'FileSpreadsheet', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'accountant', 'manager', 'executive'] },
+  { id: 'finance-cost-centers', label: 'Cost Centers', path: `${ERP_BASE_PATH}/finance/cost-centers`, iconName: 'Building2', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'accountant', 'manager', 'executive'] },
+  { id: 'finance-budget-approvals', label: 'Budget Approvals', path: `${ERP_BASE_PATH}/finance/budgets/approvals`, iconName: 'CheckCircle', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'finance_manager'] },
+  { id: 'finance-receivables', label: 'Accounts Receivable', path: `${ERP_BASE_PATH}/finance/receivables`, iconName: 'DollarSign', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'accountant', 'manager'] },
+  { id: 'finance-payables', label: 'Accounts Payable', path: `${ERP_BASE_PATH}/finance/payables`, iconName: 'CreditCard', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'accountant', 'manager'] },
+  { id: 'finance-supplier-payments', label: 'Supplier Payments', path: `${ERP_BASE_PATH}/finance/supplier-payments`, iconName: 'CreditCard', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'accountant', 'manager'] },
+  { id: 'finance-payable-aging', label: 'Payable Aging', path: `${ERP_BASE_PATH}/finance/payables/aging`, iconName: 'BarChart2', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'accountant', 'manager'] },
+  { id: 'finance-payments', label: 'Customer Payments', path: `${ERP_BASE_PATH}/finance/payments`, iconName: 'CreditCard', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'accountant', 'manager'] },
+  { id: 'finance-aging', label: 'Receivable Aging', path: `${ERP_BASE_PATH}/finance/receivables/aging`, iconName: 'BarChart2', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'accountant', 'manager'] },
+  { id: 'finance-accounts', label: 'Chart of Accounts', path: `${ERP_BASE_PATH}/finance/accounts`, iconName: 'FolderTree', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'accountant', 'manager'] },
+  { id: 'finance-journal-entries', label: 'Journal Entries', path: `${ERP_BASE_PATH}/finance/journal-entries`, iconName: 'FileText', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'accountant', 'manager'] },
+  { id: 'finance-general-ledger', label: 'General Ledger', path: `${ERP_BASE_PATH}/finance/general-ledger`, iconName: 'BookOpen', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'accountant', 'manager'] },
+  { id: 'finance-periods', label: 'Financial Periods', path: `${ERP_BASE_PATH}/finance/periods`, iconName: 'Calendar', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'accountant', 'manager'] },
+  { id: 'finance-trial-balance', label: 'Trial Balance', path: `${ERP_BASE_PATH}/finance/trial-balance`, iconName: 'Scale', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'accountant', 'manager'] },
+  { id: 'finance-profit-loss', label: 'Profit & Loss (P&L)', path: `${ERP_BASE_PATH}/finance/profit-loss`, iconName: 'TrendingUp', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'accountant', 'manager'] },
+  { id: 'finance-balance-sheet', label: 'Balance Sheet', path: `${ERP_BASE_PATH}/finance/balance-sheet`, iconName: 'PieChart', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'accountant', 'manager'] },
 
   // Employee Self-Service Section
   { id: 'my-hr', label: 'Employee Portal (My HR)', path: `${ERP_BASE_PATH}/my-hr`, iconName: 'UserCheck', category: 'Self Service', badge: 'Live', roles: ALL_ROLES },

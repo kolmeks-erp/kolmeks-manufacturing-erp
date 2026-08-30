@@ -17,11 +17,11 @@ import LoadingState from '../../../components/erp/LoadingState';
 import ErrorState from '../../../components/erp/ErrorState';
 import ConfirmDialog from '../../../components/erp/ConfirmDialog';
 import { maintenanceService } from '../../../services/maintenance.service';
-import { productService } from '../../../services/product.service';
+import { ProductService } from '../../../services/product.service';
 import { warehouseService } from '../../../services/warehouse.service';
 import { WorkOrder, WorkOrderChecklist, SparePartUsed } from '../../../types/maintenance';
 import { Product } from '../../../types/product';
-import { Warehouse } from '../../../types/warehouse';
+import { Warehouse } from '../../../types/inventory';
 
 const WorkOrderDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -71,11 +71,11 @@ const WorkOrderDetailPage: React.FC = () => {
   const loadPartDropdowns = async () => {
     try {
       const [pList, wList] = await Promise.all([
-        productService.getProducts({ limit: 100 }),
+        ProductService.getProducts({ limit: 100 }),
         warehouseService.getWarehouses()
       ]);
       setProducts(pList.data || []);
-      setWarehouses(wList || []);
+      setWarehouses(wList?.data || []);
     } catch (err) {
       console.error('Failed to load part dropdowns', err);
     }
@@ -408,7 +408,7 @@ const WorkOrderDetailPage: React.FC = () => {
                 >
                   <option value="">Select Spare Part Product...</option>
                   {products.map((prod) => (
-                    <option key={prod.id} value={prod.id}>{prod.code} - {prod.name}</option>
+                    <option key={prod.id} value={prod.id}>{prod.product_code} - {prod.name}</option>
                   ))}
                 </select>
               </div>
