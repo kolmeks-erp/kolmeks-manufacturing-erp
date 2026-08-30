@@ -246,7 +246,7 @@ export const PurchaseInvoiceDetailPage: React.FC = () => {
                   <tr key={line.id}>
                     <td className="py-3 px-4 font-medium text-slate-900">
                       {line.description}
-                      {line.product && <span className="block text-[11px] text-slate-400">SKU: {line.product.sku}</span>}
+                      {line.product && <span className="block text-[11px] text-slate-400">Code: {line.product.product_code || (line.product as any).sku}</span>}
                     </td>
                     <td className="py-3 px-4 text-center font-bold text-slate-800">
                       {line.quantity} {line.unit}

@@ -27,7 +27,7 @@ export const BudgetListPage: React.FC = () => {
     try {
       setLoading(true);
       setError(null);
-      const [budgetsRes, periodsRes] = await Promise.all([
+      const [budgetsRes, periodsData] = await Promise.all([
         budgetingService.getBudgets({
           status: selectedStatus || undefined,
           period_id: selectedPeriod || undefined,
@@ -37,7 +37,8 @@ export const BudgetListPage: React.FC = () => {
       ]);
 
       if (budgetsRes.success) setBudgets(budgetsRes.data);
-      if (periodsRes.success) setPeriods(periodsRes.data);
+      const pList = Array.isArray(periodsData) ? periodsData : (periodsData as any)?.data || [];
+      setPeriods(pList);
     } catch (err: any) {
       console.error('Error fetching budgets list:', err);
       setError(err?.response?.data?.message || 'Failed to load budgets.');

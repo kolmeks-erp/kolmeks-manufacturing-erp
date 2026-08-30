@@ -110,7 +110,12 @@ const formatRoleLabel = (roleName?: string | null): string => {
     .join(' ');
 };
 
-export const ERPLayout: React.FC = () => {
+interface ERPLayoutProps {
+  children?: React.ReactNode;
+  activeTab?: string;
+}
+
+export const ERPLayout: React.FC<ERPLayoutProps> = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
@@ -360,7 +365,7 @@ export const ERPLayout: React.FC = () => {
 
         {/* MAIN OUTLET CONTENT */}
         <main className="flex-1 p-4 lg:p-8">
-          <Outlet />
+          {children || <Outlet />}
         </main>
       </div>
     </div>

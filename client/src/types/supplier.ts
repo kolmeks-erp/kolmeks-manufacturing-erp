@@ -23,6 +23,7 @@ export interface Supplier {
   id: string;
   supplier_code: string;
   company_name: string;
+  supplier_name?: string;
   legal_name?: string | null;
   email?: string | null;
   phone?: string | null;
@@ -34,6 +35,7 @@ export interface Supplier {
   address?: string | null;
   industry?: string | null;
   supplier_type: SupplierType;
+  payment_terms?: string | null;
   status: SupplierStatus;
   notes?: string | null;
   created_at: string;

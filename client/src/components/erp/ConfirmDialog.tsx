@@ -10,8 +10,11 @@ interface ConfirmDialogProps {
   title: string;
   message: string;
   confirmText?: string;
+  confirmLabel?: string;
   cancelText?: string;
+  cancelLabel?: string;
   isDangerous?: boolean;
+  isLoading?: boolean;
 }
 
 export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
@@ -22,10 +25,15 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
   title,
   message,
   confirmText = 'Confirm',
+  confirmLabel,
   cancelText = 'Cancel',
+  cancelLabel,
   isDangerous = false,
+  isLoading = false,
 }) => {
   const handleClose = onClose || onCancel || (() => {});
+  const finalConfirmText = confirmLabel || confirmText;
+  const finalCancelText = cancelLabel || cancelText;
   return (
     <Modal isOpen={isOpen} onClose={handleClose} title={title}>
       <div className="space-y-4">
@@ -42,9 +50,10 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
           <button
             type="button"
             onClick={handleClose}
-            className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-lg transition-colors"
+            disabled={isLoading}
+            className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-lg transition-colors disabled:opacity-50"
           >
-            {cancelText}
+            {finalCancelText}
           </button>
           <button
             type="button"
@@ -52,11 +61,12 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
               onConfirm();
               handleClose();
             }}
-            className={`px-4 py-2 text-white text-xs font-bold rounded-lg transition-colors ${
+            disabled={isLoading}
+            className={`px-4 py-2 text-white text-xs font-bold rounded-lg transition-colors disabled:opacity-50 ${
               isDangerous ? 'bg-red-600 hover:bg-red-700' : 'bg-[#0B1E36] hover:bg-[#0F2C59]'
             }`}
           >
-            {confirmText}
+            {isLoading ? 'Processing...' : finalConfirmText}
           </button>
         </div>
       </div>

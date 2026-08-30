@@ -27,6 +27,8 @@ export interface ChartOfAccount {
   children?: ChartOfAccount[];
 }
 
+export type Account = ChartOfAccount;
+
 export type PeriodStatus = 'OPEN' | 'CLOSED';
 
 export interface FinancialPeriod {

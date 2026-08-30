@@ -43,6 +43,10 @@ export const financeService = {
     const res = await api.get('/finance/periods');
     return res.data.data;
   },
+  getFinancialPeriods: async (): Promise<FinancialPeriod[]> => {
+    const res = await api.get('/finance/periods');
+    return res.data.data;
+  },
 
   createPeriod: async (data: { period_name: string; start_date: string; end_date: string }): Promise<FinancialPeriod> => {
     const res = await api.post('/finance/periods', data);

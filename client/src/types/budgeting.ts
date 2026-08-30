@@ -21,6 +21,7 @@ export interface CostCenter {
   parent?: { id: string; code: string; name: string };
   manager?: Employee;
   children?: CostCenter[];
+  budgetLines?: BudgetLine[];
   created_at: string;
   updated_at: string;
 }

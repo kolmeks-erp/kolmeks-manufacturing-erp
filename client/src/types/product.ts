@@ -32,6 +32,8 @@ export interface Product {
   category?: ProductCategory | null;
   product_type: ProductType;
   unit: string;
+  unit_price?: number;
+  unit_of_measure?: string;
   material?: string | null;
   part_number?: string | null;
   revision: string;

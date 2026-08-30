@@ -220,7 +220,9 @@ export const BudgetDetailPage: React.FC = () => {
             <div className="text-base font-bold text-slate-100">
               {budget.owner ? `${budget.owner.first_name} ${budget.owner.last_name}` : 'Unassigned'}
             </div>
-            <div className="text-xs text-slate-400 mt-1">{budget.owner?.department || 'Finance Planning'}</div>
+            <div className="text-xs text-slate-400 mt-1">
+              {typeof budget.owner?.department === 'object' ? (budget.owner?.department as any)?.name : (budget.owner?.department || 'Finance Planning')}
+            </div>
           </div>
 
           <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-sm">

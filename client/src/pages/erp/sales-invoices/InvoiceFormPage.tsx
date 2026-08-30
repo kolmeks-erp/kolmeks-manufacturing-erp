@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { ArrowLeft, Save, Plus, Trash2, FileText, Calculator } from 'lucide-react';
 import { salesInvoiceService } from '../../../services/sales_invoice.service';
-import { customerService } from '../../../services/customer.service';
+import { CustomerService } from '../../../services/customer.service';
 import { productService } from '../../../services/product.service';
 import { salesOrderService } from '../../../services/sales_order.service';
 import { Customer } from '../../../types/customer';
@@ -58,27 +58,30 @@ export const InvoiceFormPage: React.FC = () => {
   useEffect(() => {
     const loadMasters = async () => {
       try {
-        const [custData, prodData, soData] = await Promise.all([
-          customerService.getCustomers({ status: 'active' }),
+        const [custRes, prodRes, soRes] = await Promise.all([
+          CustomerService.getCustomers({ status: 'active' }),
           productService.getProducts({ status: 'active' }),
           salesOrderService.getSalesOrders({ status: 'CONFIRMED' }),
         ]);
 
-        setCustomers(custData);
-        setProducts(prodData);
-        setSalesOrders(soData);
+        const prodList = prodRes.data || [];
+        const soList = soRes.data || [];
+
+        setCustomers(custRes.data || []);
+        setProducts(prodList);
+        setSalesOrders(soList);
 
         // Pre-fill from Sales Order if provided
         if (soId) {
-          const targetSo = soData.find((so) => so.id === soId);
+          const targetSo = soList.find((so: SalesOrder) => so.id === soId);
           if (targetSo) {
             setCustomerId(targetSo.customer_id);
-            setBillingAddress(targetSo.delivery_address || '');
+            setBillingAddress(targetSo.delivery_terms || targetSo.notes || '');
             if (targetSo.items && targetSo.items.length > 0) {
-              const prefLines: LineItem[] = targetSo.items.map((item) => ({
+              const prefLines: LineItem[] = targetSo.items.map((item: any) => ({
                 product_id: item.product_id || '',
                 sales_order_item_id: item.id,
-                description: item.description || item.product?.name || 'Line Item',
+                description: item.description || item.product_master?.name || 'Line Item',
                 quantity: item.quantity,
                 unit: item.unit || 'Pcs',
                 unit_price: item.unit_price,
@@ -200,7 +203,20 @@ export const InvoiceFormPage: React.FC = () => {
         payment_terms: paymentTerms,
         billing_address: billingAddress,
         notes,
-        lines,
+        lines: lines.map((l) => {
+          const qty = l.quantity || 0;
+          const price = l.unit_price || 0;
+          const disc = l.discount_type === 'percentage' ? (qty * price * l.discount) / 100 : l.discount;
+          const line_subtotal = qty * price - disc;
+          const tax_amount = (line_subtotal * (l.tax_rate || 0)) / 100;
+          const line_total = line_subtotal + tax_amount;
+          return {
+            ...l,
+            tax_amount,
+            line_subtotal,
+            line_total,
+          };
+        }),
       };
 
       const created = await salesInvoiceService.createInvoice(invoiceData);
@@ -268,7 +284,7 @@ export const InvoiceFormPage: React.FC = () => {
               <option value="">Direct Invoice (No Sales Order)</option>
               {salesOrders.map((so) => (
                 <option key={so.id} value={so.id}>
-                  {so.order_number} ({so.customer?.company_name})
+                  {so.order_number} ({so.customer_master?.company_name || 'Customer'})
                 </option>
               ))}
             </select>
@@ -368,7 +384,7 @@ export const InvoiceFormPage: React.FC = () => {
                         <option value="">Custom / Service</option>
                         {products.map((p) => (
                           <option key={p.id} value={p.id}>
-                            {p.name} ({p.sku})
+                            {p.name} ({p.product_code || 'N/A'})
                           </option>
                         ))}
                       </select>

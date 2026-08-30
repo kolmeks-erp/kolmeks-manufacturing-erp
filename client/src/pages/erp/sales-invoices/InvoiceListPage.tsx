@@ -12,7 +12,7 @@ import {
   CheckCircle,
 } from 'lucide-react';
 import { salesInvoiceService } from '../../../services/sales_invoice.service';
-import { customerService } from '../../../services/customer.service';
+import { CustomerService } from '../../../services/customer.service';
 import { SalesInvoice, InvoiceStatus } from '../../../types/sales_invoice';
 import { Customer } from '../../../types/customer';
 import { ERP_BASE_PATH } from '../../../constants/navigation';
@@ -42,13 +42,13 @@ export const InvoiceListPage: React.FC = () => {
       if (selectedCustomer !== 'ALL') params.customer_id = selectedCustomer;
       if (searchTerm.trim()) params.search = searchTerm.trim();
 
-      const [invData, custData] = await Promise.all([
+      const [invData, custRes] = await Promise.all([
         salesInvoiceService.getInvoices(params),
-        customerService.getCustomers({ status: 'active' }),
+        CustomerService.getCustomers({ status: 'active' }),
       ]);
 
       setInvoices(invData);
-      setCustomers(custData);
+      setCustomers(custRes.data || []);
     } catch (err: any) {
       setError(err?.response?.data?.error?.message || 'Failed to load sales invoices.');
     } finally {
@@ -195,7 +195,7 @@ export const InvoiceListPage: React.FC = () => {
         <EmptyState
           title="No sales invoices found"
           description="There are no invoices matching your filter criteria."
-          actionLabel="Create Sales Invoice"
+          actionText="Create Sales Invoice"
           onAction={() => navigate(`${ERP_BASE_PATH}/sales/invoices/new`)}
         />
       ) : (

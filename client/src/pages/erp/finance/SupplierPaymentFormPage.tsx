@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { ArrowLeft, Save, CreditCard, AlertTriangle, CheckCircle } from 'lucide-react';
 import { purchaseInvoiceService } from '../../../services/purchase_invoice.service';
-import { supplierService } from '../../../services/supplier.service';
+import { SupplierService } from '../../../services/supplier.service';
 import { Supplier } from '../../../types/supplier';
 import { PurchaseInvoice } from '../../../types/purchase_invoice';
 import { ERP_BASE_PATH } from '../../../constants/navigation';
@@ -33,7 +33,7 @@ export const SupplierPaymentFormPage: React.FC = () => {
 
   // Fetch Suppliers
   useEffect(() => {
-    supplierService.getSuppliers({ status: 'active' }).then(setSuppliers).catch(console.error);
+    SupplierService.getSuppliers({ status: 'active' }).then((res) => setSuppliers(res.data || [])).catch(console.error);
   }, []);
 
   // Fetch Open Purchase Invoices when Supplier changes

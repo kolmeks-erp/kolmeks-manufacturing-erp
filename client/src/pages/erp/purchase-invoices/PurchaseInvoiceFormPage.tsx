@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Save, Plus, Trash2, ShieldAlert, CheckCircle } from 'lucide-react';
 import { purchaseInvoiceService } from '../../../services/purchase_invoice.service';
-import { supplierService } from '../../../services/supplier.service';
-import { procurementService } from '../../../services/procurement.service';
-import { grnService } from '../../../services/grn.service';
+import { SupplierService } from '../../../services/supplier.service';
+import { ProcurementService } from '../../../services/procurement.service';
+import { GrnService } from '../../../services/grn.service';
 import { Supplier } from '../../../types/supplier';
 import { PurchaseOrder } from '../../../types/procurement';
 import { GoodsReceipt } from '../../../types/grn';
@@ -48,7 +48,9 @@ export const PurchaseInvoiceFormPage: React.FC = () => {
 
   // Fetch Suppliers
   useEffect(() => {
-    supplierService.getSuppliers({ status: 'active' }).then(setSuppliers).catch(console.error);
+    SupplierService.getSuppliers({ status: 'active' })
+      .then((res) => setSuppliers(res.data || []))
+      .catch(console.error);
   }, []);
 
   // Fetch POs & GRNs when Supplier is selected
@@ -70,13 +72,19 @@ export const PurchaseInvoiceFormPage: React.FC = () => {
     d.setDate(d.getDate() + 30);
     setDueDate(d.toISOString().split('T')[0]);
 
-    procurementService.getPurchaseOrders().then((pos) => {
-      setPurchaseOrders(pos.filter((p) => p.supplier_id === supplierId && p.status !== 'CANCELLED'));
-    }).catch(console.error);
+    ProcurementService.getPurchaseOrders()
+      .then((res) => {
+        const pos = res.data || [];
+        setPurchaseOrders(pos.filter((p: any) => p.supplier_id === supplierId && p.status !== 'CANCELLED'));
+      })
+      .catch(console.error);
 
-    grnService.getGoodsReceipts().then((gList) => {
-      setGrns(gList.filter((g) => g.supplier_id === supplierId));
-    }).catch(console.error);
+    GrnService.getGoodsReceipts()
+      .then((res) => {
+        const gList = res.data || [];
+        setGrns(gList.filter((g: any) => g.supplier_id === supplierId));
+      })
+      .catch(console.error);
   }, [supplierId, invoiceDate]);
 
   // Load PO Items into lines when PO is selected
@@ -84,9 +92,9 @@ export const PurchaseInvoiceFormPage: React.FC = () => {
     setPurchaseOrderId(poId);
     if (!poId) return;
     try {
-      const po = await procurementService.getPurchaseOrderById(poId);
+      const po = await ProcurementService.getPurchaseOrderById(poId);
       if (po && po.items) {
-        const autoLines = po.items.map((item) => ({
+        const autoLines = po.items.map((item: any) => ({
           purchase_order_item_id: item.id,
           product_id: item.product_id,
           description: item.description || item.product?.name || 'Item',

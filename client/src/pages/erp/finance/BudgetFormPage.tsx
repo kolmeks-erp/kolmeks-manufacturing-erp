@@ -46,21 +46,25 @@ export const BudgetFormPage: React.FC = () => {
     const loadMasterData = async () => {
       try {
         setLoading(true);
-        const [periodsRes, accountsRes, centersRes, empRes] = await Promise.all([
+        const [periodsData, accountsData, centersData, empData] = await Promise.all([
           financeService.getFinancialPeriods(),
           financeService.getAccounts({ status: 'ACTIVE' }),
           budgetingService.getCostCenters({ is_active: true }),
           employeeService.getEmployees({ limit: 100 }),
         ]);
 
-        if (periodsRes.success) {
-          setPeriods(periodsRes.data);
-          const openPeriod = periodsRes.data.find((p) => p.status === 'OPEN');
-          if (openPeriod) setPeriodId(openPeriod.id);
-        }
-        if (accountsRes.success) setAccounts(accountsRes.data);
-        if (centersRes.success) setCostCenters(centersRes.data);
-        if (empRes.success) setEmployees(empRes.data);
+        const pList = Array.isArray(periodsData) ? periodsData : (periodsData as any)?.data || [];
+        const aList = Array.isArray(accountsData) ? accountsData : (accountsData as any)?.data || [];
+        const cList = Array.isArray(centersData) ? centersData : (centersData as any)?.data || [];
+        const eList = Array.isArray(empData) ? empData : (empData as any)?.data || [];
+
+        setPeriods(pList);
+        const openPeriod = pList.find((p: any) => p.status === 'OPEN');
+        if (openPeriod) setPeriodId(openPeriod.id);
+
+        setAccounts(aList);
+        setCostCenters(cList);
+        setEmployees(eList);
       } catch (err: any) {
         console.error('Failed to load budget form dependencies:', err);
         setError('Failed to load Chart of Accounts or Cost Centers.');
@@ -219,7 +223,7 @@ export const BudgetFormPage: React.FC = () => {
                   <option value="">-- Unassigned --</option>
                   {employees.map((emp) => (
                     <option key={emp.id} value={emp.id}>
-                      {emp.first_name} {emp.last_name} ({emp.department || 'Staff'})
+                      {emp.first_name} {emp.last_name} ({typeof emp.department === 'object' ? (emp.department as any)?.name : (emp.department || 'Staff')})
                     </option>
                   ))}
                 </select>

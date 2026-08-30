@@ -5,6 +5,7 @@ interface EmptyStateProps {
   title: string;
   description: string;
   actionText?: string;
+  actionLabel?: string;
   onAction?: () => void;
   action?: React.ReactNode;
   icon?: React.ElementType | React.ReactNode;
@@ -15,11 +16,13 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
   title,
   description,
   actionText,
+  actionLabel,
   onAction,
   action,
   icon: IconProp,
   className = '',
 }) => {
+  const btnText = actionText || actionLabel;
   const renderIcon = () => {
     if (!IconProp) return <FolderOpen className="w-8 h-8" />;
     if (typeof IconProp === 'function' || (typeof IconProp === 'object' && IconProp !== null && '$$typeof' in IconProp && typeof (IconProp as any).type === 'function')) {
@@ -38,13 +41,13 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
       <p className="text-xs text-slate-500 max-w-md mx-auto leading-relaxed mb-6">{description}</p>
       {action ? (
         action
-      ) : actionText && onAction ? (
+      ) : btnText && onAction ? (
         <button
           type="button"
           onClick={onAction}
           className="inline-flex items-center px-4 py-2 bg-[#0B1E36] hover:bg-[#0F2C59] text-white text-xs font-bold rounded-lg transition-colors"
         >
-          {actionText}
+          {btnText}
         </button>
       ) : null}
     </div>

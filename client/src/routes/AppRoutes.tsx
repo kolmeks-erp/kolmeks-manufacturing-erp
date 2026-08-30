@@ -132,8 +132,8 @@ import JournalEntryDetailPage from '../pages/erp/finance/JournalEntryDetailPage'
 import FinancialPeriodListPage from '../pages/erp/finance/FinancialPeriodListPage';
 import GeneralLedgerPage from '../pages/erp/finance/GeneralLedgerPage';
 import TrialBalancePage from '../pages/erp/finance/TrialBalancePage';
-import { ProfitLossPage } from '../pages/erp/finance/ProfitLossPage';
-import { BalanceSheetPage } from '../pages/erp/finance/BalanceSheetPage';
+import ProfitLossPage from '../pages/erp/finance/ProfitLossPage';
+import BalanceSheetPage from '../pages/erp/finance/BalanceSheetPage';
 
 import { InvoiceListPage } from '../pages/erp/sales-invoices/InvoiceListPage';
 import { InvoiceFormPage } from '../pages/erp/sales-invoices/InvoiceFormPage';

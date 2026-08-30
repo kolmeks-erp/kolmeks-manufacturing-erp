@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { ArrowLeft, Save, CreditCard, CheckSquare, Square } from 'lucide-react';
 import { salesInvoiceService } from '../../../services/sales_invoice.service';
-import { customerService } from '../../../services/customer.service';
+import { CustomerService } from '../../../services/customer.service';
 import { Customer } from '../../../types/customer';
 import { SalesInvoice, PaymentMethod } from '../../../types/sales_invoice';
 import { ERP_BASE_PATH } from '../../../constants/navigation';
@@ -31,7 +31,7 @@ export const PaymentFormPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    customerService.getCustomers({ status: 'active' }).then(setCustomers).catch(console.error);
+    CustomerService.getCustomers({ status: 'active' }).then((res) => setCustomers(res.data || [])).catch(console.error);
   }, []);
 
   // Fetch open invoices when customerId changes

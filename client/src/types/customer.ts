@@ -41,6 +41,8 @@ export interface Customer {
   city?: string;
   postal_code?: string;
   address?: string;
+  billing_address?: string;
+  payment_terms?: string;
   industry?: string;
   tax_id?: string;
   status: CustomerStatus;
