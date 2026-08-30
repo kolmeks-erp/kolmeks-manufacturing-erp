@@ -1,9 +1,9 @@
-import { supabase } from '../config/supabase.js';
+const { supabaseAdmin: supabase } = require('../config/supabase');
 
 /**
  * Controller for Purchase Invoicing, Three-Way Matching, Supplier Payments & Accounts Payable
  */
-export const purchaseInvoiceController = {
+const purchaseInvoiceController = {
   // ==========================================================================
   // 1. LIST PURCHASE INVOICES
   // ==========================================================================
@@ -1105,3 +1105,5 @@ export const purchaseInvoiceController = {
     }
   },
 };
+
+module.exports = purchaseInvoiceController;

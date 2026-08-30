@@ -1,9 +1,9 @@
-import { supabaseAdmin } from '../config/supabase.js';
+const { supabaseAdmin } = require('../config/supabase');
 
 /**
  * Controller for Budgeting, Cost Centers, Budget Approvals, and Budget vs Actual Variance Analysis
  */
-export const budgetingController = {
+const budgetingController = {
   // ============================================================================
   // 1. COST CENTERS MANAGEMENT
   // ============================================================================
@@ -1016,3 +1016,5 @@ export const budgetingController = {
     }
   },
 };
+
+module.exports = budgetingController;

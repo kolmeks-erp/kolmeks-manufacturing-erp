@@ -1,9 +1,8 @@
-import { Router } from 'express';
-import { budgetingController } from '../controllers/budgeting.controller.js';
-import { authenticateUser } from '../middleware/auth.middleware.js';
-import { authorizeRoles } from '../middleware/rbac.middleware.js';
-
-const router = Router();
+const express = require('express');
+const router = express.Router();
+const budgetingController = require('../controllers/budgeting.controller');
+const { authenticateUser } = require('../middleware/auth.middleware');
+const { authorizeRoles } = require('../middleware/rbac.middleware');
 
 // Apply Authentication Middleware globally to all routes
 router.use(authenticateUser);
@@ -135,4 +134,4 @@ router.get(
   budgetingController.getBudgetVsActualReport
 );
 
-export default router;
+module.exports = router;

@@ -1,9 +1,8 @@
-import { Router } from 'express';
-import { purchaseInvoiceController } from '../controllers/purchase_invoice.controller.js';
-import { authenticateUser } from '../middleware/auth.middleware.js';
-import { authorizeRoles } from '../middleware/rbac.middleware.js';
-
-const router = Router();
+const express = require('express');
+const router = express.Router();
+const purchaseInvoiceController = require('../controllers/purchase_invoice.controller');
+const { authenticateUser } = require('../middleware/auth.middleware');
+const { authorizeRoles } = require('../middleware/rbac.middleware');
 
 // Apply Authentication Middleware globally to all routes
 router.use(authenticateUser);
@@ -111,4 +110,4 @@ router.post(
   purchaseInvoiceController.voidPayment
 );
 
-export default router;
+module.exports = router;
