@@ -1,34 +1,45 @@
 const { supabase, supabaseAdmin } = require('../config/supabase');
 
+const DEFAULT_FEATURE_FLAGS = [
+  { key: 'module_sales', label: 'Sales & Quotations', category: 'Sales', description: 'Controls RFQs, Quotations, Sales Orders, and Invoicing', is_enabled: true },
+  { key: 'module_procurement', label: 'Procurement & Purchasing', category: 'Procurement', description: 'Controls Suppliers, Requisitions, Purchase Orders, and GRNs', is_enabled: true },
+  { key: 'module_products', label: 'Products Master', category: 'Products', description: 'Controls Catalog Products, Categories, and BOM Materials', is_enabled: true },
+  { key: 'module_inventory', label: 'Inventory & Warehouses', category: 'Inventory', description: 'Controls Inventory balances, Warehouses, and Stock Movements', is_enabled: true },
+  { key: 'module_production', label: 'Production & Manufacturing', category: 'Production', description: 'Controls Production Orders, BOMs, Routings, and Work Centers', is_enabled: true },
+  { key: 'module_quality', label: 'Quality Management', category: 'Quality', description: 'Controls Inspections, Plans, NCR, and Quality Holds', is_enabled: true },
+  { key: 'module_maintenance', label: 'Maintenance & Asset Mgmt', category: 'Maintenance', description: 'Controls Equipment Assets, Maintenance Schedules, and Work Orders', is_enabled: true },
+  { key: 'module_hr', label: 'HR & Operations', category: 'HR & Operations', description: 'Controls Employees, Attendance, Shifts, and Leaves', is_enabled: true },
+  { key: 'module_finance', label: 'Finance & Accounting', category: 'Finance & Accounting', description: 'Controls Chart of Accounts, General Ledger, Accounts Payable/Receivable, and Budgets', is_enabled: true },
+  { key: 'module_self_service', label: 'Employee Self-Service', category: 'Self Service', description: 'Controls Employee My HR self-service portal', is_enabled: true },
+];
+
 /**
  * 1. Get all system feature flags (Public / Authenticated)
  */
 const getSystemFeatureFlags = async (req, res) => {
   try {
     const client = supabaseAdmin || supabase;
-    const { data, error } = await client
+    let { data, error } = await client
       .from('system_feature_flags')
       .select('*')
       .order('category', { ascending: true });
 
-    if (error) {
-      console.warn('System feature flags fetch error (using fallback defaults):', error.message);
-      // Return default flags if table doesn't exist yet
-      return res.json({
-        success: true,
-        data: [
-          { key: 'module_sales', label: 'Sales & Quotations', category: 'Sales', is_enabled: true },
-          { key: 'module_procurement', label: 'Procurement & Purchasing', category: 'Procurement', is_enabled: true },
-          { key: 'module_products', label: 'Products Master', category: 'Products', is_enabled: true },
-          { key: 'module_inventory', label: 'Inventory & Warehouses', category: 'Inventory', is_enabled: true },
-          { key: 'module_production', label: 'Production & Manufacturing', category: 'Production', is_enabled: true },
-          { key: 'module_quality', label: 'Quality Management', category: 'Quality', is_enabled: true },
-          { key: 'module_maintenance', label: 'Maintenance & Asset Mgmt', category: 'Maintenance', is_enabled: true },
-          { key: 'module_hr', label: 'HR & Operations', category: 'HR & Operations', is_enabled: true },
-          { key: 'module_finance', label: 'Finance & Accounting', category: 'Finance & Accounting', is_enabled: true },
-          { key: 'module_self_service', label: 'Employee Self-Service', category: 'Self Service', is_enabled: true },
-        ]
-      });
+    if (error || !data || data.length === 0) {
+      // Auto-seed default flags if table is empty or error occurs
+      try {
+        const seedResult = await client
+          .from('system_feature_flags')
+          .upsert(DEFAULT_FEATURE_FLAGS, { onConflict: 'key' })
+          .select();
+
+        if (!seedResult.error && seedResult.data) {
+          data = seedResult.data;
+        } else {
+          data = DEFAULT_FEATURE_FLAGS;
+        }
+      } catch (seedErr) {
+        data = DEFAULT_FEATURE_FLAGS;
+      }
     }
 
     return res.json({ success: true, data: data || [] });
@@ -50,16 +61,23 @@ const toggleFeatureFlag = async (req, res) => {
     }
 
     const client = supabaseAdmin || supabase;
+    const meta = DEFAULT_FEATURE_FLAGS.find((f) => f.key === key) || {};
 
-    // Upsert feature flag
+    // Upsert feature flag with required non-null fields
     const { data, error } = await client
       .from('system_feature_flags')
-      .upsert({
-        key,
-        is_enabled,
-        updated_at: new Date().toISOString(),
-        updated_by: req.user?.id || null
-      }, { onConflict: 'key' })
+      .upsert(
+        {
+          key,
+          label: meta.label || key,
+          category: meta.category || 'General',
+          description: meta.description || '',
+          is_enabled,
+          updated_at: new Date().toISOString(),
+          updated_by: req.user?.id || null,
+        },
+        { onConflict: 'key' }
+      )
       .select()
       .single();
 
@@ -68,7 +86,7 @@ const toggleFeatureFlag = async (req, res) => {
     return res.json({
       success: true,
       data,
-      message: `Module "${key}" has been turned ${is_enabled ? 'ON' : 'OFF'}`
+      message: `Module "${key}" has been turned ${is_enabled ? 'ON' : 'OFF'}`,
     });
   } catch (err) {
     console.error('toggleFeatureFlag Error:', err);
