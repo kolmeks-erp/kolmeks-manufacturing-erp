@@ -288,7 +288,7 @@ const getBOMs = async (req, res) => {
           unit,
           category:categories (name)
         ),
-        created_by_profile:profiles!boms_created_by_fkey (full_name)
+        created_by_profile:profiles!created_by (full_name)
       `)
       .order('created_at', { ascending: false });
 
@@ -330,7 +330,7 @@ const getBOMById = async (req, res) => {
           specifications,
           category:categories (name)
         ),
-        created_by_profile:profiles!boms_created_by_fkey (full_name)
+        created_by_profile:profiles!created_by (full_name)
       `)
       .eq('id', id)
       .single();
@@ -456,7 +456,7 @@ const getRoutings = async (req, res) => {
           unit,
           category:categories (name)
         ),
-        created_by_profile:profiles!routings_created_by_fkey (full_name)
+        created_by_profile:profiles!created_by (full_name)
       `)
       .order('created_at', { ascending: false });
 
@@ -663,7 +663,7 @@ const getProductionOrderById = async (req, res) => {
           version,
           status
         ),
-        created_by_profile:profiles!production_orders_created_by_fkey (full_name)
+        created_by_profile:profiles!created_by (full_name)
       `)
       .eq('id', id)
       .single();

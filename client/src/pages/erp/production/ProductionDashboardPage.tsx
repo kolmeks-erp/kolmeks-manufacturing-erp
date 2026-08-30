@@ -42,21 +42,21 @@ export const ProductionDashboardPage: React.FC = () => {
   return (
     <div className="space-y-6 animate-fadeIn">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 bg-gradient-to-r from-slate-900 via-slate-800 to-indigo-950 p-6 rounded-2xl border border-slate-800 text-white shadow-xl">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 bg-white p-6 rounded-2xl border border-slate-200 shadow-xs">
         <div className="space-y-1">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200">
             <Factory className="w-3.5 h-3.5" />
             <span>Kolmeks CNC Manufacturing Hub</span>
           </div>
-          <h1 className="text-2xl font-bold tracking-tight">Production & Manufacturing Operations</h1>
-          <p className="text-slate-400 text-sm">
+          <h1 className="text-2xl font-bold tracking-tight text-slate-900">Production & Manufacturing Operations</h1>
+          <p className="text-slate-600 text-sm">
             Real-time monitoring of manufacturing orders, active CNC machines, BOM definitions, and shop floor routings.
           </p>
         </div>
         <div className="flex items-center gap-3">
           <button
             onClick={() => navigate(`${ERP_BASE_PATH}/production/orders/new`)}
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-medium text-sm transition-all shadow-lg shadow-indigo-600/25 active:scale-[0.98]"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-sm transition-all shadow-md active:scale-[0.98]"
           >
             <Plus className="w-4 h-4" />
             <span>New Production Order</span>
@@ -67,71 +67,71 @@ export const ProductionDashboardPage: React.FC = () => {
       {/* KPI Telemetry Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Planned / Scheduled */}
-        <div className="bg-slate-900/60 border border-slate-800/80 backdrop-blur-xl p-5 rounded-2xl relative overflow-hidden group hover:border-slate-700 transition-all">
+        <div className="bg-white border border-slate-200 shadow-xs p-5 rounded-2xl relative overflow-hidden group hover:border-slate-300 transition-all">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">Planned Orders</span>
-            <div className="p-2.5 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20">
+            <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">Planned Orders</span>
+            <div className="p-2.5 rounded-xl bg-amber-50 text-amber-700 border border-amber-200">
               <Clock className="w-5 h-5" />
             </div>
           </div>
           <div className="mt-4 flex items-baseline gap-2">
-            <span className="text-3xl font-bold text-white">{loading ? '...' : summary?.planned_count || 0}</span>
-            <span className="text-xs text-slate-400">Ready to release</span>
+            <span className="text-3xl font-bold text-slate-900">{loading ? '...' : summary?.planned_count || 0}</span>
+            <span className="text-xs text-slate-500">Ready to release</span>
           </div>
-          <div className="mt-3 text-xs text-slate-500 border-t border-slate-800/60 pt-2.5">
+          <div className="mt-3 text-xs text-slate-400 border-t border-slate-100 pt-2.5">
             Awaiting shop floor dispatch
           </div>
         </div>
 
         {/* In Progress */}
-        <div className="bg-slate-900/60 border border-slate-800/80 backdrop-blur-xl p-5 rounded-2xl relative overflow-hidden group hover:border-slate-700 transition-all">
+        <div className="bg-white border border-slate-200 shadow-xs p-5 rounded-2xl relative overflow-hidden group hover:border-slate-300 transition-all">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">In Production</span>
-            <div className="p-2.5 rounded-xl bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+            <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">In Production</span>
+            <div className="p-2.5 rounded-xl bg-indigo-50 text-indigo-700 border border-indigo-200">
               <Play className="w-5 h-5" />
             </div>
           </div>
           <div className="mt-4 flex items-baseline gap-2">
-            <span className="text-3xl font-bold text-white">{loading ? '...' : summary?.in_progress_count || 0}</span>
-            <span className="text-xs text-indigo-400 font-medium">Active jobs</span>
+            <span className="text-3xl font-bold text-slate-900">{loading ? '...' : summary?.in_progress_count || 0}</span>
+            <span className="text-xs text-indigo-700 font-semibold">Active jobs</span>
           </div>
-          <div className="mt-3 text-xs text-slate-500 border-t border-slate-800/60 pt-2.5">
+          <div className="mt-3 text-xs text-slate-400 border-t border-slate-100 pt-2.5">
             Operations currently executing
           </div>
         </div>
 
         {/* Completed */}
-        <div className="bg-slate-900/60 border border-slate-800/80 backdrop-blur-xl p-5 rounded-2xl relative overflow-hidden group hover:border-slate-700 transition-all">
+        <div className="bg-white border border-slate-200 shadow-xs p-5 rounded-2xl relative overflow-hidden group hover:border-slate-300 transition-all">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">Completed Jobs</span>
-            <div className="p-2.5 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+            <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">Completed Jobs</span>
+            <div className="p-2.5 rounded-xl bg-emerald-50 text-emerald-700 border border-emerald-200">
               <CheckCircle2 className="w-5 h-5" />
             </div>
           </div>
           <div className="mt-4 flex items-baseline gap-2">
-            <span className="text-3xl font-bold text-white">{loading ? '...' : summary?.completed_count || 0}</span>
-            <span className="text-xs text-emerald-400 font-medium">Finished goods</span>
+            <span className="text-3xl font-bold text-slate-900">{loading ? '...' : summary?.completed_count || 0}</span>
+            <span className="text-xs text-emerald-700 font-semibold">Finished goods</span>
           </div>
-          <div className="mt-3 text-xs text-slate-500 border-t border-slate-800/60 pt-2.5">
+          <div className="mt-3 text-xs text-slate-400 border-t border-slate-100 pt-2.5">
             Posted to warehouse inventory
           </div>
         </div>
 
         {/* Active Machines */}
-        <div className="bg-slate-900/60 border border-slate-800/80 backdrop-blur-xl p-5 rounded-2xl relative overflow-hidden group hover:border-slate-700 transition-all">
+        <div className="bg-white border border-slate-200 shadow-xs p-5 rounded-2xl relative overflow-hidden group hover:border-slate-300 transition-all">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">Active CNC Machines</span>
-            <div className="p-2.5 rounded-xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+            <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">Active CNC Machines</span>
+            <div className="p-2.5 rounded-xl bg-cyan-50 text-cyan-700 border border-cyan-200">
               <Cpu className="w-5 h-5" />
             </div>
           </div>
           <div className="mt-4 flex items-baseline gap-2">
-            <span className="text-3xl font-bold text-white">
+            <span className="text-3xl font-bold text-slate-900">
               {loading ? '...' : `${summary?.running_machines || 0} / ${summary?.total_machines || 0}`}
             </span>
-            <span className="text-xs text-slate-400">Running</span>
+            <span className="text-xs text-slate-500">Running</span>
           </div>
-          <div className="mt-3 text-xs text-slate-500 border-t border-slate-800/60 pt-2.5">
+          <div className="mt-3 text-xs text-slate-400 border-t border-slate-100 pt-2.5">
             ERP-maintained operational status
           </div>
         </div>
@@ -142,16 +142,16 @@ export const ProductionDashboardPage: React.FC = () => {
         {/* Production Orders Card */}
         <div
           onClick={() => navigate(`${ERP_BASE_PATH}/production/orders`)}
-          className="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl hover:border-indigo-500/50 transition-all cursor-pointer group"
+          className="bg-white border border-slate-200 shadow-xs p-6 rounded-2xl hover:border-indigo-400 transition-all cursor-pointer group"
         >
           <div className="flex items-center justify-between mb-4">
-            <div className="p-3 rounded-xl bg-indigo-500/10 text-indigo-400 group-hover:scale-110 transition-transform">
+            <div className="p-3 rounded-xl bg-indigo-50 text-indigo-700 group-hover:scale-110 transition-transform">
               <Layers className="w-6 h-6" />
             </div>
-            <ArrowRight className="w-5 h-5 text-slate-500 group-hover:text-indigo-400 group-hover:translate-x-1 transition-all" />
+            <ArrowRight className="w-5 h-5 text-slate-400 group-hover:text-indigo-600 group-hover:translate-x-1 transition-all" />
           </div>
-          <h3 className="text-lg font-bold text-white mb-1">Production Orders</h3>
-          <p className="text-slate-400 text-sm">
+          <h3 className="text-lg font-bold text-slate-900 mb-1">Production Orders</h3>
+          <p className="text-slate-600 text-sm">
             Track manufacturing orders, planned quantities, operations progress, material requirements, and finished output.
           </p>
         </div>
@@ -159,16 +159,16 @@ export const ProductionDashboardPage: React.FC = () => {
         {/* Bills of Materials (BOM) Card */}
         <div
           onClick={() => navigate(`${ERP_BASE_PATH}/production/boms`)}
-          className="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl hover:border-indigo-500/50 transition-all cursor-pointer group"
+          className="bg-white border border-slate-200 shadow-xs p-6 rounded-2xl hover:border-amber-400 transition-all cursor-pointer group"
         >
           <div className="flex items-center justify-between mb-4">
-            <div className="p-3 rounded-xl bg-amber-500/10 text-amber-400 group-hover:scale-110 transition-transform">
+            <div className="p-3 rounded-xl bg-amber-50 text-amber-700 group-hover:scale-110 transition-transform">
               <FolderTree className="w-6 h-6" />
             </div>
-            <ArrowRight className="w-5 h-5 text-slate-500 group-hover:text-amber-400 group-hover:translate-x-1 transition-all" />
+            <ArrowRight className="w-5 h-5 text-slate-400 group-hover:text-amber-600 group-hover:translate-x-1 transition-all" />
           </div>
-          <h3 className="text-lg font-bold text-white mb-1">Bills of Materials (BOM)</h3>
-          <p className="text-slate-400 text-sm">
+          <h3 className="text-lg font-bold text-slate-900 mb-1">Bills of Materials (BOM)</h3>
+          <p className="text-slate-600 text-sm">
             Define multi-level product components, quantity per unit, scrap percentages, and version lifecycle management.
           </p>
         </div>
@@ -176,16 +176,16 @@ export const ProductionDashboardPage: React.FC = () => {
         {/* Manufacturing Routings Card */}
         <div
           onClick={() => navigate(`${ERP_BASE_PATH}/production/routings`)}
-          className="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl hover:border-indigo-500/50 transition-all cursor-pointer group"
+          className="bg-white border border-slate-200 shadow-xs p-6 rounded-2xl hover:border-cyan-400 transition-all cursor-pointer group"
         >
           <div className="flex items-center justify-between mb-4">
-            <div className="p-3 rounded-xl bg-cyan-500/10 text-cyan-400 group-hover:scale-110 transition-transform">
+            <div className="p-3 rounded-xl bg-cyan-50 text-cyan-700 group-hover:scale-110 transition-transform">
               <GitFork className="w-6 h-6" />
             </div>
-            <ArrowRight className="w-5 h-5 text-slate-500 group-hover:text-cyan-400 group-hover:translate-x-1 transition-all" />
+            <ArrowRight className="w-5 h-5 text-slate-400 group-hover:text-cyan-600 group-hover:translate-x-1 transition-all" />
           </div>
-          <h3 className="text-lg font-bold text-white mb-1">Manufacturing Routings</h3>
-          <p className="text-slate-400 text-sm">
+          <h3 className="text-lg font-bold text-slate-900 mb-1">Manufacturing Routings</h3>
+          <p className="text-slate-600 text-sm">
             Configure sequence of shop floor operations, setup & run times, work center assignments, and machine routing.
           </p>
         </div>

@@ -191,7 +191,7 @@ const getAssetById = async (req, res) => {
       .from('maintenance_work_orders')
       .select(`
         *,
-        assigned_profile:profiles!maintenance_work_orders_assigned_to_fkey (id, first_name, last_name, email)
+        assigned_profile:profiles!assigned_to (id, first_name, last_name, email)
       `)
       .eq('asset_id', id)
       .order('created_at', { ascending: false });
@@ -347,7 +347,7 @@ const getMaintenanceSchedules = async (req, res) => {
       .select(`
         *,
         assets (id, asset_code, name, location),
-        assigned_profile:profiles!maintenance_schedules_assigned_to_fkey (id, first_name, last_name, email)
+        assigned_profile:profiles!assigned_to (id, first_name, last_name, email)
       `);
 
     if (assetId) query = query.eq('asset_id', assetId);
@@ -379,7 +379,7 @@ const getMaintenanceScheduleById = async (req, res) => {
       .select(`
         *,
         assets (*),
-        assigned_profile:profiles!maintenance_schedules_assigned_to_fkey (id, first_name, last_name, email)
+        assigned_profile:profiles!assigned_to (id, first_name, last_name, email)
       `)
       .eq('id', id)
       .single();
@@ -661,7 +661,7 @@ const getWorkOrders = async (req, res) => {
       .select(`
         *,
         assets (id, asset_code, name, location, criticality),
-        assigned_profile:profiles!maintenance_work_orders_assigned_to_fkey (id, first_name, last_name, email)
+        assigned_profile:profiles!assigned_to (id, first_name, last_name, email)
       `, { count: 'exact' });
 
     if (assetId) query = query.eq('asset_id', assetId);
@@ -706,7 +706,7 @@ const getWorkOrderById = async (req, res) => {
         assets (*),
         maintenance_schedules (*),
         maintenance_requests (*),
-        assigned_profile:profiles!maintenance_work_orders_assigned_to_fkey (id, first_name, last_name, email)
+        assigned_profile:profiles!assigned_to (id, first_name, last_name, email)
       `)
       .eq('id', id)
       .single();
@@ -1324,7 +1324,7 @@ const getMaintenanceHistory = async (req, res) => {
       .select(`
         *,
         assets (id, asset_code, name, location),
-        assigned_profile:profiles!maintenance_work_orders_assigned_to_fkey (id, first_name, last_name, email),
+        assigned_profile:profiles!assigned_to (id, first_name, last_name, email),
         maintenance_parts (
           id, quantity, unit_cost, total_cost,
           products (id, product_code, name)
