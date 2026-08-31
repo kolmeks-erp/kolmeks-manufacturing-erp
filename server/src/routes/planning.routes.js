@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const planningController = require('../controllers/planning.controller');
-const { authenticateJWT, authorizeRoles } = require('../middleware/auth.middleware');
+const { authenticateUser } = require('../middleware/auth.middleware');
+const { authorizeRoles } = require('../middleware/rbac.middleware');
 
 // All routes require JWT authentication
-router.use(authenticateJWT);
+router.use(authenticateUser);
 
 const allowedPlanningRoles = [
   'admin',

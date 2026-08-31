@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const costingController = require('../controllers/costing.controller');
-const { authenticateJWT, authorizeRoles } = require('../middleware/auth.middleware');
+const { authenticateUser } = require('../middleware/auth.middleware');
+const { authorizeRoles } = require('../middleware/rbac.middleware');
 
 // All routes protected by JWT auth
-router.use(authenticateJWT);
+router.use(authenticateUser);
 
 const allowedCostingRoles = [
   'admin',
