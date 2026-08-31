@@ -12,19 +12,24 @@ exports.getPlanningDashboard = async (req, res) => {
       .from('production_plans')
       .select('id, status, start_date, end_date');
 
-    if (planErr) throw planErr;
+    if (planErr && planErr.code !== 'PGRST116') {
+      console.warn('planErr in getPlanningDashboard:', planErr);
+    }
 
-    const totalPlans = plans.length;
-    const activePlans = plans.filter((p) => ['APPROVED', 'IN_PROGRESS'].includes(p.status)).length;
-    const draftPlans = plans.filter((p) => p.status === 'DRAFT').length;
+    const planList = plans || [];
+    const totalPlans = planList.length;
+    const activePlans = planList.filter((p) => ['APPROVED', 'IN_PROGRESS'].includes(p.status)).length;
+    const draftPlans = planList.filter((p) => p.status === 'DRAFT').length;
 
     // 2. Fetch pending demand lines from eligible sales orders (CONFIRMED / IN_PROGRESS)
     const { data: eligibleSalesOrders, error: soErr } = await supabaseAdmin
       .from('sales_orders')
-      .select('id, order_number, customer_id, created_at, sales_order_items(id, product_id, quantity, delivery_date)')
+      .select('id, order_number, customer_id, created_at, sales_order_items(id, product_id, quantity)')
       .in('status', ['CONFIRMED', 'PROCESSING', 'APPROVED', 'IN_PROGRESS']);
 
-    if (soErr) throw soErr;
+    if (soErr && soErr.code !== 'PGRST116') {
+      console.warn('soErr in getPlanningDashboard:', soErr);
+    }
 
     let pendingDemandCount = 0;
     (eligibleSalesOrders || []).forEach((so) => {
@@ -36,11 +41,14 @@ exports.getPlanningDashboard = async (req, res) => {
       .from('work_order_schedules')
       .select('id, status, planned_start, planned_end, actual_start, actual_end');
 
-    if (schedErr) throw schedErr;
+    if (schedErr && schedErr.code !== 'PGRST116') {
+      console.warn('schedErr in getPlanningDashboard:', schedErr);
+    }
 
-    const totalSchedules = schedules.length;
-    const activeSchedules = schedules.filter((s) => ['SCHEDULED', 'IN_PROGRESS'].includes(s.status)).length;
-    const conflictedSchedules = schedules.filter((s) => s.status === 'CONFLICTED').length;
+    const scheduleList = schedules || [];
+    const totalSchedules = scheduleList.length;
+    const activeSchedules = scheduleList.filter((s) => ['SCHEDULED', 'IN_PROGRESS'].includes(s.status)).length;
+    const conflictedSchedules = scheduleList.filter((s) => s.status === 'CONFLICTED').length;
 
     // 4. Fetch Work Centers to evaluate capacity
     const { data: workCenters, error: wcErr } = await supabaseAdmin
@@ -48,7 +56,11 @@ exports.getPlanningDashboard = async (req, res) => {
       .select('id, code, name, capacity, status')
       .eq('status', 'ACTIVE');
 
-    if (wcErr) throw wcErr;
+    if (wcErr && wcErr.code !== 'PGRST116') {
+      console.warn('wcErr in getPlanningDashboard:', wcErr);
+    }
+
+    const wcList = workCenters || [];
 
     return res.status(200).json({
       success: true,
@@ -61,7 +73,7 @@ exports.getPlanningDashboard = async (req, res) => {
           total_schedules: totalSchedules,
           active_schedules: activeSchedules,
           conflicted_schedules: conflictedSchedules,
-          active_work_centers: workCenters.length,
+          active_work_centers: wcList.length,
         },
       },
     });

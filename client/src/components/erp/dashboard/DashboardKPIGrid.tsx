@@ -42,8 +42,8 @@ export const DashboardKPIGrid: React.FC<DashboardKPIGridProps> = ({ metrics, isL
       value: metrics ? metrics.totalRfqs.toString() : '0',
       subtext: metrics?.newRfqs ? `${metrics.newRfqs} new request(s)` : 'Connected to RFQ database',
       icon: FileText,
-      color: 'text-blue-600',
-      bgColor: 'bg-blue-50',
+      color: 'text-blue-600 dark:text-blue-400',
+      bgColor: 'bg-blue-50 dark:bg-blue-500/20',
       hasData: true,
     },
     {
@@ -51,8 +51,8 @@ export const DashboardKPIGrid: React.FC<DashboardKPIGridProps> = ({ metrics, isL
       value: metrics && metrics.totalProducts !== undefined ? metrics.totalProducts.toString() : '0',
       subtext: metrics?.activeProducts !== undefined ? `${metrics.activeProducts} active product(s)` : 'Connected to Products database',
       icon: Boxes,
-      color: 'text-emerald-600',
-      bgColor: 'bg-emerald-50',
+      color: 'text-emerald-600 dark:text-emerald-400',
+      bgColor: 'bg-emerald-50 dark:bg-emerald-500/20',
       hasData: true,
     },
     {
@@ -60,8 +60,8 @@ export const DashboardKPIGrid: React.FC<DashboardKPIGridProps> = ({ metrics, isL
       value: metrics && metrics.totalCustomers !== undefined ? metrics.totalCustomers.toString() : '0',
       subtext: metrics?.activeCustomers !== undefined ? `${metrics.activeCustomers} active client(s)` : 'Connected to Customer database',
       icon: Users,
-      color: 'text-purple-600',
-      bgColor: 'bg-purple-50',
+      color: 'text-purple-600 dark:text-purple-400',
+      bgColor: 'bg-purple-50 dark:bg-purple-500/20',
       hasData: true,
     },
     {
@@ -69,63 +69,63 @@ export const DashboardKPIGrid: React.FC<DashboardKPIGridProps> = ({ metrics, isL
       value: metrics && metrics.totalSuppliers !== undefined ? metrics.totalSuppliers.toString() : '0',
       subtext: metrics?.activeSuppliers !== undefined ? `${metrics.activeSuppliers} active vendor(s)` : 'Connected to Supplier database',
       icon: Truck,
-      color: 'text-amber-600',
-      bgColor: 'bg-amber-50',
+      color: 'text-amber-600 dark:text-amber-400',
+      bgColor: 'bg-amber-50 dark:bg-amber-500/20',
       hasData: true,
     },
     {
       title: 'Active Quotations',
-      value: 'No data available',
-      subtext: 'Quotations module pending',
+      value: metrics && metrics.activeQuotations !== undefined ? metrics.activeQuotations.toString() : '0',
+      subtext: metrics?.activeQuotations !== undefined ? `${metrics.activeQuotations} approved/sent quotation(s)` : 'Connected to Quotations DB',
       icon: FileSpreadsheet,
-      color: 'text-slate-400',
-      bgColor: 'bg-slate-100',
-      hasData: false,
+      color: 'text-indigo-600 dark:text-indigo-400',
+      bgColor: 'bg-indigo-50 dark:bg-indigo-500/20',
+      hasData: true,
     },
     {
       title: 'Open Sales Orders',
-      value: 'No data available',
-      subtext: 'Sales orders module pending',
+      value: metrics && metrics.openSalesOrders !== undefined ? metrics.openSalesOrders.toString() : '0',
+      subtext: metrics?.openSalesOrders !== undefined ? `${metrics.openSalesOrders} active sales order(s)` : 'Connected to Orders DB',
       icon: ShoppingCart,
-      color: 'text-slate-400',
-      bgColor: 'bg-slate-100',
-      hasData: false,
+      color: 'text-teal-600 dark:text-teal-400',
+      bgColor: 'bg-teal-50 dark:bg-teal-500/20',
+      hasData: true,
     },
     {
       title: 'Production Orders',
-      value: 'No data available',
-      subtext: 'Production scheduler pending',
+      value: metrics && metrics.productionOrders !== undefined ? metrics.productionOrders.toString() : '0',
+      subtext: 'Master production scheduler online',
       icon: Factory,
-      color: 'text-slate-400',
-      bgColor: 'bg-slate-100',
-      hasData: false,
+      color: 'text-cyan-600 dark:text-cyan-400',
+      bgColor: 'bg-cyan-50 dark:bg-cyan-500/20',
+      hasData: true,
     },
     {
       title: 'Quality Issues',
-      value: 'No data available',
-      subtext: 'Quality control pending',
+      value: metrics && metrics.qualityIssues !== undefined ? metrics.qualityIssues.toString() : '0',
+      subtext: 'Quality assurance & NCR tracking online',
       icon: ShieldCheck,
-      color: 'text-slate-400',
-      bgColor: 'bg-slate-100',
-      hasData: false,
+      color: 'text-rose-600 dark:text-rose-400',
+      bgColor: 'bg-rose-50 dark:bg-rose-500/20',
+      hasData: true,
     },
     {
-      title: 'Machines Requiring Attention',
-      value: 'No data available',
-      subtext: 'CNC hub & maintenance pending',
+      title: 'Machines Attention',
+      value: metrics && metrics.machinesAttention !== undefined ? metrics.machinesAttention.toString() : '0',
+      subtext: 'Preventive maintenance tracking online',
       icon: Cpu,
-      color: 'text-slate-400',
-      bgColor: 'bg-slate-100',
-      hasData: false,
+      color: 'text-orange-600 dark:text-orange-400',
+      bgColor: 'bg-orange-50 dark:bg-orange-500/20',
+      hasData: true,
     },
     {
       title: 'Pending Purchase Orders',
-      value: 'No data available',
-      subtext: 'Procurement module pending',
+      value: metrics && metrics.pendingPurchaseOrders !== undefined ? metrics.pendingPurchaseOrders.toString() : '0',
+      subtext: metrics?.pendingPurchaseOrders !== undefined ? `${metrics.pendingPurchaseOrders} PO(s) awaiting approval` : 'Procurement module online',
       icon: Receipt,
-      color: 'text-slate-400',
-      bgColor: 'bg-slate-100',
-      hasData: false,
+      color: 'text-violet-600 dark:text-violet-400',
+      bgColor: 'bg-violet-50 dark:bg-violet-500/20',
+      hasData: true,
     },
   ];
 
@@ -137,10 +137,10 @@ export const DashboardKPIGrid: React.FC<DashboardKPIGridProps> = ({ metrics, isL
         return (
           <div
             key={idx}
-            className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs hover:border-slate-300 transition-all flex flex-col justify-between"
+            className="bg-white dark:bg-[#0F2647] p-5 rounded-2xl border border-slate-200 dark:border-slate-800/80 shadow-xs hover:border-slate-300 dark:hover:border-slate-700 transition-all flex flex-col justify-between"
           >
             <div className="flex items-center justify-between mb-3">
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-500">{item.title}</span>
+              <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">{item.title}</span>
               <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${item.bgColor} ${item.color}`}>
                 <Icon className="w-4 h-4" />
               </div>
@@ -148,17 +148,17 @@ export const DashboardKPIGrid: React.FC<DashboardKPIGridProps> = ({ metrics, isL
 
             <div className="space-y-1">
               {isLoading ? (
-                <div className="h-8 bg-slate-200 rounded animate-pulse w-1/2" />
+                <div className="h-8 bg-slate-200 dark:bg-slate-700/60 rounded animate-pulse w-1/2" />
               ) : (
                 <div
                   className={`font-mono tracking-tight font-black ${
-                    item.hasData ? 'text-2xl text-[#0B1E36]' : 'text-sm text-slate-400 italic'
+                    item.hasData ? 'text-2xl text-slate-900 dark:text-white' : 'text-sm text-slate-400 dark:text-slate-500 italic'
                   }`}
                 >
                   {item.value}
                 </div>
               )}
-              <p className="text-[11px] text-slate-500 font-mono">{item.subtext}</p>
+              <p className="text-[11px] text-slate-500 dark:text-slate-400 font-mono">{item.subtext}</p>
             </div>
           </div>
         );

@@ -56,9 +56,9 @@ export function DataTable<T extends Record<string, any>>({
     <div className="space-y-4">
       {/* Search Toolbar */}
       {searchable && (
-        <div className="flex items-center justify-between gap-4 bg-slate-900 border border-slate-800 p-3 rounded-xl">
+        <div className="flex items-center justify-between gap-4 bg-white dark:bg-[#0F2647] border border-slate-200 dark:border-slate-800/80 p-3 rounded-xl">
           <div className="relative flex-1 max-w-md">
-            <Search className="w-4 h-4 absolute left-3 top-2.5 text-slate-400" />
+            <Search className="w-4 h-4 absolute left-3 top-2.5 text-slate-400 dark:text-slate-500" />
             <input
               type="text"
               placeholder={searchPlaceholder}
@@ -67,21 +67,21 @@ export function DataTable<T extends Record<string, any>>({
                 setSearchQuery(e.target.value);
                 setCurrentPage(1);
               }}
-              className="w-full bg-slate-800 border border-slate-700 text-white text-xs rounded-lg pl-9 pr-4 py-2 focus:outline-none focus:border-cyan-500 placeholder-slate-500 font-sans"
+              className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white text-xs rounded-lg pl-9 pr-4 py-2 focus:outline-none focus:border-blue-500 dark:focus:border-blue-400 placeholder-slate-400 dark:placeholder-slate-500 font-sans transition-colors"
             />
           </div>
-          <div className="text-xs text-slate-400 font-mono">
-            Total: <span className="text-cyan-400 font-bold">{filteredData.length}</span> entries
+          <div className="text-xs text-slate-500 dark:text-slate-400 font-mono">
+            Total: <span className="text-blue-600 dark:text-blue-400 font-bold">{filteredData.length}</span> entries
           </div>
         </div>
       )}
 
       {/* Table Section */}
-      <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden shadow-sm">
+      <div className="bg-white dark:bg-[#0F2647] border border-slate-200 dark:border-slate-800/80 rounded-xl overflow-hidden shadow-xs">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse text-xs">
             <thead>
-              <tr className="bg-slate-800/80 border-b border-slate-800 text-slate-400 font-mono text-[11px] uppercase tracking-wider">
+              <tr className="bg-slate-50 dark:bg-slate-900/60 border-b border-slate-200 dark:border-slate-800/80 text-slate-500 dark:text-slate-400 font-mono text-[11px] uppercase tracking-wider">
                 {columns.map((col, idx) => (
                   <th key={idx} className={`py-3.5 px-4 font-semibold ${col.className || ''}`}>
                     {col.header}
@@ -89,14 +89,14 @@ export function DataTable<T extends Record<string, any>>({
                 ))}
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/60 text-slate-200">
+            <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60 text-slate-800 dark:text-slate-200">
               {paginatedData.length > 0 ? (
                 paginatedData.map((row, rowIdx) => (
                   <tr
                     key={rowIdx}
                     onClick={() => onRowClick && onRowClick(row)}
                     className={`transition-colors ${
-                      onRowClick ? 'cursor-pointer hover:bg-slate-800/80' : 'hover:bg-slate-800/40'
+                      onRowClick ? 'cursor-pointer hover:bg-slate-50/80 dark:hover:bg-slate-800/50' : 'hover:bg-slate-50/50 dark:hover:bg-slate-800/30'
                     }`}
                   >
                     {columns.map((col, colIdx) => (
@@ -108,7 +108,7 @@ export function DataTable<T extends Record<string, any>>({
                 ))
               ) : (
                 <tr>
-                  <td colSpan={columns.length} className="py-8 text-center text-slate-400 italic">
+                  <td colSpan={columns.length} className="py-8 text-center text-slate-400 dark:text-slate-500 italic">
                     {emptyMessage}
                   </td>
                 </tr>
@@ -119,17 +119,17 @@ export function DataTable<T extends Record<string, any>>({
 
         {/* Pagination Footer */}
         {totalPages > 1 && (
-          <div className="p-3 bg-slate-800/40 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+          <div className="p-3 bg-slate-50 dark:bg-slate-900/40 border-t border-slate-200 dark:border-slate-800/80 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
             <span className="font-mono">
-              Page <strong className="text-white">{safePage}</strong> of{' '}
-              <strong className="text-white">{totalPages}</strong>
+              Page <strong className="text-slate-900 dark:text-white">{safePage}</strong> of{' '}
+              <strong className="text-slate-900 dark:text-white">{totalPages}</strong>
             </span>
             <div className="flex items-center gap-2">
               <button
                 type="button"
                 disabled={safePage <= 1}
                 onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-                className="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 disabled:opacity-40 text-slate-300 rounded-lg flex items-center gap-1 font-medium transition-colors"
+                className="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700 disabled:opacity-40 text-slate-700 dark:text-slate-200 rounded-lg flex items-center gap-1 font-medium transition-colors"
               >
                 <ChevronLeft className="w-3.5 h-3.5" /> Prev
               </button>
@@ -137,7 +137,7 @@ export function DataTable<T extends Record<string, any>>({
                 type="button"
                 disabled={safePage >= totalPages}
                 onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-                className="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 disabled:opacity-40 text-slate-300 rounded-lg flex items-center gap-1 font-medium transition-colors"
+                className="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700 disabled:opacity-40 text-slate-700 dark:text-slate-200 rounded-lg flex items-center gap-1 font-medium transition-colors"
               >
                 Next <ChevronRight className="w-3.5 h-3.5" />
               </button>

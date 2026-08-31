@@ -32,16 +32,16 @@ export const RecentRFQsTable: React.FC<RecentRFQsTableProps> = ({ rfqs, isLoadin
   };
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
+    <div className="bg-white dark:bg-[#0F2647] rounded-2xl border border-slate-200 dark:border-slate-800/80 shadow-xs overflow-hidden">
       {/* Table Header */}
-      <div className="p-5 border-b border-slate-100 flex items-center justify-between">
+      <div className="p-5 border-b border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <FileText className="w-5 h-5 text-blue-600" />
-          <h3 className="font-bold text-[#0B1E36] text-base">Recent Request for Quotations (RFQs)</h3>
+          <FileText className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+          <h3 className="font-bold text-slate-900 dark:text-white text-base">Recent Request for Quotations (RFQs)</h3>
         </div>
         <Link
           to={`${ERP_BASE_PATH}/rfqs`}
-          className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-800 transition-colors"
+          className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors"
         >
           <span>View All RFQs</span>
           <ArrowRight className="w-3.5 h-3.5" />
@@ -52,7 +52,7 @@ export const RecentRFQsTable: React.FC<RecentRFQsTableProps> = ({ rfqs, isLoadin
       {isLoading ? (
         <div className="p-6 space-y-3 animate-pulse">
           {Array.from({ length: 4 }).map((_, i) => (
-            <div key={i} className="h-10 bg-slate-100 rounded-lg w-full" />
+            <div key={i} className="h-10 bg-slate-100 dark:bg-slate-800 rounded-lg w-full" />
           ))}
         </div>
       ) : rfqs.length === 0 ? (
@@ -60,13 +60,13 @@ export const RecentRFQsTable: React.FC<RecentRFQsTableProps> = ({ rfqs, isLoadin
         <EmptyState
           title="No RFQ requests yet."
           description="Once customers submit quotation requests via the public portal (/request-quote), they will safely appear here for engineering evaluation."
-          icon={<FileText className="w-8 h-8 text-slate-400" />}
+          icon={<FileText className="w-8 h-8 text-slate-400 dark:text-slate-500" />}
         />
       ) : (
         /* Data Table */
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="bg-slate-50 text-slate-500 uppercase font-mono text-[10px] tracking-wider border-b border-slate-100">
+            <thead className="bg-slate-50 dark:bg-slate-900/60 text-slate-500 dark:text-slate-400 uppercase font-mono text-[10px] tracking-wider border-b border-slate-100 dark:border-slate-800/80">
               <tr>
                 <th className="py-3 px-5">Request Ref</th>
                 <th className="py-3 px-5">Company / Customer</th>
@@ -76,29 +76,29 @@ export const RecentRFQsTable: React.FC<RecentRFQsTableProps> = ({ rfqs, isLoadin
                 <th className="py-3 px-5 text-right">Action</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100 font-sans text-slate-800">
+            <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60 font-sans text-slate-800 dark:text-slate-200">
               {rfqs.map((rfq) => (
-                <tr key={rfq.id} className="hover:bg-slate-50/80 transition-colors">
-                  <td className="py-3.5 px-5 font-mono font-bold text-blue-900">
+                <tr key={rfq.id} className="hover:bg-slate-50/80 dark:hover:bg-slate-800/50 transition-colors">
+                  <td className="py-3.5 px-5 font-mono font-bold text-blue-600 dark:text-blue-400">
                     {rfq.rfq_number || 'RFQ-PENDING'}
                   </td>
                   <td className="py-3.5 px-5">
-                    <div className="font-bold text-slate-900">{rfq.company}</div>
-                    <div className="text-[11px] text-slate-500">{rfq.full_name}</div>
+                    <div className="font-bold text-slate-900 dark:text-white">{rfq.company}</div>
+                    <div className="text-[11px] text-slate-500 dark:text-slate-400">{rfq.full_name}</div>
                   </td>
-                  <td className="py-3.5 px-5 font-semibold text-slate-700">
+                  <td className="py-3.5 px-5 font-semibold text-slate-700 dark:text-slate-300">
                     {rfq.requirement_type}
                   </td>
                   <td className="py-3.5 px-5">
                     <StatusBadge status={rfq.status} />
                   </td>
-                  <td className="py-3.5 px-5 text-slate-500 font-mono">
+                  <td className="py-3.5 px-5 text-slate-500 dark:text-slate-400 font-mono">
                     {formatDate(rfq.created_at)}
                   </td>
                   <td className="py-3.5 px-5 text-right">
                     <Link
                       to={`${ERP_BASE_PATH}/rfqs`}
-                      className="inline-flex items-center gap-1 px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-lg text-[11px] transition-colors"
+                      className="inline-flex items-center gap-1 px-2.5 py-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold rounded-lg text-[11px] transition-colors"
                     >
                       <Eye className="w-3.5 h-3.5" />
                       <span>View</span>

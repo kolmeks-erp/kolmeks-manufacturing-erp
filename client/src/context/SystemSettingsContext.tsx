@@ -1,9 +1,14 @@
 import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
 import { systemSettingsService, SystemFeatureFlag } from '../services/systemSettings.service';
 
+export type ThemeMode = 'dark' | 'light';
+
 interface SystemSettingsContextType {
   featureFlags: SystemFeatureFlag[];
   loadingFlags: boolean;
+  theme: ThemeMode;
+  toggleTheme: () => void;
+  setTheme: (mode: ThemeMode) => void;
   isCategoryEnabled: (categoryName: string) => boolean;
   isKeyEnabled: (key: string) => boolean;
   toggleModule: (key: string, is_enabled: boolean) => Promise<void>;
@@ -29,6 +34,38 @@ const SystemSettingsContext = createContext<SystemSettingsContextType | undefine
 export const SystemSettingsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [featureFlags, setFeatureFlags] = useState<SystemFeatureFlag[]>([]);
   const [loadingFlags, setLoadingFlags] = useState<boolean>(true);
+  const [theme, setThemeState] = useState<ThemeMode>(() => {
+    const saved = localStorage.getItem('kolmeks_erp_theme');
+    if (saved === 'light' || saved === 'dark') return saved;
+    return 'dark'; // Default ERP theme is dark
+  });
+
+  const setTheme = useCallback((mode: ThemeMode) => {
+    setThemeState(mode);
+    localStorage.setItem('kolmeks_erp_theme', mode);
+    if (mode === 'dark') {
+      document.documentElement.classList.add('dark');
+      document.documentElement.classList.remove('light');
+    } else {
+      document.documentElement.classList.add('light');
+      document.documentElement.classList.remove('dark');
+    }
+  }, []);
+
+  const toggleTheme = useCallback(() => {
+    setTheme(theme === 'dark' ? 'light' : 'dark');
+  }, [theme, setTheme]);
+
+  useEffect(() => {
+    // Apply initial theme class to HTML element
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+      document.documentElement.classList.remove('light');
+    } else {
+      document.documentElement.classList.add('light');
+      document.documentElement.classList.remove('dark');
+    }
+  }, [theme]);
 
   const refreshFlags = useCallback(async () => {
     try {
@@ -89,6 +126,9 @@ export const SystemSettingsProvider: React.FC<{ children: React.ReactNode }> = (
       value={{
         featureFlags,
         loadingFlags,
+        theme,
+        toggleTheme,
+        setTheme,
         isCategoryEnabled,
         isKeyEnabled,
         toggleModule,

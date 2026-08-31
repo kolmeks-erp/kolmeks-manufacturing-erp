@@ -105,7 +105,7 @@ export const ERPDashboardPage: React.FC = () => {
       <Card variant="industrial">
         <CardHeader>
           <div className="flex items-center gap-2">
-            <Server className="w-5 h-5 text-industrial-700" />
+            <Server className="w-5 h-5 text-blue-600 dark:text-blue-400" />
             <CardTitle>Express & Supabase System Status</CardTitle>
           </div>
           <Badge variant={dashboardData ? 'success' : 'warning'}>
@@ -114,21 +114,21 @@ export const ERPDashboardPage: React.FC = () => {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs font-mono">
-            <div className="p-3 bg-slate-50 rounded border border-slate-200">
-              <span className="text-slate-500 block text-[10px] uppercase">Active Staff User</span>
-              <span className="font-bold text-slate-800">{dashboardData?.authenticatedUser || 'Staff'}</span>
+            <div className="p-3 bg-slate-50 dark:bg-slate-900/60 rounded-xl border border-slate-200 dark:border-slate-800/80">
+              <span className="text-slate-500 dark:text-slate-400 block text-[10px] uppercase">Active Staff User</span>
+              <span className="font-bold text-slate-800 dark:text-slate-200">{dashboardData?.authenticatedUser || 'Staff'}</span>
             </div>
-            <div className="p-3 bg-slate-50 rounded border border-slate-200">
-              <span className="text-slate-500 block text-[10px] uppercase">Assigned Security Role</span>
-              <span className="font-bold text-industrial-700 uppercase">{dashboardData?.userRole || 'Staff'}</span>
+            <div className="p-3 bg-slate-50 dark:bg-slate-900/60 rounded-xl border border-slate-200 dark:border-slate-800/80">
+              <span className="text-slate-500 dark:text-slate-400 block text-[10px] uppercase">Assigned Security Role</span>
+              <span className="font-bold text-blue-600 dark:text-blue-400 uppercase">{dashboardData?.userRole || 'Staff'}</span>
             </div>
-            <div className="p-3 bg-slate-50 rounded border border-slate-200">
-              <span className="text-slate-500 block text-[10px] uppercase">Database Engine</span>
-              <span className="font-bold text-emerald-700">Supabase PostgreSQL</span>
+            <div className="p-3 bg-slate-50 dark:bg-slate-900/60 rounded-xl border border-slate-200 dark:border-slate-800/80">
+              <span className="text-slate-500 dark:text-slate-400 block text-[10px] uppercase">Database Engine</span>
+              <span className="font-bold text-emerald-600 dark:text-emerald-400">Supabase PostgreSQL</span>
             </div>
-            <div className="p-3 bg-slate-50 rounded border border-slate-200">
-              <span className="text-slate-500 block text-[10px] uppercase">ERP Route</span>
-              <span className="font-bold text-slate-800">/secure-kolmeks-x0y0</span>
+            <div className="p-3 bg-slate-50 dark:bg-slate-900/60 rounded-xl border border-slate-200 dark:border-slate-800/80">
+              <span className="text-slate-500 dark:text-slate-400 block text-[10px] uppercase">ERP Route</span>
+              <span className="font-bold text-slate-800 dark:text-slate-200">/secure-kolmeks-x0y0</span>
             </div>
           </div>
         </CardContent>

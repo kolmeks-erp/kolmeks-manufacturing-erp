@@ -11,171 +11,148 @@ const { supabaseAdmin } = require('../config/supabase');
  */
 router.get('/dashboard-summary', authenticateUser, async (req, res) => {
   try {
-    // 1. Query total RFQ count
-    const { count: totalRfqs, error: countError } = await supabaseAdmin
-      .from('rfqs')
-      .select('*', { count: 'exact', head: true });
+    const safeCount = async (tableName, statusFilter = null, statusCol = 'status', extraEq = null) => {
+      try {
+        let q = supabaseAdmin.from(tableName).select('*', { count: 'exact', head: true });
+        if (statusFilter) {
+          if (Array.isArray(statusFilter)) {
+            q = q.in(statusCol, statusFilter);
+          } else {
+            q = q.ilike(statusCol, statusFilter);
+          }
+        }
+        if (extraEq) {
+          q = q.eq(extraEq.col, extraEq.val);
+        }
+        const { count, error } = await q;
+        if (error) return 0;
+        return count || 0;
+      } catch {
+        return 0;
+      }
+    };
 
-    // 2. Query new RFQs count
-    const { count: newRfqs, error: newCountError } = await supabaseAdmin
-      .from('rfqs')
-      .select('*', { count: 'exact', head: true })
-      .ilike('status', 'new');
+    // Helper to query RFQs count with fallback table name
+    const safeRfqCount = async (statusFilter = null) => {
+      let count = await safeCount('rfqs', statusFilter);
+      if (count === 0) {
+        count = await safeCount('rfq_requests', statusFilter);
+      }
+      return count;
+    };
 
-    const { count: underReviewRfqs } = await supabaseAdmin
-      .from('rfqs')
-      .select('*', { count: 'exact', head: true })
-      .ilike('status', 'under_review');
+    // Helper to query GRN count with fallback table name
+    const safeGrnCount = async (statusFilter = null) => {
+      let count = await safeCount('goods_receipts', statusFilter);
+      if (count === 0) {
+        count = await safeCount('goods_receipt_notes', statusFilter);
+      }
+      return count;
+    };
 
-    const { count: quotedRfqs } = await supabaseAdmin
-      .from('rfqs')
-      .select('*', { count: 'exact', head: true })
-      .ilike('status', 'quoted');
+    // Fetch recent 5 RFQs with fallback table
+    const safeRecentRfqs = async () => {
+      try {
+        let { data } = await supabaseAdmin
+          .from('rfqs')
+          .select('id, rfq_number, company, full_name, email, requirement_type, component_name, quantity, unit, status, created_at')
+          .order('created_at', { ascending: false })
+          .limit(5);
 
-    const { count: closedRfqs } = await supabaseAdmin
-      .from('rfqs')
-      .select('*', { count: 'exact', head: true })
-      .ilike('status', 'closed');
+        if (!data || data.length === 0) {
+          const fallback = await supabaseAdmin
+            .from('rfq_requests')
+            .select('id, request_number, company, full_name, email, requirement_type, project_name, estimated_quantity, unit, status, created_at')
+            .order('created_at', { ascending: false })
+            .limit(5);
+          data = (fallback.data || []).map((r) => ({
+            id: r.id,
+            rfq_number: r.request_number || r.id,
+            company: r.company,
+            full_name: r.full_name,
+            email: r.email,
+            requirement_type: r.requirement_type,
+            component_name: r.project_name,
+            quantity: r.estimated_quantity,
+            unit: r.unit,
+            status: r.status,
+            created_at: r.created_at,
+          }));
+        }
+        return data || [];
+      } catch {
+        return [];
+      }
+    };
 
-    // 3. Query total and active products count
-    const { count: totalProducts } = await supabaseAdmin
-      .from('products')
-      .select('*', { count: 'exact', head: true });
-
-    const { count: activeProducts } = await supabaseAdmin
-      .from('products')
-      .select('*', { count: 'exact', head: true })
-      .eq('status', 'active');
-
-    // 4. Query total and active customers count
-    const { count: totalCustomers } = await supabaseAdmin
-      .from('customers')
-      .select('*', { count: 'exact', head: true });
-
-    const { count: activeCustomers } = await supabaseAdmin
-      .from('customers')
-      .select('*', { count: 'exact', head: true })
-      .eq('status', 'active');
-
-    // 5. Query total and active suppliers count
-    const { count: totalSuppliers } = await supabaseAdmin
-      .from('suppliers')
-      .select('*', { count: 'exact', head: true });
-
-    const { count: activeSuppliers } = await supabaseAdmin
-      .from('suppliers')
-      .select('*', { count: 'exact', head: true })
-      .eq('status', 'active');
-
-    // 6. Query total and status counts for quotations
-    const { count: totalQuotations } = await supabaseAdmin
-      .from('quotations')
-      .select('*', { count: 'exact', head: true });
-
-    const { count: draftQuotations } = await supabaseAdmin
-      .from('quotations')
-      .select('*', { count: 'exact', head: true })
-      .ilike('status', 'draft');
-
-    const { count: underReviewQuotations } = await supabaseAdmin
-      .from('quotations')
-      .select('*', { count: 'exact', head: true })
-      .ilike('status', 'under_review');
-
-    const { count: approvedQuotations } = await supabaseAdmin
-      .from('quotations')
-      .select('*', { count: 'exact', head: true })
-      .ilike('status', 'approved');
-
-    const { count: sentQuotations } = await supabaseAdmin
-      .from('quotations')
-      .select('*', { count: 'exact', head: true })
-      .ilike('status', 'sent');
-
-    const { count: acceptedQuotations } = await supabaseAdmin
-      .from('quotations')
-      .select('*', { count: 'exact', head: true })
-      .ilike('status', 'accepted');
-
-    // 7. Query Sales Orders Metrics
-    const { count: totalSalesOrders } = await supabaseAdmin
-      .from('sales_orders')
-      .select('*', { count: 'exact', head: true });
-
-    const { count: draftSalesOrders } = await supabaseAdmin
-      .from('sales_orders')
-      .select('*', { count: 'exact', head: true })
-      .ilike('status', 'draft');
-
-    const { count: confirmedSalesOrders } = await supabaseAdmin
-      .from('sales_orders')
-      .select('*', { count: 'exact', head: true })
-      .ilike('status', 'confirmed');
-
-    const { count: inProductionSalesOrders } = await supabaseAdmin
-      .from('sales_orders')
-      .select('*', { count: 'exact', head: true })
-      .ilike('status', 'in_production');
-
-    const { count: completedSalesOrders } = await supabaseAdmin
-      .from('sales_orders')
-      .select('*', { count: 'exact', head: true })
-      .ilike('status', 'completed');
-
-    // 8. Query Procurement Requisitions & POs Metrics
-    const { count: totalRequisitions } = await supabaseAdmin
-      .from('purchase_requisitions')
-      .select('*', { count: 'exact', head: true });
-
-    const { count: pendingPRApproval } = await supabaseAdmin
-      .from('purchase_requisitions')
-      .select('*', { count: 'exact', head: true })
-      .in('status', ['SUBMITTED', 'UNDER_REVIEW', 'submitted', 'under_review']);
-
-    const { count: approvedRequisitions } = await supabaseAdmin
-      .from('purchase_requisitions')
-      .select('*', { count: 'exact', head: true })
-      .in('status', ['APPROVED', 'approved']);
-
-    const { count: totalPurchaseOrders } = await supabaseAdmin
-      .from('purchase_orders')
-      .select('*', { count: 'exact', head: true });
-
-    const { count: pendingPOApproval } = await supabaseAdmin
-      .from('purchase_orders')
-      .select('*', { count: 'exact', head: true })
-      .in('status', ['DRAFT', 'PENDING_APPROVAL', 'draft', 'pending_approval']);
-
-    const { count: openPurchaseOrders } = await supabaseAdmin
-      .from('purchase_orders')
-      .select('*', { count: 'exact', head: true })
-      .in('status', ['APPROVED', 'SENT', 'ACKNOWLEDGED', 'PARTIALLY_RECEIVED', 'ordered', 'partially_received']);
-
-    // 9. Query Goods Receipts Metrics
-    const { count: totalGRNs } = await supabaseAdmin
-      .from('goods_receipts')
-      .select('*', { count: 'exact', head: true });
-
-    const { count: completedGRNs } = await supabaseAdmin
-      .from('goods_receipts')
-      .select('*', { count: 'exact', head: true })
-      .ilike('status', 'completed');
-
-    const { count: inProgressGRNs } = await supabaseAdmin
-      .from('goods_receipts')
-      .select('*', { count: 'exact', head: true })
-      .in('status', ['DRAFT', 'IN_PROGRESS', 'draft', 'in_progress']);
-
-    // 10. Query recent 5 RFQs
-    const { data: recentRfqs, error: recentError } = await supabaseAdmin
-      .from('rfqs')
-      .select('id, rfq_number, company, full_name, email, requirement_type, component_name, quantity, unit, status, created_at')
-      .order('created_at', { ascending: false })
-      .limit(5);
-
-    if (countError || newCountError || recentError) {
-      console.warn('Database warning fetching ERP dashboard metrics:', countError || newCountError || recentError);
-    }
+    // Execute queries in parallel
+    const [
+      totalRfqs,
+      newRfqs,
+      underReviewRfqs,
+      quotedRfqs,
+      closedRfqs,
+      totalProducts,
+      activeProducts,
+      totalCustomers,
+      activeCustomers,
+      totalSuppliers,
+      activeSuppliers,
+      totalQuotations,
+      draftQuotations,
+      underReviewQuotations,
+      approvedQuotations,
+      sentQuotations,
+      acceptedQuotations,
+      totalSalesOrders,
+      draftSalesOrders,
+      confirmedSalesOrders,
+      inProductionSalesOrders,
+      completedSalesOrders,
+      totalRequisitions,
+      pendingPRApproval,
+      approvedRequisitions,
+      totalPurchaseOrders,
+      pendingPOApproval,
+      openPurchaseOrders,
+      totalGRNs,
+      completedGRNs,
+      inProgressGRNs,
+      recentRfqs,
+    ] = await Promise.all([
+      safeRfqCount(),
+      safeRfqCount('new'),
+      safeRfqCount('under_review'),
+      safeRfqCount('quoted'),
+      safeRfqCount('closed'),
+      safeCount('products'),
+      safeCount('products', null, 'status', { col: 'status', val: 'active' }),
+      safeCount('customers'),
+      safeCount('customers', null, 'status', { col: 'status', val: 'active' }),
+      safeCount('suppliers'),
+      safeCount('suppliers', null, 'status', { col: 'status', val: 'active' }),
+      safeCount('quotations'),
+      safeCount('quotations', 'draft'),
+      safeCount('quotations', 'under_review'),
+      safeCount('quotations', 'approved'),
+      safeCount('quotations', 'sent'),
+      safeCount('quotations', 'accepted'),
+      safeCount('sales_orders'),
+      safeCount('sales_orders', 'draft'),
+      safeCount('sales_orders', 'confirmed'),
+      safeCount('sales_orders', 'in_production'),
+      safeCount('sales_orders', 'completed'),
+      safeCount('purchase_requisitions'),
+      safeCount('purchase_requisitions', ['SUBMITTED', 'UNDER_REVIEW', 'submitted', 'under_review']),
+      safeCount('purchase_requisitions', ['APPROVED', 'approved']),
+      safeCount('purchase_orders'),
+      safeCount('purchase_orders', ['DRAFT', 'PENDING_APPROVAL', 'draft', 'pending_approval']),
+      safeCount('purchase_orders', ['APPROVED', 'SENT', 'ACKNOWLEDGED', 'PARTIALLY_RECEIVED', 'ordered', 'partially_received']),
+      safeGrnCount(),
+      safeGrnCount('completed'),
+      safeGrnCount(['DRAFT', 'IN_PROGRESS', 'draft', 'in_progress']),
+      safeRecentRfqs(),
+    ]);
 
     res.status(200).json({
       success: true,
@@ -184,37 +161,37 @@ router.get('/dashboard-summary', authenticateUser, async (req, res) => {
       userRole: req.role ? req.role.name : 'staff',
       timestamp: new Date().toISOString(),
       metrics: {
-        totalRfqs: totalRfqs || 0,
-        newRfqs: newRfqs || 0,
-        underReviewRfqs: underReviewRfqs || 0,
-        quotedRfqs: quotedRfqs || 0,
-        closedRfqs: closedRfqs || 0,
-        totalProducts: totalProducts || 0,
-        activeProducts: activeProducts || 0,
-        totalCustomers: totalCustomers || 0,
-        activeCustomers: activeCustomers || 0,
-        totalSuppliers: totalSuppliers || 0,
-        activeSuppliers: activeSuppliers || 0,
-        totalQuotations: totalQuotations || 0,
-        draftQuotations: draftQuotations || 0,
-        underReviewQuotations: underReviewQuotations || 0,
-        approvedQuotations: approvedQuotations || 0,
-        sentQuotations: sentQuotations || 0,
-        acceptedQuotations: acceptedQuotations || 0,
-        totalSalesOrders: totalSalesOrders || 0,
-        draftSalesOrders: draftSalesOrders || 0,
-        confirmedSalesOrders: confirmedSalesOrders || 0,
-        inProductionSalesOrders: inProductionSalesOrders || 0,
-        completedSalesOrders: completedSalesOrders || 0,
-        totalRequisitions: totalRequisitions || 0,
-        pendingPRApproval: pendingPRApproval || 0,
-        approvedRequisitions: approvedRequisitions || 0,
-        totalPurchaseOrders: totalPurchaseOrders || 0,
-        pendingPOApproval: pendingPOApproval || 0,
-        openPurchaseOrders: openPurchaseOrders || 0,
-        totalGRNs: totalGRNs || 0,
-        completedGRNs: completedGRNs || 0,
-        inProgressGRNs: inProgressGRNs || 0,
+        totalRfqs,
+        newRfqs,
+        underReviewRfqs,
+        quotedRfqs,
+        closedRfqs,
+        totalProducts,
+        activeProducts,
+        totalCustomers,
+        activeCustomers,
+        totalSuppliers,
+        activeSuppliers,
+        totalQuotations,
+        draftQuotations,
+        underReviewQuotations,
+        approvedQuotations,
+        sentQuotations,
+        acceptedQuotations,
+        totalSalesOrders,
+        draftSalesOrders,
+        confirmedSalesOrders,
+        inProductionSalesOrders,
+        completedSalesOrders,
+        totalRequisitions,
+        pendingPRApproval,
+        approvedRequisitions,
+        totalPurchaseOrders,
+        pendingPOApproval,
+        openPurchaseOrders,
+        totalGRNs,
+        completedGRNs,
+        inProgressGRNs,
         activeQuotations: (approvedQuotations || 0) + (sentQuotations || 0),
         lowStockItems: 0,
         productionOrders: 0,
