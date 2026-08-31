@@ -61,9 +61,17 @@ export const ERP_SIDEBAR_MENU: ERPMenuItem[] = [
   { id: 'materials', label: 'Raw Materials', path: `${ERP_BASE_PATH}/materials`, iconName: 'Boxes', category: 'Products', roles: ['admin', 'purchase_manager', 'production_manager'] },
 
   // Inventory Section
-  { id: 'inventory', label: 'Inventory Balances', path: `${ERP_BASE_PATH}/inventory`, iconName: 'Boxes', category: 'Inventory', badge: 'Live', roles: ['admin', 'warehouse_manager', 'purchase_manager', 'production_manager', 'executive'] },
-  { id: 'stock-movements', label: 'Stock Movements', path: `${ERP_BASE_PATH}/inventory/movements`, iconName: 'History', category: 'Inventory', badge: 'Live', roles: ['admin', 'warehouse_manager', 'purchase_manager', 'production_manager', 'executive'] },
-  { id: 'warehouses', label: 'Warehouses & Bins', path: `${ERP_BASE_PATH}/warehouses`, iconName: 'Building2', category: 'Inventory', badge: 'Live', roles: ['admin', 'warehouse_manager', 'purchase_manager', 'production_manager', 'executive'] },
+  { id: 'inventory-overview', label: 'Inventory Overview', path: `${ERP_BASE_PATH}/inventory`, iconName: 'BarChart2', category: 'Inventory', badge: 'Live', roles: ['admin', 'warehouse_manager', 'inventory_manager', 'purchase_manager', 'production_manager', 'executive'] },
+  { id: 'inventory-stock', label: 'Stock Balances', path: `${ERP_BASE_PATH}/inventory/stock`, iconName: 'Boxes', category: 'Inventory', badge: 'Live', roles: ['admin', 'warehouse_manager', 'inventory_manager', 'purchase_manager', 'production_manager', 'executive'] },
+  { id: 'inventory-warehouses', label: 'Warehouses & Bins', path: `${ERP_BASE_PATH}/inventory/warehouses`, iconName: 'Building2', category: 'Inventory', badge: 'Live', roles: ['admin', 'warehouse_manager', 'inventory_manager', 'executive'] },
+  { id: 'inventory-movements', label: 'Stock Movements', path: `${ERP_BASE_PATH}/inventory/movements`, iconName: 'History', category: 'Inventory', badge: 'Live', roles: ['admin', 'warehouse_manager', 'inventory_manager', 'executive'] },
+  { id: 'inventory-transfers', label: 'Stock Transfers', path: `${ERP_BASE_PATH}/inventory/transfers`, iconName: 'RefreshCw', category: 'Inventory', badge: 'Live', roles: ['admin', 'warehouse_manager', 'inventory_manager', 'executive'] },
+  { id: 'inventory-adjustments', label: 'Stock Adjustments', path: `${ERP_BASE_PATH}/inventory/adjustments`, iconName: 'Sliders', category: 'Inventory', badge: 'Live', roles: ['admin', 'warehouse_manager', 'inventory_manager', 'executive'] },
+  { id: 'inventory-reservations', label: 'Stock Reservations', path: `${ERP_BASE_PATH}/inventory/reservations`, iconName: 'Lock', category: 'Inventory', badge: 'Live', roles: ['admin', 'warehouse_manager', 'inventory_manager', 'sales_manager', 'production_manager', 'executive'] },
+  { id: 'inventory-batches', label: 'Batch / Lot Register', path: `${ERP_BASE_PATH}/inventory/batches`, iconName: 'Package', category: 'Inventory', badge: 'Live', roles: ['admin', 'warehouse_manager', 'inventory_manager', 'quality_manager', 'executive'] },
+  { id: 'inventory-serials', label: 'Serial Numbers', path: `${ERP_BASE_PATH}/inventory/serial-numbers`, iconName: 'Barcode', category: 'Inventory', badge: 'Live', roles: ['admin', 'warehouse_manager', 'inventory_manager', 'quality_manager', 'executive'] },
+  { id: 'inventory-reorder', label: 'Reorder & Replenishment', path: `${ERP_BASE_PATH}/inventory/reorder`, iconName: 'TrendingUp', category: 'Inventory', badge: 'Live', roles: ['admin', 'warehouse_manager', 'inventory_manager', 'purchase_manager', 'executive'] },
+  { id: 'inventory-reports', label: 'Valuation & Reports', path: `${ERP_BASE_PATH}/inventory/reports`, iconName: 'PieChart', category: 'Inventory', badge: 'Live', roles: ['admin', 'warehouse_manager', 'inventory_manager', 'finance_manager', 'executive'] },
 
   // Production Section
   { id: 'production-dashboard', label: 'Production Overview', path: `${ERP_BASE_PATH}/production`, iconName: 'Factory', category: 'Production', badge: 'Live', roles: ['admin', 'production_manager', 'quality_manager', 'warehouse_manager', 'executive'] },
@@ -104,6 +112,11 @@ export const ERP_SIDEBAR_MENU: ERPMenuItem[] = [
 
   // Finance & Accounting Section
   { id: 'finance-dashboard', label: 'Finance Dashboard', path: `${ERP_BASE_PATH}/finance`, iconName: 'DollarSign', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'accountant', 'manager'] },
+  { id: 'finance-expenses', label: 'Expense Management', path: `${ERP_BASE_PATH}/finance/expenses`, iconName: 'Receipt', category: 'Finance & Accounting', badge: 'Live', roles: ALL_ROLES },
+  { id: 'finance-expense-claims', label: 'Expense Claims', path: `${ERP_BASE_PATH}/finance/expenses/claims`, iconName: 'FileText', category: 'Finance & Accounting', badge: 'Live', roles: ALL_ROLES },
+  { id: 'finance-expense-reimbursements', label: 'Reimbursements', path: `${ERP_BASE_PATH}/finance/expenses/reimbursements`, iconName: 'CreditCard', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'accountant', 'manager', 'executive'] },
+  { id: 'finance-expense-reports', label: 'Expense Reports', path: `${ERP_BASE_PATH}/finance/expenses/reports`, iconName: 'BarChart2', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'accountant', 'manager', 'executive'] },
+  { id: 'finance-expense-categories', label: 'Expense Categories', path: `${ERP_BASE_PATH}/finance/expenses/categories`, iconName: 'FolderTree', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'accountant'] },
   { id: 'finance-budgets', label: 'Budgets Overview', path: `${ERP_BASE_PATH}/finance/budgets`, iconName: 'PieChart', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'accountant', 'manager', 'executive'] },
   { id: 'finance-budget-list', label: 'Budget Register', path: `${ERP_BASE_PATH}/finance/budgets/list`, iconName: 'FileSpreadsheet', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'accountant', 'manager', 'executive'] },
   { id: 'finance-cost-centers', label: 'Cost Centers', path: `${ERP_BASE_PATH}/finance/cost-centers`, iconName: 'Building2', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'accountant', 'manager', 'executive'] },
@@ -121,9 +134,17 @@ export const ERP_SIDEBAR_MENU: ERPMenuItem[] = [
   { id: 'finance-trial-balance', label: 'Trial Balance', path: `${ERP_BASE_PATH}/finance/trial-balance`, iconName: 'Scale', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'accountant', 'manager'] },
   { id: 'finance-profit-loss', label: 'Profit & Loss (P&L)', path: `${ERP_BASE_PATH}/finance/profit-loss`, iconName: 'TrendingUp', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'accountant', 'manager'] },
   { id: 'finance-balance-sheet', label: 'Balance Sheet', path: `${ERP_BASE_PATH}/finance/balance-sheet`, iconName: 'PieChart', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'accountant', 'manager'] },
+  { id: 'finance-assets', label: 'Fixed Assets Overview', path: `${ERP_BASE_PATH}/finance/assets`, iconName: 'Box', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'accountant', 'manager', 'executive'] },
+  { id: 'finance-asset-register', label: 'Asset Register', path: `${ERP_BASE_PATH}/finance/assets/list`, iconName: 'FileSpreadsheet', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'accountant', 'manager', 'executive'] },
+  { id: 'finance-asset-depreciation', label: 'Depreciation Runs', path: `${ERP_BASE_PATH}/finance/assets/depreciation`, iconName: 'TrendingDown', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'accountant', 'manager'] },
+  { id: 'finance-asset-transfers', label: 'Asset Transfers', path: `${ERP_BASE_PATH}/finance/assets/transfers`, iconName: 'RefreshCw', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'accountant', 'manager'] },
+  { id: 'finance-asset-disposals', label: 'Asset Disposals', path: `${ERP_BASE_PATH}/finance/assets/disposals`, iconName: 'Trash2', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'accountant', 'manager'] },
+  { id: 'finance-asset-categories', label: 'Asset Categories', path: `${ERP_BASE_PATH}/finance/assets/categories`, iconName: 'FolderTree', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'accountant'] },
+  { id: 'finance-asset-reports', label: 'Asset Reports', path: `${ERP_BASE_PATH}/finance/assets/reports`, iconName: 'BarChart2', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'accountant', 'manager', 'executive'] },
 
   // Employee Self-Service Section
   { id: 'my-hr', label: 'Employee Portal (My HR)', path: `${ERP_BASE_PATH}/my-hr`, iconName: 'UserCheck', category: 'Self Service', badge: 'Live', roles: ALL_ROLES },
+  { id: 'my-expenses', label: 'My Expense Claims', path: `${ERP_BASE_PATH}/finance/expenses/my`, iconName: 'Receipt', category: 'Self Service', badge: 'Live', roles: ALL_ROLES },
   { id: 'my-attendance', label: 'My Attendance Logs', path: `${ERP_BASE_PATH}/my-hr/attendance`, iconName: 'Clock', category: 'Self Service', badge: 'Live', roles: ALL_ROLES },
   { id: 'my-leave', label: 'My Leave Applications', path: `${ERP_BASE_PATH}/my-hr/leave`, iconName: 'Calendar', category: 'Self Service', badge: 'Live', roles: ALL_ROLES },
 

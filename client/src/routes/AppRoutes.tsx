@@ -71,6 +71,19 @@ import { StockTransferFormPage } from '../pages/erp/inventory/StockTransferFormP
 import { WarehouseListPage } from '../pages/erp/warehouses/WarehouseListPage';
 import { WarehouseDetailPage } from '../pages/erp/warehouses/WarehouseDetailPage';
 
+// Advanced Inventory System Modules
+import { InventoryDashboardPage } from '../pages/erp/inventory/InventoryDashboardPage';
+import { StockOverviewPage } from '../pages/erp/inventory/StockOverviewPage';
+import { WarehouseListPage as AdvancedWarehouseListPage } from '../pages/erp/inventory/WarehouseListPage';
+import { StockMovementsPage } from '../pages/erp/inventory/StockMovementsPage';
+import { StockTransfersPage } from '../pages/erp/inventory/StockTransfersPage';
+import { StockAdjustmentsPage } from '../pages/erp/inventory/StockAdjustmentsPage';
+import { StockReservationsPage } from '../pages/erp/inventory/StockReservationsPage';
+import { StockBatchesPage } from '../pages/erp/inventory/StockBatchesPage';
+import { StockSerialsPage } from '../pages/erp/inventory/StockSerialsPage';
+import { ReorderDashboardPage } from '../pages/erp/inventory/ReorderDashboardPage';
+import { InventoryReportsPage } from '../pages/erp/inventory/InventoryReportsPage';
+
 import { ProductionDashboardPage } from '../pages/erp/production/ProductionDashboardPage';
 import { ProductionOrderListPage } from '../pages/erp/production/ProductionOrderListPage';
 import { ProductionOrderFormPage } from '../pages/erp/production/ProductionOrderFormPage';
@@ -164,6 +177,25 @@ import { BudgetApprovalsPage } from '../pages/erp/finance/BudgetApprovalsPage';
 import { CostCenterListPage } from '../pages/erp/finance/CostCenterListPage';
 import { CostCenterDetailPage } from '../pages/erp/finance/CostCenterDetailPage';
 
+import { ExpenseDashboardPage } from '../pages/erp/finance/expenses/ExpenseDashboardPage';
+import { ExpenseClaimListPage } from '../pages/erp/finance/expenses/ExpenseClaimListPage';
+import { MyExpensesPage } from '../pages/erp/finance/expenses/MyExpensesPage';
+import { ExpenseClaimFormPage } from '../pages/erp/finance/expenses/ExpenseClaimFormPage';
+import { ExpenseClaimDetailPage } from '../pages/erp/finance/expenses/ExpenseClaimDetailPage';
+import { ExpenseCategoryListPage } from '../pages/erp/finance/expenses/ExpenseCategoryListPage';
+import { ReimbursementListPage } from '../pages/erp/finance/expenses/ReimbursementListPage';
+import { ExpenseReportsPage } from '../pages/erp/finance/expenses/ExpenseReportsPage';
+
+import { AssetDashboardPage as FixedAssetDashboardPage } from '../pages/erp/finance/assets/AssetDashboardPage';
+import { AssetListPage as FixedAssetListPage } from '../pages/erp/finance/assets/AssetListPage';
+import { AssetFormPage as FixedAssetFormPage } from '../pages/erp/finance/assets/AssetFormPage';
+import { AssetDetailPage as FixedAssetDetailPage } from '../pages/erp/finance/assets/AssetDetailPage';
+import { DepreciationManagementPage } from '../pages/erp/finance/assets/DepreciationManagementPage';
+import { AssetTransferListPage } from '../pages/erp/finance/assets/AssetTransferListPage';
+import { AssetDisposalListPage } from '../pages/erp/finance/assets/AssetDisposalListPage';
+import { AssetCategoryListPage as FixedAssetCategoryListPage } from '../pages/erp/finance/assets/AssetCategoryListPage';
+import { AssetReportsPage as FixedAssetReportsPage } from '../pages/erp/finance/assets/AssetReportsPage';
+
 import { ProtectedRoute } from '../components/auth/ProtectedRoute';
 import { ERP_BASE_PATH } from '../constants/navigation';
 import { SystemSettingsProvider, useSystemSettings } from '../context/SystemSettingsContext';
@@ -241,12 +273,21 @@ export const AppRoutes: React.FC = () => {
             <Route path="rfqs/:id" element={<RFQDetailPage />} />
           </Route>
 
-          {/* Inventory & Warehouse Management Authorized Routes */}
-          <Route element={<ProtectedRoute allowedRoles={['admin', 'warehouse_manager', 'purchase_manager', 'production_manager', 'executive']} />}>
-            <Route path="inventory" element={<InventoryListPage />} />
-            <Route path="inventory/movements" element={<StockMovementListPage />} />
-            <Route path="inventory/adjustments/new" element={<StockAdjustmentFormPage />} />
+          {/* Advanced Inventory & Stock Control Authorized Routes */}
+          <Route element={<ProtectedRoute allowedRoles={['admin', 'warehouse_manager', 'inventory_manager', 'purchase_manager', 'production_manager', 'quality_manager', 'sales_manager', 'finance_manager', 'executive']} />}>
+            <Route path="inventory" element={<InventoryDashboardPage />} />
+            <Route path="inventory/stock" element={<StockOverviewPage />} />
+            <Route path="inventory/warehouses" element={<AdvancedWarehouseListPage />} />
+            <Route path="inventory/movements" element={<StockMovementsPage />} />
+            <Route path="inventory/transfers" element={<StockTransfersPage />} />
             <Route path="inventory/transfers/new" element={<StockTransferFormPage />} />
+            <Route path="inventory/adjustments" element={<StockAdjustmentsPage />} />
+            <Route path="inventory/adjustments/new" element={<StockAdjustmentFormPage />} />
+            <Route path="inventory/reservations" element={<StockReservationsPage />} />
+            <Route path="inventory/batches" element={<StockBatchesPage />} />
+            <Route path="inventory/serial-numbers" element={<StockSerialsPage />} />
+            <Route path="inventory/reorder" element={<ReorderDashboardPage />} />
+            <Route path="inventory/reports" element={<InventoryReportsPage />} />
             <Route path="inventory/:productId" element={<InventoryDetailPage />} />
             <Route path="warehouses" element={<WarehouseListPage />} />
             <Route path="warehouses/:id" element={<WarehouseDetailPage />} />
@@ -395,6 +436,29 @@ export const AppRoutes: React.FC = () => {
             {/* Cost Center Routes */}
             <Route path="finance/cost-centers" element={<CostCenterListPage />} />
             <Route path="finance/cost-centers/:id" element={<CostCenterDetailPage />} />
+
+            {/* Expense Management & Reimbursement Routes */}
+            <Route path="finance/expenses" element={<ExpenseDashboardPage />} />
+            <Route path="finance/expenses/claims" element={<ExpenseClaimListPage />} />
+            <Route path="finance/expenses/claims/new" element={<ExpenseClaimFormPage />} />
+            <Route path="finance/expenses/claims/:id" element={<ExpenseClaimDetailPage />} />
+            <Route path="finance/expenses/claims/:id/edit" element={<ExpenseClaimFormPage />} />
+            <Route path="finance/expenses/my" element={<MyExpensesPage />} />
+            <Route path="finance/expenses/categories" element={<ExpenseCategoryListPage />} />
+            <Route path="finance/expenses/reimbursements" element={<ReimbursementListPage />} />
+            <Route path="finance/expenses/reports" element={<ExpenseReportsPage />} />
+
+            {/* Fixed Assets & Depreciation Routes */}
+            <Route path="finance/assets" element={<FixedAssetDashboardPage />} />
+            <Route path="finance/assets/list" element={<FixedAssetListPage />} />
+            <Route path="finance/assets/new" element={<FixedAssetFormPage />} />
+            <Route path="finance/assets/categories" element={<FixedAssetCategoryListPage />} />
+            <Route path="finance/assets/depreciation" element={<DepreciationManagementPage />} />
+            <Route path="finance/assets/transfers" element={<AssetTransferListPage />} />
+            <Route path="finance/assets/disposals" element={<AssetDisposalListPage />} />
+            <Route path="finance/assets/reports" element={<FixedAssetReportsPage />} />
+            <Route path="finance/assets/:id" element={<FixedAssetDetailPage />} />
+            <Route path="finance/assets/:id/edit" element={<FixedAssetFormPage />} />
 
             <Route path="finance/receivables" element={<CustomerReceivablesPage />} />
             <Route path="finance/receivables/aging" element={<ReceivableAgingPage />} />

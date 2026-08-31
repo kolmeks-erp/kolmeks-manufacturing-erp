@@ -28,6 +28,8 @@ const financeRoutes = require('./routes/finance.routes');
 const salesInvoiceRoutes = require('./routes/sales_invoice.routes');
 const purchaseInvoiceRoutes = require('./routes/purchase_invoice.routes');
 const budgetingRoutes = require('./routes/budgeting.routes');
+const expenseRoutes = require('./routes/expense.routes');
+const assetRoutes = require('./routes/asset.routes');
 const systemSettingsRoutes = require('./routes/system_settings.routes');
 const { publicRouter: rfqPublicRoutes, erpRouter: rfqErpRoutes } = require('./routes/rfq.routes');
 const errorHandler = require('./middleware/errorHandler');
@@ -82,6 +84,8 @@ app.use('/api/sales', salesInvoiceRoutes);
 app.use('/api/finance', salesInvoiceRoutes);
 app.use('/api', purchaseInvoiceRoutes);
 app.use('/api', budgetingRoutes);
+app.use('/api', expenseRoutes);
+app.use('/api', assetRoutes);
 app.use('/api/system', systemSettingsRoutes);
 
 // Root Endpoint

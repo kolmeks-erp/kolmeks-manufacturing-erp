@@ -22,6 +22,7 @@ export type UserRoleName =
   | 'maintenance_manager'
   | 'maintenance_technician'
   | 'warehouse_manager'
+  | 'inventory_manager'
   | 'executive';
 
 export interface UserRole {
