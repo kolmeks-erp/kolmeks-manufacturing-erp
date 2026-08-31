@@ -44,15 +44,26 @@ app.use(helmet());
 app.use(morgan(process.env.NODE_ENV === 'development' ? 'dev' : 'combined'));
 
 // CORS Configuration
-const allowedOrigins = [process.env.CLIENT_ORIGIN || 'http://localhost:5173'];
+const allowedOrigins = [
+  process.env.CLIENT_ORIGIN,
+  'https://kolmeks-manufacturing-erp.vercel.app',
+  'http://localhost:5173',
+  'http://localhost:5174',
+  'http://localhost:3000',
+].filter(Boolean);
+
 app.use(
   cors({
     origin: (origin, callback) => {
       // Allow requests with no origin (like mobile apps, curl, or server-to-server)
-      if (!origin || allowedOrigins.includes(origin)) {
+      if (
+        !origin ||
+        allowedOrigins.includes(origin) ||
+        origin.endsWith('.vercel.app')
+      ) {
         return callback(null, true);
       }
-      return callback(new Error('CORS Policy: Request origin not allowed'));
+      return callback(new Error(`CORS Policy: Request origin ${origin} not allowed`));
     },
     credentials: true,
   })

@@ -12,7 +12,10 @@ import {
   CategoryStatus,
 } from '../types/product';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const API_URL =
+  import.meta.env.VITE_API_BASE_URL ||
+  import.meta.env.VITE_API_URL ||
+  'https://kolmeks-manufacturing-erp.onrender.com/api';
 
 /**
  * Get authenticated header containing Supabase JWT session token
