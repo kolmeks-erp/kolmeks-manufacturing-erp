@@ -14,7 +14,6 @@ import {
   User,
   AlertTriangle,
 } from 'lucide-react';
-import { ERPLayout } from '../../../../layouts/ERPLayout';
 import ERPPageHeader from '../../../../components/erp/ERPPageHeader';
 import StatusBadge from '../../../../components/erp/StatusBadge';
 import LoadingState from '../../../../components/erp/LoadingState';
@@ -133,210 +132,208 @@ const ProductionPlanDetailPage: React.FC = () => {
     });
   };
 
-  if (loading) return <ERPLayout><LoadingState message="Loading Plan details..." /></ERPLayout>;
-  if (error || !planData) return <ERPLayout><ErrorState message={error || 'Plan not found.'} onRetry={fetchPlanDetail} /></ERPLayout>;
+  if (loading) return <LoadingState message="Loading Plan details..." />;
+  if (error || !planData) return <ErrorState message={error || 'Plan not found.'} onRetry={fetchPlanDetail} />;
 
   const { plan, lines } = planData;
 
   return (
-    <ERPLayout>
-      <div className="space-y-6">
-        <ERPPageHeader
-          title={`Plan ${plan.plan_number}`}
-          subtitle={plan.plan_name}
-          actions={
-            <div className="flex items-center gap-3">
+    <div className="space-y-6">
+      <ERPPageHeader
+        title={`Plan ${plan.plan_number}`}
+        subtitle={plan.plan_name}
+        actions={
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => navigate(`${ERP_BASE_PATH}/production/planning/plans`)}
+              className="px-3.5 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-sm rounded-lg flex items-center gap-1.5 transition-colors border border-slate-200 dark:border-slate-700"
+            >
+              <ArrowLeft size={14} /> Back to Plans
+            </button>
+
+            {plan.status === 'DRAFT' && (
               <button
-                onClick={() => navigate(`${ERP_BASE_PATH}/production/planning/plans`)}
-                className="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 text-sm rounded-lg flex items-center gap-1.5 transition-colors border border-slate-700"
+                onClick={() => handleStatusAction('submit')}
+                disabled={actionLoading}
+                className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white text-sm font-medium rounded-lg flex items-center gap-1.5 shadow-lg shadow-blue-500/20 transition-all"
               >
-                <ArrowLeft size={14} /> Back to Plans
+                <Send size={15} /> Submit for Approval
               </button>
+            )}
 
-              {plan.status === 'DRAFT' && (
-                <button
-                  onClick={() => handleStatusAction('submit')}
-                  disabled={actionLoading}
-                  className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white text-sm font-medium rounded-lg flex items-center gap-1.5 shadow-lg shadow-blue-500/20 transition-all"
-                >
-                  <Send size={15} /> Submit for Approval
-                </button>
-              )}
+            {(plan.status === 'SUBMITTED' || plan.status === 'UNDER_REVIEW') && (
+              <button
+                onClick={() => handleStatusAction('approve')}
+                disabled={actionLoading}
+                className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-medium rounded-lg flex items-center gap-1.5 shadow-lg shadow-emerald-500/20 transition-all"
+              >
+                <CheckCircle2 size={15} /> Approve Plan
+              </button>
+            )}
 
-              {(plan.status === 'SUBMITTED' || plan.status === 'UNDER_REVIEW') && (
-                <button
-                  onClick={() => handleStatusAction('approve')}
-                  disabled={actionLoading}
-                  className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-medium rounded-lg flex items-center gap-1.5 shadow-lg shadow-emerald-500/20 transition-all"
-                >
-                  <CheckCircle2 size={15} /> Approve Plan
-                </button>
-              )}
+            {plan.status === 'APPROVED' && (
+              <button
+                onClick={() => handleStatusAction('generate')}
+                disabled={actionLoading}
+                className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium rounded-lg flex items-center gap-1.5 shadow-lg shadow-indigo-500/20 transition-all"
+              >
+                <Play size={15} /> Generate Production Orders
+              </button>
+            )}
 
-              {plan.status === 'APPROVED' && (
-                <button
-                  onClick={() => handleStatusAction('generate')}
-                  disabled={actionLoading}
-                  className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium rounded-lg flex items-center gap-1.5 shadow-lg shadow-indigo-500/20 transition-all"
-                >
-                  <Play size={15} /> Generate Production Orders
-                </button>
-              )}
-
-              {!['COMPLETED', 'CANCELLED'].includes(plan.status) && (
-                <button
-                  onClick={() => handleStatusAction('cancel')}
-                  disabled={actionLoading}
-                  className="px-3.5 py-2 bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 text-sm rounded-lg border border-rose-500/20 flex items-center gap-1.5 transition-colors"
-                >
-                  <XCircle size={15} /> Cancel Plan
-                </button>
-              )}
-            </div>
-          }
-        />
-
-        {/* Plan Header Card */}
-        <div className="bg-slate-900 border border-slate-800 rounded-xl p-6 grid grid-cols-1 md:grid-cols-4 gap-6">
-          <div>
-            <div className="text-xs text-slate-400 font-medium">Status</div>
-            <div className="mt-1">
-              <StatusBadge status={plan.status} />
-            </div>
+            {!['COMPLETED', 'CANCELLED'].includes(plan.status) && (
+              <button
+                onClick={() => handleStatusAction('cancel')}
+                disabled={actionLoading}
+                className="px-3.5 py-2 bg-rose-50 dark:bg-rose-500/10 hover:bg-rose-100 dark:hover:bg-rose-500/20 text-rose-700 dark:text-rose-400 text-sm rounded-lg border border-rose-200 dark:border-rose-500/20 flex items-center gap-1.5 transition-colors"
+              >
+                <XCircle size={15} /> Cancel Plan
+              </button>
+            )}
           </div>
+        }
+      />
 
-          <div>
-            <div className="text-xs text-slate-400 font-medium">Planning Horizon</div>
-            <div className="text-sm font-semibold text-slate-200 mt-1 flex items-center gap-1.5">
-              <Calendar size={14} className="text-blue-400" />
-              {plan.start_date} to {plan.end_date}
-            </div>
-            <div className="text-xs text-slate-400 mt-0.5">{plan.period_type}</div>
-          </div>
-
-          <div>
-            <div className="text-xs text-slate-400 font-medium">Created By</div>
-            <div className="text-sm font-semibold text-slate-200 mt-1 flex items-center gap-1.5">
-              <User size={14} className="text-slate-400" />
-              {plan.created_by_profile?.full_name || 'System User'}
-            </div>
-            <div className="text-xs text-slate-400 mt-0.5">{new Date(plan.created_at).toLocaleDateString()}</div>
-          </div>
-
-          <div>
-            <div className="text-xs text-slate-400 font-medium">Approval State</div>
-            <div className="text-sm font-semibold text-slate-200 mt-1">
-              {plan.approved_by_profile ? (
-                <span className="text-emerald-400 flex items-center gap-1">
-                  <CheckCircle2 size={14} /> Approved by {plan.approved_by_profile.full_name}
-                </span>
-              ) : (
-                <span className="text-amber-400">Pending Approval</span>
-              )}
-            </div>
+      {/* Plan Header Card */}
+      <div className="bg-white dark:bg-[#0F2647] border border-slate-200 dark:border-slate-800/80 rounded-xl p-6 grid grid-cols-1 md:grid-cols-4 gap-6 shadow-xs">
+        <div>
+          <div className="text-xs text-slate-500 dark:text-slate-400 font-medium">Status</div>
+          <div className="mt-1">
+            <StatusBadge status={plan.status} />
           </div>
         </div>
 
-        {/* Action Shortcuts */}
-        <div className="flex items-center gap-4">
-          <button
-            onClick={() => navigate(`${ERP_BASE_PATH}/production/planning/materials?plan_id=${plan.id}`)}
-            className="px-4 py-2.5 bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded-xl text-slate-200 text-sm font-medium flex items-center gap-2 transition-colors"
-          >
-            <PackageCheck size={16} className="text-emerald-400" /> Run Material Availability Check (MRP)
-          </button>
-
-          <button
-            onClick={() => navigate(`${ERP_BASE_PATH}/production/planning/reports?plan_id=${plan.id}`)}
-            className="px-4 py-2.5 bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded-xl text-slate-200 text-sm font-medium flex items-center gap-2 transition-colors"
-          >
-            <FileText size={16} className="text-purple-400" /> View Plan vs Actual Variance Report
-          </button>
+        <div>
+          <div className="text-xs text-slate-500 dark:text-slate-400 font-medium">Planning Horizon</div>
+          <div className="text-sm font-semibold text-slate-900 dark:text-slate-200 mt-1 flex items-center gap-1.5">
+            <Calendar size={14} className="text-blue-600 dark:text-blue-400" />
+            {plan.start_date} to {plan.end_date}
+          </div>
+          <div className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">{plan.period_type}</div>
         </div>
 
-        {/* Lines Table */}
-        <div className="bg-slate-900 border border-slate-800 rounded-xl p-6 space-y-4">
-          <h3 className="text-base font-semibold text-slate-100 flex items-center gap-2">
-            <Layers className="text-blue-400" size={18} /> Planned Product Lines ({(lines || []).length})
-          </h3>
+        <div>
+          <div className="text-xs text-slate-500 dark:text-slate-400 font-medium">Created By</div>
+          <div className="text-sm font-semibold text-slate-900 dark:text-slate-200 mt-1 flex items-center gap-1.5">
+            <User size={14} className="text-slate-400" />
+            {plan.created_by_profile?.full_name || 'System User'}
+          </div>
+          <div className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">{new Date(plan.created_at).toLocaleDateString()}</div>
+        </div>
 
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs">
-              <thead className="bg-slate-950 text-slate-400 uppercase tracking-wider font-semibold border-b border-slate-800">
-                <tr>
-                  <th className="px-4 py-3">#</th>
-                  <th className="px-4 py-3">Product</th>
-                  <th className="px-4 py-3 text-right">Planned Qty</th>
-                  <th className="px-4 py-3">Required Date</th>
-                  <th className="px-4 py-3">Demand Source</th>
-                  <th className="px-4 py-3">Priority</th>
-                  <th className="px-4 py-3">Production Order</th>
-                  <th className="px-4 py-3 text-center">Status</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-800 text-slate-200">
-                {(lines || []).map((line: any) => (
-                  <tr key={line.id} className="hover:bg-slate-800/50">
-                    <td className="px-4 py-3 font-mono text-slate-400">{line.line_number}</td>
-                    <td className="px-4 py-3">
-                      <div className="font-semibold text-slate-100">{line.product?.name}</div>
-                      <div className="font-mono text-slate-400">{line.product?.product_code}</div>
-                    </td>
-                    <td className="px-4 py-3 text-right font-mono font-bold text-blue-400">
-                      {line.planned_quantity} {line.product?.unit || 'pcs'}
-                    </td>
-                    <td className="px-4 py-3 font-mono">{line.required_date}</td>
-                    <td className="px-4 py-3">
-                      {line.sales_order ? (
-                        <span className="text-blue-400 font-mono">SO: {line.sales_order.order_number}</span>
-                      ) : (
-                        <span className="text-slate-400">{line.demand_source}</span>
-                      )}
-                    </td>
-                    <td className="px-4 py-3">
-                      <span
-                        className={`px-2 py-0.5 rounded text-[11px] font-semibold ${
-                          line.priority === 'URGENT'
-                            ? 'bg-rose-500/10 text-rose-400 border border-rose-500/20'
-                            : line.priority === 'HIGH'
-                            ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
-                            : 'bg-slate-800 text-slate-300'
-                        }`}
-                      >
-                        {line.priority}
-                      </span>
-                    </td>
-                    <td className="px-4 py-3">
-                      {line.production_order ? (
-                        <span className="font-mono text-indigo-400">
-                          {line.production_order.production_order_number}
-                        </span>
-                      ) : (
-                        <span className="text-slate-500 italic">Unassigned</span>
-                      )}
-                    </td>
-                    <td className="px-4 py-3 text-center">
-                      <StatusBadge status={line.status} />
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+        <div>
+          <div className="text-xs text-slate-500 dark:text-slate-400 font-medium">Approval State</div>
+          <div className="text-sm font-semibold text-slate-900 dark:text-slate-200 mt-1">
+            {plan.approved_by_profile ? (
+              <span className="text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
+                <CheckCircle2 size={14} /> Approved by {plan.approved_by_profile.full_name}
+              </span>
+            ) : (
+              <span className="text-amber-600 dark:text-amber-400">Pending Approval</span>
+            )}
           </div>
         </div>
-
-        {/* Confirmation Modal */}
-        <ConfirmDialog
-          isOpen={confirmModal.isOpen}
-          title={confirmModal.title}
-          message={confirmModal.message}
-          confirmText="Proceed"
-          cancelText="Cancel"
-          onConfirm={confirmModal.action}
-          onCancel={() => setConfirmModal((prev) => ({ ...prev, isOpen: false }))}
-        />
       </div>
-    </ERPLayout>
+
+      {/* Action Shortcuts */}
+      <div className="flex items-center gap-4">
+        <button
+          onClick={() => navigate(`${ERP_BASE_PATH}/production/planning/materials?plan_id=${plan.id}`)}
+          className="px-4 py-2.5 bg-white dark:bg-[#0F2647] hover:bg-slate-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800/80 rounded-xl text-slate-800 dark:text-slate-200 text-sm font-medium flex items-center gap-2 transition-colors shadow-xs"
+        >
+          <PackageCheck size={16} className="text-emerald-600 dark:text-emerald-400" /> Run Material Availability Check (MRP)
+        </button>
+
+        <button
+          onClick={() => navigate(`${ERP_BASE_PATH}/production/planning/reports?plan_id=${plan.id}`)}
+          className="px-4 py-2.5 bg-white dark:bg-[#0F2647] hover:bg-slate-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800/80 rounded-xl text-slate-800 dark:text-slate-200 text-sm font-medium flex items-center gap-2 transition-colors shadow-xs"
+        >
+          <FileText size={16} className="text-purple-600 dark:text-purple-400" /> View Plan vs Actual Variance Report
+        </button>
+      </div>
+
+      {/* Lines Table */}
+      <div className="bg-white dark:bg-[#0F2647] border border-slate-200 dark:border-slate-800/80 rounded-xl p-6 space-y-4 shadow-xs">
+        <h3 className="text-base font-semibold text-slate-900 dark:text-slate-100 flex items-center gap-2">
+          <Layers className="text-blue-600 dark:text-blue-400" size={18} /> Planned Product Lines ({(lines || []).length})
+        </h3>
+
+        <div className="overflow-x-auto">
+          <table className="w-full text-left text-xs">
+            <thead className="bg-slate-50 dark:bg-slate-950 text-slate-600 dark:text-slate-400 uppercase tracking-wider font-semibold border-b border-slate-200 dark:border-slate-800">
+              <tr>
+                <th className="px-4 py-3">#</th>
+                <th className="px-4 py-3">Product</th>
+                <th className="px-4 py-3 text-right">Planned Qty</th>
+                <th className="px-4 py-3">Required Date</th>
+                <th className="px-4 py-3">Demand Source</th>
+                <th className="px-4 py-3">Priority</th>
+                <th className="px-4 py-3">Production Order</th>
+                <th className="px-4 py-3 text-center">Status</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-200 dark:divide-slate-800 text-slate-800 dark:text-slate-200">
+              {(lines || []).map((line: any) => (
+                <tr key={line.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                  <td className="px-4 py-3 font-mono text-slate-500 dark:text-slate-400">{line.line_number}</td>
+                  <td className="px-4 py-3">
+                    <div className="font-semibold text-slate-900 dark:text-slate-100">{line.product?.name}</div>
+                    <div className="font-mono text-slate-500 dark:text-slate-400">{line.product?.product_code}</div>
+                  </td>
+                  <td className="px-4 py-3 text-right font-mono font-bold text-blue-600 dark:text-blue-400">
+                    {line.planned_quantity} {line.product?.unit || 'pcs'}
+                  </td>
+                  <td className="px-4 py-3 font-mono">{line.required_date}</td>
+                  <td className="px-4 py-3">
+                    {line.sales_order ? (
+                      <span className="text-blue-600 dark:text-blue-400 font-mono">SO: {line.sales_order.order_number}</span>
+                    ) : (
+                      <span className="text-slate-500 dark:text-slate-400">{line.demand_source}</span>
+                    )}
+                  </td>
+                  <td className="px-4 py-3">
+                    <span
+                      className={`px-2 py-0.5 rounded text-[11px] font-semibold ${
+                        line.priority === 'URGENT'
+                          ? 'bg-rose-50 dark:bg-rose-500/10 text-rose-700 dark:text-rose-400 border border-rose-200 dark:border-rose-500/20'
+                          : line.priority === 'HIGH'
+                          ? 'bg-amber-50 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-500/20'
+                          : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300'
+                      }`}
+                    >
+                      {line.priority}
+                    </span>
+                  </td>
+                  <td className="px-4 py-3">
+                    {line.production_order ? (
+                      <span className="font-mono text-indigo-600 dark:text-indigo-400">
+                        {line.production_order.production_order_number}
+                      </span>
+                    ) : (
+                      <span className="text-slate-400 dark:text-slate-500 italic">Unassigned</span>
+                    )}
+                  </td>
+                  <td className="px-4 py-3 text-center">
+                    <StatusBadge status={line.status} />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* Confirmation Modal */}
+      <ConfirmDialog
+        isOpen={confirmModal.isOpen}
+        title={confirmModal.title}
+        message={confirmModal.message}
+        confirmText="Proceed"
+        cancelText="Cancel"
+        onConfirm={confirmModal.action}
+        onCancel={() => setConfirmModal((prev) => ({ ...prev, isOpen: false }))}
+      />
+    </div>
   );
 };
 

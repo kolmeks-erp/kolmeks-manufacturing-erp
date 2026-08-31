@@ -215,27 +215,27 @@ export const PurchaseInvoiceFormPage: React.FC = () => {
         <button
           type="button"
           onClick={() => navigate(-1)}
-          className="inline-flex items-center gap-1.5 text-slate-600 hover:text-slate-900 text-sm font-medium transition-colors"
+          className="inline-flex items-center gap-1.5 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 text-sm font-medium transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           Back to Invoices
         </button>
-        <h1 className="text-xl font-bold text-slate-900">Record Supplier Purchase Invoice</h1>
+        <h1 className="text-xl font-bold text-slate-900 dark:text-slate-100">Record Supplier Purchase Invoice</h1>
       </div>
 
       {error && (
-        <div className="p-4 bg-rose-50 border border-rose-200 rounded-xl text-rose-700 text-sm">
+        <div className="p-4 bg-rose-50 dark:bg-rose-500/10 border border-rose-200 dark:border-rose-500/20 rounded-xl text-rose-700 dark:text-rose-400 text-sm">
           {error}
         </div>
       )}
 
       {/* 3-WAY MATCH PREVIEW WARNING */}
       {hasVariance && (
-        <div className="p-4 bg-amber-50 border border-amber-200 rounded-xl flex items-start gap-3">
-          <ShieldAlert className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+        <div className="p-4 bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 rounded-xl flex items-start gap-3">
+          <ShieldAlert className="w-5 h-5 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
           <div>
-            <h4 className="text-sm font-bold text-amber-900">3-Way Match Variance Detected</h4>
-            <p className="text-xs text-amber-700 mt-0.5">
+            <h4 className="text-sm font-bold text-amber-900 dark:text-amber-300">3-Way Match Variance Detected</h4>
+            <p className="text-xs text-amber-700 dark:text-amber-400 mt-0.5">
               The invoiced quantities or prices differ from PO/GRN expectations. This invoice will be submitted with status{' '}
               <span className="font-bold">PENDING_REVIEW</span> for finance manager review before posting.
             </p>
@@ -243,17 +243,17 @@ export const PurchaseInvoiceFormPage: React.FC = () => {
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="bg-white rounded-xl border border-slate-200 shadow-xs p-6 space-y-6">
+      <form onSubmit={handleSubmit} className="bg-white dark:bg-[#0F2647] rounded-xl border border-slate-200 dark:border-slate-800/80 shadow-xs p-6 space-y-6">
         {/* HEADER INPUTS */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div>
-            <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-2">
+            <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">
               Supplier <span className="text-rose-500">*</span>
             </label>
             <select
               value={supplierId}
               onChange={(e) => setSupplierId(e.target.value)}
-              className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-3 py-2 border border-slate-300 dark:border-slate-800 rounded-lg text-sm bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-200 focus:ring-2 focus:ring-indigo-500"
               required
             >
               <option value="">Select Supplier...</option>
@@ -266,7 +266,7 @@ export const PurchaseInvoiceFormPage: React.FC = () => {
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-2">
+            <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">
               Supplier Bill / Invoice # <span className="text-rose-500">*</span>
             </label>
             <input
@@ -274,19 +274,19 @@ export const PurchaseInvoiceFormPage: React.FC = () => {
               placeholder="e.g. INV-90023, BILL-781"
               value={supplierInvoiceNumber}
               onChange={(e) => setSupplierInvoiceNumber(e.target.value)}
-              className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 font-mono font-semibold"
+              className="w-full px-3 py-2 border border-slate-300 dark:border-slate-800 rounded-lg text-sm bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-200 focus:ring-2 focus:ring-indigo-500 font-mono font-semibold"
               required
             />
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-2">
+            <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">
               Link Purchase Order (PO)
             </label>
             <select
               value={purchaseOrderId}
               onChange={(e) => handleSelectPO(e.target.value)}
-              className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-3 py-2 border border-slate-300 dark:border-slate-800 rounded-lg text-sm bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-200 focus:ring-2 focus:ring-indigo-500"
               disabled={!supplierId}
             >
               <option value="">-- Direct Invoice / No PO --</option>
@@ -299,13 +299,13 @@ export const PurchaseInvoiceFormPage: React.FC = () => {
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-2">
+            <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">
               Link Goods Receipt (GRN)
             </label>
             <select
               value={grnId}
               onChange={(e) => setGrnId(e.target.value)}
-              className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-3 py-2 border border-slate-300 dark:border-slate-800 rounded-lg text-sm bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-200 focus:ring-2 focus:ring-indigo-500"
               disabled={!supplierId}
             >
               <option value="">-- Select GRN --</option>
@@ -318,49 +318,49 @@ export const PurchaseInvoiceFormPage: React.FC = () => {
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-2">
+            <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">
               Invoice Date <span className="text-rose-500">*</span>
             </label>
             <input
               type="date"
               value={invoiceDate}
               onChange={(e) => setInvoiceDate(e.target.value)}
-              className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-3 py-2 border border-slate-300 dark:border-slate-800 rounded-lg text-sm bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-200 focus:ring-2 focus:ring-indigo-500"
               required
             />
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-2">
+            <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">
               Due Date <span className="text-rose-500">*</span>
             </label>
             <input
               type="date"
               value={dueDate}
               onChange={(e) => setDueDate(e.target.value)}
-              className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 font-semibold text-rose-600"
+              className="w-full px-3 py-2 border border-slate-300 dark:border-slate-800 rounded-lg text-sm bg-slate-50 dark:bg-slate-950 focus:ring-2 focus:ring-indigo-500 font-semibold text-rose-600 dark:text-rose-400"
               required
             />
           </div>
         </div>
 
         {/* LINE ITEMS TABLE */}
-        <div className="border-t border-slate-200 pt-6">
+        <div className="border-t border-slate-200 dark:border-slate-800 pt-6">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider">Line Items (3-Way Match Validation)</h3>
+            <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100 uppercase tracking-wider">Line Items (3-Way Match Validation)</h3>
             <button
               type="button"
               onClick={addLine}
-              className="inline-flex items-center gap-1 text-xs font-semibold text-indigo-600 hover:text-indigo-800"
+              className="inline-flex items-center gap-1 text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300"
             >
               <Plus className="w-4 h-4" /> Add Line
             </button>
           </div>
 
-          <div className="overflow-x-auto border border-slate-200 rounded-lg">
+          <div className="overflow-x-auto border border-slate-200 dark:border-slate-800 rounded-lg">
             <table className="w-full text-left border-collapse text-xs">
               <thead>
-                <tr className="bg-slate-100 font-semibold text-slate-600 uppercase border-b border-slate-200">
+                <tr className="bg-slate-100 dark:bg-slate-950 font-semibold text-slate-600 dark:text-slate-400 uppercase border-b border-slate-200 dark:border-slate-800">
                   <th className="py-2.5 px-3">Description</th>
                   <th className="py-2.5 px-3 text-center w-24">Invoiced Qty</th>
                   <th className="py-2.5 px-3 text-center w-24">GRN Qty</th>
@@ -371,7 +371,7 @@ export const PurchaseInvoiceFormPage: React.FC = () => {
                   <th className="py-2.5 px-3 text-center w-12"></th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-200">
+              <tbody className="divide-y divide-slate-200 dark:divide-slate-800">
                 {lines.map((line, idx) => {
                   const qty = parseFloat(line.quantity as any) || 0;
                   const price = parseFloat(line.unit_price as any) || 0;
@@ -382,14 +382,14 @@ export const PurchaseInvoiceFormPage: React.FC = () => {
                   const isPriceVar = Math.abs(price - (line.po_unit_price || price)) > 0.001;
 
                   return (
-                    <tr key={idx} className={isQtyVar || isPriceVar ? 'bg-amber-50/50' : ''}>
+                    <tr key={idx} className={isQtyVar || isPriceVar ? 'bg-amber-50/50 dark:bg-amber-500/10' : 'hover:bg-slate-50 dark:hover:bg-slate-800/50'}>
                       <td className="py-2 px-3">
                         <input
                           type="text"
                           value={line.description || ''}
                           onChange={(e) => handleLineChange(idx, 'description', e.target.value)}
                           placeholder="Item description..."
-                          className="w-full p-1.5 border border-slate-300 rounded text-xs"
+                          className="w-full p-1.5 border border-slate-300 dark:border-slate-800 rounded text-xs bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-200"
                           required
                         />
                       </td>
@@ -401,12 +401,12 @@ export const PurchaseInvoiceFormPage: React.FC = () => {
                           value={line.quantity || ''}
                           onChange={(e) => handleLineChange(idx, 'quantity', e.target.value)}
                           className={`w-full p-1.5 border rounded text-xs text-center font-semibold ${
-                            isQtyVar ? 'border-amber-500 text-amber-900 bg-amber-100' : 'border-slate-300'
+                            isQtyVar ? 'border-amber-500 text-amber-900 dark:text-amber-400 bg-amber-100 dark:bg-amber-500/20' : 'border-slate-300 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-200'
                           }`}
                           required
                         />
                       </td>
-                      <td className="py-2 px-3 text-center font-medium text-slate-500">
+                      <td className="py-2 px-3 text-center font-medium text-slate-500 dark:text-slate-400">
                         {line.received_quantity || line.ordered_quantity || '-'}
                       </td>
                       <td className="py-2 px-3 text-right">
@@ -417,12 +417,12 @@ export const PurchaseInvoiceFormPage: React.FC = () => {
                           value={line.unit_price || ''}
                           onChange={(e) => handleLineChange(idx, 'unit_price', e.target.value)}
                           className={`w-full p-1.5 border rounded text-xs text-right font-semibold ${
-                            isPriceVar ? 'border-amber-500 text-amber-900 bg-amber-100' : 'border-slate-300'
+                            isPriceVar ? 'border-amber-500 text-amber-900 dark:text-amber-400 bg-amber-100 dark:bg-amber-500/20' : 'border-slate-300 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-200'
                           }`}
                           required
                         />
                       </td>
-                      <td className="py-2 px-3 text-right font-medium text-slate-500">
+                      <td className="py-2 px-3 text-right font-medium text-slate-500 dark:text-slate-400">
                         ₹{line.po_unit_price?.toLocaleString() || '-'}
                       </td>
                       <td className="py-2 px-3 text-center">
@@ -432,17 +432,17 @@ export const PurchaseInvoiceFormPage: React.FC = () => {
                           step="any"
                           value={line.tax_rate || 0}
                           onChange={(e) => handleLineChange(idx, 'tax_rate', e.target.value)}
-                          className="w-full p-1.5 border border-slate-300 rounded text-xs text-center"
+                          className="w-full p-1.5 border border-slate-300 dark:border-slate-800 rounded text-xs text-center bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-200"
                         />
                       </td>
-                      <td className="py-2 px-3 text-right font-bold text-slate-900">
+                      <td className="py-2 px-3 text-right font-bold text-slate-900 dark:text-slate-100">
                         ₹{lineTot.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                       </td>
                       <td className="py-2 px-3 text-center">
                         <button
                           type="button"
                           onClick={() => removeLine(idx)}
-                          className="text-slate-400 hover:text-rose-600"
+                          className="text-slate-400 hover:text-rose-600 dark:hover:text-rose-400"
                         >
                           <Trash2 className="w-4 h-4" />
                         </button>
@@ -456,9 +456,9 @@ export const PurchaseInvoiceFormPage: React.FC = () => {
         </div>
 
         {/* SUMMARY & ACTIONS */}
-        <div className="border-t border-slate-200 pt-4 flex flex-col md:flex-row justify-between items-end gap-6">
+        <div className="border-t border-slate-200 dark:border-slate-800 pt-4 flex flex-col md:flex-row justify-between items-end gap-6">
           <div className="w-full md:w-1/2">
-            <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-2">
+            <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">
               Invoice Notes & Internal References
             </label>
             <textarea
@@ -466,31 +466,31 @@ export const PurchaseInvoiceFormPage: React.FC = () => {
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="Internal supplier notes..."
-              className="w-full p-2 border border-slate-300 rounded-lg text-xs"
+              className="w-full p-2 border border-slate-300 dark:border-slate-800 rounded-lg text-xs bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-200"
             />
           </div>
 
-          <div className="w-full md:w-72 space-y-2 text-sm bg-slate-50 p-4 rounded-xl border border-slate-200">
-            <div className="flex justify-between text-slate-600 text-xs">
+          <div className="w-full md:w-72 space-y-2 text-sm bg-slate-50 dark:bg-slate-950 p-4 rounded-xl border border-slate-200 dark:border-slate-800">
+            <div className="flex justify-between text-slate-600 dark:text-slate-400 text-xs">
               <span>Subtotal:</span>
-              <span className="font-semibold text-slate-900">₹{calculatedSubtotal.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
+              <span className="font-semibold text-slate-900 dark:text-slate-100">₹{calculatedSubtotal.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
             </div>
-            <div className="flex justify-between text-slate-600 text-xs">
+            <div className="flex justify-between text-slate-600 dark:text-slate-400 text-xs">
               <span>Taxes:</span>
-              <span className="font-semibold text-slate-900">₹{calculatedTax.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
+              <span className="font-semibold text-slate-900 dark:text-slate-100">₹{calculatedTax.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
             </div>
-            <div className="flex justify-between text-base font-bold text-slate-900 pt-2 border-t border-slate-300">
+            <div className="flex justify-between text-base font-bold text-slate-900 dark:text-slate-100 pt-2 border-t border-slate-300 dark:border-slate-800">
               <span>Total Bill Amount:</span>
-              <span className="text-indigo-600">₹{calculatedTotal.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
+              <span className="text-indigo-600 dark:text-indigo-400">₹{calculatedTotal.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
             </div>
           </div>
         </div>
 
-        <div className="flex justify-end gap-3 pt-4 border-t border-slate-200">
+        <div className="flex justify-end gap-3 pt-4 border-t border-slate-200 dark:border-slate-800">
           <button
             type="button"
             onClick={() => navigate(-1)}
-            className="px-4 py-2 border border-slate-300 text-slate-700 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors"
+            className="px-4 py-2 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 rounded-lg text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
           >
             Cancel
           </button>

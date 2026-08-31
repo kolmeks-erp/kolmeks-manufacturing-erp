@@ -43,12 +43,24 @@ export const SystemSettingsProvider: React.FC<{ children: React.ReactNode }> = (
   const setTheme = useCallback((mode: ThemeMode) => {
     setThemeState(mode);
     localStorage.setItem('kolmeks_erp_theme', mode);
+    const root = document.documentElement;
+    const body = document.body;
     if (mode === 'dark') {
-      document.documentElement.classList.add('dark');
-      document.documentElement.classList.remove('light');
+      root.classList.add('dark');
+      root.classList.remove('light');
+      root.setAttribute('data-theme', 'dark');
+      if (body) {
+        body.classList.add('dark');
+        body.classList.remove('light');
+      }
     } else {
-      document.documentElement.classList.add('light');
-      document.documentElement.classList.remove('dark');
+      root.classList.add('light');
+      root.classList.remove('dark');
+      root.setAttribute('data-theme', 'light');
+      if (body) {
+        body.classList.add('light');
+        body.classList.remove('dark');
+      }
     }
   }, []);
 
@@ -57,13 +69,25 @@ export const SystemSettingsProvider: React.FC<{ children: React.ReactNode }> = (
   }, [theme, setTheme]);
 
   useEffect(() => {
-    // Apply initial theme class to HTML element
+    // Apply initial theme class to HTML element and body
+    const root = document.documentElement;
+    const body = document.body;
     if (theme === 'dark') {
-      document.documentElement.classList.add('dark');
-      document.documentElement.classList.remove('light');
+      root.classList.add('dark');
+      root.classList.remove('light');
+      root.setAttribute('data-theme', 'dark');
+      if (body) {
+        body.classList.add('dark');
+        body.classList.remove('light');
+      }
     } else {
-      document.documentElement.classList.add('light');
-      document.documentElement.classList.remove('dark');
+      root.classList.add('light');
+      root.classList.remove('dark');
+      root.setAttribute('data-theme', 'light');
+      if (body) {
+        body.classList.add('light');
+        body.classList.remove('dark');
+      }
     }
   }, [theme]);
 

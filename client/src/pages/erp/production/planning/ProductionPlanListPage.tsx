@@ -11,7 +11,6 @@ import {
   FileText,
   AlertCircle,
 } from 'lucide-react';
-import { ERPLayout } from '../../../../layouts/ERPLayout';
 import ERPPageHeader from '../../../../components/erp/ERPPageHeader';
 import DataTable, { Column } from '../../../../components/common/DataTable';
 import StatusBadge from '../../../../components/erp/StatusBadge';
@@ -122,73 +121,71 @@ const ProductionPlanListPage: React.FC = () => {
   ];
 
   return (
-    <ERPLayout>
-      <div className="space-y-6">
-        <ERPPageHeader
-          title="Master Production Plans"
-          subtitle="Manage period-based production plans, sales demand allocations, and shop floor order releases"
-          actions={
-            <button
-              onClick={() => navigate(`${ERP_BASE_PATH}/production/planning/plans/new`)}
-              className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white text-sm font-medium rounded-lg flex items-center gap-2 shadow-lg shadow-blue-500/20 transition-all"
-            >
-              <Plus size={16} /> Create Production Plan
-            </button>
-          }
-        />
+    <div className="space-y-6">
+      <ERPPageHeader
+        title="Master Production Plans"
+        subtitle="Manage period-based production plans, sales demand allocations, and shop floor order releases"
+        actions={
+          <button
+            onClick={() => navigate(`${ERP_BASE_PATH}/production/planning/plans/new`)}
+            className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white text-sm font-medium rounded-lg flex items-center gap-2 shadow-lg shadow-blue-500/20 transition-all"
+          >
+            <Plus size={16} /> Create Production Plan
+          </button>
+        }
+      />
 
-        {/* Filter Bar */}
-        <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 flex flex-col md:flex-row items-center justify-between gap-4">
-          <form onSubmit={handleSearchSubmit} className="relative flex-1 w-full">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
-            <input
-              type="text"
-              placeholder="Search by plan number or plan name..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="w-full bg-slate-950 border border-slate-800 rounded-lg pl-9 pr-4 py-2 text-sm text-slate-200 focus:outline-none focus:border-blue-500"
-            />
-          </form>
-
-          <div className="flex items-center gap-3 w-full md:w-auto">
-            <div className="flex items-center gap-2 text-xs text-slate-400">
-              <Filter size={14} /> Status:
-            </div>
-            <select
-              value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value)}
-              className="bg-slate-950 border border-slate-800 text-slate-200 text-sm rounded-lg px-3 py-2 focus:outline-none focus:border-blue-500"
-            >
-              <option value="">All Statuses</option>
-              <option value="DRAFT">DRAFT</option>
-              <option value="SUBMITTED">SUBMITTED</option>
-              <option value="APPROVED">APPROVED</option>
-              <option value="IN_PROGRESS">IN_PROGRESS</option>
-              <option value="COMPLETED">COMPLETED</option>
-              <option value="CANCELLED">CANCELLED</option>
-            </select>
-          </div>
-        </div>
-
-        {/* Data Table */}
-        {loading ? (
-          <LoadingState message="Loading production plans..." />
-        ) : error ? (
-          <ErrorState message={error} onRetry={fetchPlans} />
-        ) : plans.length === 0 ? (
-          <EmptyState
-            title="No Production Plans Found"
-            description="Create your first production plan to organize manufacturing requirements against sales order demand."
-            actionText="Create Production Plan"
-            onAction={() => navigate(`${ERP_BASE_PATH}/production/planning/plans/new`)}
+      {/* Filter Bar */}
+      <div className="bg-white dark:bg-[#0F2647] border border-slate-200 dark:border-slate-800/80 rounded-xl p-4 flex flex-col md:flex-row items-center justify-between gap-4 shadow-xs">
+        <form onSubmit={handleSearchSubmit} className="relative flex-1 w-full">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+          <input
+            type="text"
+            placeholder="Search by plan number or plan name..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg pl-9 pr-4 py-2 text-sm text-slate-900 dark:text-slate-200 focus:outline-none focus:border-blue-500"
           />
-        ) : (
-          <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden shadow-sm">
-            <DataTable columns={columns} data={plans} />
+        </form>
+
+        <div className="flex items-center gap-3 w-full md:w-auto">
+          <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+            <Filter size={14} /> Status:
           </div>
-        )}
+          <select
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value)}
+            className="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-slate-200 text-sm rounded-lg px-3 py-2 focus:outline-none focus:border-blue-500"
+          >
+            <option value="">All Statuses</option>
+            <option value="DRAFT">DRAFT</option>
+            <option value="SUBMITTED">SUBMITTED</option>
+            <option value="APPROVED">APPROVED</option>
+            <option value="IN_PROGRESS">IN_PROGRESS</option>
+            <option value="COMPLETED">COMPLETED</option>
+            <option value="CANCELLED">CANCELLED</option>
+          </select>
+        </div>
       </div>
-    </ERPLayout>
+
+      {/* Data Table */}
+      {loading ? (
+        <LoadingState message="Loading production plans..." />
+      ) : error ? (
+        <ErrorState message={error} onRetry={fetchPlans} />
+      ) : plans.length === 0 ? (
+        <EmptyState
+          title="No Production Plans Found"
+          description="Create your first production plan to organize manufacturing requirements against sales order demand."
+          actionText="Create Production Plan"
+          onAction={() => navigate(`${ERP_BASE_PATH}/production/planning/plans/new`)}
+        />
+      ) : (
+        <div className="bg-white dark:bg-[#0F2647] border border-slate-200 dark:border-slate-800/80 rounded-xl overflow-hidden shadow-xs">
+          <DataTable columns={columns} data={plans} />
+        </div>
+      )}
+    </div>
   );
 };
 
