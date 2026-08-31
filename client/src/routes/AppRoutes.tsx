@@ -205,6 +205,16 @@ import { ManufacturingVariancePage } from '../pages/erp/production/costing/Manuf
 import { CostConfigurationPage } from '../pages/erp/production/costing/CostConfigurationPage';
 import { CostReportsPage } from '../pages/erp/production/costing/CostReportsPage';
 
+import ProductionPlanningDashboardPage from '../pages/erp/production/planning/ProductionPlanningDashboardPage';
+import ProductionPlanListPage from '../pages/erp/production/planning/ProductionPlanListPage';
+import ProductionPlanFormPage from '../pages/erp/production/planning/ProductionPlanFormPage';
+import ProductionPlanDetailPage from '../pages/erp/production/planning/ProductionPlanDetailPage';
+import MaterialRequirementsPage from '../pages/erp/production/planning/MaterialRequirementsPage';
+import CapacityPlanningPage from '../pages/erp/production/planning/CapacityPlanningPage';
+import ProductionSchedulePage from '../pages/erp/production/planning/ProductionSchedulePage';
+import ProductionCalendarPage from '../pages/erp/production/planning/ProductionCalendarPage';
+import PlanningReportsPage from '../pages/erp/production/planning/PlanningReportsPage';
+
 import { ProtectedRoute } from '../components/auth/ProtectedRoute';
 import { ERP_BASE_PATH } from '../constants/navigation';
 import { SystemSettingsProvider, useSystemSettings } from '../context/SystemSettingsContext';
@@ -325,6 +335,15 @@ export const AppRoutes: React.FC = () => {
             <Route path="production/costing/variance" element={<ManufacturingVariancePage />} />
             <Route path="production/costing/configuration" element={<CostConfigurationPage />} />
             <Route path="production/costing/reports" element={<CostReportsPage />} />
+            <Route path="production/planning" element={<ProductionPlanningDashboardPage />} />
+            <Route path="production/planning/plans" element={<ProductionPlanListPage />} />
+            <Route path="production/planning/plans/new" element={<ProductionPlanFormPage />} />
+            <Route path="production/planning/plans/:id" element={<ProductionPlanDetailPage />} />
+            <Route path="production/planning/materials" element={<MaterialRequirementsPage />} />
+            <Route path="production/planning/capacity" element={<CapacityPlanningPage />} />
+            <Route path="production/planning/schedule" element={<ProductionSchedulePage />} />
+            <Route path="production/planning/calendar" element={<ProductionCalendarPage />} />
+            <Route path="production/planning/reports" element={<PlanningReportsPage />} />
           </Route>
 
           {/* Quality Management Authorized Routes */}
