@@ -83,7 +83,7 @@ export const StockAdjustmentFormPage: React.FC = () => {
         .then((res) => {
           if (res.success && res.data.length > 0) {
             const found = res.data.find(
-              (item) =>
+              (item: any) =>
                 item.product_id === productId &&
                 item.warehouse_id === warehouseId &&
                 (locationId ? item.location_id === locationId : !item.location_id)
@@ -142,7 +142,8 @@ export const StockAdjustmentFormPage: React.FC = () => {
         warehouse_id: warehouseId,
         location_id: locationId || undefined,
         adjustment_type: adjustmentType,
-        quantity: qtyNum,
+        expected_quantity: currentOnHand || 0,
+        counted_quantity: computedNewOnHand,
         reason,
         notes,
       });

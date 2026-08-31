@@ -196,6 +196,15 @@ import { AssetDisposalListPage } from '../pages/erp/finance/assets/AssetDisposal
 import { AssetCategoryListPage as FixedAssetCategoryListPage } from '../pages/erp/finance/assets/AssetCategoryListPage';
 import { AssetReportsPage as FixedAssetReportsPage } from '../pages/erp/finance/assets/AssetReportsPage';
 
+import { ManufacturingCostDashboardPage } from '../pages/erp/production/costing/ManufacturingCostDashboardPage';
+import { ProductionCostListPage } from '../pages/erp/production/costing/ProductionCostListPage';
+import { ProductionCostDetailPage } from '../pages/erp/production/costing/ProductionCostDetailPage';
+import { WIPDashboardPage } from '../pages/erp/production/costing/WIPDashboardPage';
+import { WIPDetailPage } from '../pages/erp/production/costing/WIPDetailPage';
+import { ManufacturingVariancePage } from '../pages/erp/production/costing/ManufacturingVariancePage';
+import { CostConfigurationPage } from '../pages/erp/production/costing/CostConfigurationPage';
+import { CostReportsPage } from '../pages/erp/production/costing/CostReportsPage';
+
 import { ProtectedRoute } from '../components/auth/ProtectedRoute';
 import { ERP_BASE_PATH } from '../constants/navigation';
 import { SystemSettingsProvider, useSystemSettings } from '../context/SystemSettingsContext';
@@ -308,6 +317,14 @@ export const AppRoutes: React.FC = () => {
             <Route path="production/work-centers" element={<WorkCenterListPage />} />
             <Route path="production/machines" element={<MachineListPage />} />
             <Route path="production/operations-board" element={<OperationBoardPage />} />
+            <Route path="production/costing" element={<ManufacturingCostDashboardPage />} />
+            <Route path="production/costing/orders" element={<ProductionCostListPage />} />
+            <Route path="production/costing/orders/:id" element={<ProductionCostDetailPage />} />
+            <Route path="production/wip" element={<WIPDashboardPage />} />
+            <Route path="production/wip/:id" element={<WIPDetailPage />} />
+            <Route path="production/costing/variance" element={<ManufacturingVariancePage />} />
+            <Route path="production/costing/configuration" element={<CostConfigurationPage />} />
+            <Route path="production/costing/reports" element={<CostReportsPage />} />
           </Route>
 
           {/* Quality Management Authorized Routes */}

@@ -230,6 +230,7 @@ class InventoryService {
     stock_status?: string;
     sort_by?: string;
     order?: string;
+    product_id?: string;
   }) {
     const response = await api.get('/inventory', { params });
     return response.data;
@@ -259,6 +260,7 @@ class InventoryService {
     movement_type?: string;
     warehouse_id?: string;
     product_id?: string;
+    reference_type?: string;
   }) {
     const response = await api.get('/inventory/movements', { params });
     return response.data;
@@ -296,6 +298,7 @@ class InventoryService {
     counted_quantity: number;
     reason: string;
     notes?: string;
+    adjustment_type?: string;
   }) {
     const response = await api.post('/inventory/adjustments/create', payload);
     return response.data;

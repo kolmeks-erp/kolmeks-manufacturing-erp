@@ -95,7 +95,7 @@ export const StockTransferFormPage: React.FC = () => {
         .then((res) => {
           if (res.success && res.data.length > 0) {
             const found = res.data.find(
-              (item) =>
+              (item: any) =>
                 item.product_id === productId &&
                 item.warehouse_id === sourceWarehouseId &&
                 (sourceLocationId ? item.location_id === sourceLocationId : !item.location_id)
