@@ -48,7 +48,7 @@ export const RoutingListPage: React.FC = () => {
         </button>
       </div>
 
-      <div className="bg-slate-900/60 border border-slate-800/80 backdrop-blur-xl p-4 rounded-2xl flex items-center justify-between">
+      <div className="bg-slate-900 border border-slate-800 p-4 rounded-2xl flex items-center justify-between">
         <div className="relative flex-1 max-w-md">
           <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500" />
           <input
@@ -56,15 +56,15 @@ export const RoutingListPage: React.FC = () => {
             placeholder="Search by routing number or product..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 rounded-xl bg-slate-950/60 border border-slate-800 text-slate-200 text-sm focus:outline-none focus:border-cyan-500"
+            className="w-full pl-10 pr-4 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 text-sm focus:outline-none focus:border-cyan-500"
           />
         </div>
       </div>
 
-      <div className="bg-slate-900/60 border border-slate-800/80 backdrop-blur-xl rounded-2xl overflow-hidden">
+      <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-xl">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm text-slate-300">
-            <thead className="bg-slate-950/60 text-slate-400 text-xs font-semibold uppercase tracking-wider border-b border-slate-800">
+            <thead className="bg-slate-950 text-slate-400 text-xs font-semibold uppercase tracking-wider border-b border-slate-800">
               <tr>
                 <th className="px-5 py-4">Routing Number</th>
                 <th className="px-5 py-4">Product Master</th>
@@ -73,16 +73,16 @@ export const RoutingListPage: React.FC = () => {
                 <th className="px-5 py-4 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/60">
+            <tbody className="divide-y divide-slate-800/80">
               {loading ? (
                 <tr>
-                  <td colSpan={5} className="px-5 py-12 text-center text-slate-500">
+                  <td colSpan={5} className="px-5 py-12 text-center text-slate-400">
                     Loading routings...
                   </td>
                 </tr>
               ) : routings.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="px-5 py-12 text-center text-slate-500">
+                  <td colSpan={5} className="px-5 py-12 text-center text-slate-400">
                     No manufacturing routings found.
                   </td>
                 </tr>

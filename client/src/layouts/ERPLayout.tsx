@@ -155,18 +155,18 @@ export const ERPLayout: React.FC<ERPLayoutProps> = ({ children }) => {
     .toUpperCase();
 
   return (
-    <div className="min-h-screen flex bg-slate-100 font-sans text-slate-900">
+    <div className="min-h-screen flex bg-slate-950 font-sans text-slate-100 selection:bg-blue-600 selection:text-white">
       {/* MOBILE BACKDROP DRAWER OVERLAY */}
       {mobileOpen && (
         <div
-          className="fixed inset-0 z-40 bg-slate-950/60 backdrop-blur-xs lg:hidden"
+          className="fixed inset-0 z-40 bg-slate-950/80 backdrop-blur-xs lg:hidden"
           onClick={() => setMobileOpen(false)}
         />
       )}
 
       {/* ERP SIDEBAR */}
       <aside
-        className={`fixed top-0 bottom-0 left-0 z-50 bg-[#0B1E36] text-white flex flex-col transition-all duration-300 border-r border-slate-800 ${
+        className={`fixed top-0 bottom-0 left-0 z-50 bg-[#0B1E36] text-white flex flex-col transition-all duration-300 border-r border-slate-800/80 ${
           collapsed ? 'w-20' : 'w-64'
         } ${
           mobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
@@ -204,7 +204,7 @@ export const ERPLayout: React.FC<ERPLayoutProps> = ({ children }) => {
         </div>
 
         {/* SIDEBAR NAVIGATION ITEMS */}
-        <div className="flex-1 overflow-y-auto py-4 px-3 space-y-6 custom-scrollbar">
+        <div className="flex-1 overflow-y-auto py-4 px-3 space-y-6 custom-scrollbar pb-6">
           {categories.map((cat) => {
             const catItems = visibleMenuItems.filter((item) => (item.category || 'Core') === cat);
             if (catItems.length === 0) return null;
@@ -256,7 +256,7 @@ export const ERPLayout: React.FC<ERPLayoutProps> = ({ children }) => {
         </div>
 
         {/* USER INFO FOOTER */}
-        <div className="p-3 border-t border-slate-800/80 bg-slate-950/40 shrink-0">
+        <div className="p-3 border-t border-slate-800/80 bg-slate-950/60 shrink-0">
           <div className={`flex items-center ${collapsed ? 'justify-center' : 'justify-between'}`}>
             <div className="flex items-center gap-2.5 min-w-0">
               <div className="w-8 h-8 rounded-full bg-blue-600 text-white font-bold text-xs flex items-center justify-center shrink-0">
@@ -287,13 +287,13 @@ export const ERPLayout: React.FC<ERPLayoutProps> = ({ children }) => {
       {/* MAIN ERP CONTAINER */}
       <div className={`flex-1 flex flex-col min-w-0 transition-all duration-300 ${collapsed ? 'lg:ml-20' : 'lg:ml-64'}`}>
         {/* TOPBAR */}
-        <header className="h-16 bg-white border-b border-slate-200 px-4 lg:px-8 flex items-center justify-between sticky top-0 z-30 shadow-xs">
+        <header className="h-16 bg-slate-900/90 backdrop-blur-md border-b border-slate-800/80 px-4 lg:px-8 flex items-center justify-between sticky top-0 z-30 shadow-md shadow-black/20">
           {/* Left: Mobile Menu Toggle & Breadcrumbs */}
           <div className="flex items-center gap-4">
             <button
               type="button"
               onClick={() => setMobileOpen(true)}
-              className="lg:hidden p-2 text-slate-600 hover:text-slate-900 rounded-lg hover:bg-slate-100"
+              className="lg:hidden p-2 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800"
               aria-label="Open Mobile Drawer"
             >
               <Menu className="w-5 h-5" />
@@ -304,7 +304,7 @@ export const ERPLayout: React.FC<ERPLayoutProps> = ({ children }) => {
           {/* Right: Search UI Placeholder, Notifications & Profile Menu */}
           <div className="flex items-center gap-3">
             {/* Search Placeholder */}
-            <div className="hidden sm:flex items-center bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200 text-xs text-slate-400 w-48">
+            <div className="hidden sm:flex items-center bg-slate-950 px-3 py-1.5 rounded-lg border border-slate-800 text-xs text-slate-400 w-48">
               <Search className="w-3.5 h-3.5 mr-2 text-slate-400" />
               <span>Search ERP...</span>
             </div>
@@ -313,11 +313,11 @@ export const ERPLayout: React.FC<ERPLayoutProps> = ({ children }) => {
             <div className="relative">
               <button
                 type="button"
-                className="p-2 text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors relative"
+                className="p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors relative"
                 title="System Notifications"
               >
                 <Bell className="w-4 h-4" />
-                <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-blue-600 rounded-full" />
+                <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-blue-500 rounded-full" />
               </button>
             </div>
 
@@ -326,21 +326,21 @@ export const ERPLayout: React.FC<ERPLayoutProps> = ({ children }) => {
               <button
                 type="button"
                 onClick={() => setUserMenuOpen(!userMenuOpen)}
-                className="flex items-center gap-2 p-1.5 rounded-lg hover:bg-slate-100 transition-colors"
+                className="flex items-center gap-2 p-1.5 rounded-lg hover:bg-slate-800 transition-colors"
               >
-                <div className="w-7 h-7 rounded-full bg-[#0B1E36] text-white font-bold text-xs flex items-center justify-center">
+                <div className="w-7 h-7 rounded-full bg-blue-600 text-white font-bold text-xs flex items-center justify-center">
                   {userInitials}
                 </div>
-                <span className="hidden md:inline text-xs font-bold text-slate-700">{displayName}</span>
+                <span className="hidden md:inline text-xs font-bold text-slate-200">{displayName}</span>
                 <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
               </button>
 
               {userMenuOpen && (
-                <div className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-xl border border-slate-200 py-2 z-50 animate-in fade-in duration-150">
-                  <div className="px-4 py-2 border-b border-slate-100">
-                    <p className="text-xs font-bold text-slate-900 truncate">{displayName}</p>
-                    <p className="text-[11px] text-slate-500 truncate">{displayEmail}</p>
-                    <span className="inline-block mt-1 text-[10px] font-mono font-bold uppercase text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">
+                <div className="absolute right-0 mt-2 w-56 bg-slate-900 rounded-xl shadow-2xl shadow-black/80 border border-slate-800 py-2 z-50 animate-in fade-in duration-150 text-slate-200">
+                  <div className="px-4 py-2 border-b border-slate-800">
+                    <p className="text-xs font-bold text-white truncate">{displayName}</p>
+                    <p className="text-[11px] text-slate-400 truncate">{displayEmail}</p>
+                    <span className="inline-block mt-1 text-[10px] font-mono font-bold uppercase text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded border border-blue-500/20">
                       {formattedRoleName}
                     </span>
                   </div>
@@ -348,7 +348,7 @@ export const ERPLayout: React.FC<ERPLayoutProps> = ({ children }) => {
                   <Link
                     to={`${ERP_BASE_PATH}/settings`}
                     onClick={() => setUserMenuOpen(false)}
-                    className="flex items-center gap-2 px-4 py-2 text-xs text-slate-700 hover:bg-slate-50"
+                    className="flex items-center gap-2 px-4 py-2 text-xs text-slate-300 hover:bg-slate-800 hover:text-white"
                   >
                     <User className="w-4 h-4 text-slate-400" />
                     <span>My Profile & Settings</span>
@@ -358,9 +358,9 @@ export const ERPLayout: React.FC<ERPLayoutProps> = ({ children }) => {
                     <Link
                       to={`${ERP_BASE_PATH}/master-admin`}
                       onClick={() => setUserMenuOpen(false)}
-                      className="flex items-center gap-2 px-4 py-2 text-xs text-indigo-700 font-bold hover:bg-indigo-50"
+                      className="flex items-center gap-2 px-4 py-2 text-xs text-indigo-400 font-bold hover:bg-slate-800"
                     >
-                      <Settings className="w-4 h-4 text-indigo-600" />
+                      <Settings className="w-4 h-4 text-indigo-400" />
                       <span>Master Governance & Toggles</span>
                     </Link>
                   )}
@@ -368,9 +368,9 @@ export const ERPLayout: React.FC<ERPLayoutProps> = ({ children }) => {
                   <button
                     type="button"
                     onClick={handleLogout}
-                    className="w-full flex items-center gap-2 px-4 py-2 text-xs text-red-600 hover:bg-red-50 text-left"
+                    className="w-full flex items-center gap-2 px-4 py-2 text-xs text-rose-400 hover:bg-rose-500/10 text-left"
                   >
-                    <LogOut className="w-4 h-4 text-red-500" />
+                    <LogOut className="w-4 h-4 text-rose-400" />
                     <span>Sign Out of ERP</span>
                   </button>
                 </div>
