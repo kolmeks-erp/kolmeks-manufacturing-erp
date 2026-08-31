@@ -14,13 +14,13 @@ export const StatCard: React.FC<StatCardProps> = ({
   isPlaceholder = true,
 }) => {
   return (
-    <div className="p-6 bg-white rounded-xl border border-slate-200 text-center space-y-2 shadow-xs hover:border-blue-600 transition-colors">
-      <div className="text-3xl sm:text-4xl font-extrabold font-mono text-[#0B1E36]">
+    <div className="p-6 bg-white dark:bg-[#0F2647] rounded-xl border border-slate-200 dark:border-slate-800/80 text-center space-y-2 shadow-xs hover:border-blue-600 dark:hover:border-blue-500 transition-colors">
+      <div className="text-3xl sm:text-4xl font-extrabold font-mono text-[#0B1E36] dark:text-blue-400">
         {value}
       </div>
-      <div className="text-sm font-bold text-slate-800">{label}</div>
+      <div className="text-sm font-bold text-slate-800 dark:text-white">{label}</div>
       {subtext && (
-        <div className="text-[11px] font-mono text-slate-400">
+        <div className="text-[11px] font-mono text-slate-400 dark:text-slate-400">
           {isPlaceholder ? `* ${subtext}` : subtext}
         </div>
       )}

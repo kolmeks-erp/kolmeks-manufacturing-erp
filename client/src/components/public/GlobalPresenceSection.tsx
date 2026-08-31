@@ -20,7 +20,7 @@ export const GlobalPresenceSection: React.FC = () => {
         {/* World Map Visual Foundation */}
         <div className="mb-12 bg-[#0B1E36] rounded-2xl p-8 border border-slate-800 text-white relative overflow-hidden shadow-xl">
           <div className="absolute inset-0 industrial-grid-dark opacity-15 pointer-events-none" />
-          
+
           <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6 border-b border-slate-800 pb-6 mb-6">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded bg-[#0F2C59] flex items-center justify-center text-emerald-400">
