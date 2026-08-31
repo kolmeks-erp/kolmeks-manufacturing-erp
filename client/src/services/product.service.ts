@@ -12,10 +12,16 @@ import {
   CategoryStatus,
 } from '../types/product';
 
-const API_URL =
-  import.meta.env.VITE_API_BASE_URL ||
-  import.meta.env.VITE_API_URL ||
-  'https://kolmeks-manufacturing-erp.onrender.com/api';
+const getNormalizedApiUrl = (): string => {
+  const envUrl =
+    import.meta.env.VITE_API_BASE_URL ||
+    import.meta.env.VITE_API_URL ||
+    'https://kolmeks-manufacturing-erp.onrender.com/api';
+  const cleanUrl = envUrl.trim().replace(/\/+$/, '');
+  return cleanUrl.endsWith('/api') ? cleanUrl : `${cleanUrl}/api`;
+};
+
+const API_URL = getNormalizedApiUrl();
 
 /**
  * Get authenticated header containing Supabase JWT session token

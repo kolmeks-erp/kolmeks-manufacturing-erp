@@ -72,6 +72,14 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// URL Rewrite Middleware: Support requests with or without /api prefix
+app.use((req, res, next) => {
+  if (!req.path.startsWith('/api') && req.path !== '/') {
+    req.url = `/api${req.url}`;
+  }
+  next();
+});
+
 // Register API Routes
 app.use('/api', healthRoutes);
 app.use('/api/auth', authRoutes);

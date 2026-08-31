@@ -2,10 +2,16 @@ import axios from 'axios';
 import { supabase } from './supabase';
 import { HealthCheckResponse } from '../types';
 
-const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL ||
-  import.meta.env.VITE_API_URL ||
-  'https://kolmeks-manufacturing-erp.onrender.com/api';
+const getNormalizedApiUrl = (): string => {
+  const envUrl =
+    import.meta.env.VITE_API_BASE_URL ||
+    import.meta.env.VITE_API_URL ||
+    'https://kolmeks-manufacturing-erp.onrender.com/api';
+  const cleanUrl = envUrl.trim().replace(/\/+$/, '');
+  return cleanUrl.endsWith('/api') ? cleanUrl : `${cleanUrl}/api`;
+};
+
+const API_BASE_URL = getNormalizedApiUrl();
 
 export const apiClient = axios.create({
   baseURL: API_BASE_URL,
