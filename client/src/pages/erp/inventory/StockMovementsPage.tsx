@@ -59,28 +59,28 @@ export const StockMovementsPage: React.FC = () => {
       case 'ADJUSTMENT_IN':
       case 'TRANSFER_IN':
       case 'PRODUCTION_OUTPUT':
-        return 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30';
+        return 'bg-emerald-50 text-emerald-700 border border-emerald-200';
       case 'ADJUSTMENT_OUT':
       case 'TRANSFER_OUT':
       case 'PRODUCTION_CONSUMPTION':
       case 'SALES_ISSUE':
-        return 'bg-rose-500/20 text-rose-400 border border-rose-500/30';
+        return 'bg-rose-50 text-rose-700 border border-rose-200';
       default:
-        return 'bg-blue-500/20 text-blue-400 border border-blue-500/30';
+        return 'bg-blue-50 text-blue-700 border border-blue-200';
     }
   };
 
   return (
-    <div className="p-6 space-y-6 bg-slate-900 min-h-screen text-slate-100">
+    <div className="p-4 lg:p-6 space-y-6 max-w-7xl mx-auto text-slate-800">
       {/* Header Banner */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-slate-800/80 p-6 rounded-2xl border border-slate-700/60">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-slate-200 shadow-xs">
         <div className="flex items-center gap-3">
-          <div className="p-3 bg-emerald-600/20 text-emerald-400 rounded-xl border border-emerald-500/30">
+          <div className="p-3 bg-emerald-50 text-emerald-600 rounded-xl border border-emerald-200">
             <Activity className="w-7 h-7" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-white tracking-tight">Stock Movement Audit Trail</h1>
-            <p className="text-sm text-slate-400 mt-0.5">
+            <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Stock Movement Audit Trail</h1>
+            <p className="text-sm text-slate-500 mt-0.5">
               Traceable, immutable record of every inventory receipt, issue, transfer, and adjustment transaction
             </p>
           </div>
@@ -88,7 +88,7 @@ export const StockMovementsPage: React.FC = () => {
       </div>
 
       {/* Filter Controls Bar */}
-      <div className="p-4 bg-slate-800/80 rounded-xl border border-slate-700/60 grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="p-4 bg-white rounded-xl border border-slate-200 shadow-xs grid grid-cols-1 md:grid-cols-4 gap-4">
         {/* Search */}
         <div className="relative md:col-span-2">
           <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
@@ -97,7 +97,7 @@ export const StockMovementsPage: React.FC = () => {
             placeholder="Search by transaction #, SKU code, product name, reason..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 bg-slate-900/80 border border-slate-700 rounded-xl text-sm text-slate-100 placeholder-slate-400 focus:outline-none focus:border-emerald-500"
+            className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-emerald-600"
           />
         </div>
 
@@ -106,7 +106,7 @@ export const StockMovementsPage: React.FC = () => {
           <select
             value={movementType}
             onChange={(e) => setMovementType(e.target.value)}
-            className="w-full px-3 py-2 bg-slate-900/80 border border-slate-700 rounded-xl text-sm text-slate-100 focus:outline-none focus:border-emerald-500"
+            className="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:outline-none focus:border-emerald-600"
           >
             <option value="">All Movement Types</option>
             <option value="RECEIPT">RECEIPT (GRN)</option>
@@ -125,7 +125,7 @@ export const StockMovementsPage: React.FC = () => {
           <select
             value={warehouseId}
             onChange={(e) => setWarehouseId(e.target.value)}
-            className="w-full px-3 py-2 bg-slate-900/80 border border-slate-700 rounded-xl text-sm text-slate-100 focus:outline-none focus:border-emerald-500"
+            className="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:outline-none focus:border-emerald-600"
           >
             <option value="">All Warehouses</option>
             {warehouses.map((w) => (
@@ -138,10 +138,10 @@ export const StockMovementsPage: React.FC = () => {
       </div>
 
       {/* Movements Table */}
-      <div className="bg-slate-800/80 rounded-2xl border border-slate-700/60 overflow-hidden shadow-xl">
+      <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs">
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm text-slate-300">
-            <thead className="bg-slate-900/80 text-xs font-semibold text-slate-400 uppercase tracking-wider border-b border-slate-700/60">
+          <table className="w-full text-left text-xs text-slate-700">
+            <thead className="bg-slate-50 text-[11px] font-bold text-slate-500 uppercase tracking-wider border-b border-slate-200">
               <tr>
                 <th className="py-3.5 px-4">Transaction #</th>
                 <th className="py-3.5 px-4">Movement Type</th>
@@ -153,16 +153,16 @@ export const StockMovementsPage: React.FC = () => {
                 <th className="py-3.5 px-4">Date</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-700/40">
+            <tbody className="divide-y divide-slate-100">
               {loading ? (
                 <tr>
-                  <td colSpan={8} className="py-12 text-center text-slate-400">
+                  <td colSpan={8} className="py-12 text-center text-slate-500">
                     Loading stock movement audit logs...
                   </td>
                 </tr>
               ) : movements.length === 0 ? (
                 <tr>
-                  <td colSpan={8} className="py-12 text-center text-slate-400">
+                  <td colSpan={8} className="py-12 text-center text-slate-500">
                     No stock movements logged.
                   </td>
                 </tr>
@@ -176,8 +176,8 @@ export const StockMovementsPage: React.FC = () => {
                   ].includes(txn.movement_type);
 
                   return (
-                    <tr key={txn.id} className="hover:bg-slate-700/30 transition">
-                      <td className="py-3.5 px-4 font-mono text-xs font-semibold text-blue-400">
+                    <tr key={txn.id} className="hover:bg-slate-50/60 transition">
+                      <td className="py-3.5 px-4 font-mono text-xs font-bold text-blue-700">
                         {txn.transaction_number}
                       </td>
 
@@ -188,34 +188,34 @@ export const StockMovementsPage: React.FC = () => {
                       </td>
 
                       <td className="py-3.5 px-4">
-                        <div className="font-semibold text-white">{txn.products?.name || 'Item'}</div>
-                        <div className="text-xs text-slate-400 font-mono">{txn.products?.product_code}</div>
+                        <div className="font-bold text-slate-900">{txn.products?.name || 'Item'}</div>
+                        <div className="text-[11px] text-slate-500 font-mono">{txn.products?.product_code}</div>
                       </td>
 
                       <td className="py-3.5 px-4">
-                        <div className="text-slate-200 font-medium">{txn.warehouses?.name || 'Warehouse'}</div>
-                        <div className="text-xs text-slate-400 font-mono">
+                        <div className="text-slate-800 font-semibold">{txn.warehouses?.name || 'Warehouse'}</div>
+                        <div className="text-[11px] text-slate-500 font-mono">
                           Bin: {txn.storage_locations?.location_code || 'General'}
                         </div>
                       </td>
 
-                      <td className={`py-3.5 px-4 text-right font-bold ${isStockIn ? 'text-emerald-400' : 'text-rose-400'}`}>
+                      <td className={`py-3.5 px-4 text-right font-extrabold ${isStockIn ? 'text-emerald-700' : 'text-rose-700'}`}>
                         {isStockIn ? `+${txn.quantity}` : `-${txn.quantity}`} {txn.unit}
                       </td>
 
-                      <td className="py-3.5 px-4 max-w-xs truncate text-xs text-slate-300">
-                        <span className="font-medium text-slate-200">{txn.reason || 'N/A'}</span>
-                        {txn.notes && <span className="text-slate-400 block truncate">{txn.notes}</span>}
+                      <td className="py-3.5 px-4 max-w-xs truncate text-xs text-slate-700">
+                        <span className="font-semibold text-slate-800">{txn.reason || 'N/A'}</span>
+                        {txn.notes && <span className="text-slate-500 block truncate">{txn.notes}</span>}
                       </td>
 
-                      <td className="py-3.5 px-4 text-xs text-slate-300">
+                      <td className="py-3.5 px-4 text-xs text-slate-700">
                         <div className="flex items-center gap-1.5">
                           <User className="w-3.5 h-3.5 text-slate-400" />
                           {txn.profiles?.full_name || 'System Operator'}
                         </div>
                       </td>
 
-                      <td className="py-3.5 px-4 text-xs text-slate-400 font-mono">
+                      <td className="py-3.5 px-4 text-xs text-slate-500 font-mono">
                         {new Date(txn.transaction_date).toLocaleString()}
                       </td>
                     </tr>
@@ -227,20 +227,20 @@ export const StockMovementsPage: React.FC = () => {
         </div>
 
         {/* Pagination Footer */}
-        <div className="p-4 bg-slate-900/80 border-t border-slate-700/60 flex items-center justify-between text-xs text-slate-400">
+        <div className="p-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between text-xs text-slate-600 font-medium">
           <span>Page {page} of {totalPages}</span>
           <div className="flex items-center gap-2">
             <button
               disabled={page <= 1}
               onClick={() => setPage((p) => Math.max(1, p - 1))}
-              className="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 disabled:opacity-50 text-slate-200 rounded-lg transition"
+              className="px-3 py-1.5 bg-white border border-slate-200 hover:bg-slate-100 disabled:opacity-50 text-slate-700 rounded-lg transition"
             >
               Previous
             </button>
             <button
               disabled={page >= totalPages}
               onClick={() => setPage((p) => p + 1)}
-              className="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 disabled:opacity-50 text-slate-200 rounded-lg transition"
+              className="px-3 py-1.5 bg-white border border-slate-200 hover:bg-slate-100 disabled:opacity-50 text-slate-700 rounded-lg transition"
             >
               Next
             </button>

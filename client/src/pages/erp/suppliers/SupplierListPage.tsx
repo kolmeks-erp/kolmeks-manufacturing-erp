@@ -152,11 +152,11 @@ export const SupplierListPage: React.FC = () => {
       )}
 
       {/* SEARCH AND FILTERS TOOLBAR */}
-      <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs space-y-4">
+      <div className="bg-white dark:bg-[#0F2647] p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-xs space-y-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
           {/* Search Box */}
           <div className="lg:col-span-2">
-            <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">
+            <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">
               Search Suppliers
             </label>
             <input
@@ -164,13 +164,13 @@ export const SupplierListPage: React.FC = () => {
               placeholder="Search code, name, email, city, country..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 text-xs bg-slate-50 dark:bg-[#071220] border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
           {/* Status Filter */}
           <div>
-            <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">
+            <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">
               Status
             </label>
             <select
@@ -179,7 +179,7 @@ export const SupplierListPage: React.FC = () => {
                 setStatusFilter(e.target.value);
                 setPage(1);
               }}
-              className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 text-xs bg-slate-50 dark:bg-[#071220] border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="all">All Statuses</option>
               <option value="active">Active</option>
@@ -191,7 +191,7 @@ export const SupplierListPage: React.FC = () => {
 
           {/* Supplier Type Filter */}
           <div>
-            <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">
+            <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">
               Supplier Type
             </label>
             <select
@@ -200,7 +200,7 @@ export const SupplierListPage: React.FC = () => {
                 setTypeFilter(e.target.value);
                 setPage(1);
               }}
-              className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 text-xs bg-slate-50 dark:bg-[#071220] border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="all">All Types</option>
               <option value="RAW_MATERIAL">Raw Material</option>
@@ -214,7 +214,7 @@ export const SupplierListPage: React.FC = () => {
 
           {/* Industry Filter */}
           <div>
-            <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">
+            <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">
               Industry
             </label>
             <select
@@ -223,7 +223,7 @@ export const SupplierListPage: React.FC = () => {
                 setIndustryFilter(e.target.value);
                 setPage(1);
               }}
-              className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 text-xs bg-slate-50 dark:bg-[#071220] border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="all">All Industries</option>
               <option value="Raw Materials">Raw Materials</option>
@@ -237,14 +237,14 @@ export const SupplierListPage: React.FC = () => {
         </div>
 
         {hasActiveFilters && (
-          <div className="flex items-center justify-between pt-2 border-t border-slate-100 text-xs">
-            <span className="text-slate-500">
-              Filtered results: <strong className="text-slate-900">{totalItems}</strong> suppliers found
+          <div className="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-800 text-xs">
+            <span className="text-slate-500 dark:text-slate-400">
+              Filtered results: <strong className="text-slate-900 dark:text-white">{totalItems}</strong> suppliers found
             </span>
             <button
               type="button"
               onClick={clearFilters}
-              className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-lg transition-colors"
+              className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold rounded-lg transition-colors"
             >
               <X className="w-3.5 h-3.5" />
               <span>Clear Filters</span>
@@ -254,18 +254,18 @@ export const SupplierListPage: React.FC = () => {
       </div>
 
       {/* SUPPLIERS TABLE */}
-      <div className="bg-white rounded-xl border border-slate-200 shadow-xs overflow-hidden">
+      <div className="bg-white dark:bg-[#0F2647] rounded-xl border border-slate-200 dark:border-slate-800 shadow-xs overflow-hidden">
         {isLoading ? (
           <div className="p-8 space-y-4">
             {[...Array(5)].map((_, i) => (
-              <div key={i} className="h-10 bg-slate-100 animate-pulse rounded-lg" />
+              <div key={i} className="h-10 bg-slate-100 dark:bg-slate-800 animate-pulse rounded-lg" />
             ))}
           </div>
         ) : suppliers.length === 0 ? (
           <div className="p-12 text-center space-y-3">
             <Truck className="w-10 h-10 text-slate-400 mx-auto" />
-            <h3 className="text-sm font-bold text-slate-900">No suppliers found</h3>
-            <p className="text-xs text-slate-500 max-w-sm mx-auto">
+            <h3 className="text-sm font-bold text-slate-900 dark:text-white">No suppliers found</h3>
+            <p className="text-xs text-slate-500 dark:text-slate-400 max-w-sm mx-auto">
               {hasActiveFilters
                 ? 'No vendor records match your active search and filter options.'
                 : 'Get started by adding your first supplier master record.'}
@@ -274,7 +274,7 @@ export const SupplierListPage: React.FC = () => {
               <button
                 type="button"
                 onClick={() => navigate(`${ERP_BASE_PATH}/suppliers/new`)}
-                className="px-4 py-2 bg-[#0B1E36] text-white text-xs font-bold rounded-lg inline-flex items-center gap-2"
+                className="px-4 py-2 bg-[#0B1E36] hover:bg-blue-600 text-white text-xs font-bold rounded-lg inline-flex items-center gap-2"
               >
                 <Plus className="w-4 h-4" />
                 Add First Supplier
@@ -284,16 +284,16 @@ export const SupplierListPage: React.FC = () => {
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
-              <thead className="bg-slate-50 text-slate-500 uppercase font-mono text-[10px] tracking-wider border-b border-slate-100">
+              <thead className="bg-slate-50 dark:bg-[#0B1E36] text-slate-500 dark:text-slate-400 uppercase font-mono text-[10px] tracking-wider border-b border-slate-100 dark:border-slate-800">
                 <tr>
                   <th
-                    className="py-3.5 px-5 cursor-pointer hover:text-slate-900"
+                    className="py-3.5 px-5 cursor-pointer hover:text-slate-900 dark:hover:text-white"
                     onClick={() => handleSort('supplier_code')}
                   >
                     Supplier Code {sortBy === 'supplier_code' && (sortOrder === 'asc' ? '↑' : '↓')}
                   </th>
                   <th
-                    className="py-3.5 px-5 cursor-pointer hover:text-slate-900"
+                    className="py-3.5 px-5 cursor-pointer hover:text-slate-900 dark:hover:text-white"
                     onClick={() => handleSort('company_name')}
                   >
                     Company Name {sortBy === 'company_name' && (sortOrder === 'asc' ? '↑' : '↓')}
@@ -301,14 +301,14 @@ export const SupplierListPage: React.FC = () => {
                   <th className="py-3.5 px-5">Type</th>
                   <th className="py-3.5 px-5">Industry</th>
                   <th
-                    className="py-3.5 px-5 cursor-pointer hover:text-slate-900"
+                    className="py-3.5 px-5 cursor-pointer hover:text-slate-900 dark:hover:text-white"
                     onClick={() => handleSort('country')}
                   >
                     Country {sortBy === 'country' && (sortOrder === 'asc' ? '↑' : '↓')}
                   </th>
                   <th className="py-3.5 px-5">Email / Phone</th>
                   <th
-                    className="py-3.5 px-5 cursor-pointer hover:text-slate-900"
+                    className="py-3.5 px-5 cursor-pointer hover:text-slate-900 dark:hover:text-white"
                     onClick={() => handleSort('status')}
                   >
                     Status {sortBy === 'status' && (sortOrder === 'asc' ? '↑' : '↓')}
@@ -316,28 +316,30 @@ export const SupplierListPage: React.FC = () => {
                   <th className="py-3.5 px-5 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100 font-sans text-slate-800">
+              <tbody className="divide-y divide-slate-100 dark:divide-slate-800 font-sans text-slate-800 dark:text-slate-200">
                 {suppliers.map((sup) => (
-                  <tr key={sup.id} className="hover:bg-slate-50/80 transition-colors">
-                    <td className="py-3.5 px-5 font-mono font-bold text-blue-700">
-                      {sup.supplier_code}
+                  <tr key={sup.id} className="hover:bg-slate-50/80 dark:hover:bg-[#163761]/50 transition-colors">
+                    <td className="py-3.5 px-5 font-mono font-bold text-blue-700 dark:text-blue-400">
+                      <span className="bg-blue-50 dark:bg-blue-950/50 px-2 py-1 rounded border border-blue-100 dark:border-blue-800">
+                        {sup.supplier_code}
+                      </span>
                     </td>
-                    <td className="py-3.5 px-5 font-bold text-slate-900">
+                    <td className="py-3.5 px-5 font-bold text-slate-900 dark:text-white">
                       <div>{sup.company_name}</div>
                       {sup.legal_name && (
-                        <div className="text-[10px] font-normal text-slate-500">{sup.legal_name}</div>
+                        <div className="text-[10px] font-normal text-slate-500 dark:text-slate-400">{sup.legal_name}</div>
                       )}
                     </td>
-                    <td className="py-3.5 px-5 font-semibold text-slate-700">
-                      <span className="inline-flex px-2 py-0.5 rounded text-[10px] font-mono uppercase bg-slate-100 text-slate-700">
+                    <td className="py-3.5 px-5 font-semibold text-slate-700 dark:text-slate-300">
+                      <span className="inline-flex px-2 py-0.5 rounded text-[10px] font-mono uppercase bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
                         {sup.supplier_type.replace('_', ' ')}
                       </span>
                     </td>
-                    <td className="py-3.5 px-5 text-slate-600">{sup.industry || '—'}</td>
-                    <td className="py-3.5 px-5 font-medium text-slate-900">{sup.country}</td>
-                    <td className="py-3.5 px-5 font-mono text-slate-600">
+                    <td className="py-3.5 px-5 text-slate-600 dark:text-slate-400">{sup.industry || '—'}</td>
+                    <td className="py-3.5 px-5 font-medium text-slate-900 dark:text-white">{sup.country}</td>
+                    <td className="py-3.5 px-5 font-mono text-slate-600 dark:text-slate-400">
                       <div>{sup.email || '—'}</div>
-                      <div className="text-[10px] text-slate-400">{sup.phone || ''}</div>
+                      <div className="text-[10px] text-slate-400 dark:text-slate-500">{sup.phone || ''}</div>
                     </td>
                     <td className="py-3.5 px-5">
                       <StatusBadge status={sup.status} />
@@ -346,7 +348,7 @@ export const SupplierListPage: React.FC = () => {
                       <button
                         type="button"
                         onClick={() => navigate(`${ERP_BASE_PATH}/suppliers/${sup.id}`)}
-                        className="p-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg transition-colors"
+                        className="p-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg transition-colors"
                         title="View Profile"
                       >
                         <Eye className="w-3.5 h-3.5" />
@@ -354,7 +356,7 @@ export const SupplierListPage: React.FC = () => {
                       <button
                         type="button"
                         onClick={() => navigate(`${ERP_BASE_PATH}/suppliers/${sup.id}/edit`)}
-                        className="p-1.5 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-lg transition-colors"
+                        className="p-1.5 bg-blue-50 dark:bg-blue-950/50 hover:bg-blue-100 dark:hover:bg-blue-900/50 text-blue-700 dark:text-blue-300 rounded-lg transition-colors"
                         title="Edit Supplier"
                       >
                         <Edit className="w-3.5 h-3.5" />
@@ -364,8 +366,8 @@ export const SupplierListPage: React.FC = () => {
                         onClick={() => setStatusDialogTarget(sup)}
                         className={`p-1.5 rounded-lg transition-colors ${
                           sup.status === 'active'
-                            ? 'bg-amber-50 hover:bg-amber-100 text-amber-700'
-                            : 'bg-emerald-50 hover:bg-emerald-100 text-emerald-700'
+                            ? 'bg-amber-50 dark:bg-amber-950/50 hover:bg-amber-100 dark:hover:bg-amber-900/50 text-amber-700 dark:text-amber-300'
+                            : 'bg-emerald-50 dark:bg-emerald-950/50 hover:bg-emerald-100 dark:hover:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300'
                         }`}
                         title={sup.status === 'active' ? 'Deactivate Supplier' : 'Activate Supplier'}
                       >
@@ -381,17 +383,17 @@ export const SupplierListPage: React.FC = () => {
 
         {/* PAGINATION FOOTER */}
         {!isLoading && suppliers.length > 0 && (
-          <div className="py-3 px-5 border-t border-slate-100 bg-slate-50 flex items-center justify-between text-xs">
-            <span className="text-slate-500">
-              Showing page <strong className="text-slate-900">{page}</strong> of{' '}
-              <strong className="text-slate-900">{totalPages}</strong> ({totalItems} total suppliers)
+          <div className="py-3 px-5 border-t border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-[#0B1E36] flex items-center justify-between text-xs text-slate-600 dark:text-slate-400">
+            <span>
+              Showing page <strong className="text-slate-900 dark:text-white">{page}</strong> of{' '}
+              <strong className="text-slate-900 dark:text-white">{totalPages}</strong> ({totalItems} total suppliers)
             </span>
             <div className="flex items-center gap-2">
               <button
                 type="button"
                 disabled={page <= 1}
                 onClick={() => setPage((p) => Math.max(1, p - 1))}
-                className="px-3 py-1.5 border border-slate-300 rounded-lg text-slate-700 font-semibold disabled:opacity-40 hover:bg-white transition-colors"
+                className="px-3 py-1.5 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-200 font-semibold disabled:opacity-40 hover:bg-white dark:hover:bg-slate-800 transition-colors"
               >
                 Previous
               </button>
@@ -399,7 +401,7 @@ export const SupplierListPage: React.FC = () => {
                 type="button"
                 disabled={page >= totalPages}
                 onClick={() => setPage((p) => p + 1)}
-                className="px-3 py-1.5 border border-slate-300 rounded-lg text-slate-700 font-semibold disabled:opacity-40 hover:bg-white transition-colors"
+                className="px-3 py-1.5 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-200 font-semibold disabled:opacity-40 hover:bg-white dark:hover:bg-slate-800 transition-colors"
               >
                 Next
               </button>

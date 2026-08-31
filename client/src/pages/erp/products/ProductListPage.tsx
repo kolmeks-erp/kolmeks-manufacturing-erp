@@ -175,23 +175,23 @@ export const ProductListPage: React.FC = () => {
       />
 
       {/* FILTER & SEARCH TOOLBAR */}
-      <div className="bg-white p-4 rounded-xl shadow-xs border border-slate-200 space-y-3">
+      <div className="bg-white dark:bg-[#0F2647] p-4 rounded-xl shadow-xs border border-slate-200 dark:border-slate-800 space-y-3">
         <div className="flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between">
           {/* Search Bar */}
           <div className="relative flex-1 min-w-[240px]">
-            <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+            <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500" />
             <input
               type="text"
               placeholder="Search by code, name, part number, or material..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-9 pr-4 py-2 text-xs bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all font-medium"
+              className="w-full pl-9 pr-4 py-2 text-xs bg-slate-50 dark:bg-[#071220] border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-medium"
             />
             {searchTerm && (
               <button
                 type="button"
                 onClick={() => setSearchTerm('')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300"
               >
                 <XCircle className="w-4 h-4" />
               </button>
@@ -207,7 +207,7 @@ export const ProductListPage: React.FC = () => {
                 setSelectedCategory(e.target.value);
                 setPage(1);
               }}
-              className="px-3 py-2 text-xs bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-700 font-medium"
+              className="px-3 py-2 text-xs bg-slate-50 dark:bg-[#071220] border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-medium"
             >
               <option value="">All Categories</option>
               {categories.map((cat) => (
@@ -224,7 +224,7 @@ export const ProductListPage: React.FC = () => {
                 setSelectedType(e.target.value);
                 setPage(1);
               }}
-              className="px-3 py-2 text-xs bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-700 font-medium"
+              className="px-3 py-2 text-xs bg-slate-50 dark:bg-[#071220] border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-medium"
             >
               <option value="">All Types</option>
               <option value="component">Component</option>
@@ -244,7 +244,7 @@ export const ProductListPage: React.FC = () => {
                 setSelectedStatus(e.target.value);
                 setPage(1);
               }}
-              className="px-3 py-2 text-xs bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-700 font-medium"
+              className="px-3 py-2 text-xs bg-slate-50 dark:bg-[#071220] border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-medium"
             >
               <option value="">All Statuses</option>
               <option value="active">Active</option>
@@ -257,7 +257,7 @@ export const ProductListPage: React.FC = () => {
               <button
                 type="button"
                 onClick={handleClearFilters}
-                className="px-3 py-2 text-xs font-bold text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors flex items-center gap-1"
+                className="px-3 py-2 text-xs font-bold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg transition-colors flex items-center gap-1"
               >
                 <XCircle className="w-3.5 h-3.5" />
                 Clear
@@ -267,7 +267,7 @@ export const ProductListPage: React.FC = () => {
             <button
               type="button"
               onClick={fetchProducts}
-              className="p-2 text-slate-500 hover:text-slate-800 bg-slate-50 hover:bg-slate-100 border border-slate-300 rounded-lg transition-colors"
+              className="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-700 rounded-lg transition-colors"
               title="Refresh List"
             >
               <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} />
@@ -278,7 +278,7 @@ export const ProductListPage: React.FC = () => {
 
       {/* ERROR ALERT */}
       {error && (
-        <div className="p-4 bg-red-50 border border-red-200 rounded-xl text-red-700 text-xs flex items-center gap-3">
+        <div className="p-4 bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 rounded-xl text-red-700 dark:text-red-300 text-xs flex items-center gap-3">
           <AlertCircle className="w-5 h-5 shrink-0" />
           <span>{error}</span>
         </div>
@@ -286,8 +286,8 @@ export const ProductListPage: React.FC = () => {
 
       {/* DATA TABLE & EMPTY STATE */}
       {isLoading ? (
-        <div className="bg-white p-8 rounded-2xl border border-slate-200 text-center text-xs text-slate-500">
-          <RefreshCw className="w-6 h-6 animate-spin mx-auto text-blue-600 mb-2" />
+        <div className="bg-white dark:bg-[#0F2647] p-8 rounded-2xl border border-slate-200 dark:border-slate-800 text-center text-xs text-slate-500 dark:text-slate-400">
+          <RefreshCw className="w-6 h-6 animate-spin mx-auto text-blue-600 dark:text-blue-400 mb-2" />
           Loading products master directory...
         </div>
       ) : products.length === 0 ? (
@@ -299,10 +299,10 @@ export const ProductListPage: React.FC = () => {
           onAction={() => navigate(`${ERP_BASE_PATH}/products/new`)}
         />
       ) : (
-        <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
+        <div className="bg-white dark:bg-[#0F2647] rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
-              <thead className="bg-slate-50 text-slate-500 uppercase font-mono text-[10px] tracking-wider border-b border-slate-100">
+              <thead className="bg-slate-50 dark:bg-[#0B1E36] text-slate-500 dark:text-slate-400 uppercase font-mono text-[10px] tracking-wider border-b border-slate-100 dark:border-slate-800">
                 <tr>
                   <th className="py-3.5 px-5">Code</th>
                   <th className="py-3.5 px-5">Product Name</th>
@@ -315,29 +315,31 @@ export const ProductListPage: React.FC = () => {
                   <th className="py-3.5 px-5 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100 font-sans text-slate-800">
+              <tbody className="divide-y divide-slate-100 dark:divide-slate-800 font-sans text-slate-800 dark:text-slate-200">
                 {products.map((row) => (
-                  <tr key={row.id} className="hover:bg-slate-50/80 transition-colors">
-                    <td className="py-3.5 px-5 font-mono font-bold text-blue-900">
-                      {row.product_code}
+                  <tr key={row.id} className="hover:bg-slate-50/80 dark:hover:bg-[#163761]/50 transition-colors">
+                    <td className="py-3.5 px-5 font-mono font-bold text-blue-700 dark:text-blue-400">
+                      <span className="bg-blue-50 dark:bg-blue-950/50 px-2 py-1 rounded border border-blue-100 dark:border-blue-800">
+                        {row.product_code}
+                      </span>
                     </td>
                     <td className="py-3.5 px-5">
-                      <div className="font-bold text-slate-900">{row.name}</div>
+                      <div className="font-bold text-slate-900 dark:text-white">{row.name}</div>
                       {row.part_number && (
-                        <div className="text-[11px] text-slate-500 font-mono">P/N: {row.part_number}</div>
+                        <div className="text-[11px] text-slate-500 dark:text-slate-400 font-mono">P/N: {row.part_number}</div>
                       )}
                     </td>
-                    <td className="py-3.5 px-5 text-slate-700">
-                      {row.category?.name || <span className="text-slate-400 italic">Unassigned</span>}
+                    <td className="py-3.5 px-5 text-slate-700 dark:text-slate-300">
+                      {row.category?.name || <span className="text-slate-400 dark:text-slate-500 italic">Unassigned</span>}
                     </td>
                     <td className="py-3.5 px-5">
-                      <span className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-slate-100 text-slate-800 border border-slate-200">
+                      <span className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700">
                         {formatTypeLabel(row.product_type)}
                       </span>
                     </td>
-                    <td className="py-3.5 px-5 text-slate-600">{row.material || '—'}</td>
-                    <td className="py-3.5 px-5 uppercase font-mono font-medium text-slate-600">{row.unit}</td>
-                    <td className="py-3.5 px-5 font-mono font-bold text-slate-700">{row.revision || 'R0'}</td>
+                    <td className="py-3.5 px-5 text-slate-600 dark:text-slate-400">{row.material || '—'}</td>
+                    <td className="py-3.5 px-5 uppercase font-mono font-medium text-slate-600 dark:text-slate-400">{row.unit}</td>
+                    <td className="py-3.5 px-5 font-mono font-bold text-slate-700 dark:text-slate-300">{row.revision || 'R0'}</td>
                     <td className="py-3.5 px-5">
                       <StatusBadge status={row.status} />
                     </td>
@@ -345,7 +347,7 @@ export const ProductListPage: React.FC = () => {
                       <button
                         type="button"
                         onClick={() => navigate(`${ERP_BASE_PATH}/products/${row.id}`)}
-                        className="inline-flex items-center gap-1 p-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg transition-colors"
+                        className="inline-flex items-center gap-1 p-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg transition-colors"
                         title="View Profile"
                       >
                         <Eye className="w-3.5 h-3.5" />
@@ -353,7 +355,7 @@ export const ProductListPage: React.FC = () => {
                       <button
                         type="button"
                         onClick={() => navigate(`${ERP_BASE_PATH}/products/${row.id}/edit`)}
-                        className="inline-flex items-center gap-1 p-1.5 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-lg transition-colors"
+                        className="inline-flex items-center gap-1 p-1.5 bg-blue-50 dark:bg-blue-950/50 hover:bg-blue-100 dark:hover:bg-blue-900/50 text-blue-700 dark:text-blue-300 rounded-lg transition-colors"
                         title="Edit Product"
                       >
                         <Edit className="w-3.5 h-3.5" />
@@ -363,8 +365,8 @@ export const ProductListPage: React.FC = () => {
                         onClick={() => handleOpenStatusModal(row)}
                         className={`inline-flex items-center gap-1 p-1.5 rounded-lg transition-colors ${
                           row.status === 'active'
-                            ? 'bg-red-50 hover:bg-red-100 text-red-600'
-                            : 'bg-emerald-50 hover:bg-emerald-100 text-emerald-700'
+                            ? 'bg-red-50 dark:bg-red-950/50 hover:bg-red-100 dark:hover:bg-red-900/50 text-red-600 dark:text-red-400'
+                            : 'bg-emerald-50 dark:bg-emerald-950/50 hover:bg-emerald-100 dark:hover:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300'
                         }`}
                         title={row.status === 'active' ? 'Deactivate Product' : 'Activate Product'}
                       >
@@ -379,11 +381,11 @@ export const ProductListPage: React.FC = () => {
 
           {/* PAGINATION BAR */}
           {totalRecords > 0 && (
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 border-t border-slate-100 text-xs text-slate-600">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 border-t border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-[#0B1E36] text-xs text-slate-600 dark:text-slate-400">
               <div>
-                Showing <span className="font-semibold text-slate-900">{(page - 1) * limit + 1}</span> to{' '}
-                <span className="font-semibold text-slate-900">{Math.min(page * limit, totalRecords)}</span> of{' '}
-                <span className="font-semibold text-slate-900">{totalRecords}</span> records
+                Showing <span className="font-semibold text-slate-900 dark:text-white">{(page - 1) * limit + 1}</span> to{' '}
+                <span className="font-semibold text-slate-900 dark:text-white">{Math.min(page * limit, totalRecords)}</span> of{' '}
+                <span className="font-semibold text-slate-900 dark:text-white">{totalRecords}</span> records
               </div>
 
               <div className="flex items-center gap-2">
@@ -391,18 +393,18 @@ export const ProductListPage: React.FC = () => {
                   type="button"
                   disabled={page <= 1}
                   onClick={() => setPage((prev) => Math.max(1, prev - 1))}
-                  className="px-3 py-1.5 border border-slate-300 rounded-lg font-medium text-slate-700 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                  className="px-3 py-1.5 border border-slate-300 dark:border-slate-700 rounded-lg font-medium text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
                 >
                   Previous
                 </button>
-                <span className="font-medium text-slate-700 px-2">
+                <span className="font-medium text-slate-700 dark:text-slate-300 px-2">
                   Page {page} of {totalPages}
                 </span>
                 <button
                   type="button"
                   disabled={page >= totalPages}
                   onClick={() => setPage((prev) => Math.min(totalPages, prev + 1))}
-                  className="px-3 py-1.5 border border-slate-300 rounded-lg font-medium text-slate-700 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                  className="px-3 py-1.5 border border-slate-300 dark:border-slate-700 rounded-lg font-medium text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
                 >
                   Next
                 </button>

@@ -179,45 +179,45 @@ export const StockTransferFormPage: React.FC = () => {
   };
 
   return (
-    <div className="p-6 max-w-4xl mx-auto space-y-6 text-slate-100">
+    <div className="p-4 lg:p-6 max-w-4xl mx-auto space-y-6 text-slate-800">
       {/* Top Breadcrumb */}
       <button
         onClick={() => navigate(`${ERP_BASE_PATH}/inventory`)}
-        className="inline-flex items-center gap-2 text-sm text-slate-400 hover:text-white transition"
+        className="inline-flex items-center gap-2 text-xs font-semibold text-slate-500 hover:text-slate-900 transition"
       >
         <ArrowLeft className="w-4 h-4" />
         <span>Back to Inventory Balances</span>
       </button>
 
-      <div className="border-b border-slate-800 pb-4">
-        <div className="flex items-center gap-2 text-cyan-400 font-semibold text-xs tracking-wider uppercase mb-1">
+      <div className="border-b border-slate-200 pb-4">
+        <div className="flex items-center gap-2 text-cyan-700 font-bold text-xs tracking-wider uppercase mb-1">
           <ArrowLeftRight className="w-4 h-4" />
           <span>Inter-Warehouse & Location Transfer</span>
         </div>
-        <h1 className="text-2xl font-extrabold text-white tracking-tight">Record Stock Transfer</h1>
-        <p className="text-sm text-slate-400 mt-1">
+        <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Record Stock Transfer</h1>
+        <p className="text-sm text-slate-500 mt-1">
           Relocate stock between manufacturing depots or bin storage locations with atomic movement logging.
         </p>
       </div>
 
       {errorMsg && (
-        <div className="p-4 bg-rose-950/80 border border-rose-800 rounded-xl text-rose-300 text-sm flex items-start gap-3">
-          <AlertTriangle className="w-5 h-5 text-rose-400 shrink-0 mt-0.5" />
+        <div className="p-4 bg-rose-50 border border-rose-200 rounded-2xl text-rose-700 text-xs font-semibold flex items-start gap-3">
+          <AlertTriangle className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" />
           <span>{errorMsg}</span>
         </div>
       )}
 
-      <form onSubmit={handleValidateAndSubmit} className="bg-slate-900 border border-slate-800 rounded-xl p-6 space-y-6">
+      <form onSubmit={handleValidateAndSubmit} className="bg-white border border-slate-200 rounded-2xl p-6 space-y-6 shadow-xs">
         {/* Product Picker */}
         <div className="space-y-2">
-          <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider">
+          <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider">
             Select Product to Transfer *
           </label>
           <select
             value={productId}
             onChange={(e) => setProductId(e.target.value)}
             required
-            className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-lg text-sm text-slate-200 focus:outline-none focus:border-cyan-500"
+            className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:outline-none focus:border-cyan-500"
           >
             <option value="">Choose product...</option>
             {products.map((p) => (
@@ -229,21 +229,21 @@ export const StockTransferFormPage: React.FC = () => {
         </div>
 
         {/* Source vs Destination Column Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4 bg-slate-950/60 rounded-xl border border-slate-800/80">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4 bg-slate-50 rounded-2xl border border-slate-200">
           {/* Source Location Box */}
           <div className="space-y-4">
-            <div className="flex items-center gap-2 text-rose-400 font-bold text-xs uppercase tracking-wider">
+            <div className="flex items-center gap-2 text-rose-700 font-bold text-xs uppercase tracking-wider">
               <Building2 className="w-4 h-4" />
               <span>1. SOURCE LOCATION (TRANSFER OUT)</span>
             </div>
 
             <div className="space-y-2">
-              <label className="block text-xs font-medium text-slate-400">Source Warehouse *</label>
+              <label className="block text-xs font-semibold text-slate-700">Source Warehouse *</label>
               <select
                 value={sourceWarehouseId}
                 onChange={(e) => setSourceWarehouseId(e.target.value)}
                 required
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-lg text-sm text-slate-200 focus:outline-none focus:border-rose-500"
+                className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 focus:outline-none focus:border-rose-500"
               >
                 <option value="">Select Source Warehouse</option>
                 {warehouses.map((wh) => (
@@ -255,12 +255,12 @@ export const StockTransferFormPage: React.FC = () => {
             </div>
 
             <div className="space-y-2">
-              <label className="block text-xs font-medium text-slate-400">Source Storage Rack (Optional)</label>
+              <label className="block text-xs font-semibold text-slate-700">Source Storage Rack (Optional)</label>
               <select
                 value={sourceLocationId}
                 onChange={(e) => setSourceLocationId(e.target.value)}
                 disabled={!sourceWarehouseId || sourceLocations.length === 0}
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-lg text-sm text-slate-200 disabled:opacity-50 focus:outline-none focus:border-rose-500"
+                className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 disabled:opacity-50 focus:outline-none focus:border-rose-500"
               >
                 <option value="">Default Warehouse Storage</option>
                 {sourceLocations.map((loc) => (
@@ -273,12 +273,12 @@ export const StockTransferFormPage: React.FC = () => {
 
             {/* Source Stock Indicator */}
             {productId && sourceWarehouseId && (
-              <div className="p-3 bg-slate-900 rounded-lg border border-slate-800 flex items-center justify-between text-xs">
-                <span className="text-slate-400">Available at Source:</span>
+              <div className="p-3 bg-white rounded-xl border border-slate-200 flex items-center justify-between text-xs">
+                <span className="text-slate-500 font-medium">Available at Source:</span>
                 {checkingSource ? (
-                  <RefreshCw className="w-4 h-4 animate-spin text-cyan-400" />
+                  <RefreshCw className="w-4 h-4 animate-spin text-cyan-600" />
                 ) : (
-                  <span className="font-bold text-white text-sm">
+                  <span className="font-bold text-slate-900 text-sm">
                     {sourceOnHand !== null ? sourceOnHand : 0} {selectedProduct?.unit || 'pcs'}
                   </span>
                 )}
@@ -288,18 +288,18 @@ export const StockTransferFormPage: React.FC = () => {
 
           {/* Destination Location Box */}
           <div className="space-y-4">
-            <div className="flex items-center gap-2 text-emerald-400 font-bold text-xs uppercase tracking-wider">
+            <div className="flex items-center gap-2 text-emerald-700 font-bold text-xs uppercase tracking-wider">
               <Building2 className="w-4 h-4" />
               <span>2. DESTINATION LOCATION (TRANSFER IN)</span>
             </div>
 
             <div className="space-y-2">
-              <label className="block text-xs font-medium text-slate-400">Destination Warehouse *</label>
+              <label className="block text-xs font-semibold text-slate-700">Destination Warehouse *</label>
               <select
                 value={destWarehouseId}
                 onChange={(e) => setDestWarehouseId(e.target.value)}
                 required
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-lg text-sm text-slate-200 focus:outline-none focus:border-emerald-500"
+                className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 focus:outline-none focus:border-emerald-500"
               >
                 <option value="">Select Destination Warehouse</option>
                 {warehouses.map((wh) => (
@@ -311,12 +311,12 @@ export const StockTransferFormPage: React.FC = () => {
             </div>
 
             <div className="space-y-2">
-              <label className="block text-xs font-medium text-slate-400">Destination Storage Rack (Optional)</label>
+              <label className="block text-xs font-semibold text-slate-700">Destination Storage Rack (Optional)</label>
               <select
                 value={destLocationId}
                 onChange={(e) => setDestLocationId(e.target.value)}
                 disabled={!destWarehouseId || destLocations.length === 0}
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-lg text-sm text-slate-200 disabled:opacity-50 focus:outline-none focus:border-emerald-500"
+                className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 disabled:opacity-50 focus:outline-none focus:border-emerald-500"
               >
                 <option value="">Default Warehouse Storage</option>
                 {destLocations.map((loc) => (
@@ -332,7 +332,7 @@ export const StockTransferFormPage: React.FC = () => {
         {/* Transfer Quantity & Reason */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
-            <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider">
+            <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider">
               Transfer Quantity *
             </label>
             <input
@@ -343,18 +343,18 @@ export const StockTransferFormPage: React.FC = () => {
               value={quantity}
               onChange={(e) => setQuantity(e.target.value)}
               required
-              className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-lg text-sm text-slate-200 placeholder-slate-600 focus:outline-none focus:border-cyan-500 font-mono font-bold"
+              className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-cyan-500 font-mono font-bold"
             />
           </div>
 
           <div className="space-y-2">
-            <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider">
+            <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider">
               Reason / Transfer Purpose
             </label>
             <select
               value={reason}
               onChange={(e) => setReason(e.target.value)}
-              className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-lg text-sm text-slate-200 focus:outline-none focus:border-cyan-500"
+              className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:outline-none focus:border-cyan-500"
             >
               <option value="Warehouse Transfer">Warehouse Transfer</option>
               <option value="Production Staging">Production Staging</option>
@@ -367,7 +367,7 @@ export const StockTransferFormPage: React.FC = () => {
 
         {/* Notes */}
         <div className="space-y-2">
-          <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider">
+          <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider">
             Transfer Notes
           </label>
           <textarea
@@ -375,22 +375,22 @@ export const StockTransferFormPage: React.FC = () => {
             placeholder="Inter-facility dispatch notes, driver reference, or rack reallocation detail..."
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
-            className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-lg text-sm text-slate-200 placeholder-slate-600 focus:outline-none focus:border-cyan-500"
+            className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-cyan-500"
           />
         </div>
 
         {/* Actions */}
-        <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-800">
+        <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-100">
           <button
             type="button"
             onClick={() => navigate(`${ERP_BASE_PATH}/inventory`)}
-            className="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-sm font-semibold transition"
+            className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold transition"
           >
             Cancel
           </button>
           <button
             type="submit"
-            className="px-5 py-2.5 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg text-sm font-semibold transition shadow-lg shadow-cyan-600/20"
+            className="px-5 py-2.5 bg-cyan-600 hover:bg-cyan-700 text-white rounded-xl text-xs font-semibold transition shadow-xs"
           >
             Review & Transfer Stock
           </button>
@@ -399,31 +399,31 @@ export const StockTransferFormPage: React.FC = () => {
 
       {/* Confirmation Modal */}
       {showConfirmModal && (
-        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-          <div className="bg-slate-900 border border-slate-800 rounded-xl p-6 max-w-md w-full space-y-4 shadow-2xl">
-            <h3 className="text-lg font-bold text-white flex items-center gap-2">
-              <ArrowLeftRight className="w-5 h-5 text-cyan-400" />
+        <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4 z-50">
+          <div className="bg-white border border-slate-200 rounded-2xl p-6 max-w-md w-full space-y-4 shadow-xl">
+            <h3 className="text-lg font-bold text-slate-900 flex items-center gap-2">
+              <ArrowLeftRight className="w-5 h-5 text-cyan-600" />
               <span>Confirm Stock Transfer</span>
             </h3>
 
-            <div className="space-y-3 text-sm text-slate-300 bg-slate-950 p-4 rounded-lg font-mono">
+            <div className="space-y-3 text-xs text-slate-700 bg-slate-50 p-4 rounded-xl font-mono">
               <div>
                 <span className="text-slate-500">Product:</span> {selectedProduct?.name}
               </div>
               <div>
                 <span className="text-slate-500">Quantity:</span>{' '}
-                <span className="text-cyan-300 font-bold">
+                <span className="text-cyan-700 font-bold">
                   {qtyNum} {selectedProduct?.unit || 'pcs'}
                 </span>
               </div>
-              <div className="flex items-center gap-2 pt-2 border-t border-slate-800 text-xs">
-                <span className="text-rose-400 font-bold">{sourceWh?.code}</span>
-                <ArrowRight className="w-4 h-4 text-slate-500" />
-                <span className="text-emerald-400 font-bold">{destWh?.code}</span>
+              <div className="flex items-center gap-2 pt-2 border-t border-slate-200 text-xs">
+                <span className="text-rose-700 font-bold">{sourceWh?.code}</span>
+                <ArrowRight className="w-4 h-4 text-slate-400" />
+                <span className="text-emerald-700 font-bold">{destWh?.code}</span>
               </div>
             </div>
 
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-slate-500">
               Executing this transfer will instantly deduct quantity from the source depot and add it to the destination depot, creating paired TRANSFER_OUT and TRANSFER_IN ledger entries.
             </p>
 
@@ -431,14 +431,14 @@ export const StockTransferFormPage: React.FC = () => {
               <button
                 disabled={submitting}
                 onClick={() => setShowConfirmModal(false)}
-                className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-sm font-semibold transition"
+                className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold transition"
               >
                 Cancel
               </button>
               <button
                 disabled={submitting}
                 onClick={confirmTransfer}
-                className="flex items-center gap-2 px-4 py-2 bg-cyan-600 hover:bg-cyan-500 disabled:opacity-50 text-white rounded-lg text-sm font-semibold transition"
+                className="flex items-center gap-2 px-4 py-2 bg-cyan-600 hover:bg-cyan-700 disabled:opacity-50 text-white rounded-xl text-xs font-semibold transition"
               >
                 {submitting && <RefreshCw className="w-4 h-4 animate-spin" />}
                 <span>Execute Transfer</span>

@@ -206,14 +206,14 @@ export const PurchaseOrderListPage: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* HEADER BAR */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-slate-200 shadow-xs">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white dark:bg-[#0F2647] p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs">
         <div className="flex items-center gap-3">
-          <div className="p-2.5 bg-slate-900 text-white rounded-xl">
+          <div className="p-2.5 bg-slate-900 dark:bg-slate-800 text-white rounded-xl">
             <ShoppingCart className="w-6 h-6 text-emerald-400" />
           </div>
           <div>
-            <h1 className="text-xl font-bold text-slate-900">Purchase Orders</h1>
-            <p className="text-xs text-slate-500 mt-0.5">
+            <h1 className="text-xl font-bold text-slate-900 dark:text-white">Purchase Orders</h1>
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
               Issue external commercial purchase orders to approved raw material and component vendors.
             </p>
           </div>
@@ -222,7 +222,7 @@ export const PurchaseOrderListPage: React.FC = () => {
         <div className="flex items-center gap-3">
           <button
             onClick={() => fetchPurchaseOrders()}
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl transition-colors"
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-semibold rounded-xl transition-colors"
             title="Refresh list"
           >
             <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
@@ -231,7 +231,7 @@ export const PurchaseOrderListPage: React.FC = () => {
 
           <button
             onClick={() => navigate(`${ERP_BASE_PATH}/purchase-orders/new`)}
-            className="inline-flex items-center gap-2 px-4 py-2.5 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-xl shadow-xs transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2.5 bg-slate-900 dark:bg-blue-600 hover:bg-slate-800 dark:hover:bg-blue-500 text-white text-xs font-semibold rounded-xl shadow-xs transition-colors"
           >
             <Plus className="w-4 h-4" />
             New Purchase Order
@@ -240,17 +240,17 @@ export const PurchaseOrderListPage: React.FC = () => {
       </div>
 
       {/* FILTERS & SEARCH */}
-      <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs space-y-4">
+      <div className="bg-white dark:bg-[#0F2647] p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs space-y-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
           {/* SEARCH INPUT */}
           <div className="relative lg:col-span-2">
-            <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+            <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500" />
             <input
               type="text"
               placeholder="Search PO # or Vendor Reference..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:ring-2 focus:ring-slate-900 focus:outline-hidden"
+              className="w-full pl-10 pr-4 py-2 bg-slate-50 dark:bg-[#071220] border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 rounded-xl text-xs focus:ring-2 focus:ring-slate-900 dark:focus:ring-blue-500 focus:outline-hidden"
             />
           </div>
 
@@ -262,7 +262,7 @@ export const PurchaseOrderListPage: React.FC = () => {
                 setStatusFilter(e.target.value);
                 setPage(1);
               }}
-              className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-700 focus:ring-2 focus:ring-slate-900 focus:outline-hidden"
+              className="w-full px-3 py-2 bg-slate-50 dark:bg-[#071220] border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium text-slate-700 dark:text-slate-200 focus:ring-2 focus:ring-slate-900 dark:focus:ring-blue-500 focus:outline-hidden"
             >
               <option value="all">All Statuses</option>
               <option value="DRAFT">DRAFT</option>
@@ -284,7 +284,7 @@ export const PurchaseOrderListPage: React.FC = () => {
                 setSupplierFilter(e.target.value);
                 setPage(1);
               }}
-              className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-700 focus:ring-2 focus:ring-slate-900 focus:outline-hidden"
+              className="w-full px-3 py-2 bg-slate-50 dark:bg-[#071220] border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium text-slate-700 dark:text-slate-200 focus:ring-2 focus:ring-slate-900 dark:focus:ring-blue-500 focus:outline-hidden"
             >
               <option value="all">All Suppliers</option>
               {suppliers.map((s) => (
@@ -303,7 +303,7 @@ export const PurchaseOrderListPage: React.FC = () => {
                 setCurrencyFilter(e.target.value);
                 setPage(1);
               }}
-              className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-700 focus:ring-2 focus:ring-slate-900 focus:outline-hidden"
+              className="w-full px-3 py-2 bg-slate-50 dark:bg-[#071220] border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium text-slate-700 dark:text-slate-200 focus:ring-2 focus:ring-slate-900 dark:focus:ring-blue-500 focus:outline-hidden"
             >
               <option value="all">All Currencies</option>
               <option value="EUR">EUR (€)</option>
@@ -314,13 +314,13 @@ export const PurchaseOrderListPage: React.FC = () => {
         </div>
 
         {(searchTerm || statusFilter !== 'all' || supplierFilter !== 'all' || currencyFilter !== 'all') && (
-          <div className="flex items-center justify-between pt-2 border-t border-slate-100 text-xs">
-            <span className="text-slate-500 font-medium">
+          <div className="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-800 text-xs">
+            <span className="text-slate-500 dark:text-slate-400 font-medium">
               Showing filtered results ({totalCount} total purchase orders found)
             </span>
             <button
               onClick={handleClearFilters}
-              className="text-rose-600 hover:text-rose-700 font-semibold inline-flex items-center gap-1"
+              className="text-rose-600 dark:text-rose-400 hover:text-rose-700 font-semibold inline-flex items-center gap-1"
             >
               <Filter className="w-3.5 h-3.5" />
               Reset Filters
@@ -331,8 +331,8 @@ export const PurchaseOrderListPage: React.FC = () => {
 
       {/* ERROR DISPLAY */}
       {error && (
-        <div className="p-4 bg-rose-50 border border-rose-200 rounded-2xl text-rose-700 text-xs flex items-center gap-3">
-          <AlertCircle className="w-5 h-5 shrink-0 text-rose-600" />
+        <div className="p-4 bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800 rounded-2xl text-rose-700 dark:text-rose-300 text-xs flex items-center gap-3">
+          <AlertCircle className="w-5 h-5 shrink-0 text-rose-600 dark:text-rose-400" />
           <div>
             <p className="font-semibold">{error}</p>
           </div>
@@ -340,13 +340,13 @@ export const PurchaseOrderListPage: React.FC = () => {
       )}
 
       {/* DATA TABLE */}
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
+      <div className="bg-white dark:bg-[#0F2647] rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="bg-slate-50 border-b border-slate-200 text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+              <tr className="bg-slate-50 dark:bg-[#0B1E36] border-b border-slate-200 dark:border-slate-800 text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
                 <th
-                  className="py-3.5 px-4 cursor-pointer hover:bg-slate-100 transition-colors"
+                  className="py-3.5 px-4 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
                   onClick={() => handleSort('po_number')}
                 >
                   <div className="flex items-center gap-1.5">
@@ -357,7 +357,7 @@ export const PurchaseOrderListPage: React.FC = () => {
                 <th className="py-3.5 px-4">Supplier / Vendor</th>
                 <th className="py-3.5 px-4">Requisition Ref</th>
                 <th
-                  className="py-3.5 px-4 cursor-pointer hover:bg-slate-100 transition-colors"
+                  className="py-3.5 px-4 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
                   onClick={() => handleSort('order_date')}
                 >
                   <div className="flex items-center gap-1.5">
@@ -373,11 +373,11 @@ export const PurchaseOrderListPage: React.FC = () => {
               </tr>
             </thead>
 
-            <tbody className="divide-y divide-slate-200 text-xs text-slate-700">
+            <tbody className="divide-y divide-slate-200 dark:divide-slate-800 text-xs text-slate-700 dark:text-slate-200">
               {loading ? (
                 <tr>
-                  <td colSpan={9} className="py-12 text-center text-slate-400">
-                    <RefreshCw className="w-6 h-6 animate-spin mx-auto mb-2 text-slate-900" />
+                  <td colSpan={9} className="py-12 text-center text-slate-400 dark:text-slate-500">
+                    <RefreshCw className="w-6 h-6 animate-spin mx-auto mb-2 text-slate-900 dark:text-slate-200" />
                     Loading Purchase Orders...
                   </td>
                 </tr>
@@ -385,18 +385,18 @@ export const PurchaseOrderListPage: React.FC = () => {
                 <tr>
                   <td colSpan={9} className="py-16 text-center">
                     <div className="max-w-xs mx-auto text-center space-y-3">
-                      <div className="p-3 bg-slate-100 w-fit mx-auto rounded-full text-slate-400">
+                      <div className="p-3 bg-slate-100 dark:bg-slate-800 w-fit mx-auto rounded-full text-slate-400 dark:text-slate-500">
                         <ShoppingCart className="w-8 h-8" />
                       </div>
-                      <h3 className="text-sm font-bold text-slate-800">No Purchase Orders Found</h3>
-                      <p className="text-xs text-slate-500">
+                      <h3 className="text-sm font-bold text-slate-800 dark:text-white">No Purchase Orders Found</h3>
+                      <p className="text-xs text-slate-500 dark:text-slate-400">
                         {searchTerm || statusFilter !== 'all'
                           ? 'No purchase orders match your active filters.'
                           : 'No purchase orders have been created yet.'}
                       </p>
                       <button
                         onClick={() => navigate(`${ERP_BASE_PATH}/purchase-orders/new`)}
-                        className="inline-flex items-center gap-2 px-4 py-2 bg-slate-900 text-white rounded-xl text-xs font-semibold shadow-xs hover:bg-slate-800 transition-colors"
+                        className="inline-flex items-center gap-2 px-4 py-2 bg-slate-900 dark:bg-blue-600 text-white rounded-xl text-xs font-semibold shadow-xs hover:bg-slate-800 dark:hover:bg-blue-500 transition-colors"
                       >
                         <Plus className="w-4 h-4" />
                         Create Purchase Order
@@ -406,12 +406,12 @@ export const PurchaseOrderListPage: React.FC = () => {
                 </tr>
               ) : (
                 orders.map((po) => (
-                  <tr key={po.id} className="hover:bg-slate-50/80 transition-colors">
+                  <tr key={po.id} className="hover:bg-slate-50/80 dark:hover:bg-[#163761]/50 transition-colors">
                     {/* PO NUMBER */}
-                    <td className="py-3.5 px-4 font-bold text-slate-900">
+                    <td className="py-3.5 px-4 font-bold text-slate-900 dark:text-blue-400">
                       <button
                         onClick={() => navigate(`${ERP_BASE_PATH}/purchase-orders/${po.id}`)}
-                        className="hover:underline text-slate-900"
+                        className="hover:underline text-slate-900 dark:text-blue-400"
                       >
                         {po.po_number}
                       </button>
@@ -423,11 +423,11 @@ export const PurchaseOrderListPage: React.FC = () => {
                     </td>
 
                     {/* SUPPLIER */}
-                    <td className="py-3.5 px-4 font-medium text-slate-800">
+                    <td className="py-3.5 px-4 font-medium text-slate-800 dark:text-slate-200">
                       {po.supplier_master ? (
                         <button
                           onClick={() => navigate(`${ERP_BASE_PATH}/suppliers/${po.supplier_id}`)}
-                          className="flex items-center gap-1.5 hover:underline text-slate-900"
+                          className="flex items-center gap-1.5 hover:underline text-slate-900 dark:text-white"
                         >
                           <Building2 className="w-3.5 h-3.5 text-slate-400 shrink-0" />
                           <span className="font-semibold">{po.supplier_master.company_name}</span>
@@ -442,7 +442,7 @@ export const PurchaseOrderListPage: React.FC = () => {
                       {po.requisition_master ? (
                         <button
                           onClick={() => navigate(`${ERP_BASE_PATH}/purchase-requisitions/${po.requisition_id}`)}
-                          className="text-xs text-blue-600 hover:underline font-medium"
+                          className="text-xs text-blue-600 dark:text-blue-400 hover:underline font-medium"
                         >
                           {po.requisition_master.requisition_number}
                         </button>
@@ -452,7 +452,7 @@ export const PurchaseOrderListPage: React.FC = () => {
                     </td>
 
                     {/* ORDER DATE */}
-                    <td className="py-3.5 px-4 text-slate-600 whitespace-nowrap">
+                    <td className="py-3.5 px-4 text-slate-600 dark:text-slate-300 whitespace-nowrap">
                       <div className="flex items-center gap-1.5">
                         <Calendar className="w-3.5 h-3.5 text-slate-400" />
                         {po.order_date ? new Date(po.order_date).toLocaleDateString() : 'N/A'}
@@ -460,9 +460,9 @@ export const PurchaseOrderListPage: React.FC = () => {
                     </td>
 
                     {/* EXPECTED DELIVERY */}
-                    <td className="py-3.5 px-4 text-slate-600 whitespace-nowrap">
+                    <td className="py-3.5 px-4 text-slate-600 dark:text-slate-300 whitespace-nowrap">
                       {po.expected_delivery ? (
-                        <span className="font-medium text-slate-700">
+                        <span className="font-medium text-slate-700 dark:text-slate-200">
                           {new Date(po.expected_delivery).toLocaleDateString()}
                         </span>
                       ) : (
@@ -471,7 +471,7 @@ export const PurchaseOrderListPage: React.FC = () => {
                     </td>
 
                     {/* TOTAL AMOUNT */}
-                    <td className="py-3.5 px-4 text-right font-bold text-slate-900 whitespace-nowrap">
+                    <td className="py-3.5 px-4 text-right font-bold text-slate-900 dark:text-white whitespace-nowrap">
                       {po.currency || 'EUR'} {Number(po.total || 0).toLocaleString(undefined, { minimumFractionDigits: 2 })}
                     </td>
 
@@ -486,7 +486,7 @@ export const PurchaseOrderListPage: React.FC = () => {
                       <div className="flex items-center justify-end gap-1.5">
                         <button
                           onClick={() => navigate(`${ERP_BASE_PATH}/purchase-orders/${po.id}`)}
-                          className="p-1.5 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors"
+                          className="p-1.5 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
                           title="View Details"
                         >
                           <Eye className="w-4 h-4" />
@@ -495,7 +495,7 @@ export const PurchaseOrderListPage: React.FC = () => {
                         {['DRAFT', 'PENDING_APPROVAL'].includes(po.status.toUpperCase()) && (
                           <button
                             onClick={() => navigate(`${ERP_BASE_PATH}/purchase-orders/${po.id}/edit`)}
-                            className="p-1.5 text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-lg transition-colors"
+                            className="p-1.5 text-blue-600 dark:text-blue-400 hover:text-blue-800 hover:bg-blue-50 dark:hover:bg-blue-950/50 rounded-lg transition-colors"
                             title="Edit Purchase Order"
                           >
                             <Edit className="w-4 h-4" />
@@ -511,24 +511,24 @@ export const PurchaseOrderListPage: React.FC = () => {
         </div>
 
         {/* PAGINATION BAR */}
-        <div className="flex items-center justify-between px-6 py-4 bg-slate-50 border-t border-slate-200 text-xs">
-          <div className="text-slate-500 font-medium">
-            Page <span className="font-bold text-slate-900">{page}</span> of{' '}
-            <span className="font-bold text-slate-900">{totalPages}</span> ({totalCount} total purchase orders)
+        <div className="flex items-center justify-between px-6 py-4 bg-slate-50 dark:bg-[#0B1E36] border-t border-slate-200 dark:border-slate-800 text-xs">
+          <div className="text-slate-500 dark:text-slate-400 font-medium">
+            Page <span className="font-bold text-slate-900 dark:text-white">{page}</span> of{' '}
+            <span className="font-bold text-slate-900 dark:text-white">{totalPages}</span> ({totalCount} total purchase orders)
           </div>
 
           <div className="flex items-center gap-2">
             <button
               onClick={() => setPage((p) => Math.max(1, p - 1))}
               disabled={page === 1 || loading}
-              className="px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-slate-700 font-medium hover:bg-slate-100 disabled:opacity-50 transition-colors shadow-2xs"
+              className="px-3 py-1.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-200 font-medium hover:bg-slate-100 dark:hover:bg-slate-700 disabled:opacity-50 transition-colors shadow-2xs"
             >
               Previous
             </button>
             <button
               onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
               disabled={page >= totalPages || loading}
-              className="px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-slate-700 font-medium hover:bg-slate-100 disabled:opacity-50 transition-colors shadow-2xs"
+              className="px-3 py-1.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-200 font-medium hover:bg-slate-100 dark:hover:bg-slate-700 disabled:opacity-50 transition-colors shadow-2xs"
             >
               Next
             </button>

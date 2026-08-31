@@ -109,36 +109,36 @@ export const RoutingFormPage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6 animate-fadeIn max-w-4xl mx-auto">
+    <div className="space-y-6 animate-fadeIn max-w-4xl mx-auto text-slate-800">
       <div className="flex items-center gap-3">
         <button
           onClick={() => navigate(`${ERP_BASE_PATH}/production/routings`)}
-          className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors"
+          className="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors"
         >
           <ArrowLeft className="w-5 h-5" />
         </button>
         <div>
-          <h1 className="text-2xl font-bold text-white tracking-tight">Define Manufacturing Routing</h1>
-          <p className="text-slate-400 text-sm">Specify step-by-step shop floor operations.</p>
+          <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Define Manufacturing Routing</h1>
+          <p className="text-slate-500 text-sm">Specify step-by-step shop floor operations.</p>
         </div>
       </div>
 
       {errorMsg && (
-        <div className="p-4 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-300 text-sm">
+        <div className="p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-sm font-medium">
           {errorMsg}
         </div>
       )}
 
       <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="bg-slate-900/60 border border-slate-800/80 backdrop-blur-xl p-6 rounded-2xl space-y-4">
+        <div className="bg-white border border-slate-200 p-6 rounded-2xl space-y-4 shadow-xs">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1">Target Product Master *</label>
+              <label className="block text-xs font-semibold text-slate-700 mb-1">Target Product Master *</label>
               <select
                 required
                 value={productId}
                 onChange={(e) => setProductId(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl bg-slate-950/60 border border-slate-800 text-slate-200 text-sm focus:outline-none focus:border-cyan-500"
+                className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-xs focus:outline-none focus:border-cyan-600"
               >
                 <option value="">Select Product...</option>
                 {products.map((p) => (
@@ -150,28 +150,28 @@ export const RoutingFormPage: React.FC = () => {
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1">Version</label>
+              <label className="block text-xs font-semibold text-slate-700 mb-1">Version</label>
               <input
                 type="text"
                 value={version}
                 onChange={(e) => setVersion(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl bg-slate-950/60 border border-slate-800 text-slate-200 text-sm focus:outline-none focus:border-cyan-500"
+                className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-xs focus:outline-none focus:border-cyan-600"
               />
             </div>
           </div>
         </div>
 
         {/* Operation Sequence */}
-        <div className="bg-slate-900/60 border border-slate-800/80 backdrop-blur-xl p-6 rounded-2xl space-y-4">
-          <div className="flex items-center justify-between">
-            <h3 className="text-base font-bold text-white flex items-center gap-2">
-              <GitFork className="w-5 h-5 text-cyan-400" />
+        <div className="bg-white border border-slate-200 p-6 rounded-2xl space-y-4 shadow-xs">
+          <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+            <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
+              <GitFork className="w-5 h-5 text-cyan-600" />
               <span>Operations Sequence Steps</span>
             </h3>
             <button
               type="button"
               onClick={handleAddOp}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-cyan-600/20 text-cyan-300 hover:bg-cyan-600/30 text-xs font-semibold border border-cyan-500/30 transition-all"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-cyan-50 text-cyan-700 hover:bg-cyan-100 text-xs font-semibold border border-cyan-200 transition-all"
             >
               <Plus className="w-3.5 h-3.5" /> Add Step
             </button>
@@ -179,26 +179,26 @@ export const RoutingFormPage: React.FC = () => {
 
           <div className="space-y-3">
             {operations.map((op, idx) => (
-              <div key={idx} className="p-4 rounded-xl bg-slate-950/60 border border-slate-800 space-y-3">
+              <div key={idx} className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
                 <div className="grid grid-cols-12 gap-3 items-center">
                   <div className="col-span-2">
-                    <label className="block text-[10px] text-slate-500 mb-1">Seq #</label>
+                    <label className="block text-[10px] font-semibold text-slate-500 mb-1">Seq #</label>
                     <input
                       type="number"
                       value={op.sequence}
                       onChange={(e) => handleOpChange(idx, 'sequence', e.target.value)}
-                      className="w-full px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-200 text-xs font-mono font-bold"
+                      className="w-full px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-900 text-xs font-mono font-bold"
                     />
                   </div>
 
                   <div className="col-span-9">
-                    <label className="block text-[10px] text-slate-500 mb-1">Operation Name *</label>
+                    <label className="block text-[10px] font-semibold text-slate-500 mb-1">Operation Name *</label>
                     <input
                       type="text"
                       placeholder="e.g., CNC Lathe Rough Turning, Milling Keyway..."
                       value={op.operation_name}
                       onChange={(e) => handleOpChange(idx, 'operation_name', e.target.value)}
-                      className="w-full px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-200 text-xs focus:outline-none"
+                      className="w-full px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-900 text-xs focus:outline-none"
                     />
                   </div>
 
@@ -207,7 +207,7 @@ export const RoutingFormPage: React.FC = () => {
                       type="button"
                       onClick={() => handleRemoveOp(idx)}
                       disabled={operations.length === 1}
-                      className="p-1.5 rounded-lg bg-rose-500/10 text-rose-400 hover:bg-rose-500/20 disabled:opacity-30"
+                      className="p-1.5 rounded-lg bg-rose-50 text-rose-600 hover:bg-rose-100 border border-rose-200 disabled:opacity-30"
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>
@@ -216,11 +216,11 @@ export const RoutingFormPage: React.FC = () => {
 
                 <div className="grid grid-cols-4 gap-3">
                   <div>
-                    <label className="block text-[10px] text-slate-500 mb-1">Work Center</label>
+                    <label className="block text-[10px] font-semibold text-slate-500 mb-1">Work Center</label>
                     <select
                       value={op.work_center_id}
                       onChange={(e) => handleOpChange(idx, 'work_center_id', e.target.value)}
-                      className="w-full px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-200 text-xs"
+                      className="w-full px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-900 text-xs"
                     >
                       <option value="">Any Work Center</option>
                       {workCenters.map((wc) => (
@@ -232,11 +232,11 @@ export const RoutingFormPage: React.FC = () => {
                   </div>
 
                   <div>
-                    <label className="block text-[10px] text-slate-500 mb-1">Machine</label>
+                    <label className="block text-[10px] font-semibold text-slate-500 mb-1">Machine</label>
                     <select
                       value={op.machine_id}
                       onChange={(e) => handleOpChange(idx, 'machine_id', e.target.value)}
-                      className="w-full px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-200 text-xs"
+                      className="w-full px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-900 text-xs"
                     >
                       <option value="">Any Machine</option>
                       {machines.map((m) => (
@@ -248,22 +248,22 @@ export const RoutingFormPage: React.FC = () => {
                   </div>
 
                   <div>
-                    <label className="block text-[10px] text-slate-500 mb-1">Setup Mins</label>
+                    <label className="block text-[10px] font-semibold text-slate-500 mb-1">Setup Mins</label>
                     <input
                       type="number"
                       value={op.setup_time_mins}
                       onChange={(e) => handleOpChange(idx, 'setup_time_mins', e.target.value)}
-                      className="w-full px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-200 text-xs font-mono"
+                      className="w-full px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-900 text-xs font-mono"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-[10px] text-slate-500 mb-1">Run Mins/Unit</label>
+                    <label className="block text-[10px] font-semibold text-slate-500 mb-1">Run Mins/Unit</label>
                     <input
                       type="number"
                       value={op.run_time_mins}
                       onChange={(e) => handleOpChange(idx, 'run_time_mins', e.target.value)}
-                      className="w-full px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-200 text-xs font-mono"
+                      className="w-full px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-900 text-xs font-mono"
                     />
                   </div>
                 </div>
@@ -276,14 +276,14 @@ export const RoutingFormPage: React.FC = () => {
           <button
             type="button"
             onClick={() => navigate(`${ERP_BASE_PATH}/production/routings`)}
-            className="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-sm font-medium"
+            className="px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold"
           >
             Cancel
           </button>
           <button
             type="submit"
             disabled={loading}
-            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-medium text-sm transition-all shadow-lg"
+            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-cyan-600 hover:bg-cyan-700 text-white font-semibold text-xs transition-all shadow-xs"
           >
             <Save className="w-4 h-4" />
             <span>{loading ? 'Saving...' : 'Save Routing Definition'}</span>

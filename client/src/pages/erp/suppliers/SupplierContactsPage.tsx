@@ -126,7 +126,7 @@ export const SupplierContactsPage: React.FC = () => {
   }
 
   return (
-    <div className="space-y-6 max-w-5xl mx-auto">
+    <div className="space-y-6 max-w-5xl mx-auto text-slate-800 dark:text-slate-100">
       {/* PAGE HEADER */}
       <PageHeader
         title={`Supplier Contacts — ${supplier?.company_name || 'Supplier'}`}
@@ -137,7 +137,7 @@ export const SupplierContactsPage: React.FC = () => {
             <button
               type="button"
               onClick={() => navigate(`${ERP_BASE_PATH}/suppliers/${id}`)}
-              className="inline-flex items-center gap-2 px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-lg transition-colors"
+              className="inline-flex items-center gap-2 px-3.5 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-bold rounded-lg transition-colors border border-slate-200 dark:border-slate-700"
             >
               <ArrowLeft className="w-4 h-4" />
               <span>Back to Supplier</span>
@@ -146,7 +146,7 @@ export const SupplierContactsPage: React.FC = () => {
             <button
               type="button"
               onClick={handleOpenCreateModal}
-              className="inline-flex items-center gap-2 px-4 py-2 bg-[#0B1E36] hover:bg-[#0F2C59] text-white text-xs font-bold rounded-lg shadow-xs transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-lg shadow-xs transition-colors"
             >
               <Plus className="w-4 h-4" />
               <span>Add Contact</span>
@@ -157,7 +157,7 @@ export const SupplierContactsPage: React.FC = () => {
 
       {/* ERROR ALERT */}
       {error && (
-        <div className="p-4 bg-red-50 border border-red-200 rounded-xl text-red-700 text-xs flex items-center gap-3">
+        <div className="p-4 bg-red-50 dark:bg-rose-950/60 border border-red-200 dark:border-rose-800/60 rounded-xl text-red-700 dark:text-rose-300 text-xs flex items-center gap-3">
           <AlertCircle className="w-5 h-5 shrink-0" />
           <span>{error}</span>
         </div>
@@ -165,26 +165,26 @@ export const SupplierContactsPage: React.FC = () => {
 
       {/* CONTACTS TABLE */}
       {contacts.length === 0 ? (
-        <div className="bg-white p-12 rounded-xl border border-slate-200 text-center space-y-3">
-          <Users className="w-10 h-10 text-slate-400 mx-auto" />
-          <h3 className="text-sm font-bold text-slate-900">No contact persons recorded</h3>
-          <p className="text-xs text-slate-500 max-w-md mx-auto">
+        <div className="bg-white dark:bg-[#0F2647] p-12 rounded-xl border border-slate-200 dark:border-slate-800 text-center space-y-3 shadow-xs">
+          <Users className="w-10 h-10 text-slate-400 dark:text-slate-500 mx-auto" />
+          <h3 className="text-sm font-bold text-slate-900 dark:text-white">No contact persons recorded</h3>
+          <p className="text-xs text-slate-500 dark:text-slate-400 max-w-md mx-auto">
             Add supplier representatives for sales management, quality assurance, or logistics coordination.
           </p>
           <button
             type="button"
             onClick={handleOpenCreateModal}
-            className="px-4 py-2 bg-[#0B1E36] text-white rounded-lg text-xs font-bold inline-flex items-center gap-2"
+            className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-bold inline-flex items-center gap-2"
           >
             <Plus className="w-4 h-4" />
             Add First Contact
           </button>
         </div>
       ) : (
-        <div className="bg-white rounded-xl border border-slate-200 shadow-xs overflow-hidden">
+        <div className="bg-white dark:bg-[#0F2647] rounded-xl border border-slate-200 dark:border-slate-800 shadow-xs overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
-              <thead className="bg-slate-50 text-slate-500 uppercase font-mono text-[10px] tracking-wider border-b border-slate-100">
+              <thead className="bg-slate-50 dark:bg-[#0B1E36] text-slate-500 dark:text-slate-400 uppercase font-mono text-[10px] tracking-wider border-b border-slate-100 dark:border-slate-800">
                 <tr>
                   <th className="py-3.5 px-5">Contact Person</th>
                   <th className="py-3.5 px-5">Job Title</th>
@@ -195,25 +195,25 @@ export const SupplierContactsPage: React.FC = () => {
                   <th className="py-3.5 px-5 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100 font-sans text-slate-800">
+              <tbody className="divide-y divide-slate-100 dark:divide-slate-800 font-sans text-slate-800 dark:text-slate-200 bg-white dark:bg-[#0F2647]">
                 {contacts.map((c) => (
-                  <tr key={c.id} className="hover:bg-slate-50/80 transition-colors">
-                    <td className="py-3.5 px-5 font-bold text-slate-900">
+                  <tr key={c.id} className="hover:bg-slate-50/80 dark:hover:bg-[#163761]/40 transition-colors">
+                    <td className="py-3.5 px-5 font-bold text-slate-900 dark:text-white">
                       {c.first_name} {c.last_name}
                     </td>
-                    <td className="py-3.5 px-5 text-slate-700 font-medium">{c.job_title || '—'}</td>
-                    <td className="py-3.5 px-5 font-mono text-slate-700">{c.email || '—'}</td>
-                    <td className="py-3.5 px-5 font-mono text-slate-600">
+                    <td className="py-3.5 px-5 text-slate-700 dark:text-slate-300 font-medium">{c.job_title || '—'}</td>
+                    <td className="py-3.5 px-5 font-mono text-slate-700 dark:text-slate-300">{c.email || '—'}</td>
+                    <td className="py-3.5 px-5 font-mono text-slate-600 dark:text-slate-400">
                       {c.mobile || c.phone || '—'}
                     </td>
                     <td className="py-3.5 px-5">
                       {c.is_primary ? (
-                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-200 font-bold text-[10px]">
+                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded bg-amber-50 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800 font-bold text-[10px]">
                           <Star className="w-3 h-3 fill-amber-400 text-amber-500" />
                           Primary Contact
                         </span>
                       ) : (
-                        <span className="text-slate-400">—</span>
+                        <span className="text-slate-400 dark:text-slate-500">—</span>
                       )}
                     </td>
                     <td className="py-3.5 px-5">
@@ -223,7 +223,7 @@ export const SupplierContactsPage: React.FC = () => {
                       <button
                         type="button"
                         onClick={() => handleOpenEditModal(c)}
-                        className="p-1.5 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-lg transition-colors"
+                        className="p-1.5 bg-blue-50 dark:bg-blue-950/60 hover:bg-blue-100 dark:hover:bg-blue-900/60 text-blue-700 dark:text-blue-300 rounded-lg transition-colors border border-blue-200 dark:border-blue-800"
                         title="Edit Contact"
                       >
                         <Edit className="w-3.5 h-3.5" />
@@ -231,10 +231,10 @@ export const SupplierContactsPage: React.FC = () => {
                       <button
                         type="button"
                         onClick={() => handleToggleStatus(c)}
-                        className={`p-1.5 rounded-lg transition-colors ${
+                        className={`p-1.5 rounded-lg transition-colors border ${
                           c.status === 'active'
-                            ? 'bg-red-50 hover:bg-red-100 text-red-600'
-                            : 'bg-emerald-50 hover:bg-emerald-100 text-emerald-700'
+                            ? 'bg-red-50 dark:bg-rose-950/60 hover:bg-red-100 dark:hover:bg-rose-900/60 text-red-600 dark:text-rose-300 border-red-200 dark:border-rose-800'
+                            : 'bg-emerald-50 dark:bg-emerald-950/60 hover:bg-emerald-100 dark:hover:bg-emerald-900/60 text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800'
                         }`}
                         title={c.status === 'active' ? 'Deactivate Contact' : 'Activate Contact'}
                       >
@@ -251,14 +251,14 @@ export const SupplierContactsPage: React.FC = () => {
 
       {/* ADD / EDIT CONTACT MODAL */}
       {modalOpen && (
-        <div className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-xl shadow-xl border border-slate-200 w-full max-w-md overflow-hidden animate-in fade-in zoom-in-95 duration-150">
-            <div className="px-6 py-4 border-b border-slate-100 bg-slate-50 flex items-center justify-between">
-              <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
-                <Users className="w-4 h-4 text-blue-600" />
+        <div className="fixed inset-0 z-50 bg-slate-900/60 dark:bg-black/70 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-[#0F2647] rounded-xl shadow-xl border border-slate-200 dark:border-slate-800 w-full max-w-md overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+            <div className="px-6 py-4 border-b border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-[#0B1E36] flex items-center justify-between">
+              <h3 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                <Users className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                 {editingContact ? 'Edit Contact Representative' : 'Add Supplier Representative'}
               </h3>
-              <button type="button" onClick={() => setModalOpen(false)} className="text-slate-400 hover:text-slate-600">
+              <button type="button" onClick={() => setModalOpen(false)} className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
                 ✕
               </button>
             </div>
@@ -266,7 +266,7 @@ export const SupplierContactsPage: React.FC = () => {
             <form onSubmit={handleSaveContact} className="p-6 space-y-4 text-xs">
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block font-semibold text-slate-700 uppercase tracking-wider mb-1">
+                  <label className="block font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1">
                     First Name <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -274,12 +274,12 @@ export const SupplierContactsPage: React.FC = () => {
                     required
                     value={formData.first_name}
                     onChange={(e) => setFormData((prev) => ({ ...prev, first_name: e.target.value }))}
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 bg-slate-50 dark:bg-[#071220] border border-slate-300 dark:border-slate-700 rounded-lg focus:outline-none focus:border-blue-500 text-slate-900 dark:text-white"
                   />
                 </div>
 
                 <div>
-                  <label className="block font-semibold text-slate-700 uppercase tracking-wider mb-1">
+                  <label className="block font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1">
                     Last Name <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -287,13 +287,13 @@ export const SupplierContactsPage: React.FC = () => {
                     required
                     value={formData.last_name}
                     onChange={(e) => setFormData((prev) => ({ ...prev, last_name: e.target.value }))}
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 bg-slate-50 dark:bg-[#071220] border border-slate-300 dark:border-slate-700 rounded-lg focus:outline-none focus:border-blue-500 text-slate-900 dark:text-white"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block font-semibold text-slate-700 uppercase tracking-wider mb-1">
+                <label className="block font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1">
                   Job Title / Position
                 </label>
                 <input
@@ -301,12 +301,12 @@ export const SupplierContactsPage: React.FC = () => {
                   placeholder="e.g. Key Account Manager"
                   value={formData.job_title}
                   onChange={(e) => setFormData((prev) => ({ ...prev, job_title: e.target.value }))}
-                  className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 bg-slate-50 dark:bg-[#071220] border border-slate-300 dark:border-slate-700 rounded-lg focus:outline-none focus:border-blue-500 text-slate-900 dark:text-white"
                 />
               </div>
 
               <div>
-                <label className="block font-semibold text-slate-700 uppercase tracking-wider mb-1">
+                <label className="block font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1">
                   Email Address
                 </label>
                 <input
@@ -314,32 +314,32 @@ export const SupplierContactsPage: React.FC = () => {
                   placeholder="e.g. rep@supplier.fi"
                   value={formData.email}
                   onChange={(e) => setFormData((prev) => ({ ...prev, email: e.target.value }))}
-                  className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg font-mono focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 bg-slate-50 dark:bg-[#071220] border border-slate-300 dark:border-slate-700 rounded-lg font-mono focus:outline-none focus:border-blue-500 text-slate-900 dark:text-white"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block font-semibold text-slate-700 uppercase tracking-wider mb-1">
+                  <label className="block font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1">
                     Office Phone
                   </label>
                   <input
                     type="text"
                     value={formData.phone}
                     onChange={(e) => setFormData((prev) => ({ ...prev, phone: e.target.value }))}
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg font-mono focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 bg-slate-50 dark:bg-[#071220] border border-slate-300 dark:border-slate-700 rounded-lg font-mono focus:outline-none focus:border-blue-500 text-slate-900 dark:text-white"
                   />
                 </div>
 
                 <div>
-                  <label className="block font-semibold text-slate-700 uppercase tracking-wider mb-1">
+                  <label className="block font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1">
                     Mobile Phone
                   </label>
                   <input
                     type="text"
                     value={formData.mobile}
                     onChange={(e) => setFormData((prev) => ({ ...prev, mobile: e.target.value }))}
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg font-mono focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 bg-slate-50 dark:bg-[#071220] border border-slate-300 dark:border-slate-700 rounded-lg font-mono focus:outline-none focus:border-blue-500 text-slate-900 dark:text-white"
                   />
                 </div>
               </div>
@@ -350,25 +350,25 @@ export const SupplierContactsPage: React.FC = () => {
                   id="modal_supplier_is_primary"
                   checked={formData.is_primary}
                   onChange={(e) => setFormData((prev) => ({ ...prev, is_primary: e.target.checked }))}
-                  className="rounded text-blue-600 focus:ring-blue-500 h-4 w-4"
+                  className="rounded text-blue-600 focus:ring-blue-500 h-4 w-4 bg-slate-100 dark:bg-[#071220] border-slate-300 dark:border-slate-700"
                 />
-                <label htmlFor="modal_supplier_is_primary" className="font-semibold text-slate-700 cursor-pointer">
+                <label htmlFor="modal_supplier_is_primary" className="font-semibold text-slate-700 dark:text-slate-300 cursor-pointer">
                   Set as Primary Supplier Contact
                 </label>
               </div>
 
-              <div className="flex items-center justify-end gap-2 pt-3 border-t border-slate-100">
+              <div className="flex items-center justify-end gap-2 pt-3 border-t border-slate-100 dark:border-slate-800">
                 <button
                   type="button"
                   onClick={() => setModalOpen(false)}
-                  className="px-4 py-2 border border-slate-300 rounded-lg font-medium text-slate-700 hover:bg-slate-50"
+                  className="px-4 py-2 border border-slate-300 dark:border-slate-700 rounded-lg font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="px-4 py-2 bg-[#0B1E36] hover:bg-[#0F2C59] text-white font-bold rounded-lg disabled:opacity-50"
+                  className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-lg disabled:opacity-50"
                 >
                   {isSubmitting ? 'Saving...' : 'Save Representative'}
                 </button>

@@ -304,40 +304,32 @@ export const SalesOrderFormPage: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="py-20 text-center text-slate-500">
-        <RefreshCw className="w-8 h-8 animate-spin mx-auto text-slate-900 mb-3" />
+      <div className="py-20 text-center text-slate-500 dark:text-slate-400">
+        <RefreshCw className="w-8 h-8 animate-spin mx-auto text-slate-900 dark:text-white mb-3" />
         <p className="text-sm font-semibold">Loading Sales Order Builder Workspace...</p>
       </div>
     );
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      {/* TOP HEADER */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-slate-200 shadow-xs">
-        <div className="flex items-center gap-3">
-          <button
-            type="button"
-            onClick={() => navigate(`${ERP_BASE_PATH}/sales-orders`)}
-            className="p-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl transition-colors"
-          >
-            <ArrowLeft className="w-5 h-5" />
-          </button>
-          <div>
-            <h1 className="text-xl font-bold text-slate-900">
-              {isEditMode ? 'Edit Sales Order' : 'Create Sales Order'}
-            </h1>
-            <p className="text-xs text-slate-500 mt-0.5">
-              Confirm commercial terms, pricing, and prepare lines for production.
-            </p>
-          </div>
+    <form onSubmit={handleSubmit} className="space-y-6 max-w-7xl mx-auto pb-16">
+      {/* HEADER BAR */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white dark:bg-[#0F2647] p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs">
+        <div>
+          <h1 className="text-xl font-bold text-slate-900 dark:text-white tracking-tight flex items-center gap-2">
+            <FileSpreadsheet className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+            {isEditMode ? 'Edit Sales Order' : 'Create New Sales Order'}
+          </h1>
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+            Configure line items, commercial terms, pricing schedules, and delivery targets.
+          </p>
         </div>
 
         <div className="flex items-center gap-3">
           <button
             type="button"
             onClick={() => navigate(`${ERP_BASE_PATH}/sales-orders`)}
-            className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold transition-colors"
+            className="px-4 py-2.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-xl text-xs font-semibold transition-colors border border-slate-200 dark:border-slate-700"
           >
             Cancel
           </button>
@@ -345,7 +337,7 @@ export const SalesOrderFormPage: React.FC = () => {
           <button
             type="submit"
             disabled={saving}
-            className="inline-flex items-center gap-2 px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-semibold shadow-xs disabled:opacity-50 transition-colors"
+            className="inline-flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-semibold shadow-xs disabled:opacity-50 transition-colors"
           >
             <Save className="w-4 h-4" />
             {saving ? 'Saving...' : isEditMode ? 'Update Sales Order' : 'Save Sales Order'}
@@ -354,34 +346,34 @@ export const SalesOrderFormPage: React.FC = () => {
       </div>
 
       {error && (
-        <div className="p-4 bg-rose-50 border border-rose-200 rounded-2xl text-rose-700 text-xs flex items-center gap-3">
-          <AlertCircle className="w-5 h-5 shrink-0 text-rose-600" />
+        <div className="p-4 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800/60 rounded-2xl text-rose-700 dark:text-rose-300 text-xs flex items-center gap-3">
+          <AlertCircle className="w-5 h-5 shrink-0 text-rose-600 dark:text-rose-400" />
           <span>{error}</span>
         </div>
       )}
 
       {/* SECTION 1: CUSTOMER & SOURCE REFERENCE */}
-      <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-6">
-        <h2 className="text-sm font-bold text-slate-900 flex items-center gap-2 border-b border-slate-100 pb-3">
-          <Building2 className="w-4 h-4 text-slate-500" />
+      <div className="bg-white dark:bg-[#0F2647] p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs space-y-6">
+        <h2 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2 border-b border-slate-100 dark:border-slate-800 pb-3">
+          <Building2 className="w-4 h-4 text-blue-600 dark:text-blue-400" />
           Customer & Source Documents
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* CUSTOMER SELECTOR */}
           <div>
-            <label className="block text-xs font-bold text-slate-700 mb-1.5">
+            <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">
               Customer <span className="text-rose-500">*</span>
             </label>
             <select
               value={customerId}
               onChange={(e) => setCustomerId(e.target.value)}
               required
-              className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-900 focus:ring-2 focus:ring-slate-900 focus:outline-hidden"
+              className="w-full px-3.5 py-2 bg-slate-50 dark:bg-[#071220] border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium text-slate-900 dark:text-white focus:border-blue-600 focus:outline-hidden"
             >
-              <option value="">-- Select Customer Master --</option>
+              <option value="" className="bg-white dark:bg-[#0F2647]">-- Select Customer Master --</option>
               {customers.map((c) => (
-                <option key={c.id} value={c.id}>
+                <option key={c.id} value={c.id} className="bg-white dark:bg-[#0F2647]">
                   {c.company_name} ({c.customer_code || 'No Code'})
                 </option>
               ))}
@@ -390,17 +382,17 @@ export const SalesOrderFormPage: React.FC = () => {
 
           {/* QUOTATION SELECTOR */}
           <div>
-            <label className="block text-xs font-bold text-slate-700 mb-1.5">
+            <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">
               Source Quotation (Optional)
             </label>
             <select
               value={quotationId}
               onChange={(e) => handleSelectQuotation(e.target.value)}
-              className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-900 focus:ring-2 focus:ring-slate-900 focus:outline-hidden"
+              className="w-full px-3.5 py-2 bg-slate-50 dark:bg-[#071220] border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium text-slate-900 dark:text-white focus:border-blue-600 focus:outline-hidden"
             >
-              <option value="">-- Independent Sales Order --</option>
+              <option value="" className="bg-white dark:bg-[#0F2647]">-- Independent Sales Order --</option>
               {quotations.map((q) => (
-                <option key={q.id} value={q.id}>
+                <option key={q.id} value={q.id} className="bg-white dark:bg-[#0F2647]">
                   {q.quotation_number} ({q.currency} {Number(q.total).toLocaleString()})
                 </option>
               ))}
@@ -409,7 +401,7 @@ export const SalesOrderFormPage: React.FC = () => {
 
           {/* CUSTOMER REFERENCE (PO #) */}
           <div>
-            <label className="block text-xs font-bold text-slate-700 mb-1.5">
+            <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">
               Customer Reference / PO #
             </label>
             <input
@@ -417,96 +409,96 @@ export const SalesOrderFormPage: React.FC = () => {
               placeholder="e.g. PO-987452"
               value={customerReference}
               onChange={(e) => setCustomerReference(e.target.value)}
-              className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-900 focus:ring-2 focus:ring-slate-900 focus:outline-hidden"
+              className="w-full px-3.5 py-2 bg-slate-50 dark:bg-[#071220] border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium text-slate-900 dark:text-white focus:border-blue-600 focus:outline-hidden"
             />
           </div>
         </div>
       </div>
 
       {/* SECTION 2: ORDER DETAILS */}
-      <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-6">
-        <h2 className="text-sm font-bold text-slate-900 flex items-center gap-2 border-b border-slate-100 pb-3">
-          <Calendar className="w-4 h-4 text-slate-500" />
+      <div className="bg-white dark:bg-[#0F2647] p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs space-y-6">
+        <h2 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2 border-b border-slate-100 dark:border-slate-800 pb-3">
+          <Calendar className="w-4 h-4 text-blue-600 dark:text-blue-400" />
           Order Specifications & Currency
         </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
           {/* ORDER DATE */}
           <div>
-            <label className="block text-xs font-bold text-slate-700 mb-1.5">Order Date</label>
+            <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">Order Date</label>
             <input
               type="date"
               value={orderDate}
               onChange={(e) => setOrderDate(e.target.value)}
               required
-              className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-900 focus:ring-2 focus:ring-slate-900 focus:outline-hidden"
+              className="w-full px-3.5 py-2 bg-slate-50 dark:bg-[#071220] border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium text-slate-900 dark:text-white focus:border-blue-600 focus:outline-hidden"
             />
           </div>
 
           {/* REQUESTED DELIVERY DATE */}
           <div>
-            <label className="block text-xs font-bold text-slate-700 mb-1.5">Req. Delivery Date</label>
+            <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">Req. Delivery Date</label>
             <input
               type="date"
               value={requestedDeliveryDate}
               onChange={(e) => setRequestedDeliveryDate(e.target.value)}
-              className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-900 focus:ring-2 focus:ring-slate-900 focus:outline-hidden"
+              className="w-full px-3.5 py-2 bg-slate-50 dark:bg-[#071220] border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium text-slate-900 dark:text-white focus:border-blue-600 focus:outline-hidden"
             />
           </div>
 
           {/* PRIORITY */}
           <div>
-            <label className="block text-xs font-bold text-slate-700 mb-1.5">Order Priority</label>
+            <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">Order Priority</label>
             <select
               value={priority}
               onChange={(e) => setPriority(e.target.value)}
-              className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-900 focus:ring-2 focus:ring-slate-900 focus:outline-hidden"
+              className="w-full px-3.5 py-2 bg-slate-50 dark:bg-[#071220] border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-semibold text-slate-900 dark:text-white focus:border-blue-600 focus:outline-hidden"
             >
-              <option value="NORMAL">NORMAL</option>
-              <option value="HIGH">HIGH</option>
-              <option value="URGENT">URGENT</option>
-              <option value="LOW">LOW</option>
+              <option value="NORMAL" className="bg-white dark:bg-[#0F2647]">NORMAL</option>
+              <option value="HIGH" className="bg-white dark:bg-[#0F2647]">HIGH</option>
+              <option value="URGENT" className="bg-white dark:bg-[#0F2647]">URGENT</option>
+              <option value="LOW" className="bg-white dark:bg-[#0F2647]">LOW</option>
             </select>
           </div>
 
           {/* CURRENCY */}
           <div>
-            <label className="block text-xs font-bold text-slate-700 mb-1.5">Order Currency</label>
+            <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">Order Currency</label>
             <select
               value={currency}
               onChange={(e) => setCurrency(e.target.value)}
-              className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-900 focus:ring-2 focus:ring-slate-900 focus:outline-hidden"
+              className="w-full px-3.5 py-2 bg-slate-50 dark:bg-[#071220] border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-bold text-slate-900 dark:text-white focus:border-blue-600 focus:outline-hidden"
             >
-              <option value="EUR">EUR (€)</option>
-              <option value="USD">USD ($)</option>
-              <option value="INR">INR (₹)</option>
+              <option value="EUR" className="bg-white dark:bg-[#0F2647]">EUR (€)</option>
+              <option value="USD" className="bg-white dark:bg-[#0F2647]">USD ($)</option>
+              <option value="INR" className="bg-white dark:bg-[#0F2647]">INR (₹)</option>
             </select>
           </div>
         </div>
       </div>
 
       {/* SECTION 3: LINE ITEMS BUILDER */}
-      <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-6">
-        <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-          <h2 className="text-sm font-bold text-slate-900 flex items-center gap-2">
-            <Package className="w-4 h-4 text-slate-500" />
+      <div className="bg-white dark:bg-[#0F2647] p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs space-y-6">
+        <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
+          <h2 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            <Package className="w-4 h-4 text-blue-600 dark:text-blue-400" />
             Order Line Items & Pricing
           </h2>
 
           <button
             type="button"
             onClick={handleAddItem}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-900 text-white rounded-xl text-xs font-semibold shadow-xs hover:bg-slate-800 transition-colors"
+            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-blue-600 text-white rounded-xl text-xs font-semibold shadow-xs hover:bg-blue-500 transition-colors"
           >
             <Plus className="w-3.5 h-3.5" />
             Add Line Item
           </button>
         </div>
 
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
           <table className="w-full text-left border-collapse min-w-[700px]">
             <thead>
-              <tr className="bg-slate-50 text-[11px] font-bold text-slate-500 uppercase tracking-wider border-b border-slate-200">
+              <tr className="bg-slate-50 dark:bg-[#0B1E36] text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider border-b border-slate-200 dark:border-slate-800">
                 <th className="py-3 px-3 w-10">#</th>
                 <th className="py-3 px-3">Product / Description</th>
                 <th className="py-3 px-3 w-28 text-center">Qty</th>
@@ -519,7 +511,7 @@ export const SalesOrderFormPage: React.FC = () => {
               </tr>
             </thead>
 
-            <tbody className="divide-y divide-slate-100 text-xs">
+            <tbody className="divide-y divide-slate-100 dark:divide-slate-800 text-xs bg-white dark:bg-[#0F2647]">
               {items.map((item, index) => {
                 const qty = Math.max(0, Number(item.quantity) || 0);
                 const price = Math.max(0, Number(item.unit_price) || 0);
@@ -533,19 +525,19 @@ export const SalesOrderFormPage: React.FC = () => {
                 let lineTotal = taxable + taxAmt;
 
                 return (
-                  <tr key={index} className="hover:bg-slate-50/50">
-                    <td className="py-3 px-3 font-semibold text-slate-400 align-top pt-4">{index + 1}</td>
+                  <tr key={index} className="hover:bg-slate-50/50 dark:hover:bg-[#163761]/40">
+                    <td className="py-3 px-3 font-semibold text-slate-400 dark:text-slate-500 align-top pt-4">{index + 1}</td>
 
                     {/* PRODUCT / DESCRIPTION */}
                     <td className="py-3 px-3 space-y-2">
                       <select
                         value={item.product_id || ''}
                         onChange={(e) => handleItemChange(index, 'product_id', e.target.value)}
-                        className="w-full px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium text-slate-800"
+                        className="w-full px-2.5 py-1.5 bg-slate-50 dark:bg-[#071220] border border-slate-200 dark:border-slate-700 rounded-lg text-xs font-medium text-slate-800 dark:text-slate-200"
                       >
-                        <option value="">-- Custom Component / Non-Catalog Item --</option>
+                        <option value="" className="bg-white dark:bg-[#0F2647]">-- Custom Component / Non-Catalog Item --</option>
                         {products.map((p) => (
-                          <option key={p.id} value={p.id}>
+                          <option key={p.id} value={p.id} className="bg-white dark:bg-[#0F2647]">
                             {p.product_code} — {p.name}
                           </option>
                         ))}
@@ -557,7 +549,7 @@ export const SalesOrderFormPage: React.FC = () => {
                         value={item.description}
                         onChange={(e) => handleItemChange(index, 'description', e.target.value)}
                         required
-                        className="w-full px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium text-slate-900 focus:ring-2 focus:ring-slate-900"
+                        className="w-full px-2.5 py-1.5 bg-slate-50 dark:bg-[#071220] border border-slate-200 dark:border-slate-700 rounded-lg text-xs font-medium text-slate-900 dark:text-white focus:border-blue-600"
                       />
                     </td>
 
@@ -570,7 +562,7 @@ export const SalesOrderFormPage: React.FC = () => {
                         value={item.quantity}
                         onChange={(e) => handleItemChange(index, 'quantity', parseFloat(e.target.value) || 0)}
                         required
-                        className="w-full px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-bold text-center text-slate-900"
+                        className="w-full px-2.5 py-1.5 bg-slate-50 dark:bg-[#071220] border border-slate-200 dark:border-slate-700 rounded-lg text-xs font-bold text-center text-slate-900 dark:text-white"
                       />
                     </td>
 
@@ -580,7 +572,7 @@ export const SalesOrderFormPage: React.FC = () => {
                         type="text"
                         value={item.unit}
                         onChange={(e) => handleItemChange(index, 'unit', e.target.value)}
-                        className="w-full px-2 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium text-center text-slate-700"
+                        className="w-full px-2 py-1.5 bg-slate-50 dark:bg-[#071220] border border-slate-200 dark:border-slate-700 rounded-lg text-xs font-medium text-center text-slate-700 dark:text-slate-300"
                       />
                     </td>
 
@@ -593,7 +585,7 @@ export const SalesOrderFormPage: React.FC = () => {
                         value={item.unit_price}
                         onChange={(e) => handleItemChange(index, 'unit_price', parseFloat(e.target.value) || 0)}
                         required
-                        className="w-full px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-bold text-right text-slate-900"
+                        className="w-full px-2.5 py-1.5 bg-slate-50 dark:bg-[#071220] border border-slate-200 dark:border-slate-700 rounded-lg text-xs font-bold text-right text-slate-900 dark:text-white"
                       />
                     </td>
 
@@ -606,15 +598,15 @@ export const SalesOrderFormPage: React.FC = () => {
                           step="any"
                           value={item.discount}
                           onChange={(e) => handleItemChange(index, 'discount', parseFloat(e.target.value) || 0)}
-                          className="w-full px-2 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium text-right"
+                          className="w-full px-2 py-1.5 bg-slate-50 dark:bg-[#071220] border border-slate-200 dark:border-slate-700 rounded-lg text-xs font-medium text-right text-slate-900 dark:text-white"
                         />
                         <select
                           value={item.discount_type}
                           onChange={(e) => handleItemChange(index, 'discount_type', e.target.value)}
-                          className="px-1.5 py-1.5 bg-slate-100 border border-slate-200 rounded-lg text-[10px] font-bold"
+                          className="px-1.5 py-1.5 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-[10px] font-bold text-slate-700 dark:text-slate-300"
                         >
-                          <option value="amount">{currency}</option>
-                          <option value="percentage">%</option>
+                          <option value="amount" className="bg-white dark:bg-[#0F2647]">{currency}</option>
+                          <option value="percentage" className="bg-white dark:bg-[#0F2647]">%</option>
                         </select>
                       </div>
                     </td>
@@ -627,12 +619,12 @@ export const SalesOrderFormPage: React.FC = () => {
                         step="0.1"
                         value={item.tax_rate}
                         onChange={(e) => handleItemChange(index, 'tax_rate', parseFloat(e.target.value) || 0)}
-                        className="w-full px-2 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium text-right text-slate-800"
+                        className="w-full px-2 py-1.5 bg-slate-50 dark:bg-[#071220] border border-slate-200 dark:border-slate-700 rounded-lg text-xs font-medium text-right text-slate-800 dark:text-slate-200"
                       />
                     </td>
 
                     {/* LINE TOTAL */}
-                    <td className="py-3 px-3 font-bold text-right text-slate-900 align-top pt-5">
+                    <td className="py-3 px-3 font-bold text-right text-slate-900 dark:text-white align-top pt-5">
                       {currency} {lineTotal.toLocaleString(undefined, { minimumFractionDigits: 2 })}
                     </td>
 
@@ -642,7 +634,7 @@ export const SalesOrderFormPage: React.FC = () => {
                         type="button"
                         onClick={() => handleRemoveItem(index)}
                         disabled={items.length <= 1}
-                        className="p-1.5 text-rose-500 hover:text-rose-700 hover:bg-rose-50 rounded-lg disabled:opacity-30 transition-colors"
+                        className="p-1.5 text-rose-500 hover:text-rose-700 dark:hover:text-rose-300 hover:bg-rose-50 dark:hover:bg-rose-950/60 rounded-lg disabled:opacity-30 transition-colors"
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>
@@ -658,51 +650,51 @@ export const SalesOrderFormPage: React.FC = () => {
       {/* SECTION 4: TERMS & FINANCIAL SUMMARY */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* COMMERCIAL TERMS */}
-        <div className="lg:col-span-2 bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">
-          <h2 className="text-sm font-bold text-slate-900 border-b border-slate-100 pb-3">
+        <div className="lg:col-span-2 bg-white dark:bg-[#0F2647] p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs space-y-4">
+          <h2 className="text-sm font-bold text-slate-900 dark:text-white border-b border-slate-100 dark:border-slate-800 pb-3">
             Commercial Terms & Internal Notes
           </h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1.5">Payment Terms</label>
+              <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">Payment Terms</label>
               <input
                 type="text"
                 placeholder="e.g. Net 30 Days after dispatch"
                 value={paymentTerms}
                 onChange={(e) => setPaymentTerms(e.target.value)}
-                className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium"
+                className="w-full px-3.5 py-2 bg-slate-50 dark:bg-[#071220] border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium text-slate-900 dark:text-white"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1.5">Delivery Terms</label>
+              <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">Delivery Terms</label>
               <input
                 type="text"
                 placeholder="e.g. Incoterms 2020 DAP Kolmeks Facility"
                 value={deliveryTerms}
                 onChange={(e) => setDeliveryTerms(e.target.value)}
-                className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium"
+                className="w-full px-3.5 py-2 bg-slate-50 dark:bg-[#071220] border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium text-slate-900 dark:text-white"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-slate-700 mb-1.5">Internal Notes & Special Instructions</label>
+            <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">Internal Notes & Special Instructions</label>
             <textarea
               rows={3}
               placeholder="Special manufacturing requirements, packaging details..."
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium resize-none"
+              className="w-full px-3.5 py-2 bg-slate-50 dark:bg-[#071220] border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium text-slate-900 dark:text-white resize-none"
             />
           </div>
         </div>
 
         {/* TOTALS SUMMARY CARD */}
-        <div className="bg-slate-900 text-white p-6 rounded-2xl shadow-sm space-y-4 flex flex-col justify-between">
+        <div className="bg-slate-900 dark:bg-[#071220] border border-slate-800 text-white p-6 rounded-2xl shadow-sm space-y-4 flex flex-col justify-between">
           <div>
-            <h3 className="text-sm font-bold border-b border-slate-800 pb-3">Order Financial Summary</h3>
+            <h3 className="text-sm font-bold border-b border-slate-800 pb-3 text-white">Order Financial Summary</h3>
 
             <div className="space-y-2.5 pt-4 text-xs">
               <div className="flex justify-between text-slate-400">
@@ -738,7 +730,7 @@ export const SalesOrderFormPage: React.FC = () => {
           <button
             type="submit"
             disabled={saving}
-            className="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-xs shadow-xs transition-colors"
+            className="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl text-xs shadow-xs transition-colors disabled:opacity-50"
           >
             {saving ? 'Processing...' : isEditMode ? 'Update Sales Order' : 'Save & Build Sales Order'}
           </button>

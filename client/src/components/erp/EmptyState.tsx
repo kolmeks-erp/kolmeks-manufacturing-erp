@@ -33,19 +33,19 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
   };
 
   return (
-    <div className={`p-8 sm:p-12 text-center rounded-2xl bg-slate-900 border border-slate-800 shadow-xl ${className}`}>
-      <div className="w-16 h-16 bg-slate-800/80 text-slate-400 rounded-full flex items-center justify-center mx-auto mb-4 border border-slate-700/50">
+    <div className={`p-8 sm:p-12 text-center rounded-2xl bg-white dark:bg-[#0F2647] border border-slate-200 dark:border-slate-800 shadow-xs ${className}`}>
+      <div className="w-16 h-16 bg-slate-100 dark:bg-slate-800/80 text-slate-500 dark:text-slate-400 rounded-full flex items-center justify-center mx-auto mb-4 border border-slate-200 dark:border-slate-700/50">
         {renderIcon()}
       </div>
-      <h3 className="text-base font-bold text-slate-100 mb-1">{title}</h3>
-      <p className="text-xs text-slate-400 max-w-md mx-auto leading-relaxed mb-6">{description}</p>
+      <h3 className="text-base font-bold text-slate-900 dark:text-white mb-1">{title}</h3>
+      <p className="text-xs text-slate-500 dark:text-slate-400 max-w-md mx-auto leading-relaxed mb-6">{description}</p>
       {action ? (
         action
       ) : btnText && onAction ? (
         <button
           type="button"
           onClick={onAction}
-          className="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-xl transition-all shadow-lg shadow-blue-500/20"
+          className="inline-flex items-center px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-xl transition-all shadow-xs"
         >
           {btnText}
         </button>

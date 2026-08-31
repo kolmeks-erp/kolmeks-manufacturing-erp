@@ -160,48 +160,48 @@ export const ProductionOrderFormPage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6 animate-fadeIn max-w-4xl mx-auto">
+    <div className="space-y-6 animate-fadeIn max-w-4xl mx-auto text-slate-800">
       {/* Top Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <button
             onClick={() => navigate(`${ERP_BASE_PATH}/production/orders`)}
-            className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors"
+            className="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors"
           >
             <ArrowLeft className="w-5 h-5" />
           </button>
           <div>
-            <h1 className="text-2xl font-bold text-white tracking-tight">Create Production Order</h1>
-            <p className="text-slate-400 text-sm">Instruction to manufacture products on the shop floor.</p>
+            <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Create Production Order</h1>
+            <p className="text-slate-500 text-sm">Instruction to manufacture products on the shop floor.</p>
           </div>
         </div>
       </div>
 
       {errorMsg && (
-        <div className="p-4 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-300 flex items-center gap-3 text-sm">
-          <AlertTriangle className="w-5 h-5 shrink-0" />
+        <div className="p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 flex items-center gap-3 text-sm font-medium">
+          <AlertTriangle className="w-5 h-5 shrink-0 text-rose-600" />
           <span>{errorMsg}</span>
         </div>
       )}
 
       {/* Form Container */}
       <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="bg-slate-900/60 border border-slate-800/80 backdrop-blur-xl p-6 rounded-2xl space-y-6">
-          <h2 className="text-lg font-bold text-white border-b border-slate-800 pb-3 flex items-center gap-2">
-            <Layers className="w-5 h-5 text-indigo-400" />
+        <div className="bg-white border border-slate-200 p-6 rounded-2xl space-y-6 shadow-xs">
+          <h2 className="text-lg font-bold text-slate-900 border-b border-slate-100 pb-3 flex items-center gap-2">
+            <Layers className="w-5 h-5 text-indigo-600" />
             <span>Manufacturing Order Specifications</span>
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Sales Order Reference */}
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1.5">
+              <label className="block text-xs font-semibold text-slate-700 mb-1.5">
                 Sales Order Reference (Optional)
               </label>
               <select
                 value={salesOrderId}
                 onChange={(e) => handleSalesOrderSelect(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl bg-slate-950/60 border border-slate-800 text-slate-200 text-sm focus:outline-none focus:border-indigo-500"
+                className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm focus:outline-none focus:border-indigo-600"
               >
                 <option value="">Standalone Production Order</option>
                 {salesOrders.map((so) => (
@@ -214,14 +214,14 @@ export const ProductionOrderFormPage: React.FC = () => {
 
             {/* Product Selection */}
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1.5">
-                Target Product Master <span className="text-rose-400">*</span>
+              <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+                Target Product Master <span className="text-rose-600">*</span>
               </label>
               <select
                 required
                 value={productId}
                 onChange={(e) => setProductId(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl bg-slate-950/60 border border-slate-800 text-slate-200 text-sm focus:outline-none focus:border-indigo-500"
+                className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm focus:outline-none focus:border-indigo-600"
               >
                 <option value="">Select Product...</option>
                 {products.map((p) => (
@@ -234,15 +234,15 @@ export const ProductionOrderFormPage: React.FC = () => {
 
             {/* Bill of Materials (BOM) */}
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1.5 flex items-center gap-1.5">
-                <FolderTree className="w-3.5 h-3.5 text-amber-400" />
+              <label className="block text-xs font-semibold text-slate-700 mb-1.5 flex items-center gap-1.5">
+                <FolderTree className="w-3.5 h-3.5 text-amber-600" />
                 <span>Bill of Materials (BOM)</span>
               </label>
               <select
                 value={bomId}
                 onChange={(e) => setBomId(e.target.value)}
                 disabled={!productId || boms.length === 0}
-                className="w-full px-4 py-2.5 rounded-xl bg-slate-950/60 border border-slate-800 text-slate-200 text-sm focus:outline-none focus:border-indigo-500 disabled:opacity-50"
+                className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm focus:outline-none focus:border-indigo-600 disabled:opacity-50"
               >
                 {boms.length === 0 ? (
                   <option value="">No BOM found for this product</option>
@@ -258,15 +258,15 @@ export const ProductionOrderFormPage: React.FC = () => {
 
             {/* Manufacturing Routing */}
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1.5 flex items-center gap-1.5">
-                <GitFork className="w-3.5 h-3.5 text-cyan-400" />
+              <label className="block text-xs font-semibold text-slate-700 mb-1.5 flex items-center gap-1.5">
+                <GitFork className="w-3.5 h-3.5 text-cyan-600" />
                 <span>Manufacturing Routing</span>
               </label>
               <select
                 value={routingId}
                 onChange={(e) => setRoutingId(e.target.value)}
                 disabled={!productId || routings.length === 0}
-                className="w-full px-4 py-2.5 rounded-xl bg-slate-950/60 border border-slate-800 text-slate-200 text-sm focus:outline-none focus:border-indigo-500 disabled:opacity-50"
+                className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm focus:outline-none focus:border-indigo-600 disabled:opacity-50"
               >
                 {routings.length === 0 ? (
                   <option value="">No Routing found for this product</option>
@@ -282,8 +282,8 @@ export const ProductionOrderFormPage: React.FC = () => {
 
             {/* Planned Quantity */}
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1.5">
-                Planned Quantity <span className="text-rose-400">*</span>
+              <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+                Planned Quantity <span className="text-rose-600">*</span>
               </label>
               <input
                 type="number"
@@ -292,17 +292,17 @@ export const ProductionOrderFormPage: React.FC = () => {
                 required
                 value={plannedQuantity}
                 onChange={(e) => setPlannedQuantity(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl bg-slate-950/60 border border-slate-800 text-slate-200 text-sm focus:outline-none focus:border-indigo-500"
+                className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm focus:outline-none focus:border-indigo-600"
               />
             </div>
 
             {/* Priority */}
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1.5">Production Priority</label>
+              <label className="block text-xs font-semibold text-slate-700 mb-1.5">Production Priority</label>
               <select
                 value={priority}
                 onChange={(e) => setPriority(e.target.value as ProductionPriority)}
-                className="w-full px-4 py-2.5 rounded-xl bg-slate-950/60 border border-slate-800 text-slate-200 text-sm focus:outline-none focus:border-indigo-500"
+                className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm focus:outline-none focus:border-indigo-600"
               >
                 <option value="LOW">LOW</option>
                 <option value="MEDIUM">MEDIUM</option>
@@ -313,36 +313,36 @@ export const ProductionOrderFormPage: React.FC = () => {
 
             {/* Planned Start Date */}
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1.5">Planned Start Date</label>
+              <label className="block text-xs font-semibold text-slate-700 mb-1.5">Planned Start Date</label>
               <input
                 type="date"
                 value={plannedStart}
                 onChange={(e) => setPlannedStart(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl bg-slate-950/60 border border-slate-800 text-slate-200 text-sm focus:outline-none focus:border-indigo-500"
+                className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm focus:outline-none focus:border-indigo-600"
               />
             </div>
 
             {/* Planned End Date */}
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1.5">Planned Completion Date</label>
+              <label className="block text-xs font-semibold text-slate-700 mb-1.5">Planned Completion Date</label>
               <input
                 type="date"
                 value={plannedEnd}
                 onChange={(e) => setPlannedEnd(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl bg-slate-950/60 border border-slate-800 text-slate-200 text-sm focus:outline-none focus:border-indigo-500"
+                className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm focus:outline-none focus:border-indigo-600"
               />
             </div>
           </div>
 
           {/* Notes */}
           <div>
-            <label className="block text-xs font-medium text-slate-400 mb-1.5">Production Instructions & Notes</label>
+            <label className="block text-xs font-semibold text-slate-700 mb-1.5">Production Instructions & Notes</label>
             <textarea
               rows={3}
               placeholder="Special manufacturing guidelines, tolerances, or shop floor instructions..."
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              className="w-full px-4 py-2.5 rounded-xl bg-slate-950/60 border border-slate-800 text-slate-200 text-sm focus:outline-none focus:border-indigo-500"
+              className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm focus:outline-none focus:border-indigo-600"
             />
           </div>
         </div>
@@ -352,14 +352,14 @@ export const ProductionOrderFormPage: React.FC = () => {
           <button
             type="button"
             onClick={() => navigate(`${ERP_BASE_PATH}/production/orders`)}
-            className="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium text-sm transition-colors"
+            className="px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs transition-colors"
           >
             Cancel
           </button>
           <button
             type="submit"
             disabled={loading}
-            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-medium text-sm transition-all shadow-lg shadow-indigo-600/25 disabled:opacity-50"
+            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs transition-all shadow-xs disabled:opacity-50"
           >
             <Save className="w-4 h-4" />
             <span>{loading ? 'Creating...' : 'Create Production Order'}</span>

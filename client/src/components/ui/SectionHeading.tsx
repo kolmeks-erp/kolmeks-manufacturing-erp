@@ -20,15 +20,15 @@ export const SectionHeading: React.FC<SectionHeadingProps> = ({
   return (
     <div className={twMerge(clsx('space-y-2 mb-8', centered && 'text-center mx-auto max-w-3xl', className))}>
       {eyebrow && (
-        <span className="inline-block text-xs font-bold uppercase tracking-widest text-industrial-700 bg-industrial-50 border border-industrial-200 px-3 py-1 rounded-full">
+        <span className="inline-block text-xs font-bold uppercase tracking-widest text-blue-700 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800/80 px-3 py-1 rounded-full">
           {eyebrow}
         </span>
       )}
-      <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+      <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
         {title}
       </h2>
       {description && (
-        <p className="text-base text-slate-600 font-normal leading-relaxed">
+        <p className="text-base text-slate-600 dark:text-slate-300 font-normal leading-relaxed">
           {description}
         </p>
       )}

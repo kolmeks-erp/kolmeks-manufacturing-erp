@@ -163,48 +163,48 @@ export const StockAdjustmentFormPage: React.FC = () => {
   };
 
   return (
-    <div className="p-6 max-w-4xl mx-auto space-y-6 text-slate-100">
+    <div className="p-4 lg:p-6 max-w-4xl mx-auto space-y-6 text-slate-800">
       {/* Top Breadcrumb Header */}
       <button
         onClick={() => navigate(`${ERP_BASE_PATH}/inventory`)}
-        className="inline-flex items-center gap-2 text-sm text-slate-400 hover:text-white transition"
+        className="inline-flex items-center gap-2 text-xs font-semibold text-slate-500 hover:text-slate-900 transition"
       >
         <ArrowLeft className="w-4 h-4" />
         <span>Back to Inventory Balances</span>
       </button>
 
-      <div className="border-b border-slate-800 pb-4">
-        <div className="flex items-center gap-2 text-indigo-400 font-semibold text-xs tracking-wider uppercase mb-1">
+      <div className="border-b border-slate-200 pb-4">
+        <div className="flex items-center gap-2 text-indigo-600 font-bold text-xs tracking-wider uppercase mb-1">
           <SlidersHorizontal className="w-4 h-4" />
           <span>Controlled Stock Adjustment</span>
         </div>
-        <h1 className="text-2xl font-extrabold text-white tracking-tight">Record Stock Adjustment</h1>
-        <p className="text-sm text-slate-400 mt-1">
+        <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Record Stock Adjustment</h1>
+        <p className="text-sm text-slate-500 mt-1">
           Log authorized manual stock count corrections, opening balances, or damaged material write-offs.
         </p>
       </div>
 
       {errorMsg && (
-        <div className="p-4 bg-rose-950/80 border border-rose-800 rounded-xl text-rose-300 text-sm flex items-start gap-3">
-          <AlertTriangle className="w-5 h-5 text-rose-400 shrink-0 mt-0.5" />
+        <div className="p-4 bg-rose-50 border border-rose-200 rounded-2xl text-rose-700 text-xs font-semibold flex items-start gap-3">
+          <AlertTriangle className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" />
           <span>{errorMsg}</span>
         </div>
       )}
 
-      <form onSubmit={handleValidateAndSubmit} className="bg-slate-900 border border-slate-800 rounded-xl p-6 space-y-6">
+      <form onSubmit={handleValidateAndSubmit} className="bg-white border border-slate-200 rounded-2xl p-6 space-y-6 shadow-xs">
         {/* Adjustment Direction Toggle */}
         <div className="space-y-2">
-          <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider">
+          <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider">
             Adjustment Direction *
           </label>
           <div className="grid grid-cols-2 gap-4">
             <button
               type="button"
               onClick={() => setAdjustmentType('ADJUSTMENT_IN')}
-              className={`flex items-center justify-center gap-2 py-3 px-4 rounded-xl border text-sm font-semibold transition ${
+              className={`flex items-center justify-center gap-2 py-3 px-4 rounded-xl border text-xs font-bold transition ${
                 adjustmentType === 'ADJUSTMENT_IN'
-                  ? 'bg-emerald-950/80 border-emerald-500 text-emerald-300 shadow-lg shadow-emerald-950/50'
-                  : 'bg-slate-950 border-slate-800 text-slate-400 hover:bg-slate-850'
+                  ? 'bg-emerald-50 border-emerald-300 text-emerald-700 shadow-xs'
+                  : 'bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100'
               }`}
             >
               <CheckCircle2 className="w-4 h-4" />
@@ -214,10 +214,10 @@ export const StockAdjustmentFormPage: React.FC = () => {
             <button
               type="button"
               onClick={() => setAdjustmentType('ADJUSTMENT_OUT')}
-              className={`flex items-center justify-center gap-2 py-3 px-4 rounded-xl border text-sm font-semibold transition ${
+              className={`flex items-center justify-center gap-2 py-3 px-4 rounded-xl border text-xs font-bold transition ${
                 adjustmentType === 'ADJUSTMENT_OUT'
-                  ? 'bg-rose-950/80 border-rose-500 text-rose-300 shadow-lg shadow-rose-950/50'
-                  : 'bg-slate-950 border-slate-800 text-slate-400 hover:bg-slate-850'
+                  ? 'bg-rose-50 border-rose-300 text-rose-700 shadow-xs'
+                  : 'bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100'
               }`}
             >
               <AlertTriangle className="w-4 h-4" />
@@ -228,14 +228,14 @@ export const StockAdjustmentFormPage: React.FC = () => {
 
         {/* Product Picker */}
         <div className="space-y-2">
-          <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider">
+          <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider">
             Select Product *
           </label>
           <select
             value={productId}
             onChange={(e) => setProductId(e.target.value)}
             required
-            className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-lg text-sm text-slate-200 focus:outline-none focus:border-indigo-500"
+            className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:outline-none focus:border-indigo-500"
           >
             <option value="">Choose a product from catalog...</option>
             {products.map((p) => (
@@ -249,14 +249,14 @@ export const StockAdjustmentFormPage: React.FC = () => {
         {/* Warehouse & Storage Location */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
-            <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider">
+            <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider">
               Warehouse Facility *
             </label>
             <select
               value={warehouseId}
               onChange={(e) => setWarehouseId(e.target.value)}
               required
-              className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-lg text-sm text-slate-200 focus:outline-none focus:border-indigo-500"
+              className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:outline-none focus:border-indigo-500"
             >
               <option value="">Choose warehouse...</option>
               {warehouses.map((wh) => (
@@ -268,14 +268,14 @@ export const StockAdjustmentFormPage: React.FC = () => {
           </div>
 
           <div className="space-y-2">
-            <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider">
+            <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider">
               Storage Location / Rack Bin (Optional)
             </label>
             <select
               value={locationId}
               onChange={(e) => setLocationId(e.target.value)}
               disabled={!warehouseId || locations.length === 0}
-              className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-lg text-sm text-slate-200 disabled:opacity-50 focus:outline-none focus:border-indigo-500"
+              className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 disabled:opacity-50 focus:outline-none focus:border-indigo-500"
             >
               <option value="">Default Warehouse Storage</option>
               {locations.map((loc) => (
@@ -289,14 +289,14 @@ export const StockAdjustmentFormPage: React.FC = () => {
 
         {/* Current Stock Balance Live Card */}
         {productId && warehouseId && (
-          <div className="bg-slate-950 border border-indigo-900/50 rounded-xl p-4 flex items-center justify-between">
+          <div className="bg-slate-50 border border-indigo-200 rounded-2xl p-4 flex items-center justify-between shadow-xs">
             <div className="flex items-center gap-3">
-              <Info className="w-5 h-5 text-indigo-400 shrink-0" />
+              <Info className="w-5 h-5 text-indigo-600 shrink-0" />
               <div>
-                <span className="text-xs text-slate-400 block font-semibold uppercase tracking-wider">
+                <span className="text-[11px] text-slate-500 block font-bold uppercase tracking-wider">
                   Current Stock On-Hand
                 </span>
-                <span className="text-sm font-medium text-slate-300">
+                <span className="text-xs font-semibold text-slate-700">
                   {selectedProduct?.name} @ Selected Warehouse
                 </span>
               </div>
@@ -304,17 +304,17 @@ export const StockAdjustmentFormPage: React.FC = () => {
 
             <div className="text-right">
               {checkingBalance ? (
-                <RefreshCw className="w-5 h-5 animate-spin text-indigo-400" />
+                <RefreshCw className="w-5 h-5 animate-spin text-indigo-600" />
               ) : (
                 <>
-                  <div className="text-xl font-extrabold text-white">
+                  <div className="text-xl font-bold text-slate-900">
                     {currentOnHand !== null ? currentOnHand : 0} {selectedProduct?.unit || 'pcs'}
                   </div>
-                  <div className="text-xs text-indigo-300 font-mono">
+                  <div className="text-xs text-slate-500 font-mono">
                     New Computed Balance:{' '}
                     <span
                       className={`font-bold ${
-                        computedNewOnHand < 0 ? 'text-rose-400' : 'text-emerald-400'
+                        computedNewOnHand < 0 ? 'text-rose-700' : 'text-emerald-700'
                       }`}
                     >
                       {computedNewOnHand} {selectedProduct?.unit || 'pcs'}
@@ -329,7 +329,7 @@ export const StockAdjustmentFormPage: React.FC = () => {
         {/* Quantity & Reason */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
-            <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider">
+            <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider">
               Adjustment Quantity *
             </label>
             <input
@@ -340,19 +340,19 @@ export const StockAdjustmentFormPage: React.FC = () => {
               value={quantity}
               onChange={(e) => setQuantity(e.target.value)}
               required
-              className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-lg text-sm text-slate-200 placeholder-slate-600 focus:outline-none focus:border-indigo-500 font-mono font-bold"
+              className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-indigo-500 font-mono font-bold"
             />
           </div>
 
           <div className="space-y-2">
-            <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider">
+            <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider">
               Reason Code *
             </label>
             <select
               value={reason}
               onChange={(e) => setReason(e.target.value)}
               required
-              className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-lg text-sm text-slate-200 focus:outline-none focus:border-indigo-500"
+              className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:outline-none focus:border-indigo-500"
             >
               <option value="Opening Balance">Opening Balance</option>
               <option value="Counting Difference">Counting Difference</option>
@@ -367,7 +367,7 @@ export const StockAdjustmentFormPage: React.FC = () => {
 
         {/* Notes */}
         <div className="space-y-2">
-          <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider">
+          <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider">
             Notes / Audit Explanation
           </label>
           <textarea
@@ -375,22 +375,22 @@ export const StockAdjustmentFormPage: React.FC = () => {
             placeholder="Provide detail regarding physical count audit, ticket number, or damage details..."
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
-            className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-lg text-sm text-slate-200 placeholder-slate-600 focus:outline-none focus:border-indigo-500"
+            className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-indigo-500"
           />
         </div>
 
         {/* Action Buttons */}
-        <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-800">
+        <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-100">
           <button
             type="button"
             onClick={() => navigate(`${ERP_BASE_PATH}/inventory`)}
-            className="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-sm font-semibold transition"
+            className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold transition"
           >
             Cancel
           </button>
           <button
             type="submit"
-            className="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-sm font-semibold transition shadow-lg shadow-indigo-600/20"
+            className="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-semibold transition shadow-xs"
           >
             Review & Record Adjustment
           </button>
@@ -399,17 +399,17 @@ export const StockAdjustmentFormPage: React.FC = () => {
 
       {/* Confirmation Modal */}
       {showConfirmModal && (
-        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-          <div className="bg-slate-900 border border-slate-800 rounded-xl p-6 max-w-md w-full space-y-4 shadow-2xl">
-            <h3 className="text-lg font-bold text-white flex items-center gap-2">
-              <SlidersHorizontal className="w-5 h-5 text-indigo-400" />
+        <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4 z-50">
+          <div className="bg-white border border-slate-200 rounded-2xl p-6 max-w-md w-full space-y-4 shadow-xl">
+            <h3 className="text-lg font-bold text-slate-900 flex items-center gap-2">
+              <SlidersHorizontal className="w-5 h-5 text-indigo-600" />
               <span>Confirm Stock Adjustment</span>
             </h3>
 
-            <div className="space-y-2 text-sm text-slate-300 bg-slate-950 p-4 rounded-lg font-mono">
+            <div className="space-y-2 text-xs text-slate-700 bg-slate-50 p-4 rounded-xl font-mono">
               <div>
                 <span className="text-slate-500">Direction:</span>{' '}
-                <span className={adjustmentType === 'ADJUSTMENT_IN' ? 'text-emerald-400 font-bold' : 'text-rose-400 font-bold'}>
+                <span className={adjustmentType === 'ADJUSTMENT_IN' ? 'text-emerald-700 font-bold' : 'text-rose-700 font-bold'}>
                   {adjustmentType}
                 </span>
               </div>
@@ -424,14 +424,14 @@ export const StockAdjustmentFormPage: React.FC = () => {
               </div>
               <div>
                 <span className="text-slate-500">New On-Hand:</span>{' '}
-                <span className="text-indigo-300 font-bold">{computedNewOnHand}</span>
+                <span className="text-indigo-700 font-bold">{computedNewOnHand}</span>
               </div>
               <div>
                 <span className="text-slate-500">Reason:</span> {reason}
               </div>
             </div>
 
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-slate-500">
               This action will update the inventory balance and append an immutable transaction log to the system ledger.
             </p>
 
@@ -439,14 +439,14 @@ export const StockAdjustmentFormPage: React.FC = () => {
               <button
                 disabled={submitting}
                 onClick={() => setShowConfirmModal(false)}
-                className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-sm font-semibold transition"
+                className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold transition"
               >
                 Cancel
               </button>
               <button
                 disabled={submitting}
                 onClick={confirmAdjustment}
-                className="flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 text-white rounded-lg text-sm font-semibold transition"
+                className="flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white rounded-xl text-xs font-semibold transition"
               >
                 {submitting && <RefreshCw className="w-4 h-4 animate-spin" />}
                 <span>Confirm & Commit</span>

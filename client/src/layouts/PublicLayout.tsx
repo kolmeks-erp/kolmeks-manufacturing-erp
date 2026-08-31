@@ -32,9 +32,9 @@ export const PublicLayout: React.FC = () => {
   ].some((path) => location.pathname === path);
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900 font-sans">
+    <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-[#071220] text-slate-900 dark:text-slate-100 font-sans">
       {/* Main Header / Navbar */}
-      <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs">
+      <header className="sticky top-0 z-40 bg-white/95 dark:bg-[#0B1E36]/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-xs">
         <Container className="flex items-center justify-between h-20">
           {/* Brand Logo */}
           <Link to="/" className="flex items-center group" aria-label="Kolmeks Home">
@@ -55,80 +55,80 @@ export const PublicLayout: React.FC = () => {
                     <button
                       type="button"
                       aria-expanded={capabilitiesOpen}
-                      className={`flex items-center gap-1 text-sm font-semibold transition-colors py-2 focus:outline-none focus:text-blue-700 ${
-                        isCapabilitiesActive ? 'text-blue-700 font-bold' : 'text-slate-700 hover:text-blue-800'
+                      className={`flex items-center gap-1 text-sm font-semibold transition-colors py-2 focus:outline-none focus:text-blue-500 ${
+                        isCapabilitiesActive ? 'text-blue-600 dark:text-blue-400 font-bold' : 'text-slate-700 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400'
                       }`}
                       onClick={() => setCapabilitiesOpen(!capabilitiesOpen)}
                     >
                       {item.label}
-                      <ChevronDown className="w-4 h-4 text-slate-400 group-hover:text-blue-700 transition-transform group-hover:rotate-180" />
+                      <ChevronDown className="w-4 h-4 text-slate-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-transform group-hover:rotate-180" />
                     </button>
 
                     {/* Capabilities Dropdown */}
                     <div
-                      className={`absolute top-full left-0 w-72 bg-white rounded-lg border border-slate-200 shadow-xl transition-all duration-200 z-50 p-2 mt-1 ${
+                      className={`absolute top-full left-0 w-72 bg-white dark:bg-[#0F2647] rounded-lg border border-slate-200 dark:border-slate-800 shadow-xl transition-all duration-200 z-50 p-2 mt-1 ${
                         capabilitiesOpen
                           ? 'opacity-100 visible translate-y-0'
                           : 'opacity-0 invisible -translate-y-2 pointer-events-none'
                       }`}
                     >
-                      <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400 px-3 py-1.5 font-mono">
+                      <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 px-3 py-1.5 font-mono">
                         Production Capabilities
                       </div>
                       <div className="space-y-0.5">
                         <Link
                           to="/contract-manufacturing"
                           onClick={() => setCapabilitiesOpen(false)}
-                          className="flex items-center gap-3 px-3 py-2.5 rounded-md hover:bg-slate-50 text-slate-700 hover:text-[#0B1E36] transition-colors"
+                          className="flex items-center gap-3 px-3 py-2.5 rounded-md hover:bg-slate-50 dark:hover:bg-slate-800/60 text-slate-700 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                         >
-                          <Factory className="w-4 h-4 text-blue-600 shrink-0" />
+                          <Factory className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0" />
                           <div>
                             <div className="text-xs font-semibold">Contract Manufacturing</div>
-                            <div className="text-[10px] text-slate-500">Turnkey component production</div>
+                            <div className="text-[10px] text-slate-500 dark:text-slate-400">Turnkey component production</div>
                           </div>
                         </Link>
                         <Link
                           to="/cnc-machining"
                           onClick={() => setCapabilitiesOpen(false)}
-                          className="flex items-center gap-3 px-3 py-2.5 rounded-md hover:bg-slate-50 text-slate-700 hover:text-[#0B1E36] transition-colors"
+                          className="flex items-center gap-3 px-3 py-2.5 rounded-md hover:bg-slate-50 dark:hover:bg-slate-800/60 text-slate-700 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                         >
-                          <Cpu className="w-4 h-4 text-blue-600 shrink-0" />
+                          <Cpu className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0" />
                           <div>
                             <div className="text-xs font-semibold">CNC Machining</div>
-                            <div className="text-[10px] text-slate-500">High-precision milling & turning</div>
+                            <div className="text-[10px] text-slate-500 dark:text-slate-400">High-precision milling & turning</div>
                           </div>
                         </Link>
                         <Link
                           to="/assembly"
                           onClick={() => setCapabilitiesOpen(false)}
-                          className="flex items-center gap-3 px-3 py-2.5 rounded-md hover:bg-slate-50 text-slate-700 hover:text-[#0B1E36] transition-colors"
+                          className="flex items-center gap-3 px-3 py-2.5 rounded-md hover:bg-slate-50 dark:hover:bg-slate-800/60 text-slate-700 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                         >
-                          <Boxes className="w-4 h-4 text-blue-600 shrink-0" />
+                          <Boxes className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0" />
                           <div>
                             <div className="text-xs font-semibold">Component Assembly</div>
-                            <div className="text-[10px] text-slate-500">Electro-mechanical sub-assemblies</div>
+                            <div className="text-[10px] text-slate-500 dark:text-slate-400">Electro-mechanical sub-assemblies</div>
                           </div>
                         </Link>
                         <Link
                           to="/electric-motors"
                           onClick={() => setCapabilitiesOpen(false)}
-                          className="flex items-center gap-3 px-3 py-2.5 rounded-md hover:bg-slate-50 text-slate-700 hover:text-[#0B1E36] transition-colors"
+                          className="flex items-center gap-3 px-3 py-2.5 rounded-md hover:bg-slate-50 dark:hover:bg-slate-800/60 text-slate-700 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                         >
-                          <Zap className="w-4 h-4 text-blue-600 shrink-0" />
+                          <Zap className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0" />
                           <div>
                             <div className="text-xs font-semibold">Electric Motors</div>
-                            <div className="text-[10px] text-slate-500">Stators, rotors & windings</div>
+                            <div className="text-[10px] text-slate-500 dark:text-slate-400">Stators, rotors & windings</div>
                           </div>
                         </Link>
                         <Link
                           to="/supply-chain"
                           onClick={() => setCapabilitiesOpen(false)}
-                          className="flex items-center gap-3 px-3 py-2.5 rounded-md hover:bg-slate-50 text-slate-700 hover:text-[#0B1E36] transition-colors"
+                          className="flex items-center gap-3 px-3 py-2.5 rounded-md hover:bg-slate-50 dark:hover:bg-slate-800/60 text-slate-700 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                         >
-                          <Truck className="w-4 h-4 text-blue-600 shrink-0" />
+                          <Truck className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0" />
                           <div>
                             <div className="text-xs font-semibold">Supply Chain</div>
-                            <div className="text-[10px] text-slate-500">Sourcing & buffer logistics</div>
+                            <div className="text-[10px] text-slate-500 dark:text-slate-400">Sourcing & buffer logistics</div>
                           </div>
                         </Link>
                       </div>
@@ -144,8 +144,8 @@ export const PublicLayout: React.FC = () => {
                   to={item.href}
                   className={`text-sm font-semibold transition-colors py-2 ${
                     isActive
-                      ? 'text-blue-700 font-bold border-b-2 border-blue-700'
-                      : 'text-slate-700 hover:text-blue-800'
+                      ? 'text-blue-600 dark:text-blue-400 font-bold border-b-2 border-blue-600 dark:border-blue-400'
+                      : 'text-slate-700 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400'
                   }`}
                 >
                   {item.label}
@@ -165,7 +165,7 @@ export const PublicLayout: React.FC = () => {
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2 text-slate-600 hover:text-slate-900 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
+              className="lg:hidden p-2 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
               aria-label="Toggle Mobile Menu"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -175,12 +175,12 @@ export const PublicLayout: React.FC = () => {
 
         {/* Mobile Navigation Drawer */}
         {mobileMenuOpen && (
-          <div className="lg:hidden border-t border-slate-200 bg-white px-4 pt-4 pb-6 space-y-3 shadow-lg max-h-[85vh] overflow-y-auto">
+          <div className="lg:hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0B1E36] px-4 pt-4 pb-6 space-y-3 shadow-lg max-h-[85vh] overflow-y-auto">
             {PUBLIC_NAV_ITEMS.map((item) => {
               if (item.children) {
                 return (
-                  <div key={item.label} className="space-y-1 py-1 border-b border-slate-100">
-                    <div className="text-xs font-bold uppercase tracking-wider text-slate-400 px-3 font-mono">
+                  <div key={item.label} className="space-y-1 py-1 border-b border-slate-100 dark:border-slate-800">
+                    <div className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 px-3 font-mono">
                       Capabilities
                     </div>
                     {item.children.map((child) => (
@@ -188,7 +188,7 @@ export const PublicLayout: React.FC = () => {
                         key={child.label}
                         to={child.href}
                         onClick={() => setMobileMenuOpen(false)}
-                        className="block px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-blue-700 rounded-md"
+                        className="block px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-blue-600 dark:hover:text-blue-400 rounded-md"
                       >
                         {child.label}
                       </Link>
@@ -201,7 +201,7 @@ export const PublicLayout: React.FC = () => {
                   key={item.label}
                   to={item.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="block px-3 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-50 hover:text-blue-700 rounded-md"
+                  className="block px-3 py-2 text-sm font-semibold text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-blue-600 dark:hover:text-blue-400 rounded-md"
                 >
                   {item.label}
                 </Link>

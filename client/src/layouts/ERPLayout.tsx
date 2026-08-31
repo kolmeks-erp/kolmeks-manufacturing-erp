@@ -158,9 +158,7 @@ export const ERPLayout: React.FC<ERPLayoutProps> = ({ children }) => {
     .toUpperCase();
 
   return (
-    <div className={`min-h-screen flex font-sans transition-colors duration-200 selection:bg-blue-600 selection:text-white ${
-      isDark ? 'bg-[#071325] text-slate-100' : 'bg-slate-100 text-slate-900'
-    }`}>
+    <div className="min-h-screen flex font-sans transition-colors duration-200 selection:bg-blue-600 selection:text-white bg-slate-100 text-slate-900">
       {/* MOBILE BACKDROP DRAWER OVERLAY */}
       {mobileOpen && (
         <div
@@ -231,7 +229,7 @@ export const ERPLayout: React.FC<ERPLayoutProps> = ({ children }) => {
                       key={item.id}
                       to={item.path}
                       onClick={() => setMobileOpen(false)}
-                      className={`flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-semibold transition-all group ${
+                      className={`flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-semibold transition-all group focus:outline-hidden ${
                         isActive
                           ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30 font-bold'
                           : 'text-slate-300 hover:bg-slate-800/80 hover:text-white'
@@ -248,7 +246,13 @@ export const ERPLayout: React.FC<ERPLayoutProps> = ({ children }) => {
                       </div>
 
                       {!collapsed && item.badge && (
-                        <span className="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold uppercase bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                        <span
+                          className={`px-1.5 py-0.5 rounded text-[9px] font-mono font-bold uppercase transition-colors ${
+                            isActive
+                              ? 'bg-white/20 text-white border border-white/30'
+                              : 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/20'
+                          }`}
+                        >
                           {item.badge}
                         </span>
                       )}
@@ -292,19 +296,13 @@ export const ERPLayout: React.FC<ERPLayoutProps> = ({ children }) => {
       {/* MAIN ERP CONTAINER */}
       <div className={`flex-1 flex flex-col min-w-0 transition-all duration-300 ${collapsed ? 'lg:ml-20' : 'lg:ml-64'}`}>
         {/* TOPBAR */}
-        <header className={`h-16 border-b px-4 lg:px-8 flex items-center justify-between sticky top-0 z-30 transition-colors duration-200 ${
-          isDark
-            ? 'bg-[#0F2647]/95 backdrop-blur-md border-slate-800/80 text-white shadow-md shadow-black/20'
-            : 'bg-white border-slate-200 text-slate-900 shadow-xs'
-        }`}>
+        <header className="h-16 border-b px-4 lg:px-8 flex items-center justify-between sticky top-0 z-30 transition-colors duration-200 bg-white border-slate-200 text-slate-900 shadow-xs">
           {/* Left: Mobile Menu Toggle & Breadcrumbs */}
           <div className="flex items-center gap-4">
             <button
               type="button"
               onClick={() => setMobileOpen(true)}
-              className={`lg:hidden p-2 rounded-lg ${
-                isDark ? 'text-slate-400 hover:text-white hover:bg-slate-800' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-              }`}
+              className="lg:hidden p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100"
               aria-label="Open Mobile Drawer"
             >
               <Menu className="w-5 h-5" />
@@ -312,41 +310,13 @@ export const ERPLayout: React.FC<ERPLayoutProps> = ({ children }) => {
             <Breadcrumbs />
           </div>
 
-          {/* Right: Search, Theme Switcher, Notifications & Profile Menu */}
+          {/* Right: Search, Notifications & Profile Menu */}
           <div className="flex items-center gap-3">
             {/* Search Placeholder */}
-            <div className={`hidden sm:flex items-center px-3 py-1.5 rounded-lg border text-xs w-48 transition-colors ${
-              isDark
-                ? 'bg-slate-950/80 border-slate-800 text-slate-400'
-                : 'bg-slate-50 border-slate-200 text-slate-500'
-            }`}>
+            <div className="hidden sm:flex items-center px-3 py-1.5 rounded-lg border text-xs w-48 transition-colors bg-slate-50 border-slate-200 text-slate-500">
               <Search className="w-3.5 h-3.5 mr-2 text-slate-400" />
               <span>Search ERP...</span>
             </div>
-
-            {/* LIGHT / DARK MODE TOGGLE BUTTON */}
-            <button
-              type="button"
-              onClick={toggleTheme}
-              className={`flex items-center gap-2 px-3 py-1.5 rounded-xl border text-xs font-semibold transition-all duration-200 shadow-xs ${
-                isDark
-                  ? 'bg-slate-800/90 border-slate-700/80 text-amber-300 hover:bg-slate-700 hover:text-amber-200'
-                  : 'bg-slate-100 border-slate-300 text-slate-700 hover:bg-slate-200 hover:text-slate-900'
-              }`}
-              title={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-            >
-              {isDark ? (
-                <>
-                  <Sun className="w-4 h-4 text-amber-400 shrink-0" />
-                  <span className="hidden md:inline font-medium">Light Mode</span>
-                </>
-              ) : (
-                <>
-                  <Moon className="w-4 h-4 text-indigo-600 shrink-0" />
-                  <span className="hidden md:inline font-medium">Dark Mode</span>
-                </>
-              )}
-            </button>
 
             {/* Notification Bell */}
             <div className="relative">
@@ -381,15 +351,11 @@ export const ERPLayout: React.FC<ERPLayoutProps> = ({ children }) => {
               </button>
 
               {userMenuOpen && (
-                <div className={`absolute right-0 mt-2 w-56 rounded-xl shadow-2xl border py-2 z-50 animate-in fade-in duration-150 ${
-                  isDark
-                    ? 'bg-slate-900 border-slate-800 text-slate-200 shadow-black/80'
-                    : 'bg-white border-slate-200 text-slate-800 shadow-slate-300/50'
-                }`}>
-                  <div className={`px-4 py-2 border-b ${isDark ? 'border-slate-800' : 'border-slate-100'}`}>
-                    <p className={`text-xs font-bold truncate ${isDark ? 'text-white' : 'text-slate-900'}`}>{displayName}</p>
+                <div className="absolute right-0 mt-2 w-56 rounded-xl shadow-2xl border py-2 z-50 animate-in fade-in duration-150 bg-white border-slate-200 text-slate-800 shadow-slate-300/50">
+                  <div className="px-4 py-2 border-b border-slate-100">
+                    <p className="text-xs font-bold truncate text-slate-900">{displayName}</p>
                     <p className="text-[11px] text-slate-400 truncate">{displayEmail}</p>
-                    <span className="inline-block mt-1 text-[10px] font-mono font-bold uppercase text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded border border-blue-500/20">
+                    <span className="inline-block mt-1 text-[10px] font-mono font-bold uppercase text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">
                       {formattedRoleName}
                     </span>
                   </div>
@@ -397,9 +363,7 @@ export const ERPLayout: React.FC<ERPLayoutProps> = ({ children }) => {
                   <Link
                     to={`${ERP_BASE_PATH}/settings`}
                     onClick={() => setUserMenuOpen(false)}
-                    className={`flex items-center gap-2 px-4 py-2 text-xs transition-colors ${
-                      isDark ? 'text-slate-300 hover:bg-slate-800 hover:text-white' : 'text-slate-700 hover:bg-slate-100 hover:text-slate-900'
-                    }`}
+                    className="flex items-center gap-2 px-4 py-2 text-xs transition-colors text-slate-700 hover:bg-slate-100 hover:text-slate-900"
                   >
                     <User className="w-4 h-4 text-slate-400" />
                     <span>My Profile & Settings</span>
@@ -409,11 +373,9 @@ export const ERPLayout: React.FC<ERPLayoutProps> = ({ children }) => {
                     <Link
                       to={`${ERP_BASE_PATH}/master-admin`}
                       onClick={() => setUserMenuOpen(false)}
-                      className={`flex items-center gap-2 px-4 py-2 text-xs font-bold text-indigo-500 transition-colors ${
-                        isDark ? 'hover:bg-slate-800' : 'hover:bg-indigo-50'
-                      }`}
+                      className="flex items-center gap-2 px-4 py-2 text-xs font-bold text-indigo-600 transition-colors hover:bg-indigo-50"
                     >
-                      <Settings className="w-4 h-4 text-indigo-500" />
+                      <Settings className="w-4 h-4 text-indigo-600" />
                       <span>Master Governance & Toggles</span>
                     </Link>
                   )}
@@ -421,9 +383,9 @@ export const ERPLayout: React.FC<ERPLayoutProps> = ({ children }) => {
                   <button
                     type="button"
                     onClick={handleLogout}
-                    className="w-full flex items-center gap-2 px-4 py-2 text-xs text-rose-500 hover:bg-rose-500/10 text-left"
+                    className="w-full flex items-center gap-2 px-4 py-2 text-xs text-rose-600 hover:bg-rose-50 text-left"
                   >
-                    <LogOut className="w-4 h-4 text-rose-500" />
+                    <LogOut className="w-4 h-4 text-rose-600" />
                     <span>Sign Out of ERP</span>
                   </button>
                 </div>

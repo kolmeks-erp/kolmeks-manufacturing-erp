@@ -36,8 +36,10 @@ export const SystemSettingsProvider: React.FC<{ children: React.ReactNode }> = (
   const [loadingFlags, setLoadingFlags] = useState<boolean>(true);
   const [theme, setThemeState] = useState<ThemeMode>(() => {
     const saved = localStorage.getItem('kolmeks_erp_theme');
-    if (saved === 'light' || saved === 'dark') return saved;
-    return 'dark'; // Default ERP theme is dark
+    if (saved === 'light') return 'light';
+    // Force light theme as per user requirement
+    localStorage.setItem('kolmeks_erp_theme', 'light');
+    return 'light';
   });
 
   const setTheme = useCallback((mode: ThemeMode) => {

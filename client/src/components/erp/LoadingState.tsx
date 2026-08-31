@@ -15,17 +15,17 @@ export const LoadingState: React.FC<LoadingStateProps> = ({
 }) => {
   const displayText = label || message;
   return (
-    <div className={`p-6 bg-white rounded-2xl border border-slate-200 space-y-4 animate-pulse ${className}`}>
+    <div className={`p-6 bg-white dark:bg-[#0F2647] rounded-2xl border border-slate-200 dark:border-slate-800 space-y-4 animate-pulse ${className}`}>
       <div className="flex items-center justify-between">
-        <div className="h-4 bg-slate-200 rounded w-1/3" />
-        <div className="h-4 bg-slate-200 rounded w-1/6" />
+        <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded w-1/3" />
+        <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded w-1/6" />
       </div>
       <div className="space-y-2">
         {Array.from({ length: rows }).map((_, idx) => (
-          <div key={idx} className="h-10 bg-slate-100 rounded-lg w-full" />
+          <div key={idx} className="h-10 bg-slate-100 dark:bg-slate-800 rounded-lg w-full" />
         ))}
       </div>
-      <p className="text-[11px] text-slate-400 font-mono text-center pt-2">{displayText}</p>
+      <p className="text-[11px] text-slate-400 dark:text-slate-500 font-mono text-center pt-2">{displayText}</p>
     </div>
   );
 };

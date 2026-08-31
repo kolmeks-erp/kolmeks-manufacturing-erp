@@ -98,16 +98,16 @@ export const StockReservationsPage: React.FC = () => {
   };
 
   return (
-    <div className="p-6 space-y-6 bg-slate-900 min-h-screen text-slate-100">
+    <div className="p-4 lg:p-6 space-y-6 max-w-7xl mx-auto text-slate-800">
       {/* Header Banner */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-slate-800/80 p-6 rounded-2xl border border-slate-700/60">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-slate-200 shadow-xs">
         <div className="flex items-center gap-3">
-          <div className="p-3 bg-rose-600/20 text-rose-400 rounded-xl border border-rose-500/30">
+          <div className="p-3 bg-rose-50 text-rose-600 rounded-xl border border-rose-200">
             <Lock className="w-7 h-7" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-white tracking-tight">Stock Reservations & Allocations</h1>
-            <p className="text-sm text-slate-400 mt-0.5">
+            <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Stock Reservations & Allocations</h1>
+            <p className="text-sm text-slate-500 mt-0.5">
               Hard lock inventory quantities against customer Sales Orders and Production Work Orders
             </p>
           </div>
@@ -115,17 +115,17 @@ export const StockReservationsPage: React.FC = () => {
 
         <button
           onClick={() => setShowModal(true)}
-          className="px-4 py-2 bg-rose-600 hover:bg-rose-500 text-white rounded-xl font-medium transition flex items-center gap-2 text-sm shadow-lg shadow-rose-600/20"
+          className="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-xl font-semibold transition flex items-center gap-2 text-xs shadow-xs"
         >
           <Plus className="w-4 h-4" /> Reserve Stock
         </button>
       </div>
 
       {/* Reservations Table */}
-      <div className="bg-slate-800/80 rounded-2xl border border-slate-700/60 overflow-hidden shadow-xl">
+      <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs">
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm text-slate-300">
-            <thead className="bg-slate-900/80 text-xs font-semibold text-slate-400 uppercase tracking-wider border-b border-slate-700/60">
+          <table className="w-full text-left text-xs text-slate-700">
+            <thead className="bg-slate-50 text-[11px] font-bold text-slate-500 uppercase tracking-wider border-b border-slate-200">
               <tr>
                 <th className="py-3.5 px-4">Reservation #</th>
                 <th className="py-3.5 px-4">SKU / Product</th>
@@ -137,57 +137,57 @@ export const StockReservationsPage: React.FC = () => {
                 <th className="py-3.5 px-4 text-center">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-700/40">
+            <tbody className="divide-y divide-slate-100">
               {loading ? (
                 <tr>
-                  <td colSpan={8} className="py-12 text-center text-slate-400">
+                  <td colSpan={8} className="py-12 text-center text-slate-500">
                     Loading active stock reservations...
                   </td>
                 </tr>
               ) : reservations.length === 0 ? (
                 <tr>
-                  <td colSpan={8} className="py-12 text-center text-slate-400">
+                  <td colSpan={8} className="py-12 text-center text-slate-500">
                     No active stock reservations found.
                   </td>
                 </tr>
               ) : (
                 reservations.map((resItem) => (
-                  <tr key={resItem.id} className="hover:bg-slate-700/30 transition">
-                    <td className="py-3.5 px-4 font-mono text-xs font-semibold text-rose-400">
+                  <tr key={resItem.id} className="hover:bg-slate-50/60 transition">
+                    <td className="py-3.5 px-4 font-mono text-xs font-bold text-rose-700">
                       {resItem.reservation_number}
                     </td>
 
                     <td className="py-3.5 px-4">
-                      <div className="font-semibold text-white">{resItem.products?.name || 'Component'}</div>
-                      <div className="text-xs text-slate-400 font-mono">{resItem.products?.product_code}</div>
+                      <div className="font-bold text-slate-900">{resItem.products?.name || 'Component'}</div>
+                      <div className="text-[11px] text-slate-500 font-mono">{resItem.products?.product_code}</div>
                     </td>
 
-                    <td className="py-3.5 px-4 font-medium text-slate-200">
+                    <td className="py-3.5 px-4 font-semibold text-slate-800">
                       {resItem.warehouses?.name || 'Main WH'}
                     </td>
 
                     <td className="py-3.5 px-4">
-                      <div className="text-xs font-bold text-slate-200">{resItem.reference_type}</div>
-                      {resItem.reference_id && <div className="text-xs text-slate-400 font-mono">Ref: {resItem.reference_id}</div>}
+                      <div className="text-xs font-bold text-slate-800">{resItem.reference_type}</div>
+                      {resItem.reference_id && <div className="text-[11px] text-slate-500 font-mono">Ref: {resItem.reference_id}</div>}
                     </td>
 
-                    <td className="py-3.5 px-4 text-right font-bold text-amber-400">
-                      {resItem.quantity} <span className="text-xs font-normal text-slate-400">{resItem.products?.unit || 'pcs'}</span>
+                    <td className="py-3.5 px-4 text-right font-bold text-amber-700">
+                      {resItem.quantity} <span className="text-xs font-normal text-slate-500">{resItem.products?.unit || 'pcs'}</span>
                     </td>
 
                     <td className="py-3.5 px-4 text-center">
                       <span
                         className={`px-2.5 py-1 text-xs font-mono font-bold rounded-full ${
                           resItem.status === 'RELEASED'
-                            ? 'bg-slate-700 text-slate-400 border border-slate-600'
-                            : 'bg-amber-500/20 text-amber-400 border border-amber-500/30'
+                            ? 'bg-slate-100 text-slate-600 border border-slate-200'
+                            : 'bg-amber-50 text-amber-700 border border-amber-200'
                         }`}
                       >
                         {resItem.status}
                       </span>
                     </td>
 
-                    <td className="py-3.5 px-4 text-xs text-slate-400 font-mono">
+                    <td className="py-3.5 px-4 text-xs text-slate-500 font-mono">
                       {new Date(resItem.created_at).toLocaleDateString()}
                     </td>
 
@@ -195,7 +195,7 @@ export const StockReservationsPage: React.FC = () => {
                       {resItem.status === 'RESERVED' && (
                         <button
                           onClick={() => handleReleaseReservation(resItem.id)}
-                          className="px-2.5 py-1 bg-slate-700 hover:bg-slate-600 text-slate-200 rounded-lg text-xs font-medium transition inline-flex items-center gap-1 border border-slate-600"
+                          className="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-semibold transition inline-flex items-center gap-1 border border-slate-200"
                         >
                           <Unlock className="w-3.5 h-3.5" /> Release Lock
                         </button>
@@ -211,32 +211,32 @@ export const StockReservationsPage: React.FC = () => {
 
       {/* New Reservation Modal */}
       {showModal && (
-        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-slate-900 border border-slate-700 rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-2xl">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+        <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-xs z-50 flex items-center justify-center p-4">
+          <div className="bg-white border border-slate-200 rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-xl">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
               <div className="flex items-center gap-2">
-                <Lock className="w-5 h-5 text-rose-400" />
-                <h3 className="text-lg font-bold text-white">Create Stock Reservation</h3>
+                <Lock className="w-5 h-5 text-rose-600" />
+                <h3 className="text-lg font-bold text-slate-900">Create Stock Reservation</h3>
               </div>
-              <button onClick={() => setShowModal(false)} className="text-slate-400 hover:text-white">
+              <button onClick={() => setShowModal(false)} className="text-slate-400 hover:text-slate-600">
                 ✕
               </button>
             </div>
 
             {formError && (
-              <div className="p-3 bg-rose-500/20 border border-rose-500/30 rounded-xl text-xs text-rose-400">
+              <div className="p-3 bg-rose-50 border border-rose-200 rounded-xl text-xs text-rose-700 font-medium">
                 {formError}
               </div>
             )}
 
             <form onSubmit={handleCreateReservation} className="space-y-4">
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">Select Product *</label>
+                <label className="block text-xs font-semibold text-slate-700 mb-1">Select Product *</label>
                 <select
                   required
                   value={selectedProduct}
                   onChange={(e) => setSelectedProduct(e.target.value)}
-                  className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-sm text-slate-100"
+                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900"
                 >
                   <option value="">Select Product Component</option>
                   {products.map((p) => (
@@ -248,12 +248,12 @@ export const StockReservationsPage: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">Select Warehouse *</label>
+                <label className="block text-xs font-semibold text-slate-700 mb-1">Select Warehouse *</label>
                 <select
                   required
                   value={selectedWarehouse}
                   onChange={(e) => setSelectedWarehouse(e.target.value)}
-                  className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-sm text-slate-100"
+                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900"
                 >
                   <option value="">Select Warehouse</option>
                   {warehouses.map((w) => (
@@ -266,11 +266,11 @@ export const StockReservationsPage: React.FC = () => {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-300 mb-1">Reference Category</label>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">Reference Category</label>
                   <select
                     value={refType}
                     onChange={(e) => setRefType(e.target.value)}
-                    className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-sm text-slate-100"
+                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900"
                   >
                     <option value="SALES_ORDER">Sales Order (SO)</option>
                     <option value="PRODUCTION_ORDER">Production Order (WO)</option>
@@ -279,7 +279,7 @@ export const StockReservationsPage: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-slate-300 mb-1">Quantity to Reserve *</label>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">Quantity to Reserve *</label>
                   <input
                     type="number"
                     required
@@ -287,19 +287,19 @@ export const StockReservationsPage: React.FC = () => {
                     placeholder="e.g. 50"
                     value={quantity}
                     onChange={(e) => setQuantity(e.target.value)}
-                    className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-sm text-slate-100 font-bold"
+                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 font-bold"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">Reference ID / Order Number</label>
+                <label className="block text-xs font-semibold text-slate-700 mb-1">Reference ID / Order Number</label>
                 <input
                   type="text"
                   placeholder="e.g. SO-2026-0041 or WO-884"
                   value={refId}
                   onChange={(e) => setRefId(e.target.value)}
-                  className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-sm text-slate-100 font-mono"
+                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 font-mono"
                 />
               </div>
 
@@ -307,14 +307,14 @@ export const StockReservationsPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
-                  className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-sm font-medium"
+                  className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="px-5 py-2 bg-rose-600 hover:bg-rose-500 text-white rounded-xl text-sm font-medium shadow-lg shadow-rose-600/20"
+                  className="px-5 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-semibold shadow-xs"
                 >
                   {submitting ? 'Reserving...' : 'Confirm Stock Lock'}
                 </button>
