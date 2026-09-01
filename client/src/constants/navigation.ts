@@ -128,6 +128,9 @@ export const ERP_SIDEBAR_MENU: ERPMenuItem[] = [
   // HR Operations Section
   { id: 'hr-dashboard', label: 'HR Operations', path: `${ERP_BASE_PATH}/hr`, iconName: 'Users', category: 'HR & Operations', badge: 'Live', roles: ['admin', 'hr'] },
   { id: 'hr-employees', label: 'Workforce Directory', path: `${ERP_BASE_PATH}/hr/employees`, iconName: 'UserCheck', category: 'HR & Operations', badge: 'Live', roles: ['admin', 'hr'] },
+  { id: 'hr-departments', label: 'Departments & Units', path: `${ERP_BASE_PATH}/hr/departments`, iconName: 'Building2', category: 'HR & Operations', badge: 'Live', roles: ['admin', 'hr'] },
+  { id: 'hr-organization', label: 'Org Hierarchy Tree', path: `${ERP_BASE_PATH}/hr/organization`, iconName: 'Network', category: 'HR & Operations', badge: 'Live', roles: ['admin', 'hr'] },
+  { id: 'hr-reports', label: 'HR Analytics & Reports', path: `${ERP_BASE_PATH}/hr/reports`, iconName: 'BarChart2', category: 'HR & Operations', badge: 'Live', roles: ['admin', 'hr'] },
   { id: 'hr-attendance', label: 'Attendance Registry', path: `${ERP_BASE_PATH}/hr/attendance`, iconName: 'Clock', category: 'HR & Operations', badge: 'Live', roles: ['admin', 'hr'] },
   { id: 'hr-leave-requests', label: 'Leave Requests Queue', path: `${ERP_BASE_PATH}/hr/leave/requests`, iconName: 'CalendarRange', category: 'HR & Operations', badge: 'Live', roles: ['admin', 'hr'] },
   { id: 'hr-leave-balances', label: 'Leave Entitlements', path: `${ERP_BASE_PATH}/hr/leave`, iconName: 'Calendar', category: 'HR & Operations', badge: 'Live', roles: ['admin', 'hr'] },

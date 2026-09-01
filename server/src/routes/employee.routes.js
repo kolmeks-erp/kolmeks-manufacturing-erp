@@ -8,40 +8,34 @@ const employeeController = require('../controllers/employee.controller');
 router.use(authenticateUser);
 router.use(authorizeRoles('admin', 'hr'));
 
-/**
- * GET /api/employees/departments
- * Fetch departments list
- */
+// Departments
 router.get('/departments', employeeController.getDepartments);
+router.post('/departments', employeeController.createDepartment);
+router.patch('/departments/:id', employeeController.updateDepartment);
 
-/**
- * GET /api/employees
- * List employees with search, filter, sort, pagination
- */
+// Organization Hierarchy & Reports
+router.get('/organization', employeeController.getOrganizationStructure);
+router.get('/reports', employeeController.getHRReports);
+
+// Employees Master
 router.get('/', employeeController.getEmployees);
-
-/**
- * GET /api/employees/:id
- * Fetch single employee profile
- */
 router.get('/:id', employeeController.getEmployeeById);
-
-/**
- * POST /api/employees
- * Create new employee
- */
 router.post('/', employeeController.createEmployee);
-
-/**
- * PATCH /api/employees/:id
- * Update employee record
- */
 router.patch('/:id', employeeController.updateEmployee);
-
-/**
- * PATCH /api/employees/:id/status
- * Activate / Deactivate / Change status
- */
 router.patch('/:id/status', employeeController.patchEmployeeStatus);
+
+// Employee Lifecycle Operations
+router.post('/:id/transfer', employeeController.transferEmployee);
+router.post('/:id/promote', employeeController.promoteEmployee);
+router.post('/:id/confirm', employeeController.confirmEmployee);
+router.post('/:id/resign', employeeController.resignEmployee);
+router.post('/:id/terminate', employeeController.terminateEmployee);
+
+// Employee Relational Details
+router.post('/:id/skills', employeeController.addEmployeeSkill);
+router.post('/:id/qualifications', employeeController.addEmployeeQualification);
+router.post('/:id/certifications', employeeController.addEmployeeCertification);
+router.post('/:id/notes', employeeController.addEmployeeHRNote);
+router.post('/:id/documents', employeeController.addEmployeeDocument);
 
 module.exports = router;

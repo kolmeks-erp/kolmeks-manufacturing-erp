@@ -138,6 +138,13 @@ import MaintenanceCalendarPage from '../pages/erp/maintenance/MaintenanceCalenda
 import MaintenanceReportsPage from '../pages/erp/maintenance/MaintenanceReportsPage';
 import SparePartsPage from '../pages/erp/maintenance/SparePartsPage';
 
+import EmployeeListPage from '../pages/erp/employees/EmployeeListPage';
+import EmployeeCreatePage from '../pages/erp/employees/EmployeeCreatePage';
+import EmployeeDetailPage from '../pages/erp/employees/EmployeeDetailPage';
+import EmployeeEditPage from '../pages/erp/employees/EmployeeEditPage';
+import { DepartmentsPage } from '../pages/erp/employees/DepartmentsPage';
+import { OrganizationStructurePage } from '../pages/erp/employees/OrganizationStructurePage';
+
 import HRDashboardPage from '../pages/erp/hr/HRDashboardPage';
 import HREmployeeListPage from '../pages/erp/hr/HREmployeeListPage';
 import HRAttendanceListPage from '../pages/erp/hr/HRAttendanceListPage';
@@ -146,6 +153,7 @@ import HRLeaveRequestListPage from '../pages/erp/hr/HRLeaveRequestListPage';
 import HRLeaveTypeListPage from '../pages/erp/hr/HRLeaveTypeListPage';
 import HRShiftListPage from '../pages/erp/hr/HRShiftListPage';
 import HRHolidayListPage from '../pages/erp/hr/HRHolidayListPage';
+import { HRReportsPage } from '../pages/erp/hr/HRReportsPage';
 
 import MyHRDashboardPage from '../pages/erp/hr/MyHRDashboardPage';
 import MyAttendancePage from '../pages/erp/hr/MyAttendancePage';
@@ -457,11 +465,16 @@ export const AppRoutes: React.FC = () => {
           <Route element={<ProtectedRoute allowedRoles={['admin', 'hr']} />}>
             <Route path="employees" element={<EmployeeListPage />} />
             <Route path="employees/new" element={<EmployeeCreatePage />} />
+            <Route path="employees/departments" element={<DepartmentsPage />} />
+            <Route path="employees/organization" element={<OrganizationStructurePage />} />
             <Route path="employees/:id" element={<EmployeeDetailPage />} />
             <Route path="employees/:id/edit" element={<EmployeeEditPage />} />
 
             <Route path="hr" element={<HRDashboardPage />} />
             <Route path="hr/employees" element={<HREmployeeListPage />} />
+            <Route path="hr/departments" element={<DepartmentsPage />} />
+            <Route path="hr/organization" element={<OrganizationStructurePage />} />
+            <Route path="hr/reports" element={<HRReportsPage />} />
             <Route path="hr/attendance" element={<HRAttendanceListPage />} />
             <Route path="hr/leave" element={<HRLeaveListPage />} />
             <Route path="hr/leave/requests" element={<HRLeaveRequestListPage />} />
