@@ -204,3 +204,80 @@ export interface MaintenanceKPIs {
   openRequests: number;
   activeDowntimeMinutes: number;
 }
+
+export type FailureType = 'MECHANICAL' | 'ELECTRICAL' | 'SOFTWARE' | 'HYDRAULIC' | 'PNEUMATIC' | 'OTHER';
+export type BreakdownStatus = 'OPEN' | 'INVESTIGATING' | 'CONVERTED_TO_WORK_ORDER' | 'RESOLVED' | 'CLOSED';
+
+export interface Breakdown {
+  id: string;
+  breakdown_number: string;
+  asset_id: string;
+  work_center_id?: string;
+  production_order_id?: string;
+  failure_date: string;
+  failure_type: FailureType;
+  severity: Priority;
+  description: string;
+  immediate_cause?: string;
+  root_cause?: string;
+  corrective_action?: string;
+  preventive_action?: string;
+  technician_id?: string;
+  downtime_minutes: number;
+  status: BreakdownStatus;
+  ncr_id?: string;
+  capa_id?: string;
+  work_order_id?: string;
+  assets?: { id: string; asset_code: string; name: string; location?: string; criticality?: AssetCriticality };
+  work_centers?: { id: string; code: string; name: string };
+  production_orders?: { id: string; order_number: string };
+  technician_profile?: { id: string; full_name?: string; email?: string };
+  created_at: string;
+  updated_at: string;
+}
+
+export interface ReliabilityAnalytics {
+  totalAssetsCount: number;
+  totalBreakdownsCount: number;
+  totalRepairsCount: number;
+  totalDowntimeHours: number;
+  actualOperatingHours: number;
+  mtbfHours: number | null;
+  mttrHours: number | null;
+  availabilityPercentage: number;
+  repeatedFailureAssets: Array<Asset & { failure_count: number }>;
+}
+
+export interface MaintenanceCostSummary {
+  summary: {
+    totalLabor: number;
+    totalParts: number;
+    totalService: number;
+    totalOther: number;
+    totalOverall: number;
+  };
+  workOrders: Array<{
+    id: string;
+    work_order_number: string;
+    title: string;
+    maintenance_type: string;
+    status: string;
+    labor_cost: number;
+    parts_cost: number;
+    external_service_cost: number;
+    other_cost: number;
+    total_cost: number;
+    assets?: { id: string; asset_code: string; name: string };
+    cost_centers?: { id: string; code: string; name: string; budget_amount?: number };
+  }>;
+}
+
+export interface MaintenanceCalendarEvent {
+  id: string;
+  title: string;
+  date: string;
+  type: 'PREVENTIVE' | 'WORK_ORDER' | 'BREAKDOWN';
+  priority: string;
+  status: string;
+}
+

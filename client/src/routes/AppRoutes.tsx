@@ -131,6 +131,12 @@ import MaintenanceScheduleFormPage from '../pages/erp/maintenance/MaintenanceSch
 import MaintenanceRequestListPage from '../pages/erp/maintenance/MaintenanceRequestListPage';
 import DowntimeListPage from '../pages/erp/maintenance/DowntimeListPage';
 import MaintenanceHistoryPage from '../pages/erp/maintenance/MaintenanceHistoryPage';
+import BreakdownListPage from '../pages/erp/maintenance/BreakdownListPage';
+import ReliabilityDashboardPage from '../pages/erp/maintenance/ReliabilityDashboardPage';
+import MaintenanceCostsPage from '../pages/erp/maintenance/MaintenanceCostsPage';
+import MaintenanceCalendarPage from '../pages/erp/maintenance/MaintenanceCalendarPage';
+import MaintenanceReportsPage from '../pages/erp/maintenance/MaintenanceReportsPage';
+import SparePartsPage from '../pages/erp/maintenance/SparePartsPage';
 
 import HRDashboardPage from '../pages/erp/hr/HRDashboardPage';
 import HREmployeeListPage from '../pages/erp/hr/HREmployeeListPage';
@@ -389,11 +395,19 @@ export const AppRoutes: React.FC = () => {
             <Route path="maintenance/work-orders" element={<WorkOrderListPage />} />
             <Route path="maintenance/work-orders/new" element={<WorkOrderFormPage />} />
             <Route path="maintenance/work-orders/:id" element={<WorkOrderDetailPage />} />
+            <Route path="maintenance/plans" element={<MaintenanceScheduleListPage />} />
+            <Route path="maintenance/schedule" element={<MaintenanceScheduleListPage />} />
             <Route path="maintenance/schedules" element={<MaintenanceScheduleListPage />} />
             <Route path="maintenance/schedules/new" element={<MaintenanceScheduleFormPage />} />
+            <Route path="maintenance/calendar" element={<MaintenanceCalendarPage />} />
             <Route path="maintenance/requests" element={<MaintenanceRequestListPage />} />
+            <Route path="maintenance/breakdowns" element={<BreakdownListPage />} />
             <Route path="maintenance/downtime" element={<DowntimeListPage />} />
             <Route path="maintenance/history" element={<MaintenanceHistoryPage />} />
+            <Route path="maintenance/reliability" element={<ReliabilityDashboardPage />} />
+            <Route path="maintenance/spare-parts" element={<SparePartsPage />} />
+            <Route path="maintenance/costs" element={<MaintenanceCostsPage />} />
+            <Route path="maintenance/reports" element={<MaintenanceReportsPage />} />
           </Route>
 
           {/* Commercial Quotations Authorized Routes */}

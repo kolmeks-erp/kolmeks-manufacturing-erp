@@ -59,4 +59,22 @@ router.post('/downtime/:id/close', maintenanceController.closeDowntimeLog);
 // 9. History
 router.get('/history', maintenanceController.getMaintenanceHistory);
 
+// 10. Breakdowns
+router.get('/breakdowns', maintenanceController.getBreakdowns);
+router.get('/breakdowns/:id', maintenanceController.getBreakdownById);
+router.post('/breakdowns', maintenanceController.createBreakdown);
+router.post('/breakdowns/:id/convert', maintenanceController.convertBreakdownToWorkOrder);
+
+// 11. Reliability Analytics (MTBF, MTTR, Availability)
+router.get('/reliability', maintenanceController.getReliabilityAnalytics);
+
+// 12. Maintenance Costs
+router.get('/costs', maintenanceController.getMaintenanceCosts);
+
+// 13. Calendar
+router.get('/calendar', maintenanceController.getMaintenanceCalendar);
+
+// 14. Reports
+router.get('/reports', maintenanceController.getMaintenanceReports);
+
 module.exports = router;

@@ -7,7 +7,11 @@ import {
   WorkOrderChecklist,
   SparePartUsed,
   DowntimeLog,
-  MaintenanceKPIs
+  MaintenanceKPIs,
+  Breakdown,
+  ReliabilityAnalytics,
+  MaintenanceCostSummary,
+  MaintenanceCalendarEvent
 } from '../types/maintenance';
 
 export const maintenanceService = {
@@ -165,6 +169,54 @@ export const maintenanceService = {
   // 9. History
   getMaintenanceHistory: async (): Promise<WorkOrder[]> => {
     const res = await apiClient.get<{ success: boolean; data: WorkOrder[] }>('/maintenance/history');
+    return res.data.data;
+  },
+
+  // 10. Breakdowns
+  getBreakdowns: async (params?: { search?: string; assetId?: string; failureType?: string; status?: string; severity?: string }): Promise<Breakdown[]> => {
+    const res = await apiClient.get<{ success: boolean; data: Breakdown[] }>('/maintenance/breakdowns', { params });
+    return res.data.data;
+  },
+
+  getBreakdownById: async (id: string): Promise<Breakdown> => {
+    const res = await apiClient.get<{ success: boolean; data: Breakdown }>(`/maintenance/breakdowns/${id}`);
+    return res.data.data;
+  },
+
+  createBreakdown: async (payload: Partial<Breakdown>): Promise<Breakdown> => {
+    const res = await apiClient.post<{ success: boolean; data: Breakdown }>('/maintenance/breakdowns', payload);
+    return res.data.data;
+  },
+
+  convertBreakdownToWorkOrder: async (
+    breakdownId: string,
+    payload: { assigned_to?: string; planned_start?: string; planned_end?: string; priority?: string }
+  ): Promise<WorkOrder> => {
+    const res = await apiClient.post<{ success: boolean; data: WorkOrder }>(`/maintenance/breakdowns/${breakdownId}/convert`, payload);
+    return res.data.data;
+  },
+
+  // 11. Reliability Analytics (MTBF, MTTR, Availability)
+  getReliabilityAnalytics: async (): Promise<ReliabilityAnalytics> => {
+    const res = await apiClient.get<{ success: boolean; data: ReliabilityAnalytics }>('/maintenance/reliability');
+    return res.data.data;
+  },
+
+  // 12. Maintenance Costs
+  getMaintenanceCosts: async (): Promise<MaintenanceCostSummary> => {
+    const res = await apiClient.get<{ success: boolean; data: MaintenanceCostSummary }>('/maintenance/costs');
+    return res.data.data;
+  },
+
+  // 13. Calendar
+  getMaintenanceCalendar: async (): Promise<MaintenanceCalendarEvent[]> => {
+    const res = await apiClient.get<{ success: boolean; data: MaintenanceCalendarEvent[] }>('/maintenance/calendar');
+    return res.data.data;
+  },
+
+  // 14. Reports
+  getMaintenanceReports: async (params?: { reportType?: string }): Promise<any> => {
+    const res = await apiClient.get<{ success: boolean; data: any }>('/maintenance/reports', { params });
     return res.data.data;
   }
 };

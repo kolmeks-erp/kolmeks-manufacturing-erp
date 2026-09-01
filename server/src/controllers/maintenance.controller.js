@@ -1342,6 +1342,428 @@ const getMaintenanceHistory = async (req, res) => {
   }
 };
 
+/**
+ * 10. BREAKDOWNS MANAGEMENT
+ */
+const getBreakdowns = async (req, res) => {
+  try {
+    const { search = '', assetId, failureType, status, severity } = req.query;
+
+    let query = supabase
+      .from('maintenance_breakdowns')
+      .select(`
+        *,
+        assets (id, asset_code, name, location, criticality),
+        work_centers (id, code, name),
+        production_orders (id, order_number),
+        technician_profile:profiles!technician_id (id, full_name, email),
+        maintenance_work_orders (id, work_order_number, status)
+      `);
+
+    if (assetId) query = query.eq('asset_id', assetId);
+    if (failureType) query = query.eq('failure_type', failureType);
+    if (status) query = query.eq('status', status);
+    if (severity) query = query.eq('severity', severity);
+
+    if (search) {
+      query = query.or(`breakdown_number.ilike.%${search}%,description.ilike.%${search}%,immediate_cause.ilike.%${search}%,root_cause.ilike.%${search}%`);
+    }
+
+    query = query.order('failure_date', { ascending: false });
+
+    const { data, error } = await query;
+    if (error) throw error;
+
+    return res.json({ success: true, data: data || [] });
+  } catch (error) {
+    console.error('getBreakdowns Error:', error);
+    return res.status(500).json({ success: false, message: 'Failed to fetch breakdown records', error: error.message });
+  }
+};
+
+const getBreakdownById = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const { data: breakdown, error } = await supabase
+      .from('maintenance_breakdowns')
+      .select(`
+        *,
+        assets (*),
+        work_centers (*),
+        production_orders (*),
+        technician_profile:profiles!technician_id (id, full_name, email),
+        non_conformance_reports (*),
+        capa_records (*)
+      `)
+      .eq('id', id)
+      .single();
+
+    if (error || !breakdown) {
+      return res.status(404).json({ success: false, message: 'Breakdown record not found' });
+    }
+
+    return res.json({ success: true, data: breakdown });
+  } catch (error) {
+    console.error('getBreakdownById Error:', error);
+    return res.status(500).json({ success: false, message: 'Failed to fetch breakdown details', error: error.message });
+  }
+};
+
+const createBreakdown = async (req, res) => {
+  try {
+    const {
+      asset_id,
+      work_center_id,
+      production_order_id,
+      failure_type = 'MECHANICAL',
+      severity = 'HIGH',
+      description,
+      immediate_cause,
+      root_cause,
+      corrective_action,
+      preventive_action,
+      technician_id,
+      downtime_minutes = 0,
+      ncr_id,
+      capa_id
+    } = req.body;
+
+    if (!asset_id || !description) {
+      return res.status(400).json({ success: false, message: 'Asset and Description are required' });
+    }
+
+    const breakdown_number = await generateSequenceNumber('maintenance_breakdowns', 'breakdown_number', 'BD');
+
+    const newBD = {
+      breakdown_number,
+      asset_id,
+      work_center_id: work_center_id || null,
+      production_order_id: production_order_id || null,
+      failure_date: new Date().toISOString(),
+      failure_type,
+      severity,
+      description,
+      immediate_cause: immediate_cause || null,
+      root_cause: root_cause || null,
+      corrective_action: corrective_action || null,
+      preventive_action: preventive_action || null,
+      technician_id: technician_id || null,
+      downtime_minutes: parseFloat(downtime_minutes) || 0,
+      status: 'OPEN',
+      ncr_id: ncr_id || null,
+      capa_id: capa_id || null,
+      created_by: req.user?.id || null
+    };
+
+    const { data, error } = await supabase
+      .from('maintenance_breakdowns')
+      .insert([newBD])
+      .select()
+      .single();
+
+    if (error) throw error;
+
+    // Set Asset Status to BREAKDOWN
+    await supabase
+      .from('assets')
+      .update({ status: 'BREAKDOWN', updated_at: new Date().toISOString() })
+      .eq('id', asset_id);
+
+    // Record an active downtime log
+    await supabase.from('downtime_logs').insert([{
+      asset_id,
+      breakdown_id: data.id,
+      work_center_id: work_center_id || null,
+      production_order_id: production_order_id || null,
+      start_time: new Date().toISOString(),
+      reason: `Breakdown ${breakdown_number}: ${description}`,
+      status: 'ACTIVE'
+    }]);
+
+    // Log Activity
+    await supabase.from('maintenance_activities').insert([{
+      asset_id,
+      actor_id: req.user?.id || null,
+      actor_name: req.user?.email || 'System User',
+      activity_type: 'BREAKDOWN_LOGGED',
+      description: `Breakdown ${breakdown_number} (${failure_type}) recorded.`
+    }]);
+
+    return res.status(201).json({ success: true, data, message: `Breakdown ${breakdown_number} logged successfully` });
+  } catch (error) {
+    console.error('createBreakdown Error:', error);
+    return res.status(500).json({ success: false, message: 'Failed to record breakdown', error: error.message });
+  }
+};
+
+const convertBreakdownToWorkOrder = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { assigned_to, planned_start, planned_end, priority = 'HIGH' } = req.body;
+
+    const { data: bd, error: bdErr } = await supabase
+      .from('maintenance_breakdowns')
+      .select('*')
+      .eq('id', id)
+      .single();
+
+    if (bdErr || !bd) {
+      return res.status(404).json({ success: false, message: 'Breakdown record not found' });
+    }
+
+    const work_order_number = await generateSequenceNumber('maintenance_work_orders', 'work_order_number', 'MWO');
+
+    const newWO = {
+      work_order_number,
+      asset_id: bd.asset_id,
+      breakdown_id: bd.id,
+      maintenance_type: 'BREAKDOWN',
+      title: `Emergency Repair: ${bd.breakdown_number} - ${bd.failure_type}`,
+      description: bd.description,
+      priority,
+      status: 'OPEN',
+      assigned_to: assigned_to || bd.technician_id || null,
+      planned_start: planned_start || new Date().toISOString(),
+      planned_end: planned_end || null,
+      ncr_id: bd.ncr_id || null,
+      capa_id: bd.capa_id || null,
+      created_by: req.user?.id || null,
+      updated_by: req.user?.id || null
+    };
+
+    const { data: wo, error: woErr } = await supabase
+      .from('maintenance_work_orders')
+      .insert([newWO])
+      .select()
+      .single();
+
+    if (woErr) throw woErr;
+
+    // Update breakdown status
+    await supabase
+      .from('maintenance_breakdowns')
+      .update({
+        status: 'CONVERTED_TO_WORK_ORDER',
+        work_order_id: wo.id,
+        updated_at: new Date().toISOString()
+      })
+      .eq('id', id);
+
+    return res.status(201).json({ success: true, data: wo, message: `Created Emergency Work Order ${work_order_number}` });
+  } catch (error) {
+    console.error('convertBreakdownToWorkOrder Error:', error);
+    return res.status(500).json({ success: false, message: 'Failed to convert breakdown to work order', error: error.message });
+  }
+};
+
+/**
+ * 11. RELIABILITY ANALYTICS (MTBF, MTTR, AVAILABILITY)
+ */
+const getReliabilityAnalytics = async (req, res) => {
+  try {
+    const { data: assets } = await supabase.from('assets').select('*');
+    const { data: breakdowns } = await supabase.from('maintenance_breakdowns').select('*');
+    const { data: workOrders } = await supabase.from('maintenance_work_orders').select('*');
+    const { data: downtimes } = await supabase.from('downtime_logs').select('*');
+
+    const totalAssetsCount = assets?.length || 0;
+    const totalBreakdownsCount = breakdowns?.length || 0;
+    const totalRepairsCount = workOrders?.filter(w => w.status === 'COMPLETED')?.length || 0;
+
+    let totalDowntimeMinutes = 0;
+    if (downtimes && downtimes.length > 0) {
+      downtimes.forEach(d => {
+        if (d.duration_minutes) {
+          totalDowntimeMinutes += parseFloat(d.duration_minutes);
+        }
+      });
+    }
+
+    const totalDowntimeHours = totalDowntimeMinutes / 60;
+    
+    // Total planned operating hours assumption: 30 days * 24 hrs * totalAssets
+    const totalPlannedOperatingHours = Math.max(1, totalAssetsCount * 720);
+    const actualOperatingHours = Math.max(0, totalPlannedOperatingHours - totalDowntimeHours);
+
+    // MTBF = Operating Hours / Failure Count
+    const mtbfHours = totalBreakdownsCount > 0 ? Math.round((actualOperatingHours / totalBreakdownsCount) * 10) / 10 : null;
+
+    // MTTR = Total Repair Downtime Hours / Repair Count
+    const mttrHours = totalRepairsCount > 0 ? Math.round((totalDowntimeHours / totalRepairsCount) * 10) / 10 : null;
+
+    // Availability = (Operating Hours / Planned Operating Hours) * 100
+    const availabilityPercentage = Math.round((actualOperatingHours / totalPlannedOperatingHours) * 1000) / 10;
+
+    // Identify assets with repeated breakdowns (>= 2 breakdowns)
+    const breakdownCountsByAsset = {};
+    if (breakdowns) {
+      breakdowns.forEach(b => {
+        breakdownCountsByAsset[b.asset_id] = (breakdownCountsByAsset[b.asset_id] || 0) + 1;
+      });
+    }
+
+    const repeatedFailureAssets = (assets || []).filter(a => (breakdownCountsByAsset[a.id] || 0) >= 2).map(a => ({
+      ...a,
+      failure_count: breakdownCountsByAsset[a.id]
+    }));
+
+    return res.json({
+      success: true,
+      data: {
+        totalAssetsCount,
+        totalBreakdownsCount,
+        totalRepairsCount,
+        totalDowntimeHours: Math.round(totalDowntimeHours * 10) / 10,
+        actualOperatingHours: Math.round(actualOperatingHours),
+        mtbfHours,
+        mttrHours,
+        availabilityPercentage,
+        repeatedFailureAssets
+      }
+    });
+  } catch (error) {
+    console.error('getReliabilityAnalytics Error:', error);
+    return res.status(500).json({ success: false, message: 'Failed to calculate reliability analytics', error: error.message });
+  }
+};
+
+/**
+ * 12. MAINTENANCE COSTS & BUDGET SUMMARY
+ */
+const getMaintenanceCosts = async (req, res) => {
+  try {
+    const { data: workOrders, error } = await supabase
+      .from('maintenance_work_orders')
+      .select(`
+        id, work_order_number, title, maintenance_type, status,
+        labor_cost, parts_cost, external_service_cost, other_cost, total_cost,
+        assets (id, asset_code, name),
+        cost_centers (id, code, name, budget_amount)
+      `);
+
+    if (error) throw error;
+
+    let totalLabor = 0;
+    let totalParts = 0;
+    let totalService = 0;
+    let totalOther = 0;
+    let totalOverall = 0;
+
+    (workOrders || []).forEach(w => {
+      totalLabor += parseFloat(w.labor_cost || 0);
+      totalParts += parseFloat(w.parts_cost || 0);
+      totalService += parseFloat(w.external_service_cost || 0);
+      totalOther += parseFloat(w.other_cost || 0);
+      totalOverall += parseFloat(w.total_cost || 0);
+    });
+
+    return res.json({
+      success: true,
+      data: {
+        summary: {
+          totalLabor,
+          totalParts,
+          totalService,
+          totalOther,
+          totalOverall
+        },
+        workOrders: workOrders || []
+      }
+    });
+  } catch (error) {
+    console.error('getMaintenanceCosts Error:', error);
+    return res.status(500).json({ success: false, message: 'Failed to calculate maintenance costs', error: error.message });
+  }
+};
+
+/**
+ * 13. MAINTENANCE CALENDAR
+ */
+const getMaintenanceCalendar = async (req, res) => {
+  try {
+    const { data: schedules } = await supabase
+      .from('maintenance_schedules')
+      .select('id, schedule_number, title, next_due_date, priority, status, assets(name)');
+
+    const { data: workOrders } = await supabase
+      .from('maintenance_work_orders')
+      .select('id, work_order_number, title, planned_start, planned_end, priority, status, assets(name)');
+
+    const { data: breakdowns } = await supabase
+      .from('maintenance_breakdowns')
+      .select('id, breakdown_number, failure_date, failure_type, severity, status, assets(name)');
+
+    const events = [];
+
+    (schedules || []).forEach(s => {
+      events.push({
+        id: s.id,
+        title: `[PM] ${s.title} (${s.assets?.name || 'Asset'})`,
+        date: s.next_due_date,
+        type: 'PREVENTIVE',
+        priority: s.priority,
+        status: s.status
+      });
+    });
+
+    (workOrders || []).forEach(w => {
+      events.push({
+        id: w.id,
+        title: `[WO] ${w.work_order_number}: ${w.title}`,
+        date: w.planned_start ? w.planned_start.split('T')[0] : new Date().toISOString().split('T')[0],
+        type: 'WORK_ORDER',
+        priority: w.priority,
+        status: w.status
+      });
+    });
+
+    (breakdowns || []).forEach(b => {
+      events.push({
+        id: b.id,
+        title: `[BD] ${b.breakdown_number}: ${b.failure_type}`,
+        date: b.failure_date ? b.failure_date.split('T')[0] : new Date().toISOString().split('T')[0],
+        type: 'BREAKDOWN',
+        priority: b.severity,
+        status: b.status
+      });
+    });
+
+    return res.json({ success: true, data: events });
+  } catch (error) {
+    console.error('getMaintenanceCalendar Error:', error);
+    return res.status(500).json({ success: false, message: 'Failed to fetch calendar events', error: error.message });
+  }
+};
+
+/**
+ * 14. MAINTENANCE REPORTS
+ */
+const getMaintenanceReports = async (req, res) => {
+  try {
+    const { reportType = 'history' } = req.query;
+
+    const { data: assets } = await supabase.from('assets').select('*');
+    const { data: workOrders } = await supabase.from('maintenance_work_orders').select('*, assets(name, asset_code)');
+    const { data: breakdowns } = await supabase.from('maintenance_breakdowns').select('*, assets(name, asset_code)');
+    const { data: downtimes } = await supabase.from('downtime_logs').select('*, assets(name, asset_code)');
+
+    return res.json({
+      success: true,
+      data: {
+        reportType,
+        assets: assets || [],
+        workOrders: workOrders || [],
+        breakdowns: breakdowns || [],
+        downtimes: downtimes || []
+      }
+    });
+  } catch (error) {
+    console.error('getMaintenanceReports Error:', error);
+    return res.status(500).json({ success: false, message: 'Failed to generate maintenance report', error: error.message });
+  }
+};
+
 module.exports = {
   getDashboardKPIs,
   getAssets,
@@ -1365,5 +1787,14 @@ module.exports = {
   getDowntimeLogs,
   createDowntimeLog,
   closeDowntimeLog,
-  getMaintenanceHistory
+  getMaintenanceHistory,
+  getBreakdowns,
+  getBreakdownById,
+  createBreakdown,
+  convertBreakdownToWorkOrder,
+  getReliabilityAnalytics,
+  getMaintenanceCosts,
+  getMaintenanceCalendar,
+  getMaintenanceReports
 };
+
