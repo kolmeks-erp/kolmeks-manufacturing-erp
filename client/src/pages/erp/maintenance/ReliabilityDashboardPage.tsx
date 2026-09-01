@@ -3,7 +3,7 @@ import {
   Activity, Clock, ShieldAlert, Cpu, CheckCircle2, TrendingUp, AlertTriangle, 
   BarChart3, RefreshCw, AlertCircle
 } from 'lucide-react';
-import ERPLayout from '../../../components/erp/ERPLayout';
+import { ERPLayout } from '../../../layouts/ERPLayout';
 import ERPPageHeader from '../../../components/erp/ERPPageHeader';
 import LoadingState from '../../../components/erp/LoadingState';
 import ErrorState from '../../../components/erp/ErrorState';

@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { 
   Package, Plus, Search, RefreshCw, AlertTriangle, CheckCircle2, ArrowDownRight, Layers 
 } from 'lucide-react';
-import ERPLayout from '../../../components/erp/ERPLayout';
+import { ERPLayout } from '../../../layouts/ERPLayout';
 import ERPPageHeader from '../../../components/erp/ERPPageHeader';
-import DataTable from '../../../components/erp/DataTable';
+import DataTable from '../../../components/common/DataTable';
 import LoadingState from '../../../components/erp/LoadingState';
 import ErrorState from '../../../components/erp/ErrorState';
 import EmptyState from '../../../components/erp/EmptyState';

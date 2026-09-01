@@ -138,10 +138,6 @@ import MaintenanceCalendarPage from '../pages/erp/maintenance/MaintenanceCalenda
 import MaintenanceReportsPage from '../pages/erp/maintenance/MaintenanceReportsPage';
 import SparePartsPage from '../pages/erp/maintenance/SparePartsPage';
 
-import EmployeeListPage from '../pages/erp/employees/EmployeeListPage';
-import EmployeeCreatePage from '../pages/erp/employees/EmployeeCreatePage';
-import EmployeeDetailPage from '../pages/erp/employees/EmployeeDetailPage';
-import EmployeeEditPage from '../pages/erp/employees/EmployeeEditPage';
 import { DepartmentsPage } from '../pages/erp/employees/DepartmentsPage';
 import { OrganizationStructurePage } from '../pages/erp/employees/OrganizationStructurePage';
 
@@ -168,6 +164,18 @@ import { PayrollRunDetailPage } from '../pages/erp/payroll/PayrollRunDetailPage'
 import { PayslipsPage } from '../pages/erp/payroll/PayslipsPage';
 import { PayrollReportsPage } from '../pages/erp/payroll/PayrollReportsPage';
 import { CompensationManagementPage } from '../pages/erp/payroll/CompensationManagementPage';
+
+import { CRMDashboardPage } from '../pages/erp/crm/CRMDashboardPage';
+import { LeadsListPage } from '../pages/erp/crm/LeadsListPage';
+import { LeadDetailPage } from '../pages/erp/crm/LeadDetailPage';
+import { OpportunitiesListPage } from '../pages/erp/crm/OpportunitiesListPage';
+import { OpportunityDetailPage } from '../pages/erp/crm/OpportunityDetailPage';
+import { PipelineBoardPage } from '../pages/erp/crm/PipelineBoardPage';
+import { ActivitiesListPage } from '../pages/erp/crm/ActivitiesListPage';
+import { TasksListPage } from '../pages/erp/crm/TasksListPage';
+import { FollowupsListPage } from '../pages/erp/crm/FollowupsListPage';
+import { CustomerTimelinePage } from '../pages/erp/crm/CustomerTimelinePage';
+import { CRMReportsPage } from '../pages/erp/crm/CRMReportsPage';
 
 import FinanceDashboardPage from '../pages/erp/finance/FinanceDashboardPage';
 import ChartOfAccountsPage from '../pages/erp/finance/ChartOfAccountsPage';
@@ -517,6 +525,21 @@ export const AppRoutes: React.FC = () => {
             <Route path="sales/invoices" element={<InvoiceListPage />} />
             <Route path="sales/invoices/new" element={<InvoiceFormPage />} />
             <Route path="sales/invoices/:id" element={<InvoiceDetailPage />} />
+          </Route>
+
+          {/* CRM Module Protected Routes */}
+          <Route element={<ProtectedRoute allowedRoles={['admin', 'crm_manager', 'sales_manager', 'sales', 'sales_executive', 'hr', 'finance', 'executive', 'accountant']} />}>
+            <Route path="crm" element={<CRMDashboardPage />} />
+            <Route path="crm/leads" element={<LeadsListPage />} />
+            <Route path="crm/leads/:id" element={<LeadDetailPage />} />
+            <Route path="crm/opportunities" element={<OpportunitiesListPage />} />
+            <Route path="crm/opportunities/:id" element={<OpportunityDetailPage />} />
+            <Route path="crm/pipeline" element={<PipelineBoardPage />} />
+            <Route path="crm/activities" element={<ActivitiesListPage />} />
+            <Route path="crm/tasks" element={<TasksListPage />} />
+            <Route path="crm/follow-ups" element={<FollowupsListPage />} />
+            <Route path="crm/customers/:customerId/timeline" element={<CustomerTimelinePage />} />
+            <Route path="crm/reports" element={<CRMReportsPage />} />
           </Route>
 
           {/* Procurement Purchase Invoices Authorized Routes */}

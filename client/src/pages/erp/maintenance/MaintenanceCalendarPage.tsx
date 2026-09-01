@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Calendar as CalendarIcon, Clock, AlertTriangle, ZapOff, RefreshCw, ChevronLeft, ChevronRight } from 'lucide-react';
-import ERPLayout from '../../../components/erp/ERPLayout';
+import { ERPLayout } from '../../../layouts/ERPLayout';
 import ERPPageHeader from '../../../components/erp/ERPPageHeader';
 import LoadingState from '../../../components/erp/LoadingState';
 import ErrorState from '../../../components/erp/ErrorState';

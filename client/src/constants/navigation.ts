@@ -48,6 +48,16 @@ export const ERP_SIDEBAR_MENU: ERPMenuItem[] = [
   { id: 'sales-invoices', label: 'Sales Invoices', path: `${ERP_BASE_PATH}/sales/invoices`, iconName: 'FileText', category: 'Sales', badge: 'Live', roles: ['admin', 'sales_manager', 'finance', 'accountant', 'executive'] },
   { id: 'customers', label: 'Customers', path: `${ERP_BASE_PATH}/customers`, iconName: 'Users', category: 'Sales', badge: 'Live', roles: ['admin', 'sales_manager'] },
 
+  // CRM & Sales Operations Section
+  { id: 'crm-dashboard', label: 'CRM Telemetry', path: `${ERP_BASE_PATH}/crm`, iconName: 'Target', category: 'CRM & Sales', badge: 'Live', roles: ['admin', 'sales_manager', 'sales_executive', 'finance', 'executive'] },
+  { id: 'crm-leads', label: 'Leads Registry', path: `${ERP_BASE_PATH}/crm/leads`, iconName: 'Users', category: 'CRM & Sales', badge: 'Live', roles: ['admin', 'sales_manager', 'sales_executive', 'executive'] },
+  { id: 'crm-opportunities', label: 'Sales Deals & Opps', path: `${ERP_BASE_PATH}/crm/opportunities`, iconName: 'TrendingUp', category: 'CRM & Sales', badge: 'Live', roles: ['admin', 'sales_manager', 'sales_executive', 'executive'] },
+  { id: 'crm-pipeline', label: 'Kanban Pipeline', path: `${ERP_BASE_PATH}/crm/pipeline`, iconName: 'LayoutDashboard', category: 'CRM & Sales', badge: 'Live', roles: ['admin', 'sales_manager', 'sales_executive', 'executive'] },
+  { id: 'crm-activities', label: 'Activities & Touchpoints', path: `${ERP_BASE_PATH}/crm/activities`, iconName: 'Clock', category: 'CRM & Sales', badge: 'Live', roles: ['admin', 'sales_manager', 'sales_executive', 'executive'] },
+  { id: 'crm-tasks', label: 'Action Items & Tasks', path: `${ERP_BASE_PATH}/crm/tasks`, iconName: 'CheckSquare', category: 'CRM & Sales', badge: 'Live', roles: ['admin', 'sales_manager', 'sales_executive', 'executive'] },
+  { id: 'crm-followups', label: 'Follow-up Calendar', path: `${ERP_BASE_PATH}/crm/follow-ups`, iconName: 'Calendar', category: 'CRM & Sales', badge: 'Live', roles: ['admin', 'sales_manager', 'sales_executive', 'executive'] },
+  { id: 'crm-reports', label: 'CRM Sales Analytics', path: `${ERP_BASE_PATH}/crm/reports`, iconName: 'BarChart3', category: 'CRM & Sales', badge: 'Live', roles: ['admin', 'sales_manager', 'finance', 'executive'] },
+
   // Procurement Section
   { id: 'suppliers', label: 'Suppliers', path: `${ERP_BASE_PATH}/suppliers`, iconName: 'Truck', category: 'Procurement', badge: 'Live', roles: ['admin', 'purchase_manager', 'warehouse_manager'] },
   { id: 'purchase-requisitions', label: 'Purchase Requisitions', path: `${ERP_BASE_PATH}/purchase-requisitions`, iconName: 'ClipboardList', category: 'Procurement', badge: 'Live', roles: ['admin', 'purchase_manager', 'warehouse_manager', 'executive'] },

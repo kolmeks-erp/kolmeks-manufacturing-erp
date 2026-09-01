@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { 
   BarChart2, Download, FileSpreadsheet, Filter, RefreshCw, Printer, ShieldCheck 
 } from 'lucide-react';
-import ERPLayout from '../../../components/erp/ERPLayout';
+import { ERPLayout } from '../../../layouts/ERPLayout';
 import ERPPageHeader from '../../../components/erp/ERPPageHeader';
-import DataTable from '../../../components/erp/DataTable';
+import DataTable from '../../../components/common/DataTable';
 import LoadingState from '../../../components/erp/LoadingState';
 import ErrorState from '../../../components/erp/ErrorState';
 import { maintenanceService } from '../../../services/maintenance.service';

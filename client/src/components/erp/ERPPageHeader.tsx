@@ -5,6 +5,7 @@ interface ERPPageHeaderProps {
   title: string;
   subtitle?: string;
   description?: string;
+  icon?: any;
   actions?: React.ReactNode;
 }
 

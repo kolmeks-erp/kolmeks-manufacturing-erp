@@ -4,9 +4,9 @@ import {
   ZapOff, Plus, Search, Filter, RefreshCw, AlertTriangle, CheckCircle, 
   Clock, ArrowRight, Eye, AlertCircle, FileText
 } from 'lucide-react';
-import ERPLayout from '../../../components/erp/ERPLayout';
+import { ERPLayout } from '../../../layouts/ERPLayout';
 import ERPPageHeader from '../../../components/erp/ERPPageHeader';
-import DataTable from '../../../components/erp/DataTable';
+import DataTable from '../../../components/common/DataTable';
 import StatusBadge from '../../../components/erp/StatusBadge';
 import EmptyState from '../../../components/erp/EmptyState';
 import LoadingState from '../../../components/erp/LoadingState';

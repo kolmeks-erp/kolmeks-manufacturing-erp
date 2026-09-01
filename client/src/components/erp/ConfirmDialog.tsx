@@ -11,6 +11,7 @@ interface ConfirmDialogProps {
   message: string;
   confirmText?: string;
   confirmLabel?: string;
+  confirmVariant?: string;
   cancelText?: string;
   cancelLabel?: string;
   isDangerous?: boolean;
