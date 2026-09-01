@@ -882,3 +882,219 @@ exports.getMyLeave = async (req, res) => {
     res.status(500).json({ success: false, message: 'Failed to fetch personal leave data.' });
   }
 };
+
+// ==============================================================================
+// 8. OVERTIME MANAGEMENT
+// ==============================================================================
+
+exports.getOvertimeRecords = async (req, res) => {
+  try {
+    const page = parseInt(req.query.page, 10) || 1;
+    const limit = parseInt(req.query.limit, 10) || 20;
+    const status = req.query.status || '';
+    const employeeId = req.query.employee_id || '';
+
+    const from = (page - 1) * limit;
+    const to = from + limit - 1;
+
+    let query = supabaseAdmin
+      .from('overtime_records')
+      .select('*, employee:employees(id, employee_code, first_name, last_name, department:departments(name)), approver:employees!approved_by(first_name, last_name)', { count: 'exact' });
+
+    if (status) query = query.eq('status', status);
+    if (employeeId) query = query.eq('employee_id', employeeId);
+
+    query = query.order('overtime_date', { ascending: false }).range(from, to);
+
+    const { data, count, error } = await query;
+    if (error) throw error;
+
+    res.status(200).json({
+      success: true,
+      data: data || [],
+      pagination: {
+        page,
+        limit,
+        totalRecords: count || 0,
+        totalPages: Math.ceil((count || 0) / limit) || 1
+      }
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, message: 'Failed to fetch overtime records.' });
+  }
+};
+
+exports.createOvertimeRequest = async (req, res) => {
+  try {
+    const { employee_id, attendance_id, overtime_date, hours, reason } = req.body;
+    let empId = employee_id;
+
+    if (!empId) {
+      const emp = await getEmployeeForUser(req.user);
+      if (!emp) return res.status(404).json({ success: false, message: 'Employee record not linked.' });
+      empId = emp.id;
+    }
+
+    if (!hours || parseFloat(hours) <= 0 || !reason) {
+      return res.status(400).json({ success: false, message: 'Positive overtime hours and reason are required.' });
+    }
+
+    const { data, error } = await supabaseAdmin
+      .from('overtime_records')
+      .insert({
+        employee_id: empId,
+        attendance_id: attendance_id || null,
+        overtime_date: overtime_date || new Date().toISOString().split('T')[0],
+        hours: parseFloat(hours),
+        reason: reason.trim(),
+        status: 'PENDING'
+      })
+      .select()
+      .single();
+
+    if (error) throw error;
+    res.status(201).json({ success: true, message: 'Overtime request submitted for manager review.', data });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message || 'Failed to submit overtime request.' });
+  }
+};
+
+exports.approveOvertimeRequest = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { hourly_rate } = req.body;
+    const approverEmp = await getEmployeeForUser(req.user);
+
+    const { data: ot, error: fetchErr } = await supabaseAdmin
+      .from('overtime_records')
+      .select('*, employee:employees(*)')
+      .eq('id', id)
+      .single();
+
+    if (fetchErr || !ot) {
+      return res.status(404).json({ success: false, message: 'Overtime record not found.' });
+    }
+
+    if (ot.status !== 'PENDING') {
+      return res.status(400).json({ success: false, message: `Cannot approve overtime in ${ot.status} status.` });
+    }
+
+    // Lookup employee hourly rate from compensation if not provided
+    let rate = parseFloat(hourly_rate) || 0;
+    if (!rate && ot.employee_id) {
+      const { data: comp } = await supabaseAdmin
+        .from('employee_compensation')
+        .select('hourly_rate, basic_salary')
+        .eq('employee_id', ot.employee_id)
+        .maybeSingle();
+
+      if (comp && comp.hourly_rate > 0) {
+        rate = parseFloat(comp.hourly_rate);
+      } else if (comp && comp.basic_salary > 0) {
+        // Fallback calculation: Hourly rate = (Basic Salary / 30 / 8) * 1.5 multiplier
+        rate = Math.round(((comp.basic_salary / 30 / 8) * 1.5) * 100) / 100;
+      }
+    }
+
+    const otAmount = Math.round((parseFloat(ot.hours) * rate) * 100) / 100;
+
+    const { data: approved, error } = await supabaseAdmin
+      .from('overtime_records')
+      .update({
+        status: 'APPROVED',
+        hourly_rate: rate,
+        overtime_amount: otAmount,
+        approved_by: approverEmp ? approverEmp.id : null,
+        approved_at: new Date().toISOString()
+      })
+      .eq('id', id)
+      .select()
+      .single();
+
+    if (error) throw error;
+    res.status(200).json({ success: true, message: 'Overtime request approved.', data: approved });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message || 'Failed to approve overtime.' });
+  }
+};
+
+exports.rejectOvertimeRequest = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { rejection_reason } = req.body;
+    const approverEmp = await getEmployeeForUser(req.user);
+
+    const { data: rejected, error } = await supabaseAdmin
+      .from('overtime_records')
+      .update({
+        status: 'REJECTED',
+        rejection_reason: rejection_reason || 'Rejected by HR/Manager',
+        approved_by: approverEmp ? approverEmp.id : null,
+        approved_at: new Date().toISOString()
+      })
+      .eq('id', id)
+      .select()
+      .single();
+
+    if (error) throw error;
+    res.status(200).json({ success: true, message: 'Overtime request rejected.', data: rejected });
+  } catch (err) {
+    res.status(500).json({ success: false, message: 'Failed to reject overtime.' });
+  }
+};
+
+// ==============================================================================
+// 9. WORKING CALENDAR SETTINGS
+// ==============================================================================
+
+exports.getWorkingCalendarSettings = async (req, res) => {
+  try {
+    const { data, error } = await supabaseAdmin
+      .from('working_calendar_settings')
+      .select('*')
+      .order('year', { ascending: false })
+      .limit(1)
+      .maybeSingle();
+
+    if (error) throw error;
+    res.status(200).json({
+      success: true,
+      data: data || {
+        year: 2026,
+        weekly_off_days: ['Sunday'],
+        work_start_time: '09:00:00',
+        work_end_time: '18:00:00',
+        grace_period_minutes: 15,
+        overtime_multiplier: 1.50
+      }
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, message: 'Failed to fetch working calendar settings.' });
+  }
+};
+
+exports.updateWorkingCalendarSettings = async (req, res) => {
+  try {
+    const { year, weekly_off_days, work_start_time, work_end_time, grace_period_minutes, overtime_multiplier } = req.body;
+
+    const { data, error } = await supabaseAdmin
+      .from('working_calendar_settings')
+      .upsert({
+        year: parseInt(year, 10) || new Date().getFullYear(),
+        weekly_off_days: weekly_off_days || ['Sunday'],
+        work_start_time: work_start_time || '09:00:00',
+        work_end_time: work_end_time || '18:00:00',
+        grace_period_minutes: parseInt(grace_period_minutes, 10) || 15,
+        overtime_multiplier: parseFloat(overtime_multiplier) || 1.50,
+        status: 'ACTIVE'
+      })
+      .select()
+      .single();
+
+    if (error) throw error;
+    res.status(200).json({ success: true, message: 'Working calendar settings updated.', data });
+  } catch (err) {
+    res.status(500).json({ success: false, message: 'Failed to update calendar settings.' });
+  }
+};
+

@@ -33,6 +33,7 @@ const assetRoutes = require('./routes/asset.routes');
 const costingRoutes = require('./routes/costing.routes');
 const planningRoutes = require('./routes/planning.routes');
 const systemSettingsRoutes = require('./routes/system_settings.routes');
+const payrollRoutes = require('./routes/payroll.routes');
 const { publicRouter: rfqPublicRoutes, erpRouter: rfqErpRoutes } = require('./routes/rfq.routes');
 const errorHandler = require('./middleware/errorHandler');
 
@@ -111,6 +112,7 @@ app.use('/api/production/costing', costingRoutes);
 app.use('/api/production/wip', costingRoutes);
 app.use('/api/production/planning', planningRoutes);
 app.use('/api/system', systemSettingsRoutes);
+app.use('/api/payroll', payrollRoutes);
 
 // Root Endpoint
 app.get('/', (req, res) => {

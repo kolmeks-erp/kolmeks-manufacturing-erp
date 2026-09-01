@@ -179,3 +179,33 @@ export interface MyLeaveData {
   balances: LeaveBalance[];
   requests: LeaveRequest[];
 }
+
+export interface OvertimeRecord {
+  id: string;
+  overtime_number: string;
+  employee_id: string;
+  attendance_id?: string;
+  overtime_date: string;
+  hours: number;
+  reason: string;
+  status: 'PENDING' | 'APPROVED' | 'REJECTED';
+  hourly_rate?: number;
+  overtime_amount?: number;
+  approved_by?: string;
+  approved_at?: string;
+  rejection_reason?: string;
+  employee?: Partial<Employee> & { department?: { name: string } };
+  approver?: { first_name: string; last_name: string };
+  created_at?: string;
+}
+
+export interface WorkingCalendarSettings {
+  id?: string;
+  year: number;
+  weekly_off_days: string[];
+  work_start_time: string;
+  work_end_time: string;
+  grace_period_minutes: number;
+  overtime_multiplier: number;
+  status?: 'ACTIVE' | 'INACTIVE';
+}

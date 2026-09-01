@@ -158,6 +158,16 @@ import { HRReportsPage } from '../pages/erp/hr/HRReportsPage';
 import MyHRDashboardPage from '../pages/erp/hr/MyHRDashboardPage';
 import MyAttendancePage from '../pages/erp/hr/MyAttendancePage';
 import MyLeavePage from '../pages/erp/hr/MyLeavePage';
+import { OvertimePage } from '../pages/erp/hr/OvertimePage';
+import { WorkingCalendarPage } from '../pages/erp/hr/WorkingCalendarPage';
+
+import { PayrollDashboardPage } from '../pages/erp/payroll/PayrollDashboardPage';
+import { PayrollPeriodsPage } from '../pages/erp/payroll/PayrollPeriodsPage';
+import { PayrollRunsPage } from '../pages/erp/payroll/PayrollRunsPage';
+import { PayrollRunDetailPage } from '../pages/erp/payroll/PayrollRunDetailPage';
+import { PayslipsPage } from '../pages/erp/payroll/PayslipsPage';
+import { PayrollReportsPage } from '../pages/erp/payroll/PayrollReportsPage';
+import { CompensationManagementPage } from '../pages/erp/payroll/CompensationManagementPage';
 
 import FinanceDashboardPage from '../pages/erp/finance/FinanceDashboardPage';
 import ChartOfAccountsPage from '../pages/erp/finance/ChartOfAccountsPage';
@@ -476,6 +486,8 @@ export const AppRoutes: React.FC = () => {
             <Route path="hr/organization" element={<OrganizationStructurePage />} />
             <Route path="hr/reports" element={<HRReportsPage />} />
             <Route path="hr/attendance" element={<HRAttendanceListPage />} />
+            <Route path="hr/attendance/overtime" element={<OvertimePage />} />
+            <Route path="hr/attendance/calendar-settings" element={<WorkingCalendarPage />} />
             <Route path="hr/leave" element={<HRLeaveListPage />} />
             <Route path="hr/leave/requests" element={<HRLeaveRequestListPage />} />
             <Route path="hr/leave/types" element={<HRLeaveTypeListPage />} />
@@ -483,10 +495,22 @@ export const AppRoutes: React.FC = () => {
             <Route path="hr/holidays" element={<HRHolidayListPage />} />
           </Route>
 
+          {/* Payroll Authorized Routes */}
+          <Route element={<ProtectedRoute allowedRoles={['admin', 'hr', 'payroll', 'finance']} />}>
+            <Route path="payroll" element={<PayrollDashboardPage />} />
+            <Route path="payroll/periods" element={<PayrollPeriodsPage />} />
+            <Route path="payroll/runs" element={<PayrollRunsPage />} />
+            <Route path="payroll/runs/:id" element={<PayrollRunDetailPage />} />
+            <Route path="payroll/compensations" element={<CompensationManagementPage />} />
+            <Route path="payroll/payslips" element={<PayslipsPage />} />
+            <Route path="payroll/reports" element={<PayrollReportsPage />} />
+          </Route>
+
           {/* Employee Self-Service (My HR) Routes — Accessible to All Staff */}
           <Route path="my-hr" element={<MyHRDashboardPage />} />
           <Route path="my-hr/attendance" element={<MyAttendancePage />} />
           <Route path="my-hr/leave" element={<MyLeavePage />} />
+          <Route path="my-hr/payslips" element={<PayslipsPage />} />
 
           {/* Commercial Sales Invoices Authorized Routes */}
           <Route element={<ProtectedRoute allowedRoles={['admin', 'sales_manager', 'finance', 'accountant', 'executive']} />}>

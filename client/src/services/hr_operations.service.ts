@@ -11,6 +11,8 @@ import {
   Holiday,
   MyProfileData,
   MyLeaveData,
+  OvertimeRecord,
+  WorkingCalendarSettings,
 } from '../types/hr_operations';
 
 export const hrOperationsService = {
@@ -133,6 +135,38 @@ export const hrOperationsService = {
 
   getMyLeave: async (): Promise<MyLeaveData> => {
     const res = await api.get('/hr/me/leave');
+    return res.data.data;
+  },
+
+  // Overtime Management
+  getOvertimeRecords: async (params?: Record<string, any>): Promise<{ data: OvertimeRecord[]; pagination: any }> => {
+    const res = await api.get('/hr/overtime', { params });
+    return { data: res.data.data, pagination: res.data.pagination };
+  },
+
+  createOvertimeRequest: async (data: { employee_id?: string; overtime_date?: string; hours: number; reason: string }): Promise<OvertimeRecord> => {
+    const res = await api.post('/hr/overtime', data);
+    return res.data.data;
+  },
+
+  approveOvertimeRequest: async (id: string, hourly_rate?: number): Promise<OvertimeRecord> => {
+    const res = await api.post(`/hr/overtime/${id}/approve`, { hourly_rate });
+    return res.data.data;
+  },
+
+  rejectOvertimeRequest: async (id: string, rejection_reason?: string): Promise<OvertimeRecord> => {
+    const res = await api.post(`/hr/overtime/${id}/reject`, { rejection_reason });
+    return res.data.data;
+  },
+
+  // Working Calendar Settings
+  getWorkingCalendarSettings: async (): Promise<WorkingCalendarSettings> => {
+    const res = await api.get('/hr/calendar-settings');
+    return res.data.data;
+  },
+
+  updateWorkingCalendarSettings: async (data: Partial<WorkingCalendarSettings>): Promise<WorkingCalendarSettings> => {
+    const res = await api.post('/hr/calendar-settings', data);
     return res.data.data;
   },
 };

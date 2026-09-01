@@ -132,11 +132,21 @@ export const ERP_SIDEBAR_MENU: ERPMenuItem[] = [
   { id: 'hr-organization', label: 'Org Hierarchy Tree', path: `${ERP_BASE_PATH}/hr/organization`, iconName: 'Network', category: 'HR & Operations', badge: 'Live', roles: ['admin', 'hr'] },
   { id: 'hr-reports', label: 'HR Analytics & Reports', path: `${ERP_BASE_PATH}/hr/reports`, iconName: 'BarChart2', category: 'HR & Operations', badge: 'Live', roles: ['admin', 'hr'] },
   { id: 'hr-attendance', label: 'Attendance Registry', path: `${ERP_BASE_PATH}/hr/attendance`, iconName: 'Clock', category: 'HR & Operations', badge: 'Live', roles: ['admin', 'hr'] },
+  { id: 'hr-overtime', label: 'Overtime Claims', path: `${ERP_BASE_PATH}/hr/attendance/overtime`, iconName: 'Timer', category: 'HR & Operations', badge: 'Live', roles: ['admin', 'hr'] },
+  { id: 'hr-working-calendar', label: 'Working Calendar Settings', path: `${ERP_BASE_PATH}/hr/attendance/calendar-settings`, iconName: 'Calendar', category: 'HR & Operations', badge: 'Live', roles: ['admin', 'hr'] },
   { id: 'hr-leave-requests', label: 'Leave Requests Queue', path: `${ERP_BASE_PATH}/hr/leave/requests`, iconName: 'CalendarRange', category: 'HR & Operations', badge: 'Live', roles: ['admin', 'hr'] },
   { id: 'hr-leave-balances', label: 'Leave Entitlements', path: `${ERP_BASE_PATH}/hr/leave`, iconName: 'Calendar', category: 'HR & Operations', badge: 'Live', roles: ['admin', 'hr'] },
   { id: 'hr-leave-types', label: 'Leave Policies', path: `${ERP_BASE_PATH}/hr/leave/types`, iconName: 'FileSpreadsheet', category: 'HR & Operations', badge: 'Live', roles: ['admin', 'hr'] },
   { id: 'hr-shifts', label: 'Shift Management', path: `${ERP_BASE_PATH}/hr/shifts`, iconName: 'Timer', category: 'HR & Operations', badge: 'Live', roles: ['admin', 'hr'] },
   { id: 'hr-holidays', label: 'Plant Holiday Calendar', path: `${ERP_BASE_PATH}/hr/holidays`, iconName: 'Calendar', category: 'HR & Operations', badge: 'Live', roles: ['admin', 'hr'] },
+
+  // Payroll Section
+  { id: 'payroll-dashboard', label: 'Payroll Overview', path: `${ERP_BASE_PATH}/payroll`, iconName: 'DollarSign', category: 'Payroll & Remuneration', badge: 'Live', roles: ['admin', 'hr', 'payroll', 'finance'] },
+  { id: 'payroll-periods', label: 'Payroll Periods', path: `${ERP_BASE_PATH}/payroll/periods`, iconName: 'Calendar', category: 'Payroll & Remuneration', badge: 'Live', roles: ['admin', 'hr', 'payroll', 'finance'] },
+  { id: 'payroll-runs', label: 'Payroll Runs & Engine', path: `${ERP_BASE_PATH}/payroll/runs`, iconName: 'PlayCircle', category: 'Payroll & Remuneration', badge: 'Live', roles: ['admin', 'hr', 'payroll', 'finance'] },
+  { id: 'payroll-compensations', label: 'Salary Structures', path: `${ERP_BASE_PATH}/payroll/compensations`, iconName: 'Building2', category: 'Payroll & Remuneration', badge: 'Live', roles: ['admin', 'hr', 'payroll'] },
+  { id: 'payroll-payslips', label: 'Payslip Register', path: `${ERP_BASE_PATH}/payroll/payslips`, iconName: 'FileText', category: 'Payroll & Remuneration', badge: 'Live', roles: ['admin', 'hr', 'payroll', 'finance'] },
+  { id: 'payroll-reports', label: 'Payroll Analytics', path: `${ERP_BASE_PATH}/payroll/reports`, iconName: 'BarChart3', category: 'Payroll & Remuneration', badge: 'Live', roles: ['admin', 'hr', 'payroll', 'finance'] },
 
   // Finance & Accounting Section
   { id: 'finance-dashboard', label: 'Finance Dashboard', path: `${ERP_BASE_PATH}/finance`, iconName: 'DollarSign', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'accountant', 'manager'] },

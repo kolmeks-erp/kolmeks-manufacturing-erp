@@ -51,6 +51,16 @@ router.get('/leave/requests', hrAuth, hrController.getLeaveRequests);
 router.post('/leave/requests/:id/approve', hrAuth, hrController.approveLeaveRequest);
 router.post('/leave/requests/:id/reject', hrAuth, hrController.rejectLeaveRequest);
 
+// Overtime Management
+router.get('/overtime', hrAuth, hrController.getOvertimeRecords);
+router.post('/overtime', hrController.createOvertimeRequest);
+router.post('/overtime/:id/approve', hrAuth, hrController.approveOvertimeRequest);
+router.post('/overtime/:id/reject', hrAuth, hrController.rejectOvertimeRequest);
+
+// Working Calendar Settings
+router.get('/calendar-settings', hrController.getWorkingCalendarSettings);
+router.post('/calendar-settings', hrAuth, hrController.updateWorkingCalendarSettings);
+
 // Holidays
 router.get('/holidays', hrController.getHolidays); // Open for view by all staff, edit by HR
 router.post('/holidays', hrAuth, hrController.createHoliday);
