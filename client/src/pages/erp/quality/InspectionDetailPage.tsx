@@ -324,7 +324,7 @@ const InspectionDetailPage: React.FC = () => {
               <span className="text-xs text-slate-500 font-semibold uppercase">Inspector Profile</span>
               <p className="font-semibold text-slate-800 mt-1">
                 {inspection.inspected_by_profile
-                  ? `${inspection.inspected_by_profile.first_name || ''} ${inspection.inspected_by_profile.last_name || ''}`.trim()
+                  ? `${inspection.inspected_by_profile.full_name || inspection.inspected_by_profile.email}`
                   : 'Quality Officer'}
               </p>
             </div>

@@ -158,7 +158,7 @@ const NCRListPage: React.FC = () => {
                     <td className="py-3 px-4 text-xs text-slate-600">{ncr.source_type}</td>
                     <td className="py-3 px-4 text-slate-800 font-medium">{ncr.products?.name || 'N/A'}</td>
                     <td className="py-3 px-4 text-xs text-slate-700">
-                      {ncr.assigned_profile ? `${ncr.assigned_profile.first_name} ${ncr.assigned_profile.last_name}` : 'Unassigned'}
+                      {ncr.assigned_profile ? `${ncr.assigned_profile.full_name || ncr.assigned_profile.email}` : 'Unassigned'}
                     </td>
                     <td className="py-3 px-4">
                       <StatusBadge status={ncr.status} />

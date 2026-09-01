@@ -109,6 +109,15 @@ import NCRListPage from '../pages/erp/quality/NCRListPage';
 import NCRFormPage from '../pages/erp/quality/NCRFormPage';
 import NCRDetailPage from '../pages/erp/quality/NCRDetailPage';
 import QualityHoldListPage from '../pages/erp/quality/QualityHoldListPage';
+import DefectsListPage from '../pages/erp/quality/DefectsListPage';
+import CAPAListPage from '../pages/erp/quality/CAPAListPage';
+import CAPAFormPage from '../pages/erp/quality/CAPAFormPage';
+import CAPADetailPage from '../pages/erp/quality/CAPADetailPage';
+import QuarantineListPage from '../pages/erp/quality/QuarantineListPage';
+import SupplierQualityPage from '../pages/erp/quality/SupplierQualityPage';
+import CustomerComplaintsListPage from '../pages/erp/quality/CustomerComplaintsListPage';
+import CustomerComplaintFormPage from '../pages/erp/quality/CustomerComplaintFormPage';
+import QualityReportsPage from '../pages/erp/quality/QualityReportsPage';
 
 import MaintenanceDashboardPage from '../pages/erp/maintenance/MaintenanceDashboardPage';
 import AssetListPage from '../pages/erp/maintenance/AssetListPage';
@@ -355,10 +364,19 @@ export const AppRoutes: React.FC = () => {
             <Route path="quality/inspection-plans" element={<InspectionPlanListPage />} />
             <Route path="quality/inspection-plans/new" element={<InspectionPlanFormPage />} />
             <Route path="quality/inspection-plans/:id" element={<InspectionPlanDetailPage />} />
+            <Route path="quality/defects" element={<DefectsListPage />} />
             <Route path="quality/ncr" element={<NCRListPage />} />
             <Route path="quality/ncr/new" element={<NCRFormPage />} />
             <Route path="quality/ncr/:id" element={<NCRDetailPage />} />
+            <Route path="quality/capa" element={<CAPAListPage />} />
+            <Route path="quality/capa/new" element={<CAPAFormPage />} />
+            <Route path="quality/capa/:id" element={<CAPADetailPage />} />
             <Route path="quality/holds" element={<QualityHoldListPage />} />
+            <Route path="quality/quarantine" element={<QuarantineListPage />} />
+            <Route path="quality/suppliers" element={<SupplierQualityPage />} />
+            <Route path="quality/complaints" element={<CustomerComplaintsListPage />} />
+            <Route path="quality/complaints/new" element={<CustomerComplaintFormPage />} />
+            <Route path="quality/reports" element={<QualityReportsPage />} />
           </Route>
 
           {/* Maintenance & Asset Management Authorized Routes */}
