@@ -141,7 +141,7 @@ export const PricingManagementPage: React.FC = () => {
                     <td className="px-6 py-4 font-medium text-slate-300">
                       {r.customer_id ? `Customer: ${r.customer_id}` : 'Global Default Price'}
                     </td>
-                    <td className="px-6 py-4 font-bold text-emerald-400">€{Number(r.base_price).toFixed(2)}</td>
+                    <td className="px-6 py-4 font-bold text-emerald-400">₹{Number(r.base_price).toFixed(2)}</td>
                     <td className="px-6 py-4 font-medium text-slate-300">{r.min_quantity} pcs</td>
                     <td className="px-6 py-4 text-purple-400 font-semibold">{r.discount_percentage}% OFF</td>
                     <td className="px-6 py-4">
@@ -205,7 +205,7 @@ export const PricingManagementPage: React.FC = () => {
 
               <div className="grid grid-cols-3 gap-3">
                 <div>
-                  <label className="block text-xs uppercase font-semibold text-slate-300 mb-1">Base Price (€) *</label>
+                  <label className="block text-xs uppercase font-semibold text-slate-300 mb-1">Base Price (₹) *</label>
                   <input
                     type="number"
                     step="0.01"

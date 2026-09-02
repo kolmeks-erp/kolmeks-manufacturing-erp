@@ -29,7 +29,7 @@ export const InventoryReportPage: React.FC = () => {
 
   const handleExport = () => {
     if (!reportData?.productsTable) return;
-    const headers = ['SKU / Code', 'Product Name', 'Category', 'Stock Qty', 'Unit Cost (€)', 'Valuation (€)'];
+    const headers = ['SKU / Code', 'Product Name', 'Category', 'Stock Qty', 'Unit Cost (₹)', 'Valuation (₹)'];
     const rows = reportData.productsTable.map((p: any) => [
       p.sku || p.code || p.id,
       p.name,
@@ -70,7 +70,7 @@ export const InventoryReportPage: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
         <KPICard
           title="Total Stock Valuation"
-          value={loading ? '...' : `€${(metrics?.totalValuation || 0).toLocaleString('en-US', { minimumFractionDigits: 2 })}`}
+          value={loading ? '...' : `₹${(metrics?.totalValuation || 0).toLocaleString('en-US', { minimumFractionDigits: 2 })}`}
           subtitle="On-hand inventory asset value"
           icon={DollarSign}
           color="purple"
@@ -128,8 +128,8 @@ export const InventoryReportPage: React.FC = () => {
                       <td className="px-6 py-4 font-semibold text-white">{p.name}</td>
                       <td className="px-6 py-4 text-slate-300">{p.category || 'General'}</td>
                       <td className="px-6 py-4 font-medium text-slate-200">{p.stock_quantity || 0}</td>
-                      <td className="px-6 py-4 text-slate-300">€{Number(p.unit_cost || p.unit_price || 0).toFixed(2)}</td>
-                      <td className="px-6 py-4 font-bold text-emerald-400">€{valuation.toFixed(2)}</td>
+                      <td className="px-6 py-4 text-slate-300">₹{Number(p.unit_cost || p.unit_price || 0).toFixed(2)}</td>
+                      <td className="px-6 py-4 font-bold text-emerald-400">₹{valuation.toFixed(2)}</td>
                     </tr>
                   );
                 })

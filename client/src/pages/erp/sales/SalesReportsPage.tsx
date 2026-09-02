@@ -31,7 +31,7 @@ export const SalesReportsPage: React.FC = () => {
 
   const handleExportCSV = () => {
     if (!reportData?.customerPerformance) return;
-    const headers = ['Customer Name', 'Total Orders', 'Total Revenue (€)', 'Returns Count'];
+    const headers = ['Customer Name', 'Total Orders', 'Total Revenue (₹)', 'Returns Count'];
     const rows = reportData.customerPerformance.map((c: any) => [
       `"${c.name}"`,
       c.totalOrders,
@@ -129,7 +129,7 @@ export const SalesReportsPage: React.FC = () => {
                   <tr key={idx} className="hover:bg-slate-700/30 transition">
                     <td className="px-6 py-4 font-bold text-white">{c.name}</td>
                     <td className="px-6 py-4 font-medium text-slate-200">{c.totalOrders} order(s)</td>
-                    <td className="px-6 py-4 font-bold text-emerald-400">€{c.totalRevenue.toFixed(2)}</td>
+                    <td className="px-6 py-4 font-bold text-emerald-400">₹{c.totalRevenue.toFixed(2)}</td>
                     <td className="px-6 py-4 text-amber-400 font-semibold">{c.returnsCount} return(s)</td>
                   </tr>
                 ))

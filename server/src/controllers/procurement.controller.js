@@ -1117,7 +1117,7 @@ async function createPurchaseOrder(req, res) {
       insertedPO.id,
       req.profile,
       'CREATED',
-      { message: `Created Purchase Order ${poNumber} for ${supp.company_name} (Total: ${newPO.currency} ${total_amount.toLocaleString()})` }
+      { message: `Created Purchase Order ${poNumber} for ${supp.company_name} (Total: ₹{newPO.currency} ${total_amount.toLocaleString()})` }
     );
 
     return res.status(201).json({

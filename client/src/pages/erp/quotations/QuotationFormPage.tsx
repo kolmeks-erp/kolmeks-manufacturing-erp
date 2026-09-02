@@ -445,8 +445,8 @@ export const QuotationFormPage: React.FC = () => {
                   onChange={(e) => setCurrency(e.target.value)}
                   className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-semibold text-slate-900 focus:ring-2 focus:ring-slate-900"
                 >
-                  <option value="EUR">EUR (€)</option>
-                  <option value="USD">USD ($)</option>
+                  <option value="EUR">EUR (₹)</option>
+                  <option value="USD">USD (₹)</option>
                   <option value="INR">INR (₹)</option>
                 </select>
               </div>

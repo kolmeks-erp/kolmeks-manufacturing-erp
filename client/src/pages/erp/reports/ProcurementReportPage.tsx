@@ -32,7 +32,7 @@ export const ProcurementReportPage: React.FC = () => {
 
   const handleExport = () => {
     if (!reportData?.ordersTable) return;
-    const headers = ['PO Number', 'Supplier', 'Date', 'Total Spend (€)', 'Status'];
+    const headers = ['PO Number', 'Supplier', 'Date', 'Total Spend (₹)', 'Status'];
     const rows = reportData.ordersTable.map((p: any) => [
       p.po_number || p.id,
       p.supplier?.name || 'Primary Supplier',
@@ -72,7 +72,7 @@ export const ProcurementReportPage: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
         <KPICard
           title="Total Purchase Spend"
-          value={loading ? '...' : `€${(metrics?.totalSpend || 0).toLocaleString('en-US', { minimumFractionDigits: 2 })}`}
+          value={loading ? '...' : `₹${(metrics?.totalSpend || 0).toLocaleString('en-US', { minimumFractionDigits: 2 })}`}
           subtitle="Total PO commitments"
           icon={DollarSign}
           color="emerald"
@@ -102,7 +102,7 @@ export const ProcurementReportPage: React.FC = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-1 gap-6">
         <ReportChart
-          title="Top Supplier Spend (€)"
+          title="Top Supplier Spend (₹)"
           type="bar"
           data={reportData?.supplierChart || []}
           dataKey="spend"
@@ -122,7 +122,7 @@ export const ProcurementReportPage: React.FC = () => {
                 <th className="px-6 py-4">PO Number</th>
                 <th className="px-6 py-4">Supplier</th>
                 <th className="px-6 py-4">Order Date</th>
-                <th className="px-6 py-4">Total (€)</th>
+                <th className="px-6 py-4">Total (₹)</th>
                 <th className="px-6 py-4">Status</th>
               </tr>
             </thead>
@@ -137,7 +137,7 @@ export const ProcurementReportPage: React.FC = () => {
                     <td className="px-6 py-4 font-mono font-bold text-indigo-400">{p.po_number || p.id.slice(0, 8)}</td>
                     <td className="px-6 py-4 font-semibold text-white">{p.supplier?.name || 'Primary Supplier'}</td>
                     <td className="px-6 py-4 text-slate-300">{new Date(p.created_at).toLocaleDateString()}</td>
-                    <td className="px-6 py-4 font-bold text-emerald-400">€{Number(p.total_amount || 0).toFixed(2)}</td>
+                    <td className="px-6 py-4 font-bold text-emerald-400">₹{Number(p.total_amount || 0).toFixed(2)}</td>
                     <td className="px-6 py-4">
                       <span className="px-2.5 py-1 bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 rounded-full text-xs font-semibold uppercase">
                         {p.status}

@@ -30,7 +30,7 @@ export const FinanceReportPage: React.FC = () => {
   const handleExport = () => {
     if (!reportData?.metrics) return;
     const m = reportData.metrics;
-    const headers = ['Financial Indicator', 'Amount (€)'];
+    const headers = ['Financial Indicator', 'Amount (₹)'];
     const rows = [
       ['Total Accounts Receivable', m.receivables.toFixed(2)],
       ['Total Accounts Payable', m.payables.toFixed(2)],
@@ -70,21 +70,21 @@ export const FinanceReportPage: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
         <KPICard
           title="Accounts Receivable (AR)"
-          value={loading ? '...' : `€${(metrics?.receivables || 0).toLocaleString('en-US', { minimumFractionDigits: 2 })}`}
+          value={loading ? '...' : `₹${(metrics?.receivables || 0).toLocaleString('en-US', { minimumFractionDigits: 2 })}`}
           subtitle="Billed customer invoices"
           icon={TrendingUp}
           color="emerald"
         />
         <KPICard
           title="Accounts Payable (AP)"
-          value={loading ? '...' : `€${(metrics?.payables || 0).toLocaleString('en-US', { minimumFractionDigits: 2 })}`}
+          value={loading ? '...' : `₹${(metrics?.payables || 0).toLocaleString('en-US', { minimumFractionDigits: 2 })}`}
           subtitle="Outstanding vendor bills"
           icon={TrendingDown}
           color="rose"
         />
         <KPICard
           title="Operating Expenses"
-          value={loading ? '...' : `€${(metrics?.expenses || 0).toLocaleString('en-US', { minimumFractionDigits: 2 })}`}
+          value={loading ? '...' : `₹${(metrics?.expenses || 0).toLocaleString('en-US', { minimumFractionDigits: 2 })}`}
           subtitle="Operational expense claims"
           icon={Receipt}
           color="amber"

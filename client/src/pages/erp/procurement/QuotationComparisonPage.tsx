@@ -171,7 +171,7 @@ export const QuotationComparisonPage: React.FC = () => {
               <div className="space-y-3 text-sm text-slate-300 mb-6">
                 <div className="flex justify-between items-center">
                   <span className="text-slate-400 text-xs uppercase font-medium">Total Quoted Price:</span>
-                  <span className="text-xl font-bold text-emerald-400">€{q.total_amount?.toFixed(2)}</span>
+                  <span className="text-xl font-bold text-emerald-400">₹{q.total_amount?.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-slate-400 text-xs uppercase font-medium">Promised Lead Time:</span>
@@ -193,7 +193,7 @@ export const QuotationComparisonPage: React.FC = () => {
                   {q.items?.map((item, idx) => (
                     <div key={idx} className="flex justify-between text-slate-300 py-0.5">
                       <span>{item.description} (x{item.quantity})</span>
-                      <span className="font-mono text-slate-200">€{item.unit_price?.toFixed(2)}/unit</span>
+                      <span className="font-mono text-slate-200">₹{item.unit_price?.toFixed(2)}/unit</span>
                     </div>
                   ))}
                 </div>
@@ -229,7 +229,7 @@ export const QuotationComparisonPage: React.FC = () => {
             </h3>
             <p className="text-slate-300 text-sm mb-4">
               You are selecting <strong className="text-white">{selectingQuote.supplier?.company_name}</strong> for Quotation{' '}
-              <strong className="text-white">{selectingQuote.quotation_number}</strong> at total cost €
+              <strong className="text-white">{selectingQuote.quotation_number}</strong> at total cost ₹
               {selectingQuote.total_amount?.toFixed(2)}.
             </p>
 

@@ -45,10 +45,10 @@ export const ReportsExecutiveDashboardPage: React.FC = () => {
     if (!kpis) return;
     const headers = ['KPI Metric', 'Current Value'];
     const rows = [
-      ['Total Sales Revenue (€)', kpis.totalSales.toFixed(2)],
+      ['Total Sales Revenue (₹)', kpis.totalSales.toFixed(2)],
       ['Open Customer Orders', kpis.openOrdersCount],
-      ['Purchase Commitments (€)', kpis.purchaseCommitments.toFixed(2)],
-      ['Total Inventory Valuation (€)', kpis.inventoryValue.toFixed(2)],
+      ['Purchase Commitments (₹)', kpis.purchaseCommitments.toFixed(2)],
+      ['Total Inventory Valuation (₹)', kpis.inventoryValue.toFixed(2)],
       ['Active Production Orders', kpis.productionOrdersCount],
       ['Quality Issues / Failed Inspections', kpis.qualityIssuesCount],
       ['Overdue Maintenance Orders', kpis.maintenanceOverdueCount],
@@ -89,7 +89,7 @@ export const ReportsExecutiveDashboardPage: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
         <KPICard
           title="Total Sales Revenue"
-          value={loading ? '...' : `€${(kpis?.totalSales || 0).toLocaleString('en-US', { minimumFractionDigits: 2 })}`}
+          value={loading ? '...' : `₹${(kpis?.totalSales || 0).toLocaleString('en-US', { minimumFractionDigits: 2 })}`}
           subtitle="Realized sales orders in period"
           icon={DollarSign}
           color="emerald"
@@ -107,7 +107,7 @@ export const ReportsExecutiveDashboardPage: React.FC = () => {
 
         <KPICard
           title="Purchase Commitments"
-          value={loading ? '...' : `€${(kpis?.purchaseCommitments || 0).toLocaleString('en-US', { minimumFractionDigits: 2 })}`}
+          value={loading ? '...' : `₹${(kpis?.purchaseCommitments || 0).toLocaleString('en-US', { minimumFractionDigits: 2 })}`}
           subtitle="Committed PO vendor spend"
           icon={Truck}
           color="indigo"
@@ -116,7 +116,7 @@ export const ReportsExecutiveDashboardPage: React.FC = () => {
 
         <KPICard
           title="Total Inventory Valuation"
-          value={loading ? '...' : `€${(kpis?.inventoryValue || 0).toLocaleString('en-US', { minimumFractionDigits: 2 })}`}
+          value={loading ? '...' : `₹${(kpis?.inventoryValue || 0).toLocaleString('en-US', { minimumFractionDigits: 2 })}`}
           subtitle="On-hand warehouse stock value"
           icon={Boxes}
           color="purple"

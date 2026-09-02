@@ -398,8 +398,8 @@ export const PurchaseOrderFormPage: React.FC = () => {
               onChange={(e) => setCurrency(e.target.value)}
               className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-800 focus:ring-2 focus:ring-slate-900 focus:outline-hidden"
             >
-              <option value="EUR">EUR (€)</option>
-              <option value="USD">USD ($)</option>
+              <option value="EUR">EUR (₹)</option>
+              <option value="USD">USD (₹)</option>
               <option value="INR">INR (₹)</option>
             </select>
           </div>

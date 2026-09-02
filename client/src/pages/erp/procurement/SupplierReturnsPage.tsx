@@ -159,7 +159,7 @@ export const SupplierReturnsPage: React.FC = () => {
                     <td className="px-6 py-4 font-medium text-white">{ret.supplier?.company_name || 'Supplier'}</td>
                     <td className="px-6 py-4 text-slate-300">{ret.return_date}</td>
                     <td className="px-6 py-4 text-slate-300 max-w-xs truncate">{ret.reason}</td>
-                    <td className="px-6 py-4 font-bold text-white">€{ret.total_amount?.toFixed(2)}</td>
+                    <td className="px-6 py-4 font-bold text-white">₹{ret.total_amount?.toFixed(2)}</td>
                     <td className="px-6 py-4">
                       <span
                         className={`px-2.5 py-1 rounded-full text-xs font-semibold ${
@@ -271,7 +271,7 @@ export const SupplierReturnsPage: React.FC = () => {
             </div>
 
             <div>
-              <label className="text-xs uppercase font-semibold text-slate-400 block mb-1">Unit Value (€)</label>
+              <label className="text-xs uppercase font-semibold text-slate-400 block mb-1">Unit Value (₹)</label>
               <input
                 type="number"
                 step="0.01"

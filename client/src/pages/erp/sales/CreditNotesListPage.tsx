@@ -131,9 +131,9 @@ export const CreditNotesListPage: React.FC = () => {
                   <tr key={cn.id} className="hover:bg-slate-700/30 transition">
                     <td className="px-6 py-4 font-bold text-white">{cn.credit_note_number}</td>
                     <td className="px-6 py-4 text-slate-400">{cn.credit_date}</td>
-                    <td className="px-6 py-4 font-medium text-slate-300">€{Number(cn.subtotal).toFixed(2)}</td>
+                    <td className="px-6 py-4 font-medium text-slate-300">₹{Number(cn.subtotal).toFixed(2)}</td>
                     <td className="px-6 py-4 font-bold text-emerald-400">
-                      {cn.currency} €{Number(cn.total_amount).toFixed(2)}
+                      {cn.currency} ₹{Number(cn.total_amount).toFixed(2)}
                     </td>
                     <td className="px-6 py-4">
                       <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 inline-flex items-center space-x-1">
@@ -180,7 +180,7 @@ export const CreditNotesListPage: React.FC = () => {
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs uppercase font-semibold text-slate-300 mb-1">Subtotal (€) *</label>
+                  <label className="block text-xs uppercase font-semibold text-slate-300 mb-1">Subtotal (₹) *</label>
                   <input
                     type="number"
                     step="0.01"
@@ -192,7 +192,7 @@ export const CreditNotesListPage: React.FC = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-xs uppercase font-semibold text-slate-300 mb-1">Tax Amount (€)</label>
+                  <label className="block text-xs uppercase font-semibold text-slate-300 mb-1">Tax Amount (₹)</label>
                   <input
                     type="number"
                     step="0.01"

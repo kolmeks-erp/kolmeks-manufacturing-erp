@@ -165,7 +165,7 @@ export const SettingsDashboardPage: React.FC = () => {
             </div>
             <div>
               <span className="text-gray-500 dark:text-gray-400 block text-xs">Default Currency</span>
-              <p className="font-semibold text-gray-900 dark:text-white">{org?.default_currency || 'EUR'} (€)</p>
+              <p className="font-semibold text-gray-900 dark:text-white">{org?.default_currency || 'EUR'} (₹)</p>
             </div>
             <div>
               <span className="text-gray-500 dark:text-gray-400 block text-xs">Default Timezone</span>

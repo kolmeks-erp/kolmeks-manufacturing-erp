@@ -167,10 +167,10 @@ export const AdvancedQuotationDetailPage: React.FC = () => {
                     <td className="px-4 py-3 text-slate-400">{idx + 1}</td>
                     <td className="px-4 py-3 font-medium text-white">{item.description}</td>
                     <td className="px-4 py-3 text-right">{item.quantity} {item.unit}</td>
-                    <td className="px-4 py-3 text-right">€{Number(item.unit_price).toFixed(2)}</td>
-                    <td className="px-4 py-3 text-right">€{Number(item.discount).toFixed(2)}</td>
+                    <td className="px-4 py-3 text-right">₹{Number(item.unit_price).toFixed(2)}</td>
+                    <td className="px-4 py-3 text-right">₹{Number(item.discount).toFixed(2)}</td>
                     <td className="px-4 py-3 text-right font-bold text-white">
-                      €{Number(item.line_total).toFixed(2)}
+                      ₹{Number(item.line_total).toFixed(2)}
                     </td>
                   </tr>
                 ))}
@@ -182,19 +182,19 @@ export const AdvancedQuotationDetailPage: React.FC = () => {
             <div className="w-full sm:w-72 space-y-2 text-sm">
               <div className="flex justify-between text-slate-400">
                 <span>Subtotal:</span>
-                <span className="font-semibold text-white">€{Number(quotation.subtotal).toFixed(2)}</span>
+                <span className="font-semibold text-white">₹{Number(quotation.subtotal).toFixed(2)}</span>
               </div>
               <div className="flex justify-between text-slate-400">
                 <span>Discount:</span>
-                <span className="font-semibold text-red-400">- €{Number(quotation.discount).toFixed(2)}</span>
+                <span className="font-semibold text-red-400">- ₹{Number(quotation.discount).toFixed(2)}</span>
               </div>
               <div className="flex justify-between text-slate-400">
                 <span>Tax:</span>
-                <span className="font-semibold text-white">€{Number(quotation.tax).toFixed(2)}</span>
+                <span className="font-semibold text-white">₹{Number(quotation.tax).toFixed(2)}</span>
               </div>
               <div className="flex justify-between text-base font-bold text-white pt-2 border-t border-slate-700">
                 <span>Total Amount:</span>
-                <span className="text-emerald-400">{quotation.currency} €{Number(quotation.total).toFixed(2)}</span>
+                <span className="text-emerald-400">{quotation.currency} ₹{Number(quotation.total).toFixed(2)}</span>
               </div>
             </div>
           </div>

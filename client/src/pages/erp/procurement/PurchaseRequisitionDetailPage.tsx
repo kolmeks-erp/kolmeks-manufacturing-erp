@@ -396,10 +396,10 @@ export const PurchaseRequisitionDetailPage: React.FC = () => {
                     <td className="py-3.5 px-4 text-right font-bold text-slate-800">{item.quantity}</td>
                     <td className="py-3.5 px-4 text-center font-medium text-slate-600">{item.unit}</td>
                     <td className="py-3.5 px-4 text-right text-slate-600">
-                      €{Number(item.estimated_unit_cost || 0).toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                      ₹{Number(item.estimated_unit_cost || 0).toLocaleString(undefined, { minimumFractionDigits: 2 })}
                     </td>
                     <td className="py-3.5 px-4 text-right font-bold text-slate-900">
-                      €{lineTotal.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                      ₹{lineTotal.toLocaleString(undefined, { minimumFractionDigits: 2 })}
                     </td>
                     <td className="py-3.5 px-4 text-center text-slate-500">
                       {item.required_date ? new Date(item.required_date).toLocaleDateString() : 'N/A'}

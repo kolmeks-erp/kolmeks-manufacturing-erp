@@ -432,7 +432,7 @@ async function createQuotation(req, res) {
       insertedQuotation.id,
       req.profile,
       'CREATED',
-      `Created commercial quotation ${quotationNumber} for ${cust.company_name} (Total: ${newQuotation.currency} ${total_amount.toLocaleString()})`
+      `Created commercial quotation ${quotationNumber} for ${cust.company_name} (Total: ₹{newQuotation.currency} ${total_amount.toLocaleString()})`
     );
 
     return res.status(201).json({

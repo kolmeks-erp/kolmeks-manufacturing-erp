@@ -97,7 +97,7 @@ export const SalesDashboardPage: React.FC = () => {
                 {loading ? '...' : kpis?.totalQuotationCount || 0}
               </h3>
               <p className="text-xs text-blue-400 mt-1 font-medium">
-                Value: €{loading ? '0.00' : (kpis?.totalQuotationValue || 0).toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                Value: ₹{loading ? '0.00' : (kpis?.totalQuotationValue || 0).toLocaleString(undefined, { minimumFractionDigits: 2 })}
               </p>
             </div>
             <div className="p-3 bg-blue-500/10 text-blue-400 rounded-xl border border-blue-500/20">
@@ -122,7 +122,7 @@ export const SalesDashboardPage: React.FC = () => {
                 {loading ? '...' : kpis?.openOrdersCount || 0}
               </h3>
               <p className="text-xs text-emerald-400 mt-1 font-medium">
-                Pipeline: €{loading ? '0.00' : (kpis?.openOrdersValue || 0).toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                Pipeline: ₹{loading ? '0.00' : (kpis?.openOrdersValue || 0).toLocaleString(undefined, { minimumFractionDigits: 2 })}
               </p>
             </div>
             <div className="p-3 bg-emerald-500/10 text-emerald-400 rounded-xl border border-emerald-500/20">
@@ -169,7 +169,7 @@ export const SalesDashboardPage: React.FC = () => {
             <div>
               <p className="text-xs uppercase font-semibold text-slate-400 tracking-wider">Accounts Receivable</p>
               <h3 className="text-2xl font-bold text-white mt-1">
-                €{loading ? '0.00' : (kpis?.outstandingReceivables || 0).toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                ₹{loading ? '0.00' : (kpis?.outstandingReceivables || 0).toLocaleString(undefined, { minimumFractionDigits: 2 })}
               </h3>
               <p className="text-xs text-amber-400 mt-1 font-medium">
                 Returns Logged: {loading ? '0' : kpis?.totalReturnsCount || 0}

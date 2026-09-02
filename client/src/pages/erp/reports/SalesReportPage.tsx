@@ -32,7 +32,7 @@ export const SalesReportPage: React.FC = () => {
 
   const handleExport = () => {
     if (!reportData?.ordersTable) return;
-    const headers = ['Order Code', 'Customer', 'Order Date', 'Total (€)', 'Status'];
+    const headers = ['Order Code', 'Customer', 'Order Date', 'Total (₹)', 'Status'];
     const rows = reportData.ordersTable.map((o: any) => [
       o.order_number || o.id,
       o.customer?.name || 'Standard Client',
@@ -80,7 +80,7 @@ export const SalesReportPage: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
         <KPICard
           title="Sales Revenue"
-          value={loading ? '...' : `€${(metrics?.totalRevenue || 0).toLocaleString('en-US', { minimumFractionDigits: 2 })}`}
+          value={loading ? '...' : `₹${(metrics?.totalRevenue || 0).toLocaleString('en-US', { minimumFractionDigits: 2 })}`}
           subtitle="Total order revenue"
           icon={DollarSign}
           color="emerald"
@@ -94,7 +94,7 @@ export const SalesReportPage: React.FC = () => {
         />
         <KPICard
           title="Average Order Value"
-          value={loading ? '...' : `€${(metrics?.avgOrderValue || 0).toLocaleString('en-US', { minimumFractionDigits: 2 })}`}
+          value={loading ? '...' : `₹${(metrics?.avgOrderValue || 0).toLocaleString('en-US', { minimumFractionDigits: 2 })}`}
           subtitle="Revenue per order"
           icon={ShoppingCart}
           color="indigo"
@@ -111,7 +111,7 @@ export const SalesReportPage: React.FC = () => {
       {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <ReportChart
-          title="Monthly Revenue Trend (€)"
+          title="Monthly Revenue Trend (₹)"
           type="area"
           data={reportData?.monthlyChart || []}
           dataKey="revenue"
@@ -119,7 +119,7 @@ export const SalesReportPage: React.FC = () => {
           color="#10b981"
         />
         <ReportChart
-          title="Top Customers by Revenue (€)"
+          title="Top Customers by Revenue (₹)"
           type="bar"
           data={reportData?.customerChart || []}
           dataKey="revenue"
@@ -162,7 +162,7 @@ export const SalesReportPage: React.FC = () => {
                     <td className="px-6 py-4 font-mono font-bold text-blue-400">{o.order_number || o.id.slice(0, 8)}</td>
                     <td className="px-6 py-4 font-semibold text-white">{o.customer?.name || 'Standard Client'}</td>
                     <td className="px-6 py-4 text-slate-300">{new Date(o.created_at).toLocaleDateString()}</td>
-                    <td className="px-6 py-4 font-bold text-emerald-400">€{Number(o.total_amount || 0).toFixed(2)}</td>
+                    <td className="px-6 py-4 font-bold text-emerald-400">₹{Number(o.total_amount || 0).toFixed(2)}</td>
                     <td className="px-6 py-4">
                       <span className="px-2.5 py-1 bg-blue-500/10 text-blue-400 border border-blue-500/20 rounded-full text-xs font-semibold uppercase">
                         {o.status}

@@ -34,7 +34,7 @@ export const ProcurementReportsPage: React.FC = () => {
 
   const handleExportCSV = () => {
     if (!reportData?.supplierPerformance) return;
-    const headers = ['Supplier Code', 'Supplier Name', 'Total POs', 'Total Purchase Value (€)', 'On-Time Delivery %', 'Quality Acceptance %', 'Returns Count', 'Rating'];
+    const headers = ['Supplier Code', 'Supplier Name', 'Total POs', 'Total Purchase Value (₹)', 'On-Time Delivery %', 'Quality Acceptance %', 'Returns Count', 'Rating'];
     const rows = reportData.supplierPerformance.map((s: any) => [
       `"${s.supplier_code}"`,
       `"${s.name}"`,
@@ -151,7 +151,7 @@ export const ProcurementReportsPage: React.FC = () => {
                     <td className="px-6 py-4 font-mono text-slate-400 font-medium">{s.supplier_code}</td>
                     <td className="px-6 py-4 font-bold text-white">{s.name}</td>
                     <td className="px-6 py-4 font-medium text-slate-200">{s.totalOrders} order(s)</td>
-                    <td className="px-6 py-4 font-bold text-emerald-400">€{s.totalValue.toFixed(2)}</td>
+                    <td className="px-6 py-4 font-bold text-emerald-400">₹{s.totalValue.toFixed(2)}</td>
                     <td className="px-6 py-4 text-blue-400 font-semibold">{s.onTimeDeliveryPct.toFixed(1)}%</td>
                     <td className="px-6 py-4 text-indigo-400 font-semibold">{s.qualityAcceptancePct.toFixed(1)}%</td>
                     <td className="px-6 py-4 text-rose-400 font-semibold">{s.returnsCount}</td>

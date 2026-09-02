@@ -453,7 +453,7 @@ async function createSalesOrder(req, res) {
       insertedSO.id,
       req.profile,
       'CREATED',
-      `Created manual sales order ${orderNumber} for ${cust.company_name} (Total: ${newSalesOrder.currency} ${total_amount.toLocaleString()})`
+      `Created manual sales order ${orderNumber} for ${cust.company_name} (Total: ₹{newSalesOrder.currency} ${total_amount.toLocaleString()})`
     );
 
     return res.status(201).json({
@@ -616,7 +616,7 @@ async function createSalesOrderFromQuotation(req, res) {
       insertedSO.id,
       req.profile,
       'CREATED_FROM_QUOTATION',
-      `Generated Sales Order ${orderNumber} from accepted Quotation ${quotation.quotation_number} for ${cust?.company_name || 'Customer'} (Total: ${newSalesOrder.currency} ${Number(newSalesOrder.total).toLocaleString()})`
+      `Generated Sales Order ${orderNumber} from accepted Quotation ${quotation.quotation_number} for ${cust?.company_name || 'Customer'} (Total: ₹{newSalesOrder.currency} ${Number(newSalesOrder.total).toLocaleString()})`
     );
 
     return res.status(201).json({

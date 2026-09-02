@@ -194,8 +194,8 @@ export const QuotationListPage: React.FC = () => {
               className="w-full p-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700/80 rounded-lg text-xs text-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-blue-600 focus:outline-hidden"
             >
               <option value="all">All Currencies</option>
-              <option value="EUR">EUR (€)</option>
-              <option value="USD">USD ($)</option>
+              <option value="EUR">EUR (₹)</option>
+              <option value="USD">USD (₹)</option>
               <option value="INR">INR (₹)</option>
             </select>
           </div>

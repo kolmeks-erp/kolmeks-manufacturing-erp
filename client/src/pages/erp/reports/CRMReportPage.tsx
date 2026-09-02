@@ -29,7 +29,7 @@ export const CRMReportPage: React.FC = () => {
 
   const handleExport = () => {
     if (!reportData?.oppsTable) return;
-    const headers = ['Opportunity', 'Value (€)', 'Stage', 'Probability (%)'];
+    const headers = ['Opportunity', 'Value (₹)', 'Stage', 'Probability (%)'];
     const rows = reportData.oppsTable.map((o: any) => [
       o.title || o.name || 'Sales Deal',
       Number(o.expected_revenue || o.amount || 0).toFixed(2),
@@ -68,7 +68,7 @@ export const CRMReportPage: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
         <KPICard
           title="Total Pipeline Valuation"
-          value={loading ? '...' : `€${(metrics?.pipelineValue || 0).toLocaleString('en-US', { minimumFractionDigits: 2 })}`}
+          value={loading ? '...' : `₹${(metrics?.pipelineValue || 0).toLocaleString('en-US', { minimumFractionDigits: 2 })}`}
           subtitle="Forecasted deal revenue"
           icon={TrendingUp}
           color="emerald"
@@ -119,7 +119,7 @@ export const CRMReportPage: React.FC = () => {
                 reportData.oppsTable.map((o: any) => (
                   <tr key={o.id} className="hover:bg-slate-700/30 transition">
                     <td className="px-6 py-4 font-bold text-white">{o.title || o.name || 'Sales Contract Opportunity'}</td>
-                    <td className="px-6 py-4 font-bold text-emerald-400">€{Number(o.expected_revenue || o.amount || 0).toFixed(2)}</td>
+                    <td className="px-6 py-4 font-bold text-emerald-400">₹{Number(o.expected_revenue || o.amount || 0).toFixed(2)}</td>
                     <td className="px-6 py-4 text-slate-300 capitalize">{o.stage || 'Qualification'}</td>
                     <td className="px-6 py-4 text-indigo-400 font-semibold">{o.probability || 50}%</td>
                   </tr>

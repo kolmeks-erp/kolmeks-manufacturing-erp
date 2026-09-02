@@ -475,7 +475,7 @@ export const PurchaseRequisitionFormPage: React.FC = () => {
                 {/* ESTIMATED UNIT COST */}
                 <div>
                   <label className="block text-[11px] font-semibold text-slate-600 mb-1">
-                    Est. Unit Cost (€)
+                    Est. Unit Cost (₹)
                   </label>
                   <input
                     type="number"

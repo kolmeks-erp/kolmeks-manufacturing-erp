@@ -477,7 +477,7 @@ class SystemAdminService {
     const { data, error } = await this.client().from('currencies').select('*').order('code');
     if (error || !data || data.length === 0) {
       return [
-        { id: 'cur-1', code: 'EUR', name: 'Euro', symbol: '€', decimal_precision: 2, is_default: true, exchange_rate_to_default: 1.0, status: 'Active' },
+        { id: 'cur-1', code: 'EUR', name: 'Euro', symbol: '₹', decimal_precision: 2, is_default: true, exchange_rate_to_default: 1.0, status: 'Active' },
         { id: 'cur-2', code: 'USD', name: 'US Dollar', symbol: '$', decimal_precision: 2, is_default: false, exchange_rate_to_default: 1.085, status: 'Active' },
         { id: 'cur-3', code: 'GBP', name: 'British Pound', symbol: '£', decimal_precision: 2, is_default: false, exchange_rate_to_default: 0.854, status: 'Active' },
         { id: 'cur-4', code: 'INR', name: 'Indian Rupee', symbol: '₹', decimal_precision: 2, is_default: false, exchange_rate_to_default: 90.15, status: 'Active' },

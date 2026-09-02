@@ -469,8 +469,8 @@ export const SalesOrderFormPage: React.FC = () => {
               onChange={(e) => setCurrency(e.target.value)}
               className="w-full px-3.5 py-2 bg-slate-50 dark:bg-[#071220] border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-bold text-slate-900 dark:text-white focus:border-blue-600 focus:outline-hidden"
             >
-              <option value="EUR" className="bg-white dark:bg-[#0F2647]">EUR (€)</option>
-              <option value="USD" className="bg-white dark:bg-[#0F2647]">USD ($)</option>
+              <option value="EUR" className="bg-white dark:bg-[#0F2647]">EUR (₹)</option>
+              <option value="USD" className="bg-white dark:bg-[#0F2647]">USD (₹)</option>
               <option value="INR" className="bg-white dark:bg-[#0F2647]">INR (₹)</option>
             </select>
           </div>
