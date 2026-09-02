@@ -67,7 +67,7 @@ export interface UserItem {
   full_name: string;
   phone?: string;
   department?: string;
-  status: 'active' | 'inactive' | 'suspended';
+  status: 'active' | 'inactive' | 'suspended' | 'Active' | 'Inactive';
   is_active?: boolean;
   is_master_admin?: boolean;
   role?: {
