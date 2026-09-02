@@ -32,7 +32,7 @@ exports.getEmployees = async (req, res) => {
       .from('employees')
       .select(`
         *,
-        department:departments(id, code, name),
+        department:departments!employees_department_id_fkey(id, code, name),
         designation_rel:designations(id, code, name),
         manager:employees!manager_id(id, employee_code, first_name, last_name, email)
       `, { count: 'exact' });
@@ -229,7 +229,7 @@ exports.getEmployeeById = async (req, res) => {
         .from('employees')
         .select(`
           *,
-          department:departments(id, code, name, description),
+          department:departments!employees_department_id_fkey(id, code, name, description),
           designation_rel:designations(id, code, name),
           manager:employees!manager_id(id, employee_code, first_name, last_name, email),
           cost_center:cost_centers(id, code, name)
@@ -367,7 +367,7 @@ exports.createEmployee = async (req, res) => {
     const { data: createdEmployee, error: insertError } = await supabaseAdmin
       .from('employees')
       .insert(newEmployeePayload)
-      .select('*, department:departments(id, code, name)')
+      .select('*, department:departments!employees_department_id_fkey(id, code, name)')
       .single();
 
     if (insertError) {
@@ -438,7 +438,7 @@ exports.updateEmployee = async (req, res) => {
         updated_by: req.user ? req.user.id : null
       })
       .eq('id', id)
-      .select('*, department:departments(id, code, name)')
+      .select('*, department:departments!employees_department_id_fkey(id, code, name)')
       .single();
 
     if (updateError) throw updateError;

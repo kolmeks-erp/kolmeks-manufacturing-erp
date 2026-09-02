@@ -7,7 +7,7 @@ const getEmployeeForUser = async (user) => {
   if (!user) return null;
   let { data: emp } = await supabaseAdmin
     .from('employees')
-    .select('*, department:departments(id, code, name)')
+    .select('*, department:departments!employees_department_id_fkey(id, code, name)')
     .eq('auth_user_id', user.id)
     .maybeSingle();
 
@@ -16,7 +16,7 @@ const getEmployeeForUser = async (user) => {
   if (user.email) {
     const { data: empByEmail } = await supabaseAdmin
       .from('employees')
-      .select('*, department:departments(id, code, name)')
+      .select('*, department:departments!employees_department_id_fkey(id, code, name)')
       .eq('email', user.email.toLowerCase())
       .maybeSingle();
 
@@ -68,7 +68,7 @@ exports.getEmployeeCompensations = async (req, res) => {
       .from('employees')
       .select(`
         id, employee_code, first_name, last_name, email, hire_date, status,
-        department:departments(id, code, name),
+        department:departments!employees_department_id_fkey(id, code, name),
         compensation:employee_compensation(*)
       `)
       .eq('status', 'ACTIVE')
@@ -295,7 +295,7 @@ exports.calculatePayrollRun = async (req, res) => {
     // 1. Fetch active employees
     const { data: employees, error: empErr } = await supabaseAdmin
       .from('employees')
-      .select('*, department:departments(id, name), compensation:employee_compensation(*)')
+      .select('*, department:departments!employees_department_id_fkey(id, name), compensation:employee_compensation(*)')
       .eq('status', 'ACTIVE');
 
     if (empErr) throw empErr;
@@ -650,7 +650,7 @@ exports.getPayslipById = async (req, res) => {
       .from('payroll_entries')
       .select(`
         *,
-        employee:employees(id, employee_code, first_name, last_name, email, hire_date, department:departments(name)),
+        employee:employees(id, employee_code, first_name, last_name, email, hire_date, department:departments!employees_department_id_fkey(name)),
         department:departments(name),
         cost_center:cost_centers(code, name),
         payroll_run:payroll_runs(id, run_number, run_date, payroll_period:payroll_periods(name, start_date, end_date))
@@ -685,7 +685,7 @@ exports.getPayrollReports = async (req, res) => {
 
     let query = supabaseAdmin
       .from('payroll_entries')
-      .select('*, employee:employees(id, employee_code, first_name, last_name, department:departments(name)), payroll_run:payroll_runs(id, run_number, payroll_period_id)');
+      .select('*, employee:employees(id, employee_code, first_name, last_name, department:departments!employees_department_id_fkey(name)), payroll_run:payroll_runs(id, run_number, payroll_period_id)');
 
     if (periodId) {
       const { data: runs } = await supabaseAdmin.from('payroll_runs').select('id').eq('payroll_period_id', periodId);

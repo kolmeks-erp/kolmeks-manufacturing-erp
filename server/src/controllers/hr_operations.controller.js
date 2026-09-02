@@ -9,7 +9,7 @@ const getEmployeeForUser = async (user) => {
   // 1. Try matching by auth_user_id
   let { data: emp } = await supabaseAdmin
     .from('employees')
-    .select('*, department:departments(id, code, name), shift:shifts(*)')
+    .select('*, department:departments!employees_department_id_fkey(id, code, name), shift:shifts(*)')
     .eq('auth_user_id', user.id)
     .maybeSingle();
 
@@ -19,7 +19,7 @@ const getEmployeeForUser = async (user) => {
   if (user.email) {
     const { data: empByEmail } = await supabaseAdmin
       .from('employees')
-      .select('*, department:departments(id, code, name), shift:shifts(*)')
+      .select('*, department:departments!employees_department_id_fkey(id, code, name), shift:shifts(*)')
       .eq('email', user.email.toLowerCase())
       .maybeSingle();
 
@@ -51,7 +51,7 @@ const getEmployeeForUser = async (user) => {
           hire_date: new Date().toISOString().split('T')[0],
           status: 'ACTIVE'
         })
-        .select('*, department:departments(id, code, name), shift:shifts(*)')
+        .select('*, department:departments!employees_department_id_fkey(id, code, name), shift:shifts(*)')
         .single();
 
       if (newEmp) return newEmp;
@@ -367,7 +367,7 @@ exports.getAttendanceRecords = async (req, res) => {
 
     let query = supabaseAdmin
       .from('attendance_records')
-      .select('*, employee:employees(id, employee_code, first_name, last_name, department:departments(name)), shift:shifts(name)', { count: 'exact' });
+      .select('*, employee:employees(id, employee_code, first_name, last_name, department:departments!employees_department_id_fkey(name)), shift:shifts(name)', { count: 'exact' });
 
     if (employeeId) query = query.eq('employee_id', employeeId);
     if (status) query = query.eq('status', status);
@@ -532,7 +532,7 @@ exports.getLeaveRequests = async (req, res) => {
 
     let query = supabaseAdmin
       .from('leave_requests')
-      .select('*, employee:employees(id, employee_code, first_name, last_name, department:departments(name)), leave_type:leave_types(id, code, name), approver:employees!approver_id(first_name, last_name)', { count: 'exact' });
+      .select('*, employee:employees!employee_id(id, employee_code, first_name, last_name, department:departments!employees_department_id_fkey(name)), leave_type:leave_types(id, code, name), approver:employees!approver_id(first_name, last_name)', { count: 'exact' });
 
     if (status) query = query.eq('status', status);
     if (employeeId) query = query.eq('employee_id', employeeId);
@@ -899,7 +899,7 @@ exports.getOvertimeRecords = async (req, res) => {
 
     let query = supabaseAdmin
       .from('overtime_records')
-      .select('*, employee:employees(id, employee_code, first_name, last_name, department:departments(name)), approver:employees!approved_by(first_name, last_name)', { count: 'exact' });
+      .select('*, employee:employees!employee_id(id, employee_code, first_name, last_name, department:departments!employees_department_id_fkey(name)), approver:employees!approved_by(first_name, last_name)', { count: 'exact' });
 
     if (status) query = query.eq('status', status);
     if (employeeId) query = query.eq('employee_id', employeeId);
