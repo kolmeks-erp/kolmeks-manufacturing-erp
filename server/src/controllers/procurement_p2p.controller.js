@@ -1,4 +1,4 @@
-const { supabase } = require('../config/supabase');
+const { supabaseAdmin: supabase } = require('../config/supabase');
 
 // Helper to handle error responses safely
 const handleError = (res, error, customMessage = 'Procurement P2P operation failed.') => {

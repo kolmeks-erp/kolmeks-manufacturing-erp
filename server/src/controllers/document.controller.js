@@ -1,4 +1,4 @@
-const { supabase } = require('../config/supabase');
+const { supabaseAdmin: supabase } = require('../config/supabase');
 const CloudinaryService = require('../services/cloudinary.service');
 const NotificationService = require('../services/notification.service');
 const WorkflowEngineService = require('../services/workflow.service');
