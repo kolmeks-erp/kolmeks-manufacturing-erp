@@ -60,9 +60,22 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ allowedRoles, ch
 
   // 4. Role Authorization Check
   if (allowedRoles && allowedRoles.length > 0 && role) {
-    const isMasterAdmin = role === 'admin' || role === 'master_admin';
-    if (!isMasterAdmin && !allowedRoles.includes(role)) {
-      return <UnauthorizedPage />;
+    const currentRole = role.toLowerCase().trim();
+    const isMasterAdmin = currentRole === 'admin' || currentRole === 'master_admin' || currentRole === 'system_admin';
+
+    if (!isMasterAdmin) {
+      const roleAliases = [currentRole];
+      if (currentRole.startsWith('hr') || currentRole.includes('human')) {
+        roleAliases.push('hr');
+      }
+      if (currentRole.startsWith('finance') || currentRole === 'accountant') {
+        roleAliases.push('finance');
+      }
+
+      const hasAccess = allowedRoles.some((r) => roleAliases.includes(r.toLowerCase()));
+      if (!hasAccess) {
+        return <UnauthorizedPage />;
+      }
     }
   }
 

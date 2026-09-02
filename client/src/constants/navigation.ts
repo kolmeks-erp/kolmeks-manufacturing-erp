@@ -44,7 +44,7 @@ export const ERP_SIDEBAR_MENU: ERPMenuItem[] = [
   { id: 'activity-center', label: 'Activity Center', path: `${ERP_BASE_PATH}/activity/my`, iconName: 'Activity', category: 'core', badge: 'Live', roles: ALL_ROLES },
   
   // Sales & Distribution ERP Section
-  { id: 'sales-dashboard', label: 'Sales & Distribution Telemetry', path: `${ERP_BASE_PATH}/sales/dashboard`, iconName: 'LayoutDashboard', category: 'Sales', badge: 'Live', roles: ALL_ROLES },
+  { id: 'sales-dashboard', label: 'Sales & Distribution Telemetry', path: `${ERP_BASE_PATH}/sales/dashboard`, iconName: 'LayoutDashboard', category: 'Sales', badge: 'Live', roles: ['admin', 'sales_manager', 'executive', 'sales_executive'] },
   { id: 'rfqs', label: 'RFQs Management', path: `${ERP_BASE_PATH}/rfqs`, iconName: 'FileText', category: 'Sales', badge: 'Live', roles: ['admin', 'sales_manager', 'production_manager', 'quality_manager'] },
   { id: 'quotations', label: 'Quotations', path: `${ERP_BASE_PATH}/quotations`, iconName: 'FileSpreadsheet', category: 'Sales', badge: 'Live', roles: ['admin', 'sales_manager', 'executive'] },
   { id: 'sales-orders', label: 'Sales Orders', path: `${ERP_BASE_PATH}/sales-orders`, iconName: 'FileCheck', category: 'Sales', badge: 'Live', roles: ['admin', 'sales_manager', 'executive'] },
@@ -60,7 +60,7 @@ export const ERP_SIDEBAR_MENU: ERPMenuItem[] = [
   { id: 'customers', label: 'Customers', path: `${ERP_BASE_PATH}/customers`, iconName: 'Users', category: 'Sales', badge: 'Live', roles: ['admin', 'sales_manager'] },
 
   // CRM & Sales Operations Section
-  { id: 'crm-dashboard', label: 'CRM Telemetry', path: `${ERP_BASE_PATH}/crm`, iconName: 'Target', category: 'CRM & Sales', badge: 'Live', roles: ['admin', 'sales_manager', 'sales_executive', 'finance', 'executive'] },
+  { id: 'crm-dashboard', label: 'CRM Telemetry', path: `${ERP_BASE_PATH}/crm`, iconName: 'Target', category: 'CRM & Sales', badge: 'Live', roles: ['admin', 'sales_manager', 'sales_executive', 'executive'] },
   { id: 'crm-leads', label: 'Leads Registry', path: `${ERP_BASE_PATH}/crm/leads`, iconName: 'Users', category: 'CRM & Sales', badge: 'Live', roles: ['admin', 'sales_manager', 'sales_executive', 'executive'] },
   { id: 'crm-opportunities', label: 'Sales Deals & Opps', path: `${ERP_BASE_PATH}/crm/opportunities`, iconName: 'TrendingUp', category: 'CRM & Sales', badge: 'Live', roles: ['admin', 'sales_manager', 'sales_executive', 'executive'] },
   { id: 'crm-pipeline', label: 'Kanban Pipeline', path: `${ERP_BASE_PATH}/crm/pipeline`, iconName: 'LayoutDashboard', category: 'CRM & Sales', badge: 'Live', roles: ['admin', 'sales_manager', 'sales_executive', 'executive'] },
@@ -82,11 +82,11 @@ export const ERP_SIDEBAR_MENU: ERPMenuItem[] = [
   { id: 'procurement-reports', label: 'Procurement Analytics', path: `${ERP_BASE_PATH}/procurement/reports`, iconName: 'BarChart3', category: 'Procurement', badge: 'Live', roles: ['admin', 'purchase_manager', 'finance', 'executive'] },
 
   // Document Management Section
-  { id: 'documents-dashboard', label: 'Document Telemetry', path: `${ERP_BASE_PATH}/documents/dashboard`, iconName: 'LayoutDashboard', category: 'Document Management', badge: 'Live', roles: ALL_ROLES },
-  { id: 'documents-library', label: 'Document Library', path: `${ERP_BASE_PATH}/documents/library`, iconName: 'FileText', category: 'Document Management', badge: 'Live', roles: ALL_ROLES },
-  { id: 'documents-approvals', label: 'Digital Approvals', path: `${ERP_BASE_PATH}/documents/approvals`, iconName: 'Clock', category: 'Document Management', badge: 'Live', roles: ALL_ROLES },
-  { id: 'documents-recent', label: 'Recent Documents', path: `${ERP_BASE_PATH}/documents/recent`, iconName: 'History', category: 'Document Management', badge: 'Live', roles: ALL_ROLES },
-  { id: 'documents-expiring', label: 'Expiring & Review Due', path: `${ERP_BASE_PATH}/documents/expiring`, iconName: 'AlertTriangle', category: 'Document Management', badge: 'Live', roles: ALL_ROLES },
+  { id: 'documents-dashboard', label: 'Document Telemetry', path: `${ERP_BASE_PATH}/documents/dashboard`, iconName: 'LayoutDashboard', category: 'Document Management', badge: 'Live', roles: ['admin', 'quality_manager', 'hr', 'executive'] },
+  { id: 'documents-library', label: 'Document Library', path: `${ERP_BASE_PATH}/documents/library`, iconName: 'FileText', category: 'Document Management', badge: 'Live', roles: ['admin', 'quality_manager', 'hr', 'executive'] },
+  { id: 'documents-approvals', label: 'Digital Approvals', path: `${ERP_BASE_PATH}/documents/approvals`, iconName: 'Clock', category: 'Document Management', badge: 'Live', roles: ['admin', 'quality_manager', 'hr', 'executive'] },
+  { id: 'documents-recent', label: 'Recent Documents', path: `${ERP_BASE_PATH}/documents/recent`, iconName: 'History', category: 'Document Management', badge: 'Live', roles: ['admin', 'quality_manager', 'hr', 'executive'] },
+  { id: 'documents-expiring', label: 'Expiring & Review Due', path: `${ERP_BASE_PATH}/documents/expiring`, iconName: 'AlertTriangle', category: 'Document Management', badge: 'Live', roles: ['admin', 'quality_manager', 'hr', 'executive'] },
   { id: 'documents-types', label: 'Document Types', path: `${ERP_BASE_PATH}/documents/types`, iconName: 'Layers', category: 'Document Management', badge: 'Live', roles: ['admin', 'quality_manager', 'hr', 'executive'] },
   { id: 'documents-categories', label: 'Document Categories', path: `${ERP_BASE_PATH}/documents/categories`, iconName: 'FolderKanban', category: 'Document Management', badge: 'Live', roles: ['admin', 'quality_manager', 'hr', 'executive'] },
   { id: 'documents-reports', label: 'Compliance Reports', path: `${ERP_BASE_PATH}/documents/reports`, iconName: 'FileSpreadsheet', category: 'Document Management', badge: 'Live', roles: ['admin', 'quality_manager', 'hr', 'finance', 'executive'] },
@@ -203,8 +203,8 @@ export const ERP_SIDEBAR_MENU: ERPMenuItem[] = [
 
   // Finance & Accounting Section
   { id: 'finance-dashboard', label: 'Finance Dashboard', path: `${ERP_BASE_PATH}/finance`, iconName: 'IndianRupee', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'accountant', 'manager'] },
-  { id: 'finance-expenses', label: 'Expense Management', path: `${ERP_BASE_PATH}/finance/expenses`, iconName: 'Receipt', category: 'Finance & Accounting', badge: 'Live', roles: ALL_ROLES },
-  { id: 'finance-expense-claims', label: 'Expense Claims', path: `${ERP_BASE_PATH}/finance/expenses/claims`, iconName: 'FileText', category: 'Finance & Accounting', badge: 'Live', roles: ALL_ROLES },
+  { id: 'finance-expenses', label: 'Expense Management', path: `${ERP_BASE_PATH}/finance/expenses`, iconName: 'Receipt', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'accountant', 'manager'] },
+  { id: 'finance-expense-claims', label: 'Expense Claims', path: `${ERP_BASE_PATH}/finance/expenses/claims`, iconName: 'FileText', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'accountant', 'manager', 'hr'] },
   { id: 'finance-expense-reimbursements', label: 'Reimbursements', path: `${ERP_BASE_PATH}/finance/expenses/reimbursements`, iconName: 'CreditCard', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'accountant', 'manager', 'executive'] },
   { id: 'finance-expense-reports', label: 'Expense Reports', path: `${ERP_BASE_PATH}/finance/expenses/reports`, iconName: 'BarChart2', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'accountant', 'manager', 'executive'] },
   { id: 'finance-expense-categories', label: 'Expense Categories', path: `${ERP_BASE_PATH}/finance/expenses/categories`, iconName: 'FolderTree', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'accountant'] },

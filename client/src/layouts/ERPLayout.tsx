@@ -124,7 +124,15 @@ interface ERPLayoutProps {
   activeTab?: string;
 }
 
+const ERPLayoutContext = React.createContext<boolean>(false);
+
 export const ERPLayout: React.FC<ERPLayoutProps> = ({ children }) => {
+  const isInsideParentLayout = React.useContext(ERPLayoutContext);
+
+  if (isInsideParentLayout) {
+    return <>{children || <Outlet />}</>;
+  }
+
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
@@ -172,7 +180,24 @@ export const ERPLayout: React.FC<ERPLayoutProps> = ({ children }) => {
       return false;
     }
     if (!item.roles || item.roles.length === 0) return true;
-    return role ? item.roles.includes(role) : false;
+
+    const currentRole = (role || '').toLowerCase().trim();
+    if (!currentRole) return false;
+
+    // Admin has access to all sidebar items
+    if (currentRole === 'admin' || currentRole === 'master_admin' || currentRole === 'system_admin') {
+      return true;
+    }
+
+    const roleAliases: string[] = [currentRole];
+    if (currentRole.startsWith('hr') || currentRole.includes('human')) {
+      roleAliases.push('hr');
+    }
+    if (currentRole.startsWith('finance') || currentRole === 'accountant') {
+      roleAliases.push('finance');
+    }
+
+    return item.roles.some((r) => roleAliases.includes(r.toLowerCase()));
   });
 
   // Group items by category
@@ -189,7 +214,8 @@ export const ERPLayout: React.FC<ERPLayoutProps> = ({ children }) => {
     .toUpperCase();
 
   return (
-    <div className="min-h-screen flex font-sans transition-colors duration-200 selection:bg-blue-600 selection:text-white bg-slate-100 text-slate-900">
+    <ERPLayoutContext.Provider value={true}>
+      <div className="min-h-screen flex font-sans transition-colors duration-200 selection:bg-blue-600 selection:text-white bg-slate-100 text-slate-900">
       {/* MOBILE BACKDROP DRAWER OVERLAY */}
       {mobileOpen && (
         <div
@@ -494,5 +520,6 @@ export const ERPLayout: React.FC<ERPLayoutProps> = ({ children }) => {
         </main>
       </div>
     </div>
+    </ERPLayoutContext.Provider>
   );
 };

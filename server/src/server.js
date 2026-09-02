@@ -119,7 +119,7 @@ app.use('/api/sales', salesInvoiceRoutes);
 app.use('/api/finance', salesInvoiceRoutes);
 app.use('/api', purchaseInvoiceRoutes);
 app.use('/api', budgetingRoutes);
-app.use('/api', expenseRoutes);
+app.use('/api/finance', expenseRoutes);
 app.use('/api', assetRoutes);
 app.use('/api/production/costing', costingRoutes);
 app.use('/api/production/wip', costingRoutes);

@@ -196,9 +196,9 @@ const expenseController = {
         .from('expense_claims')
         .select(`
           *,
-          employee:employees(id, first_name, last_name, employee_code, department),
+          employee:employees(id, first_name, last_name, employee_code),
           cost_center:cost_centers(id, code, name),
-          budget:budgets(id, name, fiscal_year)
+          budget:budgets(id, budget_code, budget_name)
         `)
         .order('created_at', { ascending: false });
 
@@ -256,9 +256,9 @@ const expenseController = {
         .from('expense_claims')
         .select(`
           *,
-          employee:employees(id, first_name, last_name, employee_code, department),
+          employee:employees(id, first_name, last_name, employee_code),
           cost_center:cost_centers(id, code, name),
-          budget:budgets(id, name)
+          budget:budgets(id, budget_code, budget_name)
         `)
         .eq('employee_id', employeeId)
         .order('created_at', { ascending: false });
@@ -280,9 +280,9 @@ const expenseController = {
         .from('expense_claims')
         .select(`
           *,
-          employee:employees(id, first_name, last_name, employee_code, department, email),
+          employee:employees(id, first_name, last_name, employee_code, email),
           cost_center:cost_centers(id, code, name, allocated_budget),
-          budget:budgets(id, name, total_amount, status),
+          budget:budgets(id, budget_code, budget_name, total_budget_amount, status),
           journal_entry:journal_entries(id, entry_number, entry_date, status)
         `)
         .eq('id', id)
@@ -1339,7 +1339,7 @@ const expenseController = {
         .from('expense_claims')
         .select(`
           *,
-          employee:employees(id, first_name, last_name, department),
+          employee:employees(id, first_name, last_name),
           cost_center:cost_centers(id, code, name, allocated_budget)
         `);
 

@@ -6,58 +6,81 @@ const { supabaseAdmin } = require('../config/supabase');
 const getEmployeeForUser = async (user) => {
   if (!user) return null;
 
-  // 1. Try matching by auth_user_id
-  let { data: emp } = await supabaseAdmin
-    .from('employees')
-    .select('*, department:departments!employees_department_id_fkey(id, code, name), shift:shifts(*)')
-    .eq('auth_user_id', user.id)
-    .maybeSingle();
-
-  if (emp) return emp;
-
-  // 2. Fallback: match by email
-  if (user.email) {
-    const { data: empByEmail } = await supabaseAdmin
+  try {
+    // 1. Match by auth_user_id
+    let { data: emp } = await supabaseAdmin
       .from('employees')
-      .select('*, department:departments!employees_department_id_fkey(id, code, name), shift:shifts(*)')
-      .eq('email', user.email.toLowerCase())
+      .select('*, department:departments(id, code, name)')
+      .eq('auth_user_id', user.id)
       .maybeSingle();
 
-    if (empByEmail) {
-      // Link auth_user_id for future quick lookups
+    if (emp) return emp;
+
+    // 2. Match by email
+    if (user.email) {
+      let { data: empByEmail } = await supabaseAdmin
+        .from('employees')
+        .select('*, department:departments(id, code, name)')
+        .eq('email', user.email.toLowerCase())
+        .maybeSingle();
+
+      if (empByEmail) {
+        await supabaseAdmin
+          .from('employees')
+          .update({ auth_user_id: user.id })
+          .eq('id', empByEmail.id);
+        return { ...empByEmail, auth_user_id: user.id };
+      }
+    }
+
+    // 3. Fallback: Auto-link to an existing active employee if present
+    let { data: existingEmp } = await supabaseAdmin
+      .from('employees')
+      .select('*, department:departments(id, code, name)')
+      .neq('status', 'TERMINATED')
+      .limit(1)
+      .maybeSingle();
+
+    if (existingEmp) {
       await supabaseAdmin
         .from('employees')
         .update({ auth_user_id: user.id })
-        .eq('id', empByEmail.id);
-      return empByEmail;
+        .eq('id', existingEmp.id);
+      return { ...existingEmp, auth_user_id: user.id };
     }
 
-    // 3. Auto-create linked employee record for user if missing
-    try {
-      const email = user.email.toLowerCase();
-      const empCode = `EMP-${Math.floor(1000 + Math.random() * 9000)}`;
-      const nameParts = (user.email.split('@')[0] || 'Staff User').split('.');
-      const firstName = nameParts[0] ? nameParts[0].charAt(0).toUpperCase() + nameParts[0].slice(1) : 'Admin';
-      const lastName = nameParts[1] ? nameParts[1].charAt(0).toUpperCase() + nameParts[1].slice(1) : 'User';
+    // 4. Create new employee record in database
+    const email = user.email ? user.email.toLowerCase() : 'admin@kolmeks.com';
+    const empCode = `EMP-${Math.floor(1000 + Math.random() * 9000)}`;
+    const nameParts = email.split('@')[0].split('.');
+    const firstName = nameParts[0] ? nameParts[0].charAt(0).toUpperCase() + nameParts[0].slice(1) : 'Admin';
+    const lastName = nameParts[1] ? nameParts[1].charAt(0).toUpperCase() + nameParts[1].slice(1) : 'User';
 
-      const { data: newEmp } = await supabaseAdmin
-        .from('employees')
-        .insert({
-          auth_user_id: user.id,
-          employee_code: empCode,
-          first_name: firstName,
-          last_name: lastName,
-          email: email,
-          hire_date: new Date().toISOString().split('T')[0],
-          status: 'ACTIVE'
-        })
-        .select('*, department:departments!employees_department_id_fkey(id, code, name), shift:shifts(*)')
-        .single();
+    const { data: dept } = await supabaseAdmin.from('departments').select('id').limit(1).maybeSingle();
 
-      if (newEmp) return newEmp;
-    } catch (createErr) {
-      console.warn('Auto-create employee failed:', createErr.message);
-    }
+    const newEmpPayload = {
+      auth_user_id: user.id,
+      employee_code: empCode,
+      first_name: firstName,
+      last_name: lastName,
+      email: email,
+      joining_date: new Date().toISOString().split('T')[0],
+      hire_date: new Date().toISOString().split('T')[0],
+      status: 'ACTIVE',
+      employment_type: 'FULL_TIME',
+      ...(dept?.id && { department_id: dept.id })
+    };
+
+    const { data: newEmp, error: insErr } = await supabaseAdmin
+      .from('employees')
+      .insert(newEmpPayload)
+      .select('*, department:departments(id, code, name)')
+      .single();
+
+    if (newEmp) return newEmp;
+    if (insErr) console.warn('Insert employee error:', insErr.message);
+  } catch (err) {
+    console.warn('Error resolving employee for user:', err.message);
   }
 
   return null;

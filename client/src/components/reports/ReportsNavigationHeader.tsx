@@ -37,8 +37,8 @@ export const ReportsNavigationHeader: React.FC = () => {
   ];
 
   return (
-    <div className="bg-slate-800/80 backdrop-blur-sm border border-slate-700/60 rounded-2xl p-2 shadow-lg mb-6 overflow-x-auto scrollbar-none">
-      <nav className="flex space-x-1 min-w-max">
+    <div className="bg-slate-900/90 border border-slate-800 rounded-xl p-2 shadow-sm mb-6 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      <nav className="flex space-x-1.5 min-w-max">
         {tabs.map((tab) => {
           const Icon = tab.icon;
           return (
@@ -46,14 +46,14 @@ export const ReportsNavigationHeader: React.FC = () => {
               key={tab.path}
               to={tab.path}
               className={({ isActive }) =>
-                `px-3 py-2 rounded-xl text-xs font-semibold flex items-center space-x-2 transition ${
+                `px-3.5 py-2 rounded-lg text-xs font-medium flex items-center space-x-2 transition-all ${
                   isActive
-                    ? 'bg-blue-600 text-white shadow-md'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-slate-700/50'
+                    ? 'bg-blue-600 text-white shadow-sm font-semibold'
+                    : 'text-slate-400 hover:text-white hover:bg-slate-800'
                 }`
               }
             >
-              <Icon className="w-4 h-4" />
+              <Icon className="w-3.5 h-3.5" />
               <span>{tab.name}</span>
             </NavLink>
           );

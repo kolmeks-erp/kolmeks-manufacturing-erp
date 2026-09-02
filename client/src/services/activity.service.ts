@@ -1,12 +1,5 @@
-import axios from 'axios';
+import apiClient from './api';
 import { ActivityStreamResponse } from '../types/activity';
-
-const API_URL = '/api/activity';
-
-const getAuthHeaders = () => {
-  const token = localStorage.getItem('supabase.auth.token') || localStorage.getItem('token');
-  return token ? { Authorization: `Bearer ${token}` } : {};
-};
 
 export const activityService = {
   async getActivity(params: {
@@ -18,10 +11,7 @@ export const activityService = {
     action?: string;
     limit?: number;
   } = {}): Promise<ActivityStreamResponse> {
-    const response = await axios.get(API_URL, {
-      params,
-      headers: getAuthHeaders()
-    });
-    return response.data.data;
+    const response = await apiClient.get('/activity', { params });
+    return response.data?.data || { logs: [], total: 0 };
   }
 };

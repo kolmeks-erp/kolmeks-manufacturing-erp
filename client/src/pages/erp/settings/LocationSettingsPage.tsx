@@ -110,7 +110,7 @@ export const LocationSettingsPage: React.FC = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100 dark:divide-gray-700 text-sm">
-              {locations.map((item) => (
+              {(locations || []).map((item) => (
                 <tr key={item.code} className="hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors">
                   <td className="py-3 px-4 font-mono font-semibold text-blue-600 dark:text-blue-400">{item.code}</td>
                   <td className="py-3 px-4 font-medium text-gray-900 dark:text-white">

@@ -1,5 +1,6 @@
-const { supabase, supabaseAdmin } = require('../config/supabase');
-const db = supabaseAdmin || supabase;
+const { supabaseAdmin } = require('../config/supabase');
+const db = supabaseAdmin;
+const supabase = supabaseAdmin;
 
 /**
  * Helper: Generate unique format code (e.g., AST-CNC-001, PM-2026-000001, MWO-2026-000001, MR-2026-000001)

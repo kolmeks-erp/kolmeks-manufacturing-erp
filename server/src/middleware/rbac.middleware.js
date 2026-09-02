@@ -13,17 +13,38 @@ const authorizeRoles = (...allowedRoles) => {
       });
     }
 
-    const userRole = req.role.name;
+    const rawRole = (req.role.name || '').toLowerCase().trim();
 
-    if (!allowedRoles.includes(userRole)) {
-      return res.status(403).json({
-        success: false,
-        error: 'Forbidden',
-        message: `Access denied. Role '${userRole}' is not authorized to access this resource.`,
-      });
+    // Superusers always have full access to all system modules
+    if (rawRole === 'admin' || rawRole === 'master_admin' || rawRole === 'system_admin') {
+      return next();
     }
 
-    next();
+    const normalizedAllowed = allowedRoles.map((r) => r.toLowerCase().trim());
+
+    // If 'hr' is allowed, allow all HR role variants
+    if (normalizedAllowed.includes('hr')) {
+      normalizedAllowed.push('hr_manager', 'hr_admin', 'hr_executive', 'human_resources', 'hr_officer');
+    }
+
+    // If 'finance' is allowed, allow all Finance role variants
+    if (normalizedAllowed.includes('finance')) {
+      normalizedAllowed.push('finance_manager', 'accountant', 'finance_executive');
+    }
+
+    if (
+      normalizedAllowed.includes(rawRole) ||
+      (rawRole.startsWith('hr') && normalizedAllowed.includes('hr')) ||
+      (rawRole.startsWith('finance') && normalizedAllowed.includes('finance'))
+    ) {
+      return next();
+    }
+
+    return res.status(403).json({
+      success: false,
+      error: 'Forbidden',
+      message: `Access denied. Role '${req.role.name}' is not authorized to access this resource.`,
+    });
   };
 };
 

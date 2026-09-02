@@ -79,28 +79,28 @@ const HREmployeeListPage: React.FC = () => {
     {
       header: 'Code',
       accessor: (row: EmployeeItem) => (
-        <span className="font-mono text-cyan-400 font-bold">{row.employee_code}</span>
+        <span className="font-mono text-blue-600 dark:text-cyan-400 font-bold">{row.employee_code}</span>
       ),
     },
     {
       header: 'Employee Name',
       accessor: (row: EmployeeItem) => (
         <div>
-          <span className="font-semibold text-white block">{row.first_name} {row.last_name}</span>
-          <span className="text-slate-400 text-xs">{row.email}</span>
+          <span className="font-bold text-slate-900 dark:text-white block">{row.first_name} {row.last_name}</span>
+          <span className="text-slate-500 dark:text-slate-400 text-xs block">{row.email}</span>
         </div>
       ),
     },
     {
       header: 'Department',
       accessor: (row: EmployeeItem) => (
-        <span className="text-slate-300 font-medium">{row.department?.name || 'Unassigned'}</span>
+        <span className="text-slate-700 dark:text-slate-300 font-medium">{row.department?.name || 'Unassigned'}</span>
       ),
     },
     {
       header: 'Designation',
       accessor: (row: EmployeeItem) => (
-        <span className="text-slate-300 text-xs">{row.designation || 'Staff'}</span>
+        <span className="text-slate-700 dark:text-slate-300 text-xs">{row.designation || 'Staff'}</span>
       ),
     },
     {

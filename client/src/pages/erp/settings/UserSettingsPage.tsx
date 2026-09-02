@@ -105,7 +105,7 @@ export const UserSettingsPage: React.FC = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100 dark:divide-gray-700 text-sm">
-              {users.map((u) => {
+              {(users || []).map((u) => {
                 const status = u.status || (u.is_active !== false ? 'active' : 'inactive');
                 return (
                   <tr key={u.id} className="hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors">

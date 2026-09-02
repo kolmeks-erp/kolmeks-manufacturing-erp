@@ -38,7 +38,7 @@ const tabs = [
 
 export const SettingsNavigationHeader: React.FC = () => {
   return (
-    <div className="mb-6 border-b border-gray-200 dark:border-gray-700 overflow-x-auto scrollbar-none">
+    <div className="mb-6 border-b border-gray-200 dark:border-gray-700 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
       <nav className="flex space-x-1 min-w-max pb-2" aria-label="Settings Tabs">
         {tabs.map((tab) => {
           const Icon = tab.icon;
