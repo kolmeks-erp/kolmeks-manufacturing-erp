@@ -40,6 +40,8 @@ const ALL_ROLES: UserRoleName[] = [
 export const ERP_SIDEBAR_MENU: ERPMenuItem[] = [
   // Dashboard Core
   { id: 'dashboard', label: 'Executive Dashboard', path: `${ERP_BASE_PATH}/dashboard`, iconName: 'LayoutDashboard', category: 'core', roles: ALL_ROLES },
+  { id: 'global-search', label: 'Global Search', path: `${ERP_BASE_PATH}/search`, iconName: 'Search', category: 'core', badge: 'Live', roles: ALL_ROLES },
+  { id: 'activity-center', label: 'Activity Center', path: `${ERP_BASE_PATH}/activity/my`, iconName: 'Activity', category: 'core', badge: 'Live', roles: ALL_ROLES },
   
   // Sales & Distribution ERP Section
   { id: 'sales-dashboard', label: 'Sales & Distribution Telemetry', path: `${ERP_BASE_PATH}/sales/dashboard`, iconName: 'LayoutDashboard', category: 'Sales', badge: 'Live', roles: ALL_ROLES },

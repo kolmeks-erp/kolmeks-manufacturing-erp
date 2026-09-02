@@ -343,6 +343,12 @@ import { SecurityPoliciesPage } from '../pages/erp/security/SecurityPoliciesPage
 import { SecurityAuditPage } from '../pages/erp/security/SecurityAuditPage';
 import { SecurityReportsPage } from '../pages/erp/security/SecurityReportsPage';
 
+// Global Search & Activity Center Pages
+import { SearchResultsPage } from '../pages/erp/search/SearchResultsPage';
+import { MyActivityPage } from '../pages/erp/activity/MyActivityPage';
+import { TeamActivityPage } from '../pages/erp/activity/TeamActivityPage';
+import { SystemActivityPage } from '../pages/erp/activity/SystemActivityPage';
+
 export const AppRoutes: React.FC = () => {
   return (
     <SystemSettingsProvider>
@@ -815,6 +821,20 @@ export const AppRoutes: React.FC = () => {
             <Route path="security/policies" element={<SecurityPoliciesPage />} />
             <Route path="security/audit" element={<SecurityAuditPage />} />
             <Route path="security/reports" element={<SecurityReportsPage />} />
+          </Route>
+
+          {/* Global Search Routes (Authenticated Users) */}
+          <Route element={<ProtectedRoute allowedRoles={['admin', 'master_admin', 'executive', 'sales_manager', 'procurement_manager', 'inventory_manager', 'production_manager', 'quality_manager', 'maintenance_manager', 'hr', 'finance', 'staff']} />}>
+            <Route path="search" element={<SearchResultsPage />} />
+            <Route path="search/results" element={<SearchResultsPage />} />
+            <Route path="activity" element={<MyActivityPage />} />
+            <Route path="activity/my" element={<MyActivityPage />} />
+            <Route path="activity/team" element={<TeamActivityPage />} />
+          </Route>
+
+          {/* System Security Activity Route (Restricted to Admin / Security Officer) */}
+          <Route element={<ProtectedRoute allowedRoles={['admin', 'master_admin', 'security_officer']} />}>
+            <Route path="activity/system" element={<SystemActivityPage />} />
           </Route>
         </Route>
       </Route>

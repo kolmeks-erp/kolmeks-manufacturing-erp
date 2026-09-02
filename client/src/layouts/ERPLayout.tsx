@@ -3,6 +3,7 @@ import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import {
   Factory,
   LayoutDashboard,
+  Activity,
   Package,
   Boxes,
   Users,
@@ -59,11 +60,14 @@ import { useAuth } from '../context/AuthContext';
 import { useSystemSettings } from '../context/SystemSettingsContext';
 import { KolmeksLogo } from '../components/ui/KolmeksLogo';
 import { Breadcrumbs } from '../components/erp/Breadcrumbs';
+import { GlobalSearchCommandPalette } from '../components/search/GlobalSearchCommandPalette';
 import { notificationService } from '../services/notification.service';
 import { NotificationItem } from '../types/notification';
 
 const iconMap: Record<string, React.ElementType> = {
   LayoutDashboard,
+  Activity,
+  Search,
   Package,
   Boxes,
   Users,
@@ -339,11 +343,8 @@ export const ERPLayout: React.FC<ERPLayoutProps> = ({ children }) => {
 
           {/* Right: Search, Notifications & Profile Menu */}
           <div className="flex items-center gap-3">
-            {/* Search Placeholder */}
-            <div className="hidden sm:flex items-center px-3 py-1.5 rounded-lg border text-xs w-48 transition-colors bg-slate-50 border-slate-200 text-slate-500">
-              <Search className="w-3.5 h-3.5 mr-2 text-slate-400" />
-              <span>Search ERP...</span>
-            </div>
+            {/* Global Search Command Palette Entry */}
+            <GlobalSearchCommandPalette />
 
             {/* Notification Bell */}
             <div className="relative">
