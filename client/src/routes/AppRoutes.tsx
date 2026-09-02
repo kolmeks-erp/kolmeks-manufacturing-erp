@@ -318,6 +318,22 @@ import { MasterSettingsPage } from '../pages/erp/settings/MasterSettingsPage';
 import { SecuritySettingsPage } from '../pages/erp/settings/SecuritySettingsPage';
 import { AuditSettingsPage } from '../pages/erp/settings/AuditSettingsPage';
 
+// Advanced Reporting & Analytics Pages
+import { ReportsExecutiveDashboardPage } from '../pages/erp/reports/ReportsExecutiveDashboardPage';
+import { SalesReportPage } from '../pages/erp/reports/SalesReportPage';
+import { ProcurementReportPage } from '../pages/erp/reports/ProcurementReportPage';
+import { InventoryReportPage } from '../pages/erp/reports/InventoryReportPage';
+import { ProductionReportPage } from '../pages/erp/reports/ProductionReportPage';
+import { QualityReportPage } from '../pages/erp/reports/QualityReportPage';
+import { MaintenanceReportPage } from '../pages/erp/reports/MaintenanceReportPage';
+import { HRReportPage } from '../pages/erp/reports/HRReportPage';
+import { FinanceReportPage } from '../pages/erp/reports/FinanceReportPage';
+import { CRMReportPage } from '../pages/erp/reports/CRMReportPage';
+import { DocumentReportPage } from '../pages/erp/reports/DocumentReportPage';
+import { WorkflowReportPage } from '../pages/erp/reports/WorkflowReportPage';
+import { AuditReportPage } from '../pages/erp/reports/AuditReportPage';
+import { CustomSavedReportsPage } from '../pages/erp/reports/CustomSavedReportsPage';
+
 export const AppRoutes: React.FC = () => {
   return (
     <SystemSettingsProvider>
@@ -751,6 +767,33 @@ export const AppRoutes: React.FC = () => {
             <Route path="settings/security" element={<SecuritySettingsPage />} />
             <Route path="settings/audit" element={<AuditSettingsPage />} />
             <Route path="master-admin" element={<MasterAdminControlPage />} />
+          </Route>
+
+          {/* Centralized Advanced Reporting & Analytics Routes */}
+          <Route element={<ProtectedRoute allowedRoles={['admin', 'master_admin', 'executive', 'sales_manager', 'procurement_manager', 'inventory_manager', 'production_manager', 'quality_manager', 'maintenance_manager', 'hr', 'finance']} />}>
+            <Route path="reports" element={<ReportsExecutiveDashboardPage />} />
+            <Route path="reports/dashboard" element={<ReportsExecutiveDashboardPage />} />
+            <Route path="reports/sales" element={<SalesReportPage />} />
+            <Route path="reports/procurement" element={<ProcurementReportPage />} />
+            <Route path="reports/inventory" element={<InventoryReportPage />} />
+            <Route path="reports/production" element={<ProductionReportPage />} />
+            <Route path="reports/quality" element={<QualityReportPage />} />
+            <Route path="reports/maintenance" element={<MaintenanceReportPage />} />
+            <Route path="reports/crm" element={<CRMReportPage />} />
+            <Route path="reports/documents" element={<DocumentReportPage />} />
+            <Route path="reports/workflows" element={<WorkflowReportPage />} />
+            <Route path="reports/custom" element={<CustomSavedReportsPage />} />
+          </Route>
+
+          {/* Restricted HR & Finance Reports */}
+          <Route element={<ProtectedRoute allowedRoles={['admin', 'master_admin', 'executive', 'hr']} />}>
+            <Route path="reports/hr" element={<HRReportPage />} />
+          </Route>
+          <Route element={<ProtectedRoute allowedRoles={['admin', 'master_admin', 'executive', 'finance']} />}>
+            <Route path="reports/finance" element={<FinanceReportPage />} />
+          </Route>
+          <Route element={<ProtectedRoute allowedRoles={['admin', 'master_admin', 'executive']} />}>
+            <Route path="reports/audit" element={<AuditReportPage />} />
           </Route>
         </Route>
       </Route>

@@ -41,6 +41,7 @@ const documentRoutes = require('./routes/document.routes');
 const notificationRoutes = require('./routes/notification.routes');
 const workflowRoutes = require('./routes/workflow.routes');
 const settingsRoutes = require('./routes/settings.routes');
+const reportsRoutes = require('./routes/reports.routes');
 const { publicRouter: rfqPublicRoutes, erpRouter: rfqErpRoutes } = require('./routes/rfq.routes');
 const errorHandler = require('./middleware/errorHandler');
 
@@ -127,6 +128,7 @@ app.use('/api/documents', documentRoutes);
 app.use('/api/notifications', notificationRoutes);
 app.use('/api/workflows', workflowRoutes);
 app.use('/api/settings', settingsRoutes);
+app.use('/api/reports', reportsRoutes);
 
 // Root Endpoint
 app.get('/', (req, res) => {
