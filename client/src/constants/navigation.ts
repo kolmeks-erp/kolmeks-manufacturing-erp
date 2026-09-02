@@ -79,6 +79,16 @@ export const ERP_SIDEBAR_MENU: ERPMenuItem[] = [
   { id: 'purchase-invoices', label: 'Purchase Invoices', path: `${ERP_BASE_PATH}/purchases/invoices`, iconName: 'FileText', category: 'Procurement', badge: 'Live', roles: ['admin', 'purchase_manager', 'finance', 'accountant', 'executive'] },
   { id: 'procurement-reports', label: 'Procurement Analytics', path: `${ERP_BASE_PATH}/procurement/reports`, iconName: 'BarChart3', category: 'Procurement', badge: 'Live', roles: ['admin', 'purchase_manager', 'finance', 'executive'] },
 
+  // Document Management Section
+  { id: 'documents-dashboard', label: 'Document Telemetry', path: `${ERP_BASE_PATH}/documents/dashboard`, iconName: 'LayoutDashboard', category: 'Document Management', badge: 'Live', roles: ALL_ROLES },
+  { id: 'documents-library', label: 'Document Library', path: `${ERP_BASE_PATH}/documents/library`, iconName: 'FileText', category: 'Document Management', badge: 'Live', roles: ALL_ROLES },
+  { id: 'documents-approvals', label: 'Digital Approvals', path: `${ERP_BASE_PATH}/documents/approvals`, iconName: 'Clock', category: 'Document Management', badge: 'Live', roles: ALL_ROLES },
+  { id: 'documents-recent', label: 'Recent Documents', path: `${ERP_BASE_PATH}/documents/recent`, iconName: 'History', category: 'Document Management', badge: 'Live', roles: ALL_ROLES },
+  { id: 'documents-expiring', label: 'Expiring & Review Due', path: `${ERP_BASE_PATH}/documents/expiring`, iconName: 'AlertTriangle', category: 'Document Management', badge: 'Live', roles: ALL_ROLES },
+  { id: 'documents-types', label: 'Document Types', path: `${ERP_BASE_PATH}/documents/types`, iconName: 'Layers', category: 'Document Management', badge: 'Live', roles: ['admin', 'quality_manager', 'hr', 'executive'] },
+  { id: 'documents-categories', label: 'Document Categories', path: `${ERP_BASE_PATH}/documents/categories`, iconName: 'FolderKanban', category: 'Document Management', badge: 'Live', roles: ['admin', 'quality_manager', 'hr', 'executive'] },
+  { id: 'documents-reports', label: 'Compliance Reports', path: `${ERP_BASE_PATH}/documents/reports`, iconName: 'FileSpreadsheet', category: 'Document Management', badge: 'Live', roles: ['admin', 'quality_manager', 'hr', 'finance', 'executive'] },
+
   // Products Section
   { id: 'products', label: 'Products Master', path: `${ERP_BASE_PATH}/products`, iconName: 'Package', category: 'Products', badge: 'Live', roles: ['admin', 'production_manager', 'sales_manager', 'quality_manager'] },
   { id: 'product-categories', label: 'Product Categories', path: `${ERP_BASE_PATH}/product-categories`, iconName: 'FolderTree', category: 'Products', badge: 'Live', roles: ['admin', 'production_manager', 'sales_manager', 'quality_manager'] },

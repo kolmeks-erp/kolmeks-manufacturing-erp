@@ -37,6 +37,7 @@ const payrollRoutes = require('./routes/payroll.routes');
 const crmRoutes = require('./routes/crm.routes');
 const salesDistributionRoutes = require('./routes/sales_distribution.routes');
 const procurementP2PRoutes = require('./routes/procurement_p2p.routes');
+const documentRoutes = require('./routes/document.routes');
 const { publicRouter: rfqPublicRoutes, erpRouter: rfqErpRoutes } = require('./routes/rfq.routes');
 const errorHandler = require('./middleware/errorHandler');
 
@@ -119,6 +120,7 @@ app.use('/api/payroll', payrollRoutes);
 app.use('/api/crm', crmRoutes);
 app.use('/api/sales', salesDistributionRoutes);
 app.use('/api/procurement/p2p', procurementP2PRoutes);
+app.use('/api/documents', documentRoutes);
 
 // Root Endpoint
 app.get('/', (req, res) => {

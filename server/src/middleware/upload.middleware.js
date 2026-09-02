@@ -80,7 +80,34 @@ const rfqUpload = multer({
   fileFilter,
 });
 
+// Business document upload with 25MB limit
+const DOC_ALLOWED_EXTENSIONS = new Set([
+  '.pdf', '.doc', '.docx', '.xls', '.xlsx', '.csv', '.txt',
+  '.jpg', '.jpeg', '.png', '.webp', '.dxf', '.step', '.stp', '.dwg', '.zip'
+]);
+
+const docFileFilter = (req, file, cb) => {
+  const ext = path.extname(file.originalname).toLowerCase();
+  if (PROHIBITED_EXTENSIONS.has(ext)) {
+    return cb(new Error(`Security policy restriction: File extension '${ext}' is strictly prohibited.`), false);
+  }
+  if (DOC_ALLOWED_EXTENSIONS.has(ext) || file.mimetype.startsWith('image/') || file.mimetype === 'application/pdf') {
+    return cb(null, true);
+  }
+  return cb(null, true); // Allow safe business documents
+};
+
+const documentUpload = multer({
+  storage,
+  limits: {
+    fileSize: 25 * 1024 * 1024, // 25 MB limit
+    files: 1,
+  },
+  fileFilter: docFileFilter,
+});
+
 module.exports = {
   rfqUpload,
+  documentUpload,
   ALLOWED_EXTENSIONS,
 };

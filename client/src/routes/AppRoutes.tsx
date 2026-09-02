@@ -74,6 +74,16 @@ import { QuotationComparisonPage } from '../pages/erp/procurement/QuotationCompa
 import { SupplierReturnsPage } from '../pages/erp/procurement/SupplierReturnsPage';
 import { ThreeWayMatchPage } from '../pages/erp/procurement/ThreeWayMatchPage';
 import { ProcurementReportsPage } from '../pages/erp/procurement/ProcurementReportsPage';
+
+import { DocumentDashboardPage } from '../pages/erp/documents/DocumentDashboardPage';
+import { DocumentLibraryPage } from '../pages/erp/documents/DocumentLibraryPage';
+import { DocumentDetailPage } from '../pages/erp/documents/DocumentDetailPage';
+import { DocumentApprovalsPage } from '../pages/erp/documents/DocumentApprovalsPage';
+import { RecentDocumentsPage } from '../pages/erp/documents/RecentDocumentsPage';
+import { ExpiringDocumentsPage } from '../pages/erp/documents/ExpiringDocumentsPage';
+import { DocumentTypesPage } from '../pages/erp/documents/DocumentTypesPage';
+import { DocumentCategoriesPage } from '../pages/erp/documents/DocumentCategoriesPage';
+import { DocumentReportsPage } from '../pages/erp/documents/DocumentReportsPage';
 import { PurchaseOrderListPage } from '../pages/erp/procurement/PurchaseOrderListPage';
 import { PurchaseOrderFormPage } from '../pages/erp/procurement/PurchaseOrderFormPage';
 import { PurchaseOrderDetailPage } from '../pages/erp/procurement/PurchaseOrderDetailPage';
@@ -496,6 +506,17 @@ export const AppRoutes: React.FC = () => {
             <Route path="procurement/returns" element={<SupplierReturnsPage />} />
             <Route path="procurement/three-way-match" element={<ThreeWayMatchPage />} />
             <Route path="procurement/reports" element={<ProcurementReportsPage />} />
+
+            {/* Document Management & Digital Approvals Routes */}
+            <Route path="documents/dashboard" element={<DocumentDashboardPage />} />
+            <Route path="documents/library" element={<DocumentLibraryPage />} />
+            <Route path="documents/approvals" element={<DocumentApprovalsPage />} />
+            <Route path="documents/recent" element={<RecentDocumentsPage />} />
+            <Route path="documents/expiring" element={<ExpiringDocumentsPage />} />
+            <Route path="documents/types" element={<DocumentTypesPage />} />
+            <Route path="documents/categories" element={<DocumentCategoriesPage />} />
+            <Route path="documents/reports" element={<DocumentReportsPage />} />
+            <Route path="documents/:id" element={<DocumentDetailPage />} />
             <Route path="suppliers" element={<SupplierListPage />} />
             <Route path="suppliers/new" element={<SupplierCreatePage />} />
             <Route path="suppliers/:id" element={<SupplierDetailPage />} />
