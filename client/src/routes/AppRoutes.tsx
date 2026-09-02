@@ -593,6 +593,17 @@ export const AppRoutes: React.FC = () => {
             <Route path="notifications/settings" element={<NotificationSettingsPage />} />
             <Route path="notifications/reports" element={<NotificationReportsPage />} />
 
+            {/* Document Management Routes */}
+            <Route path="documents/dashboard" element={<DocumentDashboardPage />} />
+            <Route path="documents/library" element={<DocumentLibraryPage />} />
+            <Route path="documents/approvals" element={<DocumentApprovalsPage />} />
+            <Route path="documents/recent" element={<RecentDocumentsPage />} />
+            <Route path="documents/expiring" element={<ExpiringDocumentsPage />} />
+            <Route path="documents/types" element={<DocumentTypesPage />} />
+            <Route path="documents/categories" element={<DocumentCategoriesPage />} />
+            <Route path="documents/reports" element={<DocumentReportsPage />} />
+            <Route path="documents/:id" element={<DocumentDetailPage />} />
+
             {/* Workflow & Approval Engine Routes (All Authenticated Users) */}
             <Route path="workflows" element={<WorkflowDashboardPage />} />
             <Route path="workflows/definitions" element={<WorkflowDefinitionsPage />} />

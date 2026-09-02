@@ -34,8 +34,10 @@ const authorizeRoles = (...allowedRoles) => {
 
     if (
       normalizedAllowed.includes(rawRole) ||
-      (rawRole.startsWith('hr') && normalizedAllowed.includes('hr')) ||
-      (rawRole.startsWith('finance') && normalizedAllowed.includes('finance'))
+      (rawRole.includes('hr') && normalizedAllowed.includes('hr')) ||
+      (rawRole.includes('human') && normalizedAllowed.includes('hr')) ||
+      (rawRole.includes('finance') && normalizedAllowed.includes('finance')) ||
+      (rawRole.includes('account') && normalizedAllowed.includes('finance'))
     ) {
       return next();
     }

@@ -11,6 +11,8 @@ import {
   CheckSquare,
   Download
 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../../context/AuthContext';
 import { ReportsNavigationHeader } from '../../../components/reports/ReportsNavigationHeader';
 import { GlobalReportFilterBar } from '../../../components/reports/GlobalReportFilterBar';
 import { KPICard } from '../../../components/reports/KPICard';
@@ -19,11 +21,20 @@ import { reportsService } from '../../../services/reports.service';
 import { ERP_BASE_PATH } from '../../../constants/navigation';
 
 export const ReportsExecutiveDashboardPage: React.FC = () => {
+  const navigate = useNavigate();
+  const { role } = useAuth();
   const [filters, setFilters] = useState<GlobalReportFilters>({
     date_range: 'this_month'
   });
   const [loading, setLoading] = useState(true);
   const [kpis, setKpis] = useState<ExecutiveDashboardKPIs | null>(null);
+
+  useEffect(() => {
+    const currentRole = (role || '').toLowerCase().trim();
+    if (currentRole.startsWith('hr') || currentRole.includes('human')) {
+      navigate(`${ERP_BASE_PATH}/reports/hr`, { replace: true });
+    }
+  }, [role, navigate]);
 
   const fetchDashboard = async () => {
     setLoading(true);
