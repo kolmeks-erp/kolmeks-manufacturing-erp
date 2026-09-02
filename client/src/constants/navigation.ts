@@ -89,6 +89,23 @@ export const ERP_SIDEBAR_MENU: ERPMenuItem[] = [
   { id: 'documents-categories', label: 'Document Categories', path: `${ERP_BASE_PATH}/documents/categories`, iconName: 'FolderKanban', category: 'Document Management', badge: 'Live', roles: ['admin', 'quality_manager', 'hr', 'executive'] },
   { id: 'documents-reports', label: 'Compliance Reports', path: `${ERP_BASE_PATH}/documents/reports`, iconName: 'FileSpreadsheet', category: 'Document Management', badge: 'Live', roles: ['admin', 'quality_manager', 'hr', 'finance', 'executive'] },
 
+  // Notifications & Communication Center Section
+  { id: 'notifications-all', label: 'Notifications Center', path: `${ERP_BASE_PATH}/notifications`, iconName: 'Bell', category: 'Notifications', badge: 'Live', roles: ALL_ROLES },
+  { id: 'notifications-unread', label: 'Unread Alerts', path: `${ERP_BASE_PATH}/notifications/unread`, iconName: 'AlertTriangle', category: 'Notifications', badge: 'Live', roles: ALL_ROLES },
+  { id: 'notifications-approvals', label: 'Approval Tasks', path: `${ERP_BASE_PATH}/notifications/approvals`, iconName: 'CheckSquare', category: 'Notifications', badge: 'Live', roles: ALL_ROLES },
+  { id: 'notifications-reminders', label: 'My Reminders', path: `${ERP_BASE_PATH}/notifications/reminders`, iconName: 'Calendar', category: 'Notifications', badge: 'Live', roles: ALL_ROLES },
+  { id: 'notifications-settings', label: 'Alert Preferences', path: `${ERP_BASE_PATH}/notifications/settings`, iconName: 'Settings', category: 'Notifications', badge: 'Live', roles: ALL_ROLES },
+  { id: 'notifications-reports', label: 'Delivery Analytics', path: `${ERP_BASE_PATH}/notifications/reports`, iconName: 'BarChart2', category: 'Notifications', badge: 'Live', roles: ALL_ROLES },
+
+  // Workflow & Approval Engine Section
+  { id: 'workflows-dashboard', label: 'Workflow Engine', path: `${ERP_BASE_PATH}/workflows`, iconName: 'GitMerge', category: 'Workflows', badge: 'Live', roles: ALL_ROLES },
+  { id: 'workflows-definitions', label: 'Workflow Definitions', path: `${ERP_BASE_PATH}/workflows/definitions`, iconName: 'Layers', category: 'Workflows', badge: 'Live', roles: ['admin', 'executive', 'purchase_manager', 'quality_manager', 'hr', 'finance_manager'] },
+  { id: 'workflows-instances', label: 'Running Instances', path: `${ERP_BASE_PATH}/workflows/instances`, iconName: 'GitBranch', category: 'Workflows', badge: 'Live', roles: ALL_ROLES },
+  { id: 'workflows-tasks', label: 'My Approvals & Tasks', path: `${ERP_BASE_PATH}/workflows/tasks`, iconName: 'CheckCircle2', category: 'Workflows', badge: 'Live', roles: ALL_ROLES },
+  { id: 'workflows-history', label: 'Workflow Audit History', path: `${ERP_BASE_PATH}/workflows/history`, iconName: 'History', category: 'Workflows', badge: 'Live', roles: ALL_ROLES },
+  { id: 'workflows-reports', label: 'Approval Telemetry', path: `${ERP_BASE_PATH}/workflows/reports`, iconName: 'BarChart2', category: 'Workflows', badge: 'Live', roles: ['admin', 'executive', 'finance_manager'] },
+  { id: 'workflows-settings', label: 'Groups & Delegations', path: `${ERP_BASE_PATH}/workflows/settings`, iconName: 'Settings', category: 'Workflows', badge: 'Live', roles: ['admin', 'executive', 'hr'] },
+
   // Products Section
   { id: 'products', label: 'Products Master', path: `${ERP_BASE_PATH}/products`, iconName: 'Package', category: 'Products', badge: 'Live', roles: ['admin', 'production_manager', 'sales_manager', 'quality_manager'] },
   { id: 'product-categories', label: 'Product Categories', path: `${ERP_BASE_PATH}/product-categories`, iconName: 'FolderTree', category: 'Products', badge: 'Live', roles: ['admin', 'production_manager', 'sales_manager', 'quality_manager'] },

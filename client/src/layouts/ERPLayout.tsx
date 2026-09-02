@@ -59,6 +59,8 @@ import { useAuth } from '../context/AuthContext';
 import { useSystemSettings } from '../context/SystemSettingsContext';
 import { KolmeksLogo } from '../components/ui/KolmeksLogo';
 import { Breadcrumbs } from '../components/erp/Breadcrumbs';
+import { notificationService } from '../services/notification.service';
+import { NotificationItem } from '../types/notification';
 
 const iconMap: Record<string, React.ElementType> = {
   LayoutDashboard,
@@ -122,12 +124,37 @@ export const ERPLayout: React.FC<ERPLayoutProps> = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [unreadCount, setUnreadCount] = useState<number>(0);
+  const [recentNotifs, setRecentNotifs] = useState<NotificationItem[]>([]);
+  const [notifDropdownOpen, setNotifDropdownOpen] = useState<boolean>(false);
   const location = useLocation();
   const navigate = useNavigate();
 
   const { profile, role, signOut } = useAuth();
   const { isCategoryEnabled, theme, toggleTheme } = useSystemSettings();
   const isDark = theme === 'dark';
+
+  useEffect(() => {
+    let isMounted = true;
+    const fetchNotificationState = async () => {
+      try {
+        const count = await notificationService.getUnreadCount();
+        if (isMounted) setUnreadCount(count);
+        if (isMounted && notifDropdownOpen) {
+          const res = await notificationService.getNotifications({ limit: 5 });
+          setRecentNotifs(res.data);
+        }
+      } catch (err) {
+        // Safe failover
+      }
+    };
+    fetchNotificationState();
+    const interval = setInterval(fetchNotificationState, 15000);
+    return () => {
+      isMounted = false;
+      clearInterval(interval);
+    };
+  }, [notifDropdownOpen]);
 
   const handleLogout = async () => {
     setUserMenuOpen(false);
@@ -322,14 +349,80 @@ export const ERPLayout: React.FC<ERPLayoutProps> = ({ children }) => {
             <div className="relative">
               <button
                 type="button"
+                onClick={() => setNotifDropdownOpen(!notifDropdownOpen)}
                 className={`p-2 rounded-lg transition-colors relative ${
                   isDark ? 'text-slate-400 hover:text-white hover:bg-slate-800' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
                 }`}
                 title="System Notifications"
               >
                 <Bell className="w-4 h-4" />
-                <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-blue-500 rounded-full" />
+                {unreadCount > 0 && (
+                  <span className="absolute -top-1 -right-1 px-1.5 py-0.2 bg-blue-600 text-white rounded-full text-[10px] font-bold font-mono">
+                    {unreadCount > 99 ? '99+' : unreadCount}
+                  </span>
+                )}
               </button>
+
+              {notifDropdownOpen && (
+                <div className="absolute right-0 mt-2 w-80 sm:w-96 rounded-2xl shadow-2xl border py-2 z-50 animate-in fade-in duration-150 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200">
+                  <div className="px-4 py-2 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                    <span className="text-xs font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
+                      <Bell className="w-4 h-4 text-blue-500" />
+                      ERP Feed ({unreadCount} unread)
+                    </span>
+                    <button
+                      onClick={async () => {
+                        await notificationService.markAllAsRead();
+                        setUnreadCount(0);
+                        const res = await notificationService.getNotifications({ limit: 5 });
+                        setRecentNotifs(res.data);
+                      }}
+                      className="text-[11px] font-semibold text-blue-600 dark:text-blue-400 hover:underline"
+                    >
+                      Mark all read
+                    </button>
+                  </div>
+
+                  <div className="max-h-80 overflow-y-auto divide-y divide-slate-100 dark:divide-slate-800">
+                    {recentNotifs.length === 0 ? (
+                      <div className="p-4 text-center text-xs text-slate-400">No recent notifications.</div>
+                    ) : (
+                      recentNotifs.map((n) => (
+                        <div
+                          key={n.id}
+                          onClick={() => {
+                            setNotifDropdownOpen(false);
+                            if (!n.is_read) notificationService.markAsRead(n.id);
+                            if (n.related_route) navigate(n.related_route);
+                            else navigate(`${ERP_BASE_PATH}/notifications`);
+                          }}
+                          className={`p-3 text-xs cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-colors ${
+                            !n.is_read ? 'bg-blue-50/40 dark:bg-blue-950/20' : ''
+                          }`}
+                        >
+                          <div className="flex items-center justify-between gap-2">
+                            <span className="font-bold text-slate-900 dark:text-white truncate">{n.title}</span>
+                            <span className="text-[9px] font-mono text-slate-400">{new Date(n.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                          </div>
+                          <p className="text-slate-500 dark:text-slate-400 text-[11px] line-clamp-1 mt-0.5">{n.message}</p>
+                        </div>
+                      ))
+                    )}
+                  </div>
+
+                  <div className="p-2 border-t border-slate-100 dark:border-slate-800 text-center">
+                    <button
+                      onClick={() => {
+                        setNotifDropdownOpen(false);
+                        navigate(`${ERP_BASE_PATH}/notifications`);
+                      }}
+                      className="w-full py-1.5 text-xs font-bold text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/40 rounded-xl transition-colors"
+                    >
+                      View All Notifications Center →
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Profile Dropdown */}

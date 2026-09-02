@@ -1,5 +1,7 @@
 const { supabase } = require('../config/supabase');
 const CloudinaryService = require('../services/cloudinary.service');
+const NotificationService = require('../services/notification.service');
+const WorkflowEngineService = require('../services/workflow.service');
 
 // Helper to handle error responses safely
 const handleError = (res, error, customMessage = 'Document Management operation failed.') => {
@@ -521,6 +523,36 @@ exports.submitForApproval = async (req, res) => {
       reason: message || 'Document submitted for formal digital approval',
     });
 
+    // Start Centralized Workflow Instance
+    try {
+      await WorkflowEngineService.startWorkflow({
+        entity_type: 'document',
+        entity_id: id,
+        entity_reference: doc.document_number,
+        module: 'Documents',
+        started_by: req.user?.id,
+        priority: priority === 'URGENT' ? 'URGENT' : 'HIGH',
+        entity_data: { title: doc.title, category_id: doc.category_id }
+      });
+    } catch (wfErr) {
+      console.warn('Workflow Engine instance initiation warning:', wfErr.message);
+    }
+
+    // Dispatch notification to approvers of target role
+    NotificationService.dispatchNotification({
+      type_code: 'APPROVAL_REQUIRED',
+      recipient_role: target_role || 'DEPARTMENT_MANAGER',
+      sender_id: req.user?.id,
+      title: 'Document Approval Required',
+      message: `Document has been submitted for formal digital approval.`,
+      category: 'Approvals',
+      priority: priority === 'URGENT' ? 'URGENT' : 'HIGH',
+      related_module: 'Documents',
+      related_record_id: id,
+      related_route: `/secure-kolmeks-x0y0/documents/${id}`,
+      event_key: `DOC_SUBMIT_${id}_${approval.id}`,
+    }).catch((e) => console.error('Notification dispatch failed:', e));
+
     return res.status(201).json({
       success: true,
       message: 'Document submitted for approval.',
@@ -582,6 +614,24 @@ exports.processApprovalDecision = async (req, res) => {
       new_value: { decision, comments },
       reason: comments || `Approval decision recorded as ${decision}`,
     });
+
+    // Dispatch notification to original requester
+    if (approval.requester_id) {
+      const typeCode = decision === 'APPROVED' ? 'APPROVAL_COMPLETED' : decision === 'REJECTED' ? 'APPROVAL_REJECTED' : 'CHANGES_REQUESTED';
+      NotificationService.dispatchNotification({
+        type_code: typeCode,
+        recipient_id: approval.requester_id,
+        sender_id: req.user?.id,
+        title: `Document Approval ${decision}`,
+        message: `Your document approval request was marked as ${decision}. ${comments ? 'Comments: ' + comments : ''}`,
+        category: 'Approvals',
+        priority: decision === 'APPROVED' ? 'NORMAL' : 'HIGH',
+        related_module: 'Documents',
+        related_record_id: approval.document_id,
+        related_route: `/secure-kolmeks-x0y0/documents/${approval.document_id}`,
+        event_key: `DOC_DECISION_${approval_id}_${decision}`,
+      }).catch((e) => console.error('Notification dispatch failed:', e));
+    }
 
     return res.status(200).json({
       success: true,

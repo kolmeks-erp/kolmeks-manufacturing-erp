@@ -84,6 +84,17 @@ import { ExpiringDocumentsPage } from '../pages/erp/documents/ExpiringDocumentsP
 import { DocumentTypesPage } from '../pages/erp/documents/DocumentTypesPage';
 import { DocumentCategoriesPage } from '../pages/erp/documents/DocumentCategoriesPage';
 import { DocumentReportsPage } from '../pages/erp/documents/DocumentReportsPage';
+import { NotificationDashboardPage } from '../pages/erp/notifications/NotificationDashboardPage';
+import { NotificationSettingsPage } from '../pages/erp/notifications/NotificationSettingsPage';
+import { NotificationReportsPage } from '../pages/erp/notifications/NotificationReportsPage';
+import { WorkflowDashboardPage } from '../pages/erp/workflows/WorkflowDashboardPage';
+import { WorkflowDefinitionsPage } from '../pages/erp/workflows/WorkflowDefinitionsPage';
+import { WorkflowBuilderPage } from '../pages/erp/workflows/WorkflowBuilderPage';
+import { WorkflowInstancesPage } from '../pages/erp/workflows/WorkflowInstancesPage';
+import { WorkflowTasksPage } from '../pages/erp/workflows/WorkflowTasksPage';
+import { WorkflowHistoryPage } from '../pages/erp/workflows/WorkflowHistoryPage';
+import { WorkflowReportsPage } from '../pages/erp/workflows/WorkflowReportsPage';
+import { WorkflowSettingsPage } from '../pages/erp/workflows/WorkflowSettingsPage';
 import { PurchaseOrderListPage } from '../pages/erp/procurement/PurchaseOrderListPage';
 import { PurchaseOrderFormPage } from '../pages/erp/procurement/PurchaseOrderFormPage';
 import { PurchaseOrderDetailPage } from '../pages/erp/procurement/PurchaseOrderDetailPage';
@@ -517,6 +528,28 @@ export const AppRoutes: React.FC = () => {
             <Route path="documents/categories" element={<DocumentCategoriesPage />} />
             <Route path="documents/reports" element={<DocumentReportsPage />} />
             <Route path="documents/:id" element={<DocumentDetailPage />} />
+
+            {/* Notifications & Communication Center Routes */}
+            <Route path="notifications" element={<NotificationDashboardPage />} />
+            <Route path="notifications/all" element={<NotificationDashboardPage />} />
+            <Route path="notifications/unread" element={<NotificationDashboardPage />} />
+            <Route path="notifications/mentions" element={<NotificationDashboardPage />} />
+            <Route path="notifications/approvals" element={<NotificationDashboardPage />} />
+            <Route path="notifications/reminders" element={<NotificationDashboardPage />} />
+            <Route path="notifications/settings" element={<NotificationSettingsPage />} />
+            <Route path="notifications/reports" element={<NotificationReportsPage />} />
+
+            {/* Workflow & Approval Engine Routes */}
+            <Route path="workflows" element={<WorkflowDashboardPage />} />
+            <Route path="workflows/definitions" element={<WorkflowDefinitionsPage />} />
+            <Route path="workflows/definitions/:id" element={<WorkflowBuilderPage />} />
+            <Route path="workflows/instances" element={<WorkflowInstancesPage />} />
+            <Route path="workflows/instances/:id" element={<WorkflowInstancesPage />} />
+            <Route path="workflows/tasks" element={<WorkflowTasksPage />} />
+            <Route path="workflows/approvals" element={<WorkflowTasksPage />} />
+            <Route path="workflows/history" element={<WorkflowHistoryPage />} />
+            <Route path="workflows/reports" element={<WorkflowReportsPage />} />
+            <Route path="workflows/settings" element={<WorkflowSettingsPage />} />
             <Route path="suppliers" element={<SupplierListPage />} />
             <Route path="suppliers/new" element={<SupplierCreatePage />} />
             <Route path="suppliers/:id" element={<SupplierDetailPage />} />
