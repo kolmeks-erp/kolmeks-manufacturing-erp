@@ -334,6 +334,15 @@ import { WorkflowReportPage } from '../pages/erp/reports/WorkflowReportPage';
 import { AuditReportPage } from '../pages/erp/reports/AuditReportPage';
 import { CustomSavedReportsPage } from '../pages/erp/reports/CustomSavedReportsPage';
 
+// Security & Compliance Hardening Pages
+import { SecurityOverviewPage } from '../pages/erp/security/SecurityOverviewPage';
+import { AccessControlSecurityPage } from '../pages/erp/security/AccessControlSecurityPage';
+import { SessionSecurityPage } from '../pages/erp/security/SessionSecurityPage';
+import { SecurityEventsPage } from '../pages/erp/security/SecurityEventsPage';
+import { SecurityPoliciesPage } from '../pages/erp/security/SecurityPoliciesPage';
+import { SecurityAuditPage } from '../pages/erp/security/SecurityAuditPage';
+import { SecurityReportsPage } from '../pages/erp/security/SecurityReportsPage';
+
 export const AppRoutes: React.FC = () => {
   return (
     <SystemSettingsProvider>
@@ -794,6 +803,18 @@ export const AppRoutes: React.FC = () => {
           </Route>
           <Route element={<ProtectedRoute allowedRoles={['admin', 'master_admin', 'executive']} />}>
             <Route path="reports/audit" element={<AuditReportPage />} />
+          </Route>
+
+          {/* Centralized Audit, Security & Compliance Hardening Module Routes */}
+          <Route element={<ProtectedRoute allowedRoles={['admin', 'master_admin', 'security_officer']} />}>
+            <Route path="security" element={<SecurityOverviewPage />} />
+            <Route path="security/overview" element={<SecurityOverviewPage />} />
+            <Route path="security/access" element={<AccessControlSecurityPage />} />
+            <Route path="security/sessions" element={<SessionSecurityPage />} />
+            <Route path="security/events" element={<SecurityEventsPage />} />
+            <Route path="security/policies" element={<SecurityPoliciesPage />} />
+            <Route path="security/audit" element={<SecurityAuditPage />} />
+            <Route path="security/reports" element={<SecurityReportsPage />} />
           </Route>
         </Route>
       </Route>
