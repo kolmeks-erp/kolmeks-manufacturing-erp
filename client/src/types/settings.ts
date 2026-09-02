@@ -58,6 +58,9 @@ export interface DepartmentItem {
   };
 }
 
+export type LocationSetting = LocationItem;
+export type DepartmentSetting = DepartmentItem;
+
 export interface UserItem {
   id: string;
   email: string;
