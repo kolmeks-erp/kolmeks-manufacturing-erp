@@ -114,7 +114,7 @@ class SearchService {
         results.salesOrders = salesOrders.map((so) => ({
           id: so.id,
           title: `Sales Order: ${so.order_number}`,
-          subtitle: `Customer: ${so.customer?.name || 'N/A'} • Value: $${so.total_amount || 0}`,
+          subtitle: `Customer: ${so.customer?.name || 'N/A'} • Value: ₹${so.total_amount || 0}`,
           badge: so.status || 'Pending',
           module: 'Sales',
           type: 'Sales Order',
@@ -138,7 +138,7 @@ class SearchService {
         results.purchaseOrders = purchaseOrders.map((po) => ({
           id: po.id,
           title: `Purchase Order: ${po.po_number}`,
-          subtitle: `Supplier: ${po.supplier?.name || 'N/A'} • Amount: $${po.total_amount || 0}`,
+          subtitle: `Supplier: ${po.supplier?.name || 'N/A'} • Amount: ₹${po.total_amount || 0}`,
           badge: po.status || 'Issued',
           module: 'Procurement',
           type: 'Purchase Order',

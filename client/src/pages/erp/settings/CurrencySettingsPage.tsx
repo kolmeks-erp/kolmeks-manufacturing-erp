@@ -31,9 +31,9 @@ export const CurrencySettingsPage: React.FC = () => {
   const handleOpenModal = (item?: CurrencyItem) => {
     setEditingItem(
       item || {
-        code: '',
-        name: '',
-        symbol: '$',
+        code: 'INR',
+        name: 'Indian Rupee',
+        symbol: '₹',
         decimal_precision: 2,
         is_default: false,
         exchange_rate_to_default: 1.0,
