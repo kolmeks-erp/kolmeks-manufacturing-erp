@@ -8,6 +8,9 @@ export interface NavItem {
 
 export type UserRoleName =
   | 'admin'
+  | 'master_admin'
+  | 'security_officer'
+  | 'staff'
   | 'hr'
   | 'finance'
   | 'finance_manager'
@@ -19,6 +22,7 @@ export type UserRoleName =
   | 'crm_manager'
   | 'payroll'
   | 'purchase_manager'
+  | 'procurement_manager'
   | 'production_manager'
   | 'production_planner'
   | 'production_supervisor'
