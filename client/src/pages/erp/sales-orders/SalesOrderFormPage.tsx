@@ -45,7 +45,7 @@ export const SalesOrderFormPage: React.FC = () => {
   const [orderDate, setOrderDate] = useState<string>(new Date().toISOString().split('T')[0]);
   const [requestedDeliveryDate, setRequestedDeliveryDate] = useState<string>('');
   const [priority, setPriority] = useState<string>('NORMAL');
-  const [currency, setCurrency] = useState<string>('EUR');
+  const [currency, setCurrency] = useState<string>('INR');
   const [customerReference, setCustomerReference] = useState<string>('');
   const [paymentTerms, setPaymentTerms] = useState<string>('Net 30 Days');
   const [deliveryTerms, setDeliveryTerms] = useState<string>('FOB Factory');
@@ -100,7 +100,7 @@ export const SalesOrderFormPage: React.FC = () => {
           setOrderDate(so.order_date ? so.order_date.split('T')[0] : new Date().toISOString().split('T')[0]);
           setRequestedDeliveryDate(so.requested_delivery_date ? so.requested_delivery_date.split('T')[0] : '');
           setPriority(so.priority || 'NORMAL');
-          setCurrency(so.currency || 'EUR');
+          setCurrency(so.currency || 'INR');
           setCustomerReference(so.customer_reference || '');
           setPaymentTerms(so.payment_terms || 'Net 30 Days');
           setDeliveryTerms(so.delivery_terms || 'FOB Factory');
@@ -469,8 +469,8 @@ export const SalesOrderFormPage: React.FC = () => {
               onChange={(e) => setCurrency(e.target.value)}
               className="w-full px-3.5 py-2 bg-slate-50 dark:bg-[#071220] border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-bold text-slate-900 dark:text-white focus:border-blue-600 focus:outline-hidden"
             >
-              <option value="EUR" className="bg-white dark:bg-[#0F2647]">EUR (₹)</option>
-              <option value="USD" className="bg-white dark:bg-[#0F2647]">USD (₹)</option>
+              <option value="INR" className="bg-white dark:bg-[#0F2647]">INR (₹)</option>
+              <option value="INR" className="bg-white dark:bg-[#0F2647]">INR (₹)</option>
               <option value="INR" className="bg-white dark:bg-[#0F2647]">INR (₹)</option>
             </select>
           </div>

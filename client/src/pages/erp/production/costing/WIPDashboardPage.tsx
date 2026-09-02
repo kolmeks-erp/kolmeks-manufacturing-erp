@@ -78,19 +78,19 @@ export const WIPDashboardPage: React.FC = () => {
   return (
     <div className="p-6 space-y-6 max-w-7xl mx-auto">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-900 border border-slate-800 p-6 rounded-2xl">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white dark:bg-[#0F2647] border border-slate-200 dark:border-slate-800 p-6 rounded-2xl shadow-sm">
         <div>
-          <h1 className="text-2xl font-bold text-white flex items-center gap-3">
-            <Activity className="w-7 h-7 text-amber-400" />
+          <h1 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-3">
+            <Activity className="w-7 h-7 text-amber-500 dark:text-amber-400" />
             Work In Progress (WIP) Tracking
           </h1>
-          <p className="text-slate-400 text-sm mt-1">
+          <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">
             Monitor incomplete production orders, WIP aging, material/labor/overhead absorption balances
           </p>
         </div>
         <button
           onClick={fetchWIP}
-          className="flex items-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-medium rounded-xl border border-slate-700 transition"
+          className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-sm font-medium rounded-xl border border-slate-200 dark:border-slate-700 transition"
         >
           <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
           Refresh WIP
@@ -98,7 +98,7 @@ export const WIPDashboardPage: React.FC = () => {
       </div>
 
       {/* Filter Bar */}
-      <div className="flex flex-col sm:flex-row gap-4 bg-slate-900 border border-slate-800 p-4 rounded-xl">
+      <div className="flex flex-col sm:flex-row gap-4 bg-white dark:bg-[#0F2647] border border-slate-200 dark:border-slate-800 p-4 rounded-xl shadow-sm">
         <div className="relative flex-1">
           <Search className="w-4 h-4 absolute left-3 top-3 text-slate-400" />
           <input
@@ -107,14 +107,14 @@ export const WIPDashboardPage: React.FC = () => {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && fetchWIP()}
-            className="w-full pl-9 pr-4 py-2 bg-slate-950 border border-slate-800 rounded-lg text-sm text-white placeholder-slate-500 focus:outline-none focus:border-amber-500"
+            className="w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500"
           />
         </div>
 
         <select
           value={status}
           onChange={(e) => setStatus(e.target.value)}
-          className="px-3 py-2 bg-slate-950 border border-slate-800 rounded-lg text-sm text-slate-300 focus:outline-none focus:border-amber-500"
+          className="px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-sm text-slate-700 dark:text-slate-300 focus:outline-none focus:border-amber-500"
         >
           <option value="">All WIP Statuses</option>
           <option value="OPEN">OPEN</option>
@@ -125,10 +125,10 @@ export const WIPDashboardPage: React.FC = () => {
       </div>
 
       {/* WIP Master Table */}
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-xl">
+      <div className="bg-white dark:bg-[#0F2647] border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm">
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm text-slate-300">
-            <thead className="bg-slate-950/80 text-slate-400 font-semibold border-b border-slate-800">
+          <table className="w-full text-left text-sm text-slate-600 dark:text-slate-300">
+            <thead className="bg-slate-50 dark:bg-slate-900/80 text-slate-700 dark:text-slate-400 font-semibold border-b border-slate-200 dark:border-slate-800">
               <tr>
                 <th className="p-4">WIP Reference</th>
                 <th className="p-4">Production Order</th>
@@ -142,16 +142,16 @@ export const WIPDashboardPage: React.FC = () => {
                 <th className="p-4 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/60">
+            <tbody className="divide-y divide-slate-200 dark:divide-slate-800/60">
               {loading ? (
                 <tr>
-                  <td colSpan={10} className="p-8 text-center text-slate-500">
+                  <td colSpan={10} className="p-8 text-center text-slate-400">
                     Loading Work In Progress telemetry...
                   </td>
                 </tr>
               ) : wipList.length === 0 ? (
                 <tr>
-                  <td colSpan={10} className="p-8 text-center text-slate-500">
+                  <td colSpan={10} className="p-8 text-center text-slate-400">
                     No active Work In Progress records found.
                   </td>
                 </tr>
@@ -160,22 +160,22 @@ export const WIPDashboardPage: React.FC = () => {
                   <tr
                     key={w.id}
                     onClick={() => navigate(`/secure-kolmeks-x0y0/production/wip/${w.id}`)}
-                    className="hover:bg-slate-800/40 cursor-pointer transition"
+                    className="hover:bg-slate-50 dark:hover:bg-slate-800/40 cursor-pointer transition"
                   >
-                    <td className="p-4 font-semibold text-white">{w.wip_number}</td>
-                    <td className="p-4 text-amber-400 font-medium font-mono text-xs">
+                    <td className="p-4 font-semibold text-slate-900 dark:text-white">{w.wip_number}</td>
+                    <td className="p-4 text-amber-600 dark:text-amber-400 font-medium font-mono text-xs">
                       {w.production_order?.production_order_number}
                     </td>
                     <td className="p-4">
-                      <div className="text-slate-200 font-medium">{w.product?.name}</div>
-                      <div className="text-xs text-slate-500">{w.product?.product_code}</div>
+                      <div className="text-slate-800 dark:text-slate-200 font-medium">{w.product?.name}</div>
+                      <div className="text-xs text-slate-400">{w.product?.product_code}</div>
                     </td>
-                    <td className="p-4 text-slate-300">{formatCurrency(w.material_wip)}</td>
-                    <td className="p-4 text-slate-300">{formatCurrency(w.labor_wip)}</td>
-                    <td className="p-4 text-slate-300">{formatCurrency(w.overhead_wip)}</td>
-                    <td className="p-4 text-white font-bold">{formatCurrency(w.total_wip)}</td>
+                    <td className="p-4 text-slate-700 dark:text-slate-300">{formatCurrency(w.material_wip)}</td>
+                    <td className="p-4 text-slate-700 dark:text-slate-300">{formatCurrency(w.labor_wip)}</td>
+                    <td className="p-4 text-slate-700 dark:text-slate-300">{formatCurrency(w.overhead_wip)}</td>
+                    <td className="p-4 text-slate-900 dark:text-white font-bold">{formatCurrency(w.total_wip)}</td>
                     <td className="p-4">
-                      <span className="px-2 py-0.5 bg-slate-800 text-slate-300 text-xs rounded font-medium">
+                      <span className="px-2 py-0.5 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs rounded font-medium">
                         {w.age_days || 0} Days
                       </span>
                     </td>
@@ -185,7 +185,7 @@ export const WIPDashboardPage: React.FC = () => {
                         <button
                           onClick={(e) => handleCloseWIP(e, w.id)}
                           disabled={closingId === w.id}
-                          className="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 text-xs font-semibold rounded-lg transition"
+                          className="px-3 py-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 text-xs font-semibold rounded-lg transition"
                         >
                           {closingId === w.id ? 'Closing...' : 'Close WIP'}
                         </button>

@@ -11,7 +11,7 @@ export const ActivityNavigationHeader: React.FC = () => {
   ];
 
   return (
-    <div className="bg-slate-800/80 backdrop-blur-sm border border-slate-700/60 rounded-2xl p-2 shadow-lg mb-6 overflow-x-auto scrollbar-none">
+    <div className="bg-white dark:bg-[#0F2647] border border-slate-200 dark:border-slate-800 rounded-2xl p-2 shadow-xs mb-6 overflow-x-auto scrollbar-none">
       <nav className="flex space-x-2 min-w-max">
         {tabs.map((tab) => {
           const Icon = tab.icon;
@@ -22,8 +22,8 @@ export const ActivityNavigationHeader: React.FC = () => {
               className={({ isActive }) =>
                 `px-4 py-2.5 rounded-xl text-xs font-bold flex items-center space-x-2 transition ${
                   isActive
-                    ? 'bg-blue-600 text-white shadow-md'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-slate-700/50'
+                    ? 'bg-blue-600 text-white shadow-xs'
+                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800'
                 }`
               }
             >

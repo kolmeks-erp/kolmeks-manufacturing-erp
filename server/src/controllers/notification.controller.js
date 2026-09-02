@@ -1,11 +1,13 @@
-const { supabase } = require('../config/supabase');
+const { supabase, supabaseAdmin } = require('../config/supabase');
 const NotificationService = require('../services/notification.service');
+
+const db = supabaseAdmin || supabase;
 
 // GET /api/notifications/unread-count
 exports.getUnreadCount = async (req, res) => {
   try {
     const userId = req.user.id;
-    const { count, error } = await supabase
+    const { count, error } = await db
       .from('notifications')
       .select('*', { count: 'exact', head: true })
       .eq('recipient_id', userId)
@@ -33,7 +35,7 @@ exports.getNotifications = async (req, res) => {
       limit = 20,
     } = req.query;
 
-    let query = supabase
+    let query = db
       .from('notifications')
       .select(`
         *,
@@ -101,7 +103,7 @@ exports.getNotificationById = async (req, res) => {
     const userId = req.user.id;
     const { id } = req.params;
 
-    const { data, error } = await supabase
+    const { data, error } = await db
       .from('notifications')
       .select(`
         *,
@@ -128,7 +130,7 @@ exports.markAsRead = async (req, res) => {
     const userId = req.user.id;
     const { id } = req.params;
 
-    const { data, error } = await supabase
+    const { data, error } = await db
       .from('notifications')
       .update({ is_read: true, read_at: new Date().toISOString() })
       .eq('id', id)
@@ -150,7 +152,7 @@ exports.markAsUnread = async (req, res) => {
     const userId = req.user.id;
     const { id } = req.params;
 
-    const { data, error } = await supabase
+    const { data, error } = await db
       .from('notifications')
       .update({ is_read: false, read_at: null })
       .eq('id', id)
@@ -171,7 +173,7 @@ exports.markAllAsRead = async (req, res) => {
   try {
     const userId = req.user.id;
 
-    const { data, error } = await supabase
+    const { data, error } = await db
       .from('notifications')
       .update({ is_read: true, read_at: new Date().toISOString() })
       .eq('recipient_id', userId)
@@ -191,7 +193,7 @@ exports.dismissNotification = async (req, res) => {
     const userId = req.user.id;
     const { id } = req.params;
 
-    const { data, error } = await supabase
+    const { data, error } = await db
       .from('notifications')
       .update({ is_dismissed: true, dismissed_at: new Date().toISOString() })
       .eq('id', id)
@@ -213,7 +215,7 @@ exports.getReminders = async (req, res) => {
     const userId = req.user.id;
     const { status } = req.query;
 
-    let query = supabase
+    let query = db
       .from('reminders')
       .select('*')
       .eq('recipient_id', userId)
@@ -253,7 +255,7 @@ exports.createReminder = async (req, res) => {
       return res.status(400).json({ success: false, message: 'Title and due date are required.' });
     }
 
-    const { data, error } = await supabase
+    const { data, error } = await db
       .from('reminders')
       .insert({
         title,
@@ -286,7 +288,7 @@ exports.updateReminderStatus = async (req, res) => {
     const { id } = req.params;
     const { status } = req.body; // 'COMPLETED', 'DISMISSED', 'PENDING'
 
-    const { data, error } = await supabase
+    const { data, error } = await db
       .from('reminders')
       .update({ status, updated_at: new Date().toISOString() })
       .eq('id', id)
@@ -307,7 +309,7 @@ exports.getPreferences = async (req, res) => {
   try {
     const userId = req.user.id;
 
-    let { data, error } = await supabase
+    let { data, error } = await db
       .from('notification_preferences')
       .select('*')
       .eq('user_id', userId)
@@ -315,7 +317,7 @@ exports.getPreferences = async (req, res) => {
 
     if (error && error.code === 'PGRST116') {
       // If no preferences row exists yet, create default
-      const { data: newPrefs, error: insertErr } = await supabase
+      const { data: newPrefs, error: insertErr } = await db
         .from('notification_preferences')
         .insert({ user_id: userId })
         .select()
@@ -338,13 +340,17 @@ exports.getPreferences = async (req, res) => {
 exports.updatePreferences = async (req, res) => {
   try {
     const userId = req.user.id;
-    const updates = req.body;
+    const updates = { ...req.body };
     delete updates.id;
     delete updates.user_id;
+    delete updates.created_at;
 
-    const { data, error } = await supabase
+    const { data, error } = await db
       .from('notification_preferences')
-      .upsert({ user_id: userId, ...updates, updated_at: new Date().toISOString() })
+      .upsert(
+        { user_id: userId, ...updates, updated_at: new Date().toISOString() },
+        { onConflict: 'user_id' }
+      )
       .select()
       .single();
 
@@ -359,7 +365,7 @@ exports.updatePreferences = async (req, res) => {
 // GET /api/notifications/types
 exports.getNotificationTypes = async (req, res) => {
   try {
-    const { data, error } = await supabase
+    const { data, error } = await db
       .from('notification_types')
       .select('*')
       .order('category', { ascending: true });
@@ -384,11 +390,11 @@ exports.getNotificationReports = async (req, res) => {
       { data: byCategory },
       { data: recentDeliveryLogs },
     ] = await Promise.all([
-      supabase.from('notifications').select('*', { count: 'exact', head: true }).eq('recipient_id', userId),
-      supabase.from('notifications').select('*', { count: 'exact', head: true }).eq('recipient_id', userId).eq('is_read', false),
-      supabase.from('notifications').select('*', { count: 'exact', head: true }).eq('recipient_id', userId).eq('priority', 'URGENT'),
-      supabase.from('notifications').select('category').eq('recipient_id', userId),
-      supabase.from('notification_delivery_logs').select('*').order('created_at', { ascending: false }).limit(20),
+      db.from('notifications').select('*', { count: 'exact', head: true }).eq('recipient_id', userId),
+      db.from('notifications').select('*', { count: 'exact', head: true }).eq('recipient_id', userId).eq('is_read', false),
+      db.from('notifications').select('*', { count: 'exact', head: true }).eq('recipient_id', userId).eq('priority', 'URGENT'),
+      db.from('notifications').select('category').eq('recipient_id', userId),
+      db.from('notification_delivery_logs').select('*').order('created_at', { ascending: false }).limit(20),
     ]);
 
     // Aggregate category metrics

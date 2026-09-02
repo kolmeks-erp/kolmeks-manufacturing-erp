@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Truck, DollarSign, ShoppingBag, CheckSquare, Download } from 'lucide-react';
+import { Truck, IndianRupee, ShoppingBag, CheckSquare, Download } from 'lucide-react';
 import { ReportsNavigationHeader } from '../../../components/reports/ReportsNavigationHeader';
 import { GlobalReportFilterBar } from '../../../components/reports/GlobalReportFilterBar';
 import { KPICard } from '../../../components/reports/KPICard';
@@ -74,7 +74,7 @@ export const ProcurementReportPage: React.FC = () => {
           title="Total Purchase Spend"
           value={loading ? '...' : `₹${(metrics?.totalSpend || 0).toLocaleString('en-US', { minimumFractionDigits: 2 })}`}
           subtitle="Total PO commitments"
-          icon={DollarSign}
+          icon={IndianRupee}
           color="emerald"
         />
         <KPICard

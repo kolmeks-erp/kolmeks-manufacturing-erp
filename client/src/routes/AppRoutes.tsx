@@ -388,8 +388,6 @@ export const AppRoutes: React.FC = () => {
           <Route path="cmm" element={<ERPModuleShellPage />} />
           <Route path="maintenance" element={<ERPModuleShellPage />} />
           <Route path="deliveries" element={<ERPModuleShellPage />} />
-          <Route path="reports" element={<ERPModuleShellPage />} />
-          <Route path="notifications" element={<ERPModuleShellPage />} />
 
           {/* Purchase Requisitions Authorized Routes */}
           <Route element={<ProtectedRoute allowedRoles={['admin', 'purchase_manager', 'warehouse_manager', 'executive']} />}>
@@ -577,7 +575,15 @@ export const AppRoutes: React.FC = () => {
             <Route path="documents/reports" element={<DocumentReportsPage />} />
             <Route path="documents/:id" element={<DocumentDetailPage />} />
 
-            {/* Notifications & Communication Center Routes */}
+            <Route path="suppliers" element={<SupplierListPage />} />
+            <Route path="suppliers/new" element={<SupplierCreatePage />} />
+            <Route path="suppliers/:id" element={<SupplierDetailPage />} />
+            <Route path="suppliers/:id/edit" element={<SupplierEditPage />} />
+            <Route path="suppliers/:id/contacts" element={<SupplierContactsPage />} />
+          </Route>
+
+          {/* Notifications & Communication Center Routes (All Authenticated Users) */}
+          <Route element={<ProtectedRoute />}>
             <Route path="notifications" element={<NotificationDashboardPage />} />
             <Route path="notifications/all" element={<NotificationDashboardPage />} />
             <Route path="notifications/unread" element={<NotificationDashboardPage />} />
@@ -587,7 +593,7 @@ export const AppRoutes: React.FC = () => {
             <Route path="notifications/settings" element={<NotificationSettingsPage />} />
             <Route path="notifications/reports" element={<NotificationReportsPage />} />
 
-            {/* Workflow & Approval Engine Routes */}
+            {/* Workflow & Approval Engine Routes (All Authenticated Users) */}
             <Route path="workflows" element={<WorkflowDashboardPage />} />
             <Route path="workflows/definitions" element={<WorkflowDefinitionsPage />} />
             <Route path="workflows/definitions/:id" element={<WorkflowBuilderPage />} />
@@ -598,11 +604,6 @@ export const AppRoutes: React.FC = () => {
             <Route path="workflows/history" element={<WorkflowHistoryPage />} />
             <Route path="workflows/reports" element={<WorkflowReportsPage />} />
             <Route path="workflows/settings" element={<WorkflowSettingsPage />} />
-            <Route path="suppliers" element={<SupplierListPage />} />
-            <Route path="suppliers/new" element={<SupplierCreatePage />} />
-            <Route path="suppliers/:id" element={<SupplierDetailPage />} />
-            <Route path="suppliers/:id/edit" element={<SupplierEditPage />} />
-            <Route path="suppliers/:id/contacts" element={<SupplierContactsPage />} />
           </Route>
 
           {/* Customers & Contacts Authorized Routes */}

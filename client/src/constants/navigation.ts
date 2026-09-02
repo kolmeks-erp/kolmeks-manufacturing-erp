@@ -53,7 +53,7 @@ export const ERP_SIDEBAR_MENU: ERPMenuItem[] = [
   { id: 'sales-packing', label: 'Packing Slips', path: `${ERP_BASE_PATH}/sales/packing`, iconName: 'Layers', category: 'Sales', badge: 'Live', roles: ['admin', 'sales_manager', 'warehouse_manager', 'executive'] },
   { id: 'sales-deliveries', label: 'Delivery Orders', path: `${ERP_BASE_PATH}/sales/deliveries`, iconName: 'Truck', category: 'Sales', badge: 'Live', roles: ['admin', 'sales_manager', 'warehouse_manager', 'executive'] },
   { id: 'sales-returns', label: 'Sales Returns & RMA', path: `${ERP_BASE_PATH}/sales/returns`, iconName: 'RotateCcw', category: 'Sales', badge: 'Live', roles: ['admin', 'sales_manager', 'quality_manager', 'executive'] },
-  { id: 'credit-notes', label: 'Credit Notes', path: `${ERP_BASE_PATH}/sales/credit-notes`, iconName: 'DollarSign', category: 'Sales', badge: 'Live', roles: ['admin', 'sales_manager', 'finance', 'accountant', 'executive'] },
+  { id: 'credit-notes', label: 'Credit Notes', path: `${ERP_BASE_PATH}/sales/credit-notes`, iconName: 'IndianRupee', category: 'Sales', badge: 'Live', roles: ['admin', 'sales_manager', 'finance', 'accountant', 'executive'] },
   { id: 'sales-pricing', label: 'Customer Pricing Rules', path: `${ERP_BASE_PATH}/sales/pricing`, iconName: 'Tag', category: 'Sales', badge: 'Live', roles: ['admin', 'sales_manager', 'executive'] },
   { id: 'sales-invoices', label: 'Sales Invoices', path: `${ERP_BASE_PATH}/sales/invoices`, iconName: 'FileText', category: 'Sales', badge: 'Live', roles: ['admin', 'sales_manager', 'finance', 'accountant', 'executive'] },
   { id: 'sales-reports', label: 'Sales Analytics Reports', path: `${ERP_BASE_PATH}/sales/reports`, iconName: 'BarChart3', category: 'Sales', badge: 'Live', roles: ['admin', 'sales_manager', 'finance', 'executive'] },
@@ -170,7 +170,7 @@ export const ERP_SIDEBAR_MENU: ERPMenuItem[] = [
   { id: 'maintenance-history', label: 'Asset History', path: `${ERP_BASE_PATH}/maintenance/history`, iconName: 'ShieldCheck', category: 'Maintenance', badge: 'Live', roles: ['admin', 'maintenance_manager', 'production_manager', 'executive'] },
   { id: 'maintenance-reliability', label: 'Reliability (MTBF/MTTR)', path: `${ERP_BASE_PATH}/maintenance/reliability`, iconName: 'Activity', category: 'Maintenance', badge: 'Live', roles: ['admin', 'maintenance_manager', 'production_manager', 'executive'] },
   { id: 'maintenance-spare-parts', label: 'Spare Parts', path: `${ERP_BASE_PATH}/maintenance/spare-parts`, iconName: 'Package', category: 'Maintenance', badge: 'Live', roles: ['admin', 'maintenance_manager', 'warehouse_manager', 'executive'] },
-  { id: 'maintenance-costs', label: 'Maintenance Costs', path: `${ERP_BASE_PATH}/maintenance/costs`, iconName: 'DollarSign', category: 'Maintenance', badge: 'Live', roles: ['admin', 'maintenance_manager', 'finance', 'executive'] },
+  { id: 'maintenance-costs', label: 'Maintenance Costs', path: `${ERP_BASE_PATH}/maintenance/costs`, iconName: 'IndianRupee', category: 'Maintenance', badge: 'Live', roles: ['admin', 'maintenance_manager', 'finance', 'executive'] },
   { id: 'maintenance-reports', label: 'Maintenance Reports', path: `${ERP_BASE_PATH}/maintenance/reports`, iconName: 'BarChart2', category: 'Maintenance', badge: 'Live', roles: ['admin', 'maintenance_manager', 'production_manager', 'executive'] },
   { id: 'maintenance-assets', label: 'Asset Master', path: `${ERP_BASE_PATH}/maintenance/assets`, iconName: 'Layers', category: 'Maintenance', badge: 'Live', roles: ['admin', 'maintenance_manager', 'maintenance_technician', 'production_manager', 'executive'] },
 
@@ -194,7 +194,7 @@ export const ERP_SIDEBAR_MENU: ERPMenuItem[] = [
   { id: 'hr-holidays', label: 'Plant Holiday Calendar', path: `${ERP_BASE_PATH}/hr/holidays`, iconName: 'Calendar', category: 'HR & Operations', badge: 'Live', roles: ['admin', 'hr'] },
 
   // Payroll Section
-  { id: 'payroll-dashboard', label: 'Payroll Overview', path: `${ERP_BASE_PATH}/payroll`, iconName: 'DollarSign', category: 'Payroll & Remuneration', badge: 'Live', roles: ['admin', 'hr', 'payroll', 'finance'] },
+  { id: 'payroll-dashboard', label: 'Payroll Overview', path: `${ERP_BASE_PATH}/payroll`, iconName: 'IndianRupee', category: 'Payroll & Remuneration', badge: 'Live', roles: ['admin', 'hr', 'payroll', 'finance'] },
   { id: 'payroll-periods', label: 'Payroll Periods', path: `${ERP_BASE_PATH}/payroll/periods`, iconName: 'Calendar', category: 'Payroll & Remuneration', badge: 'Live', roles: ['admin', 'hr', 'payroll', 'finance'] },
   { id: 'payroll-runs', label: 'Payroll Runs & Engine', path: `${ERP_BASE_PATH}/payroll/runs`, iconName: 'PlayCircle', category: 'Payroll & Remuneration', badge: 'Live', roles: ['admin', 'hr', 'payroll', 'finance'] },
   { id: 'payroll-compensations', label: 'Salary Structures', path: `${ERP_BASE_PATH}/payroll/compensations`, iconName: 'Building2', category: 'Payroll & Remuneration', badge: 'Live', roles: ['admin', 'hr', 'payroll'] },
@@ -202,7 +202,7 @@ export const ERP_SIDEBAR_MENU: ERPMenuItem[] = [
   { id: 'payroll-reports', label: 'Payroll Analytics', path: `${ERP_BASE_PATH}/payroll/reports`, iconName: 'BarChart3', category: 'Payroll & Remuneration', badge: 'Live', roles: ['admin', 'hr', 'payroll', 'finance'] },
 
   // Finance & Accounting Section
-  { id: 'finance-dashboard', label: 'Finance Dashboard', path: `${ERP_BASE_PATH}/finance`, iconName: 'DollarSign', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'accountant', 'manager'] },
+  { id: 'finance-dashboard', label: 'Finance Dashboard', path: `${ERP_BASE_PATH}/finance`, iconName: 'IndianRupee', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'accountant', 'manager'] },
   { id: 'finance-expenses', label: 'Expense Management', path: `${ERP_BASE_PATH}/finance/expenses`, iconName: 'Receipt', category: 'Finance & Accounting', badge: 'Live', roles: ALL_ROLES },
   { id: 'finance-expense-claims', label: 'Expense Claims', path: `${ERP_BASE_PATH}/finance/expenses/claims`, iconName: 'FileText', category: 'Finance & Accounting', badge: 'Live', roles: ALL_ROLES },
   { id: 'finance-expense-reimbursements', label: 'Reimbursements', path: `${ERP_BASE_PATH}/finance/expenses/reimbursements`, iconName: 'CreditCard', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'accountant', 'manager', 'executive'] },
@@ -212,7 +212,7 @@ export const ERP_SIDEBAR_MENU: ERPMenuItem[] = [
   { id: 'finance-budget-list', label: 'Budget Register', path: `${ERP_BASE_PATH}/finance/budgets/list`, iconName: 'FileSpreadsheet', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'accountant', 'manager', 'executive'] },
   { id: 'finance-cost-centers', label: 'Cost Centers', path: `${ERP_BASE_PATH}/finance/cost-centers`, iconName: 'Building2', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'accountant', 'manager', 'executive'] },
   { id: 'finance-budget-approvals', label: 'Budget Approvals', path: `${ERP_BASE_PATH}/finance/budgets/approvals`, iconName: 'CheckCircle', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'finance_manager'] },
-  { id: 'finance-receivables', label: 'Accounts Receivable', path: `${ERP_BASE_PATH}/finance/receivables`, iconName: 'DollarSign', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'accountant', 'manager'] },
+  { id: 'finance-receivables', label: 'Accounts Receivable', path: `${ERP_BASE_PATH}/finance/receivables`, iconName: 'IndianRupee', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'accountant', 'manager'] },
   { id: 'finance-payables', label: 'Accounts Payable', path: `${ERP_BASE_PATH}/finance/payables`, iconName: 'CreditCard', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'accountant', 'manager'] },
   { id: 'finance-supplier-payments', label: 'Supplier Payments', path: `${ERP_BASE_PATH}/finance/supplier-payments`, iconName: 'CreditCard', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'accountant', 'manager'] },
   { id: 'finance-payable-aging', label: 'Payable Aging', path: `${ERP_BASE_PATH}/finance/payables/aging`, iconName: 'BarChart2', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'accountant', 'manager'] },

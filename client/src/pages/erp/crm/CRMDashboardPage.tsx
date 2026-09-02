@@ -4,7 +4,7 @@ import { crmService } from '../../../services/crm.service';
 import {
   Users,
   Target,
-  DollarSign,
+  IndianRupee,
   TrendingUp,
   Award,
   AlertTriangle,
@@ -92,7 +92,7 @@ export const CRMDashboardPage: React.FC = () => {
             </span>
           </div>
           <div className="w-12 h-12 bg-emerald-50 dark:bg-emerald-950/50 rounded-xl flex items-center justify-center text-emerald-600 dark:text-emerald-400">
-            <DollarSign className="w-6 h-6" />
+            <IndianRupee className="w-6 h-6" />
           </div>
         </div>
 

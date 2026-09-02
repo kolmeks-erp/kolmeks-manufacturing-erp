@@ -13,7 +13,7 @@ import {
   Eye,
   Edit2,
   Building2,
-  DollarSign,
+  IndianRupee,
   Phone,
   Mail,
   UserCheck,

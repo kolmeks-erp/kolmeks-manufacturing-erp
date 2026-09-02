@@ -285,7 +285,7 @@ exports.createSupplierQuotation = async (req, res) => {
         validity_date: validity_date || null,
         lead_time_days: Number(lead_time_days || 7),
         delivery_date: delivery_date || null,
-        currency: currency || 'EUR',
+        currency: currency || 'INR',
         payment_terms: payment_terms || 'Net 30 Days',
         subtotal,
         total_amount: totalAmount,

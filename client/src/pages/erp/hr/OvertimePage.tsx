@@ -9,7 +9,7 @@ import {
   Plus,
   Search,
   Filter,
-  DollarSign,
+  IndianRupee,
   AlertCircle,
   Calendar,
 } from 'lucide-react';

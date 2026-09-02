@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, TrendingUp, RefreshCw, AlertTriangle, CheckCircle, PieChart, DollarSign } from 'lucide-react';
+import { ArrowLeft, TrendingUp, RefreshCw, AlertTriangle, CheckCircle, PieChart, IndianRupee } from 'lucide-react';
 import { ERPLayout } from '../../../layouts/ERPLayout';
 import { ERPPageHeader } from '../../../components/erp/ERPPageHeader';
 import { LoadingState } from '../../../components/erp/LoadingState';

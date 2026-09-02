@@ -1,7 +1,7 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { crmService } from '../../../services/crm.service';
-import { BarChart3, TrendingUp, Users, Award, PieChart, DollarSign } from 'lucide-react';
+import { BarChart3, TrendingUp, Users, Award, PieChart, IndianRupee } from 'lucide-react';
 
 export const CRMReportsPage: React.FC = () => {
   const { data: reportData, isLoading } = useQuery({

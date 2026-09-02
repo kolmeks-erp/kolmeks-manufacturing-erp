@@ -22,7 +22,7 @@ export const OrganizationSettingsPage: React.FC = () => {
     website: 'https://www.kolmeks.com',
     logo_url: '/images/kolmeks-logo.png',
     default_timezone: 'Europe/Helsinki',
-    default_currency: 'EUR',
+    default_currency: 'INR',
     date_format: 'YYYY-MM-DD',
     number_format: '1,234.56'
   });

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  DollarSign,
+  IndianRupee,
   TrendingUp,
   TrendingDown,
   CreditCard,
@@ -52,7 +52,7 @@ const FinanceDashboardPage: React.FC = () => {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-slate-100 flex items-center gap-2">
-            <DollarSign className="w-7 h-7 text-emerald-400" />
+            <IndianRupee className="w-7 h-7 text-emerald-400" />
             Finance & Accounting Control Center
           </h1>
           <p className="text-sm text-slate-400 mt-1">
@@ -117,7 +117,7 @@ const FinanceDashboardPage: React.FC = () => {
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Net Profit / Loss</span>
             <div className={`p-2.5 rounded-lg ${(kpis?.netProfitLoss || 0) >= 0 ? 'bg-cyan-500/10 text-cyan-400' : 'bg-amber-500/10 text-amber-400'}`}>
-              <DollarSign className="w-5 h-5" />
+              <IndianRupee className="w-5 h-5" />
             </div>
           </div>
           <div className="mt-3">

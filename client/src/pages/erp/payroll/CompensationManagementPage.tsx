@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { payrollService } from '../../../services/payroll.service';
-import { Building2, Search, Edit2, Save, DollarSign, CheckCircle } from 'lucide-react';
+import { Building2, Search, Edit2, Save, IndianRupee, CheckCircle } from 'lucide-react';
 
 export const CompensationManagementPage: React.FC = () => {
   const queryClient = useQueryClient();
@@ -157,7 +157,7 @@ export const CompensationManagementPage: React.FC = () => {
         <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="bg-white dark:bg-slate-800 rounded-2xl max-w-md w-full p-6 shadow-xl border border-slate-200 dark:border-slate-700 space-y-4">
             <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
-              <DollarSign className="w-5 h-5 text-indigo-500" /> Edit Compensation: {editingEmp.first_name} {editingEmp.last_name}
+              <IndianRupee className="w-5 h-5 text-indigo-500" /> Edit Compensation: {editingEmp.first_name} {editingEmp.last_name}
             </h2>
             <form onSubmit={handleSave} className="space-y-4">
               <div>

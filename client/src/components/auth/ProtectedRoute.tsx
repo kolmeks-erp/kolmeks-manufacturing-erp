@@ -59,8 +59,11 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ allowedRoles, ch
   }
 
   // 4. Role Authorization Check
-  if (allowedRoles && allowedRoles.length > 0 && role && !allowedRoles.includes(role)) {
-    return <UnauthorizedPage />;
+  if (allowedRoles && allowedRoles.length > 0 && role) {
+    const isMasterAdmin = role === 'admin' || role === 'master_admin';
+    if (!isMasterAdmin && !allowedRoles.includes(role)) {
+      return <UnauthorizedPage />;
+    }
   }
 
   return children ? <>{children}</> : <Outlet />;

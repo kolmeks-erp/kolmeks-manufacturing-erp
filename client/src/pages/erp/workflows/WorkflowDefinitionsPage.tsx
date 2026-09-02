@@ -21,9 +21,10 @@ export const WorkflowDefinitionsPage: React.FC = () => {
   const fetchDefinitions = async () => {
     try {
       const data = await workflowService.getDefinitions();
-      setDefinitions(data);
+      setDefinitions(Array.isArray(data) ? data : []);
     } catch (err) {
       console.error('Failed to load workflow definitions:', err);
+      setDefinitions([]);
     } finally {
       setLoading(false);
     }

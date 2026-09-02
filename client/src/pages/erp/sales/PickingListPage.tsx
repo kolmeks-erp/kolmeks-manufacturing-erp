@@ -4,9 +4,6 @@ import {
   Plus,
   CheckCircle,
   Clock,
-  Warehouse,
-  UserCheck,
-  Package,
   X,
 } from 'lucide-react';
 import { salesService } from '../../../services/sales.service';
@@ -93,19 +90,23 @@ export const PickingListPage: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-slate-800/80 backdrop-blur-sm p-6 rounded-2xl border border-slate-700/60 shadow-lg">
-        <div>
-          <h1 className="text-2xl font-bold text-white flex items-center space-x-3">
-            <TrendingUp className="w-7 h-7 text-indigo-400" />
-            <span>Warehouse Picking Lists</span>
-          </h1>
-          <p className="text-slate-400 text-sm mt-1">
-            Generate picking slips for warehouse operators, locate inventory bins, and log picked line item quantities.
-          </p>
+      <div className="bg-white dark:bg-[#0F2647] p-6 sm:p-8 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div className="flex items-center space-x-3.5">
+          <div className="p-3 bg-indigo-50 dark:bg-indigo-950/60 rounded-xl border border-indigo-100 dark:border-indigo-800 text-indigo-600 dark:text-indigo-400 shrink-0">
+            <TrendingUp className="w-6 h-6" />
+          </div>
+          <div>
+            <h1 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
+              Warehouse Picking Lists
+            </h1>
+            <p className="text-slate-600 dark:text-slate-400 text-xs sm:text-sm mt-0.5">
+              Generate picking slips for warehouse operators, locate inventory bins, and log picked line item quantities.
+            </p>
+          </div>
         </div>
         <button
           onClick={handleOpenModal}
-          className="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-medium rounded-xl shadow-md transition flex items-center space-x-2 text-sm"
+          className="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-xs transition flex items-center space-x-2 text-xs shrink-0"
         >
           <Plus className="w-4 h-4" />
           <span>New Picking Slip</span>
@@ -113,10 +114,10 @@ export const PickingListPage: React.FC = () => {
       </div>
 
       {/* Picking Lists Table */}
-      <div className="bg-slate-800/80 backdrop-blur-sm border border-slate-700/60 rounded-2xl shadow-lg overflow-hidden">
+      <div className="bg-white dark:bg-[#0F2647] border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xs overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm text-slate-300">
-            <thead className="bg-slate-900/80 text-xs uppercase font-semibold text-slate-400 border-b border-slate-700">
+          <table className="w-full text-left text-xs">
+            <thead className="bg-slate-50 dark:bg-slate-900/60 border-b border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 font-bold uppercase tracking-wider text-[11px]">
               <tr>
                 <th className="px-6 py-4">Picking Slip No.</th>
                 <th className="px-6 py-4">Sales Order</th>
@@ -125,33 +126,33 @@ export const PickingListPage: React.FC = () => {
                 <th className="px-6 py-4 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-700/60">
+            <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60">
               {loading ? (
                 <tr>
-                  <td colSpan={5} className="text-center py-10 text-slate-400">
+                  <td colSpan={5} className="text-center py-10 text-slate-500 dark:text-slate-400 font-medium">
                     Loading picking lists...
                   </td>
                 </tr>
               ) : pickings.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="text-center py-10 text-slate-400">
+                  <td colSpan={5} className="text-center py-10 text-slate-500 dark:text-slate-400 font-medium">
                     No picking lists found. Create a new picking slip to begin.
                   </td>
                 </tr>
               ) : (
                 pickings.map((p) => (
-                  <tr key={p.id} className="hover:bg-slate-700/30 transition">
-                    <td className="px-6 py-4 font-bold text-white">{p.picking_number}</td>
-                    <td className="px-6 py-4 text-indigo-400 font-semibold">{p.sales_order_id}</td>
-                    <td className="px-6 py-4 text-slate-400">{new Date(p.created_at).toLocaleDateString()}</td>
+                  <tr key={p.id} className="hover:bg-slate-50/80 dark:hover:bg-slate-800/50 transition-colors">
+                    <td className="px-6 py-4 font-bold text-slate-900 dark:text-white font-mono">{p.picking_number}</td>
+                    <td className="px-6 py-4 text-indigo-600 dark:text-indigo-400 font-bold font-mono">{p.sales_order_id}</td>
+                    <td className="px-6 py-4 text-slate-600 dark:text-slate-300 font-mono">{new Date(p.created_at).toLocaleDateString()}</td>
                     <td className="px-6 py-4">
                       {p.status === 'PICKED' ? (
-                        <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 inline-flex items-center space-x-1">
+                        <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 inline-flex items-center space-x-1">
                           <CheckCircle className="w-3 h-3" />
                           <span>PICKED</span>
                         </span>
                       ) : (
-                        <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/30 inline-flex items-center space-x-1">
+                        <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800 inline-flex items-center space-x-1">
                           <Clock className="w-3 h-3" />
                           <span>{p.status}</span>
                         </span>
@@ -161,7 +162,7 @@ export const PickingListPage: React.FC = () => {
                       {p.status !== 'PICKED' && (
                         <button
                           onClick={() => handleCompletePicking(p.id)}
-                          className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-medium transition"
+                          className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold transition shadow-xs"
                         >
                           Confirm Picked
                         </button>
@@ -177,23 +178,23 @@ export const PickingListPage: React.FC = () => {
 
       {/* Modal for Creating Picking Slip */}
       {showCreateModal && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-slate-800 border border-slate-700 rounded-2xl w-full max-w-lg shadow-2xl p-6 space-y-5">
-            <div className="flex justify-between items-center border-b border-slate-700 pb-3">
-              <h3 className="text-lg font-bold text-white">Create New Warehouse Picking Slip</h3>
-              <button onClick={() => setShowCreateModal(false)} className="text-slate-400 hover:text-white">
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-xs z-50 flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-[#0F2647] border border-slate-200 dark:border-slate-800 rounded-2xl w-full max-w-lg shadow-xl p-6 space-y-5">
+            <div className="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-3">
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white">Create New Warehouse Picking Slip</h3>
+              <button onClick={() => setShowCreateModal(false)} className="text-slate-400 hover:text-slate-600 dark:hover:text-white">
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             <form onSubmit={handleCreatePicking} className="space-y-4">
               <div>
-                <label className="block text-xs uppercase font-semibold text-slate-300 mb-1">Select Sales Order *</label>
+                <label className="block text-xs uppercase font-bold text-slate-600 dark:text-slate-400 mb-1">Select Sales Order *</label>
                 <select
                   required
                   value={selectedSO}
                   onChange={(e) => setSelectedSO(e.target.value)}
-                  className="w-full bg-slate-900 border border-slate-700 text-white rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-indigo-500"
+                  className="w-full bg-slate-50 dark:bg-[#071220] border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white rounded-xl px-3.5 py-2.5 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 >
                   <option value="">-- Choose Sales Order --</option>
                   {salesOrders.map((so) => (
@@ -205,12 +206,12 @@ export const PickingListPage: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-xs uppercase font-semibold text-slate-300 mb-1">Target Warehouse *</label>
+                <label className="block text-xs uppercase font-bold text-slate-600 dark:text-slate-400 mb-1">Target Warehouse *</label>
                 <select
                   required
                   value={selectedWH}
                   onChange={(e) => setSelectedWH(e.target.value)}
-                  className="w-full bg-slate-900 border border-slate-700 text-white rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-indigo-500"
+                  className="w-full bg-slate-50 dark:bg-[#071220] border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white rounded-xl px-3.5 py-2.5 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 >
                   <option value="">-- Choose Warehouse --</option>
                   {warehouses.map((wh) => (
@@ -222,28 +223,28 @@ export const PickingListPage: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-xs uppercase font-semibold text-slate-300 mb-1">Picking Instructions / Notes</label>
+                <label className="block text-xs uppercase font-bold text-slate-600 dark:text-slate-400 mb-1">Picking Instructions / Notes</label>
                 <textarea
                   rows={3}
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
                   placeholder="Special handling or bin retrieval notes..."
-                  className="w-full bg-slate-900 border border-slate-700 text-white rounded-xl p-3 text-sm focus:outline-none focus:border-indigo-500"
+                  className="w-full bg-slate-50 dark:bg-[#071220] border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white rounded-xl p-3 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 />
               </div>
 
-              <div className="flex justify-end space-x-3 pt-3 border-t border-slate-700">
+              <div className="flex justify-end space-x-3 pt-3 border-t border-slate-100 dark:border-slate-800">
                 <button
                   type="button"
                   onClick={() => setShowCreateModal(false)}
-                  className="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white text-sm font-medium rounded-xl transition"
+                  className="px-4 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-bold rounded-xl transition"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={creating}
-                  className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium rounded-xl transition shadow-md"
+                  className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-xl transition shadow-xs"
                 >
                   {creating ? 'Generating...' : 'Generate Picking Slip'}
                 </button>

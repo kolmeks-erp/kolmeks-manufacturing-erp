@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { DollarSign, TrendingUp, TrendingDown, Receipt, Download } from 'lucide-react';
+import { IndianRupee, TrendingUp, TrendingDown, Receipt, Download } from 'lucide-react';
 import { ReportsNavigationHeader } from '../../../components/reports/ReportsNavigationHeader';
 import { GlobalReportFilterBar } from '../../../components/reports/GlobalReportFilterBar';
 import { KPICard } from '../../../components/reports/KPICard';
@@ -48,7 +48,7 @@ export const FinanceReportPage: React.FC = () => {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-slate-800/80 backdrop-blur-sm p-6 rounded-2xl border border-slate-700/60 shadow-lg">
         <div>
           <h1 className="text-2xl font-bold text-white flex items-center space-x-3">
-            <DollarSign className="w-7 h-7 text-emerald-400" />
+            <IndianRupee className="w-7 h-7 text-emerald-400" />
             <span>Financial Accounting & Cash Flow Analytics</span>
           </h1>
           <p className="text-slate-400 text-sm mt-1">
@@ -93,7 +93,7 @@ export const FinanceReportPage: React.FC = () => {
           title="Unpaid AR Invoices"
           value={loading ? '...' : metrics?.outstandingCustomerInvoices || 0}
           subtitle="Invoices pending settlement"
-          icon={DollarSign}
+          icon={IndianRupee}
           color="purple"
         />
       </div>

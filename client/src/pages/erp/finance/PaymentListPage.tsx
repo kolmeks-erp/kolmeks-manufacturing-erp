@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { CreditCard, Plus, Eye, DollarSign, Calendar, Filter } from 'lucide-react';
+import { CreditCard, Plus, Eye, IndianRupee, Calendar, Filter } from 'lucide-react';
 import { salesInvoiceService } from '../../../services/sales_invoice.service';
 import { CustomerPayment } from '../../../types/sales_invoice';
 import { ERP_BASE_PATH } from '../../../constants/navigation';
@@ -69,7 +69,7 @@ export const PaymentListPage: React.FC = () => {
           </p>
         </div>
         <div className="p-3 bg-emerald-50 text-emerald-600 rounded-xl">
-          <DollarSign className="w-6 h-6" />
+          <IndianRupee className="w-6 h-6" />
         </div>
       </div>
 

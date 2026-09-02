@@ -33,28 +33,34 @@ export const MyActivityPage: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div className="bg-slate-800/80 backdrop-blur-sm p-6 rounded-2xl border border-slate-700/60 shadow-lg">
-        <h1 className="text-2xl font-bold text-white flex items-center space-x-3">
-          <User className="w-7 h-7 text-blue-400" />
-          <span>My Personal Activity Timeline</span>
-        </h1>
-        <p className="text-slate-400 text-sm mt-1">
-          Review your created records, submitted forms, workflow approvals, and transaction history.
-        </p>
+      {/* Header Card */}
+      <div className="bg-white dark:bg-[#0F2647] p-6 sm:p-8 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs space-y-2">
+        <div className="flex items-center space-x-3.5">
+          <div className="p-3 bg-blue-50 dark:bg-blue-950/60 rounded-xl border border-blue-100 dark:border-blue-800 text-blue-600 dark:text-blue-400 shrink-0">
+            <User className="w-6 h-6" />
+          </div>
+          <div>
+            <h1 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
+              My Personal Activity Timeline
+            </h1>
+            <p className="text-slate-600 dark:text-slate-400 text-xs sm:text-sm mt-0.5">
+              Review your created records, submitted forms, workflow approvals, and transaction history.
+            </p>
+          </div>
+        </div>
       </div>
 
       <ActivityNavigationHeader />
 
       {/* Filter Bar */}
-      <div className="bg-slate-800/80 backdrop-blur-sm border border-slate-700/60 rounded-2xl p-4 shadow-lg flex flex-wrap items-center justify-between gap-4">
+      <div className="bg-white dark:bg-[#0F2647] border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-xs flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center space-x-3">
-          <Calendar className="w-4 h-4 text-blue-400" />
-          <span className="text-xs font-semibold text-slate-400 uppercase">Time Horizon:</span>
+          <Calendar className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+          <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Time Horizon:</span>
           <select
             value={datePreset}
             onChange={(e) => setDatePreset(e.target.value)}
-            className="px-3 py-1.5 bg-slate-900 border border-slate-700 rounded-xl text-xs text-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="px-3 py-1.5 bg-slate-50 dark:bg-[#071220] border border-slate-300 dark:border-slate-700 rounded-xl text-xs font-semibold text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option value="today">Today</option>
             <option value="yesterday">Yesterday</option>
@@ -65,12 +71,12 @@ export const MyActivityPage: React.FC = () => {
         </div>
 
         <div className="flex items-center space-x-3">
-          <Filter className="w-4 h-4 text-blue-400" />
-          <span className="text-xs font-semibold text-slate-400 uppercase">Module Scope:</span>
+          <Filter className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+          <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Module Scope:</span>
           <select
             value={moduleFilter}
             onChange={(e) => setModuleFilter(e.target.value)}
-            className="px-3 py-1.5 bg-slate-900 border border-slate-700 rounded-xl text-xs text-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 capitalize"
+            className="px-3 py-1.5 bg-slate-50 dark:bg-[#071220] border border-slate-300 dark:border-slate-700 rounded-xl text-xs font-semibold text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 capitalize"
           >
             <option value="">All Modules</option>
             <option value="Sales">Sales</option>
@@ -86,7 +92,7 @@ export const MyActivityPage: React.FC = () => {
       </div>
 
       {/* Activity Timeline Card */}
-      <div className="bg-slate-800/80 backdrop-blur-sm border border-slate-700/60 rounded-2xl p-6 shadow-lg">
+      <div className="bg-white dark:bg-[#0F2647] border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-xs min-h-[300px]">
         <ActivityTimeline activities={activities} loading={loading} />
       </div>
     </div>

@@ -8,7 +8,7 @@ import {
   Mail,
   Phone,
   FileText,
-  DollarSign,
+  IndianRupee,
   Send,
   Plus,
   Tag,
@@ -56,7 +56,7 @@ export const CustomerTimelinePage: React.FC = () => {
       case 'LEAD':
         return <Tag className="w-4 h-4 text-sky-500" />;
       case 'OPPORTUNITY':
-        return <DollarSign className="w-4 h-4 text-emerald-500" />;
+        return <IndianRupee className="w-4 h-4 text-emerald-500" />;
       case 'ACTIVITY':
         return <Phone className="w-4 h-4 text-indigo-500" />;
       case 'NOTE':

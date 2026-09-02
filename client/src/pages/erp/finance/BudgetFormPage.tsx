@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Save, Plus, Trash2, DollarSign, AlertTriangle } from 'lucide-react';
+import { ArrowLeft, Save, Plus, Trash2, IndianRupee, AlertTriangle } from 'lucide-react';
 import { ERPLayout } from '../../../layouts/ERPLayout';
 import { ERPPageHeader } from '../../../components/erp/ERPPageHeader';
 import { LoadingState } from '../../../components/erp/LoadingState';

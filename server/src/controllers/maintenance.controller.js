@@ -1,4 +1,5 @@
-const { supabase } = require('../config/supabase');
+const { supabase, supabaseAdmin } = require('../config/supabase');
+const db = supabaseAdmin || supabase;
 
 /**
  * Helper: Generate unique format code (e.g., AST-CNC-001, PM-2026-000001, MWO-2026-000001, MR-2026-000001)
@@ -7,7 +8,7 @@ const generateSequenceNumber = async (table, column, prefix) => {
   const currentYear = new Date().getFullYear();
   const pattern = `${prefix}-${currentYear}-%`;
   
-  const { data } = await supabase
+  const { data } = await db
     .from(table)
     .select(column)
     .like(column, pattern)
@@ -63,11 +64,11 @@ const calculateNextDueDate = (fromDate, frequencyType, frequencyValue) => {
  */
 const getDashboardKPIs = async (req, res) => {
   try {
-    const { data: assets } = await supabase.from('assets').select('status, criticality');
-    const { data: workOrders } = await supabase.from('maintenance_work_orders').select('status, priority');
-    const { data: schedules } = await supabase.from('maintenance_schedules').select('status, next_due_date');
-    const { data: requests } = await supabase.from('maintenance_requests').select('status');
-    const { data: downtimes } = await supabase.from('downtime_logs').select('status, duration_minutes');
+    const { data: assets } = await db.from('assets').select('status, criticality');
+    const { data: workOrders } = await db.from('maintenance_work_orders').select('status, priority');
+    const { data: schedules } = await db.from('maintenance_schedules').select('status, next_due_date');
+    const { data: requests } = await db.from('maintenance_requests').select('status');
+    const { data: downtimes } = await db.from('downtime_logs').select('status, duration_minutes');
 
     const totalAssets = assets?.length || 0;
     const assetsUnderMaintenance = assets?.filter(a => a.status === 'UNDER_MAINTENANCE')?.length || 0;
@@ -123,7 +124,7 @@ const getAssets = async (req, res) => {
     const from = (parseInt(page, 10) - 1) * parseInt(limit, 10);
     const to = from + parseInt(limit, 10) - 1;
 
-    let query = supabase
+    let query = db
       .from('assets')
       .select(`
         *,
@@ -282,7 +283,7 @@ const createAsset = async (req, res) => {
     if (error) throw error;
 
     // Log Activity
-    await supabase.from('maintenance_activities').insert([{
+    await db.from('maintenance_activities').insert([{
       asset_id: data.id,
       actor_id: req.user?.id || null,
       actor_name: req.user?.email || 'System User',
@@ -342,7 +343,7 @@ const getMaintenanceSchedules = async (req, res) => {
   try {
     const { search = '', assetId, status, type } = req.query;
 
-    let query = supabase
+    let query = db
       .from('maintenance_schedules')
       .select(`
         *,
@@ -453,7 +454,7 @@ const updateMaintenanceSchedule = async (req, res) => {
     const { id } = req.params;
     const { title, description, frequency_type, frequency_value, last_completed_date, assigned_to, priority, status } = req.body;
 
-    const { data: existing } = await supabase.from('maintenance_schedules').select('*').eq('id', id).single();
+    const { data: existing } = await db.from('maintenance_schedules').select('*').eq('id', id).single();
     if (!existing) {
       return res.status(404).json({ success: false, message: 'Schedule not found' });
     }
@@ -501,7 +502,7 @@ const getMaintenanceRequests = async (req, res) => {
   try {
     const { search = '', assetId, status, priority } = req.query;
 
-    let query = supabase
+    let query = db
       .from('maintenance_requests')
       .select(`
         *,
@@ -559,7 +560,7 @@ const createMaintenanceRequest = async (req, res) => {
     if (error) throw error;
 
     // Log Activity
-    await supabase.from('maintenance_activities').insert([{
+    await db.from('maintenance_activities').insert([{
       request_id: data.id,
       asset_id,
       actor_id: req.user?.id || null,
@@ -629,7 +630,7 @@ const convertRequestToWorkOrder = async (req, res) => {
       .eq('id', request.asset_id);
 
     // Log Activity
-    await supabase.from('maintenance_activities').insert([{
+    await db.from('maintenance_activities').insert([{
       work_order_id: wo.id,
       request_id: request.id,
       asset_id: request.asset_id,
@@ -656,7 +657,7 @@ const getWorkOrders = async (req, res) => {
     const from = (parseInt(page, 10) - 1) * parseInt(limit, 10);
     const to = from + parseInt(limit, 10) - 1;
 
-    let query = supabase
+    let query = db
       .from('maintenance_work_orders')
       .select(`
         *,
@@ -830,10 +831,10 @@ const createWorkOrder = async (req, res) => {
       ];
     }
 
-    await supabase.from('maintenance_checklists').insert(itemsToInsert);
+    await db.from('maintenance_checklists').insert(itemsToInsert);
 
     // Log Activity
-    await supabase.from('maintenance_activities').insert([{
+    await db.from('maintenance_activities').insert([{
       work_order_id: wo.id,
       asset_id,
       actor_id: req.user?.id || null,
@@ -886,7 +887,7 @@ const startWorkOrder = async (req, res) => {
       .eq('id', wo.asset_id);
 
     // Create an active downtime log
-    await supabase.from('downtime_logs').insert([{
+    await db.from('downtime_logs').insert([{
       asset_id: wo.asset_id,
       work_order_id: id,
       start_time: actual_start,
@@ -895,7 +896,7 @@ const startWorkOrder = async (req, res) => {
     }]);
 
     // Log Activity
-    await supabase.from('maintenance_activities').insert([{
+    await db.from('maintenance_activities').insert([{
       work_order_id: id,
       asset_id: wo.asset_id,
       actor_id: req.user?.id || null,
@@ -1017,7 +1018,7 @@ const completeWorkOrder = async (req, res) => {
     }
 
     // Log Activity
-    await supabase.from('maintenance_activities').insert([{
+    await db.from('maintenance_activities').insert([{
       work_order_id: id,
       asset_id: wo.asset_id,
       actor_id: req.user?.id || null,
@@ -1201,7 +1202,7 @@ const getDowntimeLogs = async (req, res) => {
   try {
     const { search = '', assetId, status } = req.query;
 
-    let query = supabase
+    let query = db
       .from('downtime_logs')
       .select(`
         *,
@@ -1349,15 +1350,15 @@ const getBreakdowns = async (req, res) => {
   try {
     const { search = '', assetId, failureType, status, severity } = req.query;
 
-    let query = supabase
+    let query = db
       .from('maintenance_breakdowns')
       .select(`
         *,
         assets (id, asset_code, name, location, criticality),
         work_centers (id, code, name),
-        production_orders (id, order_number),
+        production_orders!production_order_id (id, production_order_number),
         technician_profile:profiles!technician_id (id, full_name, email),
-        maintenance_work_orders (id, work_order_number, status)
+        maintenance_work_orders!fk_maint_bd_wo (id, work_order_number, status)
       `);
 
     if (assetId) query = query.eq('asset_id', assetId);
@@ -1471,7 +1472,7 @@ const createBreakdown = async (req, res) => {
       .eq('id', asset_id);
 
     // Record an active downtime log
-    await supabase.from('downtime_logs').insert([{
+    await db.from('downtime_logs').insert([{
       asset_id,
       breakdown_id: data.id,
       work_center_id: work_center_id || null,
@@ -1482,7 +1483,7 @@ const createBreakdown = async (req, res) => {
     }]);
 
     // Log Activity
-    await supabase.from('maintenance_activities').insert([{
+    await db.from('maintenance_activities').insert([{
       asset_id,
       actor_id: req.user?.id || null,
       actor_name: req.user?.email || 'System User',
@@ -1562,10 +1563,10 @@ const convertBreakdownToWorkOrder = async (req, res) => {
  */
 const getReliabilityAnalytics = async (req, res) => {
   try {
-    const { data: assets } = await supabase.from('assets').select('*');
-    const { data: breakdowns } = await supabase.from('maintenance_breakdowns').select('*');
-    const { data: workOrders } = await supabase.from('maintenance_work_orders').select('*');
-    const { data: downtimes } = await supabase.from('downtime_logs').select('*');
+    const { data: assets } = await db.from('assets').select('*');
+    const { data: breakdowns } = await db.from('maintenance_breakdowns').select('*');
+    const { data: workOrders } = await db.from('maintenance_work_orders').select('*');
+    const { data: downtimes } = await db.from('downtime_logs').select('*');
 
     const totalAssetsCount = assets?.length || 0;
     const totalBreakdownsCount = breakdowns?.length || 0;
@@ -1639,7 +1640,7 @@ const getMaintenanceCosts = async (req, res) => {
         id, work_order_number, title, maintenance_type, status,
         labor_cost, parts_cost, external_service_cost, other_cost, total_cost,
         assets (id, asset_code, name),
-        cost_centers (id, code, name, budget_amount)
+        cost_centers (id, code, name)
       `);
 
     if (error) throw error;
@@ -1743,10 +1744,10 @@ const getMaintenanceReports = async (req, res) => {
   try {
     const { reportType = 'history' } = req.query;
 
-    const { data: assets } = await supabase.from('assets').select('*');
-    const { data: workOrders } = await supabase.from('maintenance_work_orders').select('*, assets(name, asset_code)');
-    const { data: breakdowns } = await supabase.from('maintenance_breakdowns').select('*, assets(name, asset_code)');
-    const { data: downtimes } = await supabase.from('downtime_logs').select('*, assets(name, asset_code)');
+    const { data: assets } = await db.from('assets').select('*');
+    const { data: workOrders } = await db.from('maintenance_work_orders').select('*, assets(name, asset_code)');
+    const { data: breakdowns } = await db.from('maintenance_breakdowns').select('*, assets(name, asset_code)');
+    const { data: downtimes } = await db.from('downtime_logs').select('*, assets(name, asset_code)');
 
     return res.json({
       success: true,

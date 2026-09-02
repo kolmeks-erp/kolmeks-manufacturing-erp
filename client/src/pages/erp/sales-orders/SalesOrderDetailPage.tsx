@@ -19,7 +19,7 @@ import {
   Ban,
   Layers,
   Truck,
-  DollarSign,
+  IndianRupee,
 } from 'lucide-react';
 import { salesOrderService } from '../../../services/sales_order.service';
 import { SalesOrder, SalesOrderActivity } from '../../../types/sales_order';

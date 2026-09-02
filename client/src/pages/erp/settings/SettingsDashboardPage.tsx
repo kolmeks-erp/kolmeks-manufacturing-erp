@@ -165,7 +165,7 @@ export const SettingsDashboardPage: React.FC = () => {
             </div>
             <div>
               <span className="text-gray-500 dark:text-gray-400 block text-xs">Default Currency</span>
-              <p className="font-semibold text-gray-900 dark:text-white">{org?.default_currency || 'EUR'} (₹)</p>
+              <p className="font-semibold text-gray-900 dark:text-white">{org?.default_currency || 'INR'} (₹)</p>
             </div>
             <div>
               <span className="text-gray-500 dark:text-gray-400 block text-xs">Default Timezone</span>
@@ -214,7 +214,7 @@ export const SettingsDashboardPage: React.FC = () => {
               </li>
               <li className="flex items-center gap-2 text-gray-700 dark:text-gray-300">
                 <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-                <span>Currencies (EUR, USD, GBP, INR, CNY) & UOM Configured</span>
+                <span>Currencies (INR, INR, GBP, INR, CNY) & UOM Configured</span>
               </li>
               <li className="flex items-center gap-2 text-gray-700 dark:text-gray-300">
                 <CheckCircle2 className="w-4 h-4 text-emerald-500" />

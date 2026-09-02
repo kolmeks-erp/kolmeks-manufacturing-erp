@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { TrendingUp, ArrowLeft, Filter, Printer, DollarSign, TrendingDown } from 'lucide-react';
+import { TrendingUp, ArrowLeft, Filter, Printer, IndianRupee, TrendingDown } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { financeService } from '../../../services/finance.service';
 import { ProfitLossData } from '../../../types/finance';

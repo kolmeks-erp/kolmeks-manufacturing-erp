@@ -10,7 +10,7 @@ import {
   ArrowLeft,
   CheckCircle,
   Paperclip,
-  DollarSign,
+  IndianRupee,
   Building2,
   Calendar,
   AlertCircle,
@@ -315,7 +315,7 @@ export const ExpenseClaimFormPage: React.FC = () => {
         <div className="bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-sm space-y-4">
           <div className="flex items-center justify-between border-b border-slate-800 pb-3">
             <h3 className="text-base font-semibold text-slate-100 flex items-center">
-              <DollarSign className="w-4 h-4 mr-2 text-emerald-400" />
+              <IndianRupee className="w-4 h-4 mr-2 text-emerald-400" />
               Expense Line Items Breakdown
             </h3>
             <button

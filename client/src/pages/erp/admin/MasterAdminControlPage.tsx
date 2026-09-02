@@ -10,7 +10,7 @@ import {
   Search,
   Lock,
   Layers,
-  DollarSign,
+  IndianRupee,
   Users2,
   Wrench,
   ShieldCheck,
@@ -33,7 +33,7 @@ const categoryIconMap: Record<string, React.ElementType> = {
   'Quality': ShieldCheck,
   'Maintenance': Wrench,
   'HR & Operations': Users2,
-  'Finance & Accounting': DollarSign,
+  'Finance & Accounting': IndianRupee,
   'Self Service': Layers,
 };
 

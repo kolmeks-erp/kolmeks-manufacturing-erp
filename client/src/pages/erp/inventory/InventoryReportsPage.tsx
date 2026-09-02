@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { PieChart, DollarSign, Boxes, Building2, BarChart3, ArrowDownRight, ArrowUpRight } from 'lucide-react';
+import { PieChart, IndianRupee, Boxes, Building2, BarChart3, ArrowDownRight, ArrowUpRight } from 'lucide-react';
 import inventoryService, { InventoryValuationResponse } from '../../../services/inventory.service';
 
 export const InventoryReportsPage: React.FC = () => {
@@ -23,7 +23,7 @@ export const InventoryReportsPage: React.FC = () => {
   };
 
   const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'EUR' }).format(amount);
+    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'INR' }).format(amount);
   };
 
   return (
@@ -56,7 +56,7 @@ export const InventoryReportsPage: React.FC = () => {
             </p>
           </div>
           <div className="p-4 bg-sky-50 text-sky-600 rounded-2xl border border-sky-100">
-            <DollarSign className="w-8 h-8" />
+            <IndianRupee className="w-8 h-8" />
           </div>
         </div>
 

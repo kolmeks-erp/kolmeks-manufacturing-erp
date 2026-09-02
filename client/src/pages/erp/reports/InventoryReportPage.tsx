@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Boxes, DollarSign, AlertTriangle, Warehouse, Download } from 'lucide-react';
+import { Boxes, IndianRupee, AlertTriangle, Warehouse, Download } from 'lucide-react';
 import { ReportsNavigationHeader } from '../../../components/reports/ReportsNavigationHeader';
 import { GlobalReportFilterBar } from '../../../components/reports/GlobalReportFilterBar';
 import { KPICard } from '../../../components/reports/KPICard';
@@ -72,7 +72,7 @@ export const InventoryReportPage: React.FC = () => {
           title="Total Stock Valuation"
           value={loading ? '...' : `₹${(metrics?.totalValuation || 0).toLocaleString('en-US', { minimumFractionDigits: 2 })}`}
           subtitle="On-hand inventory asset value"
-          icon={DollarSign}
+          icon={IndianRupee}
           color="purple"
         />
         <KPICard

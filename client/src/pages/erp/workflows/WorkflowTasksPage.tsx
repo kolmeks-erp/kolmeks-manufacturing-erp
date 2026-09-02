@@ -18,9 +18,10 @@ export const WorkflowTasksPage: React.FC = () => {
     setLoading(true);
     try {
       const res = await workflowService.getUserTasks({ tab: activeTab });
-      setTasks(res.data);
+      setTasks(Array.isArray(res?.data) ? res.data : Array.isArray(res) ? res : []);
     } catch (err) {
       console.error('Failed to load user tasks:', err);
+      setTasks([]);
     } finally {
       setLoading(false);
     }

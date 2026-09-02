@@ -1,16 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import {
-  FileSpreadsheet,
   ArrowLeft,
   CheckCircle,
-  Clock,
   Printer,
-  FileCheck,
   Send,
   Building2,
-  DollarSign,
-  AlertCircle,
 } from 'lucide-react';
 import { ERP_BASE_PATH } from '../../../constants/navigation';
 import { salesService } from '../../../services/sales.service';
@@ -59,7 +54,7 @@ export const AdvancedQuotationDetailPage: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="p-8 text-center text-slate-400">
+      <div className="p-8 text-center text-slate-500 dark:text-slate-400 font-medium">
         Loading quotation details...
       </div>
     );
@@ -67,9 +62,9 @@ export const AdvancedQuotationDetailPage: React.FC = () => {
 
   if (!quotation) {
     return (
-      <div className="p-8 text-center text-slate-400 space-y-4">
+      <div className="p-8 text-center text-slate-500 dark:text-slate-400 space-y-4">
         <p>Quotation record not found.</p>
-        <Link to={`${ERP_BASE_PATH}/sales/quotations`} className="text-blue-400 hover:underline">
+        <Link to={`${ERP_BASE_PATH}/sales/quotations`} className="text-blue-600 dark:text-blue-400 font-bold hover:underline">
           Return to Quotations List
         </Link>
       </div>
@@ -78,32 +73,32 @@ export const AdvancedQuotationDetailPage: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Top Header */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-slate-800/80 backdrop-blur-sm p-6 rounded-2xl border border-slate-700/60 shadow-lg">
+      {/* Top Header Banner */}
+      <div className="bg-white dark:bg-[#0F2647] p-6 sm:p-8 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div className="flex items-center space-x-4">
           <Link
             to={`${ERP_BASE_PATH}/sales/quotations`}
-            className="p-2 bg-slate-700/60 hover:bg-slate-600 text-white rounded-xl transition"
+            className="p-2.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-xl transition border border-slate-200 dark:border-slate-700"
           >
             <ArrowLeft className="w-5 h-5" />
           </Link>
           <div>
             <div className="flex items-center space-x-3">
-              <h1 className="text-2xl font-bold text-white">{quotation.quotation_number}</h1>
-              <span className="px-3 py-1 bg-blue-500/20 text-blue-300 border border-blue-500/30 rounded-full text-xs font-semibold uppercase">
+              <h1 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">{quotation.quotation_number}</h1>
+              <span className="px-3 py-0.5 bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800 rounded-full text-xs font-bold uppercase">
                 {quotation.status}
               </span>
             </div>
-            <p className="text-slate-400 text-sm mt-1">
+            <p className="text-slate-600 dark:text-slate-400 text-xs sm:text-sm mt-0.5">
               Issued on {quotation.quotation_date} • Valid until {quotation.valid_until || 'N/A'}
             </p>
           </div>
         </div>
 
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center space-x-3 shrink-0">
           <button
             onClick={handlePrint}
-            className="px-3.5 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-xl text-sm font-medium transition flex items-center space-x-2"
+            className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-bold transition flex items-center space-x-2 shadow-xs"
           >
             <Printer className="w-4 h-4" />
             <span>Print Quotation</span>
@@ -113,7 +108,7 @@ export const AdvancedQuotationDetailPage: React.FC = () => {
             <button
               onClick={() => handleStatusChange('SUBMITTED')}
               disabled={actionLoading}
-              className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-sm font-medium transition flex items-center space-x-2"
+              className="px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition flex items-center space-x-2 shadow-xs"
             >
               <Send className="w-4 h-4" />
               <span>Submit Commercial Quote</span>
@@ -124,7 +119,7 @@ export const AdvancedQuotationDetailPage: React.FC = () => {
             <button
               onClick={() => handleStatusChange('APPROVED')}
               disabled={actionLoading}
-              className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-sm font-medium transition flex items-center space-x-2"
+              className="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition flex items-center space-x-2 shadow-xs"
             >
               <CheckCircle className="w-4 h-4" />
               <span>Approve Quotation</span>
@@ -135,7 +130,7 @@ export const AdvancedQuotationDetailPage: React.FC = () => {
             <button
               onClick={() => handleStatusChange('ACCEPTED')}
               disabled={actionLoading}
-              className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-sm font-medium transition flex items-center space-x-2"
+              className="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition flex items-center space-x-2 shadow-xs"
             >
               <CheckCircle className="w-4 h-4" />
               <span>Mark as Customer Accepted</span>
@@ -147,11 +142,11 @@ export const AdvancedQuotationDetailPage: React.FC = () => {
       {/* Main Details Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Quotation Line Items & Financial Breakdown */}
-        <div className="lg:col-span-2 bg-slate-800/80 backdrop-blur-sm border border-slate-700/60 rounded-2xl p-6 shadow-lg space-y-6">
-          <h2 className="text-lg font-semibold text-white">Quotation Line Items</h2>
+        <div className="lg:col-span-2 bg-white dark:bg-[#0F2647] border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-xs space-y-6">
+          <h2 className="text-base font-bold text-slate-900 dark:text-white">Quotation Line Items</h2>
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm text-slate-300">
-              <thead className="bg-slate-900/80 text-xs uppercase font-semibold text-slate-400 border-b border-slate-700">
+            <table className="w-full text-left text-xs">
+              <thead className="bg-slate-50 dark:bg-slate-900/60 border-b border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 font-bold uppercase tracking-wider text-[11px]">
                 <tr>
                   <th className="px-4 py-3">#</th>
                   <th className="px-4 py-3">Description</th>
@@ -161,15 +156,15 @@ export const AdvancedQuotationDetailPage: React.FC = () => {
                   <th className="px-4 py-3 text-right">Total</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-700/50">
+              <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60">
                 {quotation.items?.map((item, idx) => (
-                  <tr key={idx} className="hover:bg-slate-700/30 transition">
-                    <td className="px-4 py-3 text-slate-400">{idx + 1}</td>
-                    <td className="px-4 py-3 font-medium text-white">{item.description}</td>
-                    <td className="px-4 py-3 text-right">{item.quantity} {item.unit}</td>
-                    <td className="px-4 py-3 text-right">₹{Number(item.unit_price).toFixed(2)}</td>
-                    <td className="px-4 py-3 text-right">₹{Number(item.discount).toFixed(2)}</td>
-                    <td className="px-4 py-3 text-right font-bold text-white">
+                  <tr key={idx} className="hover:bg-slate-50/80 dark:hover:bg-slate-800/50 transition-colors">
+                    <td className="px-4 py-3 text-slate-500 dark:text-slate-400 font-mono">{idx + 1}</td>
+                    <td className="px-4 py-3 font-semibold text-slate-900 dark:text-white">{item.description}</td>
+                    <td className="px-4 py-3 text-right font-mono text-slate-700 dark:text-slate-300">{item.quantity} {item.unit}</td>
+                    <td className="px-4 py-3 text-right font-mono text-slate-700 dark:text-slate-300">₹{Number(item.unit_price).toFixed(2)}</td>
+                    <td className="px-4 py-3 text-right font-mono text-slate-700 dark:text-slate-300">₹{Number(item.discount).toFixed(2)}</td>
+                    <td className="px-4 py-3 text-right font-bold text-slate-900 dark:text-white font-mono">
                       ₹{Number(item.line_total).toFixed(2)}
                     </td>
                   </tr>
@@ -178,54 +173,54 @@ export const AdvancedQuotationDetailPage: React.FC = () => {
             </table>
           </div>
 
-          <div className="flex justify-end pt-4 border-t border-slate-700/50">
-            <div className="w-full sm:w-72 space-y-2 text-sm">
-              <div className="flex justify-between text-slate-400">
+          <div className="flex justify-end pt-4 border-t border-slate-100 dark:border-slate-800">
+            <div className="w-full sm:w-72 space-y-2 text-xs">
+              <div className="flex justify-between text-slate-600 dark:text-slate-400">
                 <span>Subtotal:</span>
-                <span className="font-semibold text-white">₹{Number(quotation.subtotal).toFixed(2)}</span>
+                <span className="font-bold text-slate-900 dark:text-white font-mono">₹{Number(quotation.subtotal).toFixed(2)}</span>
               </div>
-              <div className="flex justify-between text-slate-400">
+              <div className="flex justify-between text-slate-600 dark:text-slate-400">
                 <span>Discount:</span>
-                <span className="font-semibold text-red-400">- ₹{Number(quotation.discount).toFixed(2)}</span>
+                <span className="font-bold text-red-600 dark:text-red-400 font-mono">- ₹{Number(quotation.discount).toFixed(2)}</span>
               </div>
-              <div className="flex justify-between text-slate-400">
+              <div className="flex justify-between text-slate-600 dark:text-slate-400">
                 <span>Tax:</span>
-                <span className="font-semibold text-white">₹{Number(quotation.tax).toFixed(2)}</span>
+                <span className="font-bold text-slate-900 dark:text-white font-mono">₹{Number(quotation.tax).toFixed(2)}</span>
               </div>
-              <div className="flex justify-between text-base font-bold text-white pt-2 border-t border-slate-700">
+              <div className="flex justify-between text-sm font-bold text-slate-900 dark:text-white pt-2 border-t border-slate-200 dark:border-slate-800">
                 <span>Total Amount:</span>
-                <span className="text-emerald-400">{quotation.currency} ₹{Number(quotation.total).toFixed(2)}</span>
+                <span className="text-emerald-600 dark:text-emerald-400 font-mono">{quotation.currency} ₹{Number(quotation.total).toFixed(2)}</span>
               </div>
             </div>
           </div>
         </div>
 
         {/* Customer & Commercial Terms Side Card */}
-        <div className="bg-slate-800/80 backdrop-blur-sm border border-slate-700/60 rounded-2xl p-6 shadow-lg space-y-6">
+        <div className="bg-white dark:bg-[#0F2647] border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-xs space-y-6">
           <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-400 mb-3 flex items-center space-x-2">
-              <Building2 className="w-4 h-4 text-blue-400" />
+            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-3 flex items-center space-x-2">
+              <Building2 className="w-4 h-4 text-blue-600 dark:text-blue-400" />
               <span>Customer Information</span>
             </h3>
-            <p className="text-lg font-bold text-white">{quotation.customer_master?.company_name || 'N/A'}</p>
+            <p className="text-base font-bold text-slate-900 dark:text-white">{quotation.customer_master?.company_name || 'N/A'}</p>
             {quotation.customer_master?.customer_code && (
-              <p className="text-xs text-slate-400 mt-0.5">Code: {quotation.customer_master.customer_code}</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5 font-mono">Code: {quotation.customer_master.customer_code}</p>
             )}
           </div>
 
-          <div className="border-t border-slate-700/50 pt-4 space-y-3 text-sm">
+          <div className="border-t border-slate-100 dark:border-slate-800 pt-4 space-y-3 text-xs">
             <div>
-              <p className="text-xs text-slate-400 uppercase font-semibold">Payment Terms</p>
-              <p className="text-slate-200 mt-0.5">{quotation.payment_terms || 'Standard 30 Days'}</p>
+              <p className="text-[11px] text-slate-500 dark:text-slate-400 uppercase font-bold tracking-wider">Payment Terms</p>
+              <p className="text-slate-800 dark:text-slate-200 font-semibold mt-0.5">{quotation.payment_terms || 'Standard 30 Days'}</p>
             </div>
             <div>
-              <p className="text-xs text-slate-400 uppercase font-semibold">Delivery Terms</p>
-              <p className="text-slate-200 mt-0.5">{quotation.delivery_terms || 'EXW Warehouse'}</p>
+              <p className="text-[11px] text-slate-500 dark:text-slate-400 uppercase font-bold tracking-wider">Delivery Terms</p>
+              <p className="text-slate-800 dark:text-slate-200 font-semibold mt-0.5">{quotation.delivery_terms || 'EXW Warehouse'}</p>
             </div>
             {quotation.notes && (
               <div>
-                <p className="text-xs text-slate-400 uppercase font-semibold">Commercial Notes</p>
-                <p className="text-slate-300 italic text-xs mt-0.5">{quotation.notes}</p>
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 uppercase font-bold tracking-wider">Commercial Notes</p>
+                <p className="text-slate-600 dark:text-slate-300 italic text-xs mt-0.5">{quotation.notes}</p>
               </div>
             )}
           </div>

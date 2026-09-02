@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ShoppingCart, DollarSign, FileText, CheckCircle, RotateCcw, Download, Users } from 'lucide-react';
+import { ShoppingCart, IndianRupee, FileText, CheckCircle, RotateCcw, Download, Users } from 'lucide-react';
 import { ReportsNavigationHeader } from '../../../components/reports/ReportsNavigationHeader';
 import { GlobalReportFilterBar } from '../../../components/reports/GlobalReportFilterBar';
 import { KPICard } from '../../../components/reports/KPICard';
@@ -82,7 +82,7 @@ export const SalesReportPage: React.FC = () => {
           title="Sales Revenue"
           value={loading ? '...' : `₹${(metrics?.totalRevenue || 0).toLocaleString('en-US', { minimumFractionDigits: 2 })}`}
           subtitle="Total order revenue"
-          icon={DollarSign}
+          icon={IndianRupee}
           color="emerald"
         />
         <KPICard

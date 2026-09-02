@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { 
   Package, Plus, Search, RefreshCw, AlertTriangle, CheckCircle2, ArrowDownRight, Layers 
 } from 'lucide-react';
-import { ERPLayout } from '../../../layouts/ERPLayout';
 import ERPPageHeader from '../../../components/erp/ERPPageHeader';
 import DataTable from '../../../components/common/DataTable';
 import LoadingState from '../../../components/erp/LoadingState';
@@ -125,139 +124,136 @@ const SparePartsPage: React.FC = () => {
   ];
 
   return (
-    <ERPLayout>
-      <div className="p-6 max-w-7xl mx-auto space-y-6">
-        <ERPPageHeader
-          title="Maintenance Spare Parts & Inventory Issue"
-          subtitle="Issue spare parts directly from plant warehouses for work order repairs with strict stock validation."
-          icon={Package}
-          actions={
-            <button
-              onClick={() => setIsModalOpen(true)}
-              className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-lg shadow-sm hover:bg-indigo-700"
-            >
-              <Plus className="w-4 h-4" /> Issue Spare Part to WO
-            </button>
-          }
+    <div className="space-y-6">
+      <ERPPageHeader
+        title="Maintenance Spare Parts & Inventory Issue"
+        subtitle="Issue spare parts directly from plant warehouses for work order repairs with strict stock validation."
+        actions={
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-lg shadow-sm hover:bg-indigo-700"
+          >
+            <Plus className="w-4 h-4" /> Issue Spare Part to WO
+          </button>
+        }
+      />
+
+      {loading ? (
+        <LoadingState message="Loading work order spare parts consumption..." />
+      ) : error ? (
+        <ErrorState message={error} onRetry={fetchSparePartLogs} />
+      ) : workOrders.length === 0 ? (
+        <EmptyState
+          title="No Spare Parts Consumption Logged"
+          description="No spare parts have been requested or issued for maintenance work orders."
+          actionText="Issue Spare Part"
+          onAction={() => setIsModalOpen(true)}
         />
+      ) : (
+        <DataTable
+          data={workOrders}
+          columns={columns}
+        />
+      )}
 
-        {loading ? (
-          <LoadingState message="Loading work order spare parts consumption..." />
-        ) : error ? (
-          <ErrorState message={error} onRetry={fetchSparePartLogs} />
-        ) : workOrders.length === 0 ? (
-          <EmptyState
-            title="No Spare Parts Consumption Logged"
-            description="No spare parts have been requested or issued for maintenance work orders."
-            actionText="Issue Spare Part"
-            onAction={() => setIsModalOpen(true)}
-          />
-        ) : (
-          <DataTable
-            data={workOrders}
-            columns={columns}
-          />
-        )}
+      {/* Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-xl max-w-lg w-full p-6 shadow-xl border border-slate-200 space-y-4">
+            <h3 className="text-lg font-semibold text-slate-900 flex items-center gap-2">
+              <Package className="w-5 h-5 text-indigo-600" /> Issue Spare Part to Work Order
+            </h3>
 
-        {/* Modal */}
-        {isModalOpen && (
-          <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
-            <div className="bg-white rounded-xl max-w-lg w-full p-6 shadow-xl border border-slate-200 space-y-4">
-              <h3 className="text-lg font-semibold text-slate-900 flex items-center gap-2">
-                <Package className="w-5 h-5 text-indigo-600" /> Issue Spare Part to Work Order
-              </h3>
+            <form onSubmit={handleIssueSparePart} className="space-y-4">
+              <div>
+                <label className="block text-xs font-semibold text-slate-700 uppercase mb-1">Target Work Order *</label>
+                <select
+                  value={selectedWOId}
+                  onChange={(e) => setSelectedWOId(e.target.value)}
+                  required
+                  className="w-full text-sm border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500"
+                >
+                  <option value="">Select Work Order</option>
+                  {workOrders.map(w => (
+                    <option key={w.id} value={w.id}>{w.work_order_number} — {w.title}</option>
+                  ))}
+                </select>
+              </div>
 
-              <form onSubmit={handleIssueSparePart} className="space-y-4">
+              <div>
+                <label className="block text-xs font-semibold text-slate-700 uppercase mb-1">Spare Part / Product *</label>
+                <select
+                  value={productId}
+                  onChange={(e) => setProductId(e.target.value)}
+                  required
+                  className="w-full text-sm border border-slate-300 rounded-lg px-3 py-2"
+                >
+                  <option value="">Select Spare Part Product</option>
+                  {products.map(p => (
+                    <option key={p.id} value={p.id}>{p.name} ({p.product_code || p.code})</option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 uppercase mb-1">Target Work Order *</label>
+                  <label className="block text-xs font-semibold text-slate-700 uppercase mb-1">Source Warehouse *</label>
                   <select
-                    value={selectedWOId}
-                    onChange={(e) => setSelectedWOId(e.target.value)}
-                    required
-                    className="w-full text-sm border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500"
-                  >
-                    <option value="">Select Work Order</option>
-                    {workOrders.map(w => (
-                      <option key={w.id} value={w.id}>{w.work_order_number} — {w.title}</option>
-                    ))}
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-xs font-semibold text-slate-700 uppercase mb-1">Spare Part / Product *</label>
-                  <select
-                    value={productId}
-                    onChange={(e) => setProductId(e.target.value)}
+                    value={warehouseId}
+                    onChange={(e) => setWarehouseId(e.target.value)}
                     required
                     className="w-full text-sm border border-slate-300 rounded-lg px-3 py-2"
                   >
-                    <option value="">Select Spare Part Product</option>
-                    {products.map(p => (
-                      <option key={p.id} value={p.id}>{p.name} ({p.product_code || p.code})</option>
+                    <option value="">Select Warehouse</option>
+                    {warehouses.map(w => (
+                      <option key={w.id} value={w.id}>{w.name} ({w.code})</option>
                     ))}
                   </select>
                 </div>
-
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-xs font-semibold text-slate-700 uppercase mb-1">Source Warehouse *</label>
-                    <select
-                      value={warehouseId}
-                      onChange={(e) => setWarehouseId(e.target.value)}
-                      required
-                      className="w-full text-sm border border-slate-300 rounded-lg px-3 py-2"
-                    >
-                      <option value="">Select Warehouse</option>
-                      {warehouses.map(w => (
-                        <option key={w.id} value={w.id}>{w.name} ({w.code})</option>
-                      ))}
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-xs font-semibold text-slate-700 uppercase mb-1">Quantity *</label>
-                    <input
-                      type="number"
-                      min={1}
-                      value={quantity}
-                      onChange={(e) => setQuantity(parseInt(e.target.value, 10) || 1)}
-                      required
-                      className="w-full text-sm border border-slate-300 rounded-lg px-3 py-2 font-mono"
-                    />
-                  </div>
-                </div>
-
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 uppercase mb-1">Notes</label>
+                  <label className="block text-xs font-semibold text-slate-700 uppercase mb-1">Quantity *</label>
                   <input
-                    type="text"
-                    placeholder="e.g. Replaced worn bearing assembly"
-                    value={notes}
-                    onChange={(e) => setNotes(e.target.value)}
-                    className="w-full text-sm border border-slate-300 rounded-lg px-3 py-2"
+                    type="number"
+                    min={1}
+                    value={quantity}
+                    onChange={(e) => setQuantity(parseInt(e.target.value, 10) || 1)}
+                    required
+                    className="w-full text-sm border border-slate-300 rounded-lg px-3 py-2 font-mono"
                   />
                 </div>
+              </div>
 
-                <div className="flex justify-end gap-3 pt-2">
-                  <button
-                    type="button"
-                    onClick={() => setIsModalOpen(false)}
-                    className="px-4 py-2 text-sm font-medium text-slate-700 bg-slate-100 rounded-lg hover:bg-slate-200"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    className="px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700"
-                  >
-                    Issue Spare Part
-                  </button>
-                </div>
-              </form>
-            </div>
+              <div>
+                <label className="block text-xs font-semibold text-slate-700 uppercase mb-1">Notes</label>
+                <input
+                  type="text"
+                  placeholder="e.g. Replaced worn bearing assembly"
+                  value={notes}
+                  onChange={(e) => setNotes(e.target.value)}
+                  className="w-full text-sm border border-slate-300 rounded-lg px-3 py-2"
+                />
+              </div>
+
+              <div className="flex justify-end gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setIsModalOpen(false)}
+                  className="px-4 py-2 text-sm font-medium text-slate-700 bg-slate-100 rounded-lg hover:bg-slate-200"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700"
+                >
+                  Issue Spare Part
+                </button>
+              </div>
+            </form>
           </div>
-        )}
-      </div>
-    </ERPLayout>
+        </div>
+      )}
+    </div>
   );
 };
 

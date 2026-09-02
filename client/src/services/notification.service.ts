@@ -1,4 +1,4 @@
-import axios from 'axios';
+import apiClient from './api';
 import {
   NotificationItem,
   ReminderItem,
@@ -7,19 +7,12 @@ import {
   NotificationReportData,
 } from '../types/notification';
 
-const API_BASE = '/api/notifications';
-
-const getAuthHeaders = () => {
-  const token = localStorage.getItem('supabase.auth.token') || localStorage.getItem('sb-access-token');
-  return {
-    headers: token ? { Authorization: `Bearer ${token}` } : {},
-  };
-};
+const API_BASE = '/notifications';
 
 export const notificationService = {
   // Fetch real-time unread count
   getUnreadCount: async (): Promise<number> => {
-    const res = await axios.get(`${API_BASE}/unread-count`, getAuthHeaders());
+    const res = await apiClient.get(`${API_BASE}/unread-count`);
     return res.data?.count || 0;
   },
 
@@ -32,10 +25,7 @@ export const notificationService = {
     page?: number;
     limit?: number;
   }): Promise<{ data: NotificationItem[]; total: number }> => {
-    const res = await axios.get(API_BASE, {
-      ...getAuthHeaders(),
-      params,
-    });
+    const res = await apiClient.get(API_BASE, { params });
     return {
       data: res.data?.data || [],
       total: res.data?.pagination?.total || 0,
@@ -44,36 +34,35 @@ export const notificationService = {
 
   // Get single notification by ID
   getNotificationById: async (id: string): Promise<NotificationItem> => {
-    const res = await axios.get(`${API_BASE}/${id}`, getAuthHeaders());
+    const res = await apiClient.get(`${API_BASE}/${id}`);
     return res.data?.data;
   },
 
   // Mark single as read
   markAsRead: async (id: string): Promise<NotificationItem> => {
-    const res = await axios.put(`${API_BASE}/${id}/read`, {}, getAuthHeaders());
+    const res = await apiClient.put(`${API_BASE}/${id}/read`, {});
     return res.data?.data;
   },
 
   // Mark single as unread
   markAsUnread: async (id: string): Promise<NotificationItem> => {
-    const res = await axios.put(`${API_BASE}/${id}/unread`, {}, getAuthHeaders());
+    const res = await apiClient.put(`${API_BASE}/${id}/unread`, {});
     return res.data?.data;
   },
 
   // Mark all as read
   markAllAsRead: async (): Promise<void> => {
-    await axios.put(`${API_BASE}/mark-all-read`, {}, getAuthHeaders());
+    await apiClient.put(`${API_BASE}/mark-all-read`, {});
   },
 
   // Dismiss notification
   dismissNotification: async (id: string): Promise<void> => {
-    await axios.delete(`${API_BASE}/${id}/dismiss`, getAuthHeaders());
+    await apiClient.delete(`${API_BASE}/${id}/dismiss`);
   },
 
   // Reminders API
   getReminders: async (status?: string): Promise<ReminderItem[]> => {
-    const res = await axios.get(`${API_BASE}/reminders`, {
-      ...getAuthHeaders(),
+    const res = await apiClient.get(`${API_BASE}/reminders`, {
       params: { status },
     });
     return res.data?.data || [];
@@ -89,35 +78,35 @@ export const notificationService = {
     related_record_id?: string;
     related_route?: string;
   }): Promise<ReminderItem> => {
-    const res = await axios.post(`${API_BASE}/reminders`, payload, getAuthHeaders());
+    const res = await apiClient.post(`${API_BASE}/reminders`, payload);
     return res.data?.data;
   },
 
   updateReminderStatus: async (id: string, status: 'COMPLETED' | 'DISMISSED' | 'PENDING'): Promise<ReminderItem> => {
-    const res = await axios.put(`${API_BASE}/reminders/${id}/status`, { status }, getAuthHeaders());
+    const res = await apiClient.put(`${API_BASE}/reminders/${id}/status`, { status });
     return res.data?.data;
   },
 
   // User Notification Preferences API
   getPreferences: async (): Promise<NotificationPreference> => {
-    const res = await axios.get(`${API_BASE}/preferences`, getAuthHeaders());
+    const res = await apiClient.get(`${API_BASE}/preferences`);
     return res.data?.data;
   },
 
   updatePreferences: async (payload: Partial<NotificationPreference>): Promise<NotificationPreference> => {
-    const res = await axios.put(`${API_BASE}/preferences`, payload, getAuthHeaders());
+    const res = await apiClient.put(`${API_BASE}/preferences`, payload);
     return res.data?.data;
   },
 
   // Notification Types Metadata
   getNotificationTypes: async (): Promise<NotificationTypeItem[]> => {
-    const res = await axios.get(`${API_BASE}/types`, getAuthHeaders());
+    const res = await apiClient.get(`${API_BASE}/types`);
     return res.data?.data || [];
   },
 
   // Executive Reports
   getNotificationReports: async (): Promise<NotificationReportData> => {
-    const res = await axios.get(`${API_BASE}/reports`, getAuthHeaders());
+    const res = await apiClient.get(`${API_BASE}/reports`);
     return res.data?.data;
   },
 };

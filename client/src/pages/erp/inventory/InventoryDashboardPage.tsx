@@ -14,7 +14,7 @@ import {
   ArrowRight,
   ShieldAlert,
   CheckCircle2,
-  DollarSign,
+  IndianRupee,
   Activity,
 } from 'lucide-react';
 import inventoryService, { InventorySummary, ReorderDashboardItem } from '../../../services/inventory.service';
@@ -56,7 +56,7 @@ export const InventoryDashboardPage: React.FC = () => {
   };
 
   const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'EUR' }).format(amount);
+    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'INR' }).format(amount);
   };
 
   return (
@@ -119,7 +119,7 @@ export const InventoryDashboardPage: React.FC = () => {
         <div className="bg-white dark:bg-[#0F2647] p-5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-xs hover:border-slate-300 dark:hover:border-slate-700 transition">
           <div className="flex items-center justify-between text-slate-500 dark:text-slate-400 mb-2">
             <span className="text-xs font-semibold uppercase tracking-wider">Gross Stock Value</span>
-            <DollarSign className="w-5 h-5 text-indigo-500 dark:text-indigo-400" />
+            <IndianRupee className="w-5 h-5 text-indigo-500 dark:text-indigo-400" />
           </div>
           <div className="text-2xl font-bold text-slate-900 dark:text-white">
             {loading ? '...' : formatCurrency(valuation)}

@@ -69,7 +69,7 @@ export const CurrencySettingsPage: React.FC = () => {
             Currencies & Exchange Rates
           </h1>
           <p className="text-sm text-gray-500 dark:text-gray-400">
-            Manage multi-currency master list (EUR, USD, GBP, INR, CNY) and exchange rates.
+            Manage multi-currency master list (INR, INR, GBP, INR, CNY) and exchange rates.
           </p>
         </div>
         <button

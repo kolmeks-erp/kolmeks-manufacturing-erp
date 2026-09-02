@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { DollarSign, Clock, AlertTriangle, FileText, CreditCard, BarChart2 } from 'lucide-react';
+import { IndianRupee, Clock, AlertTriangle, FileText, CreditCard, BarChart2 } from 'lucide-react';
 import { salesInvoiceService } from '../../../services/sales_invoice.service';
 import { ReceivablesSummary } from '../../../types/sales_invoice';
 import { ERP_BASE_PATH } from '../../../constants/navigation';
@@ -39,7 +39,7 @@ export const CustomerReceivablesPage: React.FC = () => {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-            <DollarSign className="w-7 h-7 text-emerald-600" />
+            <IndianRupee className="w-7 h-7 text-emerald-600" />
             Accounts Receivable Dashboard
           </h1>
           <p className="text-slate-500 text-sm mt-1">
@@ -69,7 +69,7 @@ export const CustomerReceivablesPage: React.FC = () => {
           <div className="flex items-center justify-between">
             <span className="text-sm font-medium text-slate-500">Total Outstanding A/R</span>
             <div className="p-2 bg-emerald-50 text-emerald-600 rounded-lg">
-              <DollarSign className="w-5 h-5" />
+              <IndianRupee className="w-5 h-5" />
             </div>
           </div>
           <p className="text-2xl font-bold text-slate-900 mt-2">

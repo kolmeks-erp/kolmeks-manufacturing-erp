@@ -6,7 +6,7 @@ import {
   TrendingUp,
   Building2,
   Calendar,
-  DollarSign,
+  IndianRupee,
   Clock,
   ArrowLeft,
   FileText,

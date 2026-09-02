@@ -10,7 +10,7 @@ import {
   Award,
   XCircle,
   Building2,
-  DollarSign,
+  IndianRupee,
   Calendar,
   Eye,
   CheckCircle,

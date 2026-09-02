@@ -10,8 +10,11 @@ export const WorkflowHistoryPage: React.FC = () => {
   useEffect(() => {
     workflowService
       .getHistory()
-      .then((res) => setHistory(res.data))
-      .catch((err) => console.error('Failed to load workflow history:', err))
+      .then((res) => setHistory(Array.isArray(res?.data) ? res.data : Array.isArray(res) ? res : []))
+      .catch((err) => {
+        console.error('Failed to load workflow history:', err);
+        setHistory([]);
+      })
       .finally(() => setLoading(false));
   }, []);
 

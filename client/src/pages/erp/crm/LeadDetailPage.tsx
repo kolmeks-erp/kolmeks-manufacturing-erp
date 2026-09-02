@@ -8,7 +8,7 @@ import {
   Mail,
   Phone,
   Calendar,
-  DollarSign,
+  IndianRupee,
   Clock,
   CheckCircle,
   FileText,

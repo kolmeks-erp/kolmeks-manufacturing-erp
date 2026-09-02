@@ -306,8 +306,8 @@ export const PurchaseOrderListPage: React.FC = () => {
               className="w-full px-3 py-2 bg-slate-50 dark:bg-[#071220] border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium text-slate-700 dark:text-slate-200 focus:ring-2 focus:ring-slate-900 dark:focus:ring-blue-500 focus:outline-hidden"
             >
               <option value="all">All Currencies</option>
-              <option value="EUR">EUR (₹)</option>
-              <option value="USD">USD (₹)</option>
+              <option value="INR">INR (₹)</option>
+              <option value="INR">INR (₹)</option>
               <option value="INR">INR (₹)</option>
             </select>
           </div>
@@ -472,7 +472,7 @@ export const PurchaseOrderListPage: React.FC = () => {
 
                     {/* TOTAL AMOUNT */}
                     <td className="py-3.5 px-4 text-right font-bold text-slate-900 dark:text-white whitespace-nowrap">
-                      {po.currency || 'EUR'} {Number(po.total || 0).toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                      {po.currency || 'INR'} {Number(po.total || 0).toLocaleString(undefined, { minimumFractionDigits: 2 })}
                     </td>
 
                     {/* PRIORITY */}

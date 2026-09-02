@@ -1,4 +1,6 @@
-const { supabase } = require('../config/supabase');
+const { supabase, supabaseAdmin } = require('../config/supabase');
+
+const db = supabaseAdmin || supabase;
 
 class NotificationService {
   /**
@@ -44,7 +46,7 @@ class NotificationService {
 
       // Idempotency check: prevent duplicate notifications for same event
       if (event_key) {
-        const { data: existing } = await supabase
+        const { data: existing } = await db
           .from('notifications')
           .select('id')
           .eq('event_key', event_key)
@@ -61,13 +63,13 @@ class NotificationService {
       if (recipient_id) {
         targetRecipientIds.push(recipient_id);
       } else if (recipient_role) {
-        const { data: profiles } = await supabase
+        const { data: profiles } = await db
           .from('profiles')
           .select('id')
           .eq('role', recipient_role);
         if (profiles) targetRecipientIds = profiles.map((p) => p.id);
       } else if (recipient_department) {
-        const { data: profiles } = await supabase
+        const { data: profiles } = await db
           .from('profiles')
           .select('id')
           .eq('department_id', recipient_department);
@@ -82,7 +84,7 @@ class NotificationService {
       // Resolve notification type ID if type_code provided
       let typeId = null;
       if (type_code) {
-        const { data: nType } = await supabase
+        const { data: nType } = await db
           .from('notification_types')
           .select('id')
           .eq('code', type_code)
@@ -94,7 +96,7 @@ class NotificationService {
 
       for (const recId of targetRecipientIds) {
         // Check recipient notification preferences server-side
-        const { data: prefs } = await supabase
+        const { data: prefs } = await db
           .from('notification_preferences')
           .select('*')
           .eq('user_id', recId)
@@ -107,7 +109,7 @@ class NotificationService {
           continue;
         }
 
-        const { data: notif, error } = await supabase
+        const { data: notif, error } = await db
           .from('notifications')
           .insert({
             type_id: typeId,
@@ -132,7 +134,7 @@ class NotificationService {
         }
 
         // Log delivery status
-        await supabase.from('notification_delivery_logs').insert({
+        await db.from('notification_delivery_logs').insert({
           notification_id: notif.id,
           channel: 'IN_APP',
           status: 'SENT',

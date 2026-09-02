@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { DollarSign, Clock, FileCheck, Plus, Search, Eye, AlertTriangle, ShieldAlert } from 'lucide-react';
+import { IndianRupee, Clock, FileCheck, Plus, Search, Eye, AlertTriangle, ShieldAlert } from 'lucide-react';
 import { purchaseInvoiceService } from '../../../services/purchase_invoice.service';
 import { PayablesSummary, PurchaseInvoice } from '../../../types/purchase_invoice';
 import { ERP_BASE_PATH } from '../../../constants/navigation';
@@ -53,7 +53,7 @@ export const SupplierPayablesPage: React.FC = () => {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-            <DollarSign className="w-7 h-7 text-indigo-600" />
+            <IndianRupee className="w-7 h-7 text-indigo-600" />
             Accounts Payable Management
           </h1>
           <p className="text-slate-500 text-sm mt-1">
@@ -84,7 +84,7 @@ export const SupplierPayablesPage: React.FC = () => {
           <div className="flex justify-between items-start">
             <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Payable</span>
             <div className="p-2 bg-indigo-50 text-indigo-600 rounded-lg">
-              <DollarSign className="w-5 h-5" />
+              <IndianRupee className="w-5 h-5" />
             </div>
           </div>
           <div className="text-2xl font-extrabold text-slate-900 mt-2">

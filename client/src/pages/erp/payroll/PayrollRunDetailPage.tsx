@@ -9,7 +9,7 @@ import {
   Landmark,
   ArrowLeft,
   Users,
-  DollarSign,
+  IndianRupee,
   AlertCircle,
   FileText,
 } from 'lucide-react';

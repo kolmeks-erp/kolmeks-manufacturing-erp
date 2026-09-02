@@ -386,7 +386,7 @@ async function createQuotation(req, res) {
       rfq_id: rfq_id || null,
       quotation_date: finalDate,
       valid_until: valid_until || null,
-      currency: (currency || 'EUR').trim().toUpperCase(),
+      currency: (currency || 'INR').trim().toUpperCase(),
       subtotal,
       discount: discount_amount,
       tax: tax_amount,

@@ -13,7 +13,7 @@ import {
   FileText,
   Clock,
   Calculator,
-  DollarSign,
+  IndianRupee,
 } from 'lucide-react';
 import { ProcurementService } from '../../../services/procurement.service';
 import { SupplierService } from '../../../services/supplier.service';
@@ -54,7 +54,7 @@ export const PurchaseOrderFormPage: React.FC = () => {
   const [orderDate, setOrderDate] = useState<string>(new Date().toISOString().split('T')[0]);
   const [expectedDelivery, setExpectedDelivery] = useState<string>('');
   const [priority, setPriority] = useState<'LOW' | 'NORMAL' | 'HIGH' | 'URGENT'>('NORMAL');
-  const [currency, setCurrency] = useState<string>('EUR');
+  const [currency, setCurrency] = useState<string>('INR');
   const [paymentTerms, setPaymentTerms] = useState<string>('Net 30 Days');
   const [deliveryTerms, setDeliveryTerms] = useState<string>('FOB Factory');
   const [supplierReference, setSupplierReference] = useState<string>('');
@@ -107,7 +107,7 @@ export const PurchaseOrderFormPage: React.FC = () => {
             setOrderDate(po.order_date || new Date().toISOString().split('T')[0]);
             setExpectedDelivery(po.expected_delivery || '');
             setPriority(po.priority || 'NORMAL');
-            setCurrency(po.currency || 'EUR');
+            setCurrency(po.currency || 'INR');
             setPaymentTerms(po.payment_terms || 'Net 30 Days');
             setDeliveryTerms(po.delivery_terms || 'FOB Factory');
             setSupplierReference(po.supplier_reference || '');
@@ -398,8 +398,8 @@ export const PurchaseOrderFormPage: React.FC = () => {
               onChange={(e) => setCurrency(e.target.value)}
               className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-800 focus:ring-2 focus:ring-slate-900 focus:outline-hidden"
             >
-              <option value="EUR">EUR (₹)</option>
-              <option value="USD">USD (₹)</option>
+              <option value="INR">INR (₹)</option>
+              <option value="INR">INR (₹)</option>
               <option value="INR">INR (₹)</option>
             </select>
           </div>

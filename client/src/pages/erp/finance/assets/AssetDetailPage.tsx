@@ -10,7 +10,7 @@ import {
   Building2,
   FileText,
   Calendar,
-  DollarSign,
+  IndianRupee,
   ShieldCheck,
   Info,
 } from 'lucide-react';

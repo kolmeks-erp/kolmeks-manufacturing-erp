@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {
   BarChart3,
-  DollarSign,
+  IndianRupee,
   ShoppingCart,
   Truck,
   Boxes,
@@ -91,7 +91,7 @@ export const ReportsExecutiveDashboardPage: React.FC = () => {
           title="Total Sales Revenue"
           value={loading ? '...' : `₹${(kpis?.totalSales || 0).toLocaleString('en-US', { minimumFractionDigits: 2 })}`}
           subtitle="Realized sales orders in period"
-          icon={DollarSign}
+          icon={IndianRupee}
           color="emerald"
           drillDownUrl={`${ERP_BASE_PATH}/reports/sales`}
         />

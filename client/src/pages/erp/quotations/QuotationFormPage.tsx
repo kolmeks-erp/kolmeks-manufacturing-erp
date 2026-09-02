@@ -6,7 +6,7 @@ import {
   Trash2,
   Building2,
   Calendar,
-  DollarSign,
+  IndianRupee,
   Boxes,
   FileSpreadsheet,
   Save,
@@ -50,7 +50,7 @@ export const QuotationFormPage: React.FC = () => {
     d.setDate(d.getDate() + 30);
     return d.toISOString().split('T')[0];
   });
-  const [currency, setCurrency] = useState<string>('EUR');
+  const [currency, setCurrency] = useState<string>('INR');
   const [paymentTerms, setPaymentTerms] = useState<string>('Net 30 Days from Invoice');
   const [deliveryTerms, setDeliveryTerms] = useState<string>('Ex-Works Järvenpää, Finland');
   const [deliveryTime, setDeliveryTime] = useState<string>('4-6 Weeks from Order Confirmation');
@@ -445,8 +445,6 @@ export const QuotationFormPage: React.FC = () => {
                   onChange={(e) => setCurrency(e.target.value)}
                   className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-semibold text-slate-900 focus:ring-2 focus:ring-slate-900"
                 >
-                  <option value="EUR">EUR (₹)</option>
-                  <option value="USD">USD (₹)</option>
                   <option value="INR">INR (₹)</option>
                 </select>
               </div>

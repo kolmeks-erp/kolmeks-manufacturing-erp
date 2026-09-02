@@ -10,7 +10,7 @@ import {
   Paperclip,
   Clock,
   Building2,
-  DollarSign,
+  IndianRupee,
   AlertTriangle,
   BookOpen,
   UserCheck,
@@ -337,7 +337,7 @@ export const ExpenseClaimDetailPage: React.FC = () => {
         {/* Expense Items Breakdown Table */}
         <div className="bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-sm">
           <h3 className="text-base font-semibold text-slate-100 mb-4 flex items-center">
-            <DollarSign className="w-4 h-4 mr-2 text-emerald-400" />
+            <IndianRupee className="w-4 h-4 mr-2 text-emerald-400" />
             Expense Line Items & Receipts ({claim.items?.length || 0})
           </h3>
 

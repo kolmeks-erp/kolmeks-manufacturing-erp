@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Settings, Save, Shield, BellRing, Mail } from 'lucide-react';
+import { Settings, Save, Shield, BellRing, Mail, CheckCircle2, AlertCircle } from 'lucide-react';
 import { notificationService } from '../../../services/notification.service';
 import { NotificationPreference } from '../../../types/notification';
 
@@ -7,18 +7,24 @@ export const NotificationSettingsPage: React.FC = () => {
   const [prefs, setPrefs] = useState<Partial<NotificationPreference>>({});
   const [loading, setLoading] = useState<boolean>(true);
   const [saving, setSaving] = useState<boolean>(false);
-  const [message, setMessage] = useState<string | null>(null);
+  const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
   useEffect(() => {
     notificationService
       .getPreferences()
-      .then((data) => setPrefs(data))
-      .catch((err) => console.error('Failed to load notification preferences:', err))
+      .then((data) => setPrefs(data || {}))
+      .catch((err) => {
+        console.error('Failed to load notification preferences:', err);
+        setPrefs({});
+      })
       .finally(() => setLoading(false));
   }, []);
 
   const handleToggle = (key: keyof NotificationPreference) => {
-    setPrefs((prev) => ({ ...prev, [key]: !prev[key] }));
+    setPrefs((prev) => {
+      const current = prev || {};
+      return { ...current, [key]: !current[key] };
+    });
   };
 
   const handleSave = async (e: React.FormEvent) => {
@@ -26,11 +32,14 @@ export const NotificationSettingsPage: React.FC = () => {
     setSaving(true);
     setMessage(null);
     try {
-      await notificationService.updatePreferences(prefs);
-      setMessage('Notification preferences saved successfully.');
-    } catch (err) {
+      await notificationService.updatePreferences(prefs || {});
+      setMessage({ type: 'success', text: 'Notification preferences saved successfully.' });
+    } catch (err: any) {
       console.error('Failed to save preferences:', err);
-      setMessage('Failed to save notification preferences.');
+      setMessage({
+        type: 'error',
+        text: err?.response?.data?.message || err?.message || 'Failed to save notification preferences.',
+      });
     } finally {
       setSaving(false);
     }
@@ -75,8 +84,15 @@ export const NotificationSettingsPage: React.FC = () => {
       </div>
 
       {message && (
-        <div className="p-4 rounded-xl bg-emerald-50 text-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 text-xs font-semibold">
-          {message}
+        <div
+          className={`p-4 rounded-xl border flex items-center gap-3 text-xs font-semibold ${
+            message.type === 'success'
+              ? 'bg-emerald-50 text-emerald-800 border-emerald-200 dark:bg-emerald-950/40 dark:border-emerald-800 dark:text-emerald-300'
+              : 'bg-rose-50 text-rose-800 border-rose-200 dark:bg-rose-950/40 dark:border-rose-800 dark:text-rose-300'
+          }`}
+        >
+          {message.type === 'success' ? <CheckCircle2 className="w-5 h-5 flex-shrink-0" /> : <AlertCircle className="w-5 h-5 flex-shrink-0" />}
+          <span>{message.text}</span>
         </div>
       )}
 
@@ -101,7 +117,7 @@ export const NotificationSettingsPage: React.FC = () => {
               <label className="relative inline-flex items-center cursor-pointer">
                 <input
                   type="checkbox"
-                  checked={Boolean(prefs[cat.key as keyof NotificationPreference])}
+                  checked={Boolean((prefs || {})[cat.key as keyof NotificationPreference])}
                   onChange={() => handleToggle(cat.key as keyof NotificationPreference)}
                   className="sr-only peer"
                 />
@@ -128,7 +144,7 @@ export const NotificationSettingsPage: React.FC = () => {
             <label className="relative inline-flex items-center cursor-pointer">
               <input
                 type="checkbox"
-                checked={Boolean(prefs.email_approvals)}
+                checked={Boolean(prefs?.email_approvals)}
                 onChange={() => handleToggle('email_approvals')}
                 className="sr-only peer"
               />
@@ -144,7 +160,7 @@ export const NotificationSettingsPage: React.FC = () => {
             <label className="relative inline-flex items-center cursor-pointer">
               <input
                 type="checkbox"
-                checked={Boolean(prefs.email_urgent)}
+                checked={Boolean(prefs?.email_urgent)}
                 onChange={() => handleToggle('email_urgent')}
                 className="sr-only peer"
               />

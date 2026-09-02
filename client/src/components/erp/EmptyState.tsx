@@ -25,11 +25,9 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
   const btnText = actionText || actionLabel;
   const renderIcon = () => {
     if (!IconProp) return <FolderOpen className="w-8 h-8" />;
-    if (typeof IconProp === 'function' || (typeof IconProp === 'object' && IconProp !== null && '$$typeof' in IconProp && typeof (IconProp as any).type === 'function')) {
-      const Comp = IconProp as React.ElementType;
-      return <Comp className="w-8 h-8" />;
-    }
-    return IconProp;
+    if (React.isValidElement(IconProp)) return IconProp;
+    const IconComp = IconProp as React.ElementType;
+    return <IconComp className="w-8 h-8" />;
   };
 
   return (

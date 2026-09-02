@@ -4,7 +4,7 @@ import {
   ArrowLeft,
   FileCheck,
   Ban,
-  DollarSign,
+  IndianRupee,
   Printer,
   Calendar,
   Building2,

@@ -4,7 +4,7 @@ import { crmService } from '../../../services/crm.service';
 import { PipelineStageBoard, OpportunityStage } from '../../../types/crm';
 import {
   TrendingUp,
-  DollarSign,
+  IndianRupee,
   Building2,
   Calendar,
   UserCheck,

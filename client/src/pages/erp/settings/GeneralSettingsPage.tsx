@@ -8,7 +8,7 @@ export const GeneralSettingsPage: React.FC = () => {
   const [profile, setProfile] = useState<OrganizationProfile>({
     org_name: 'Kolmeks Oy',
     default_timezone: 'Europe/Helsinki',
-    default_currency: 'EUR',
+    default_currency: 'INR',
     date_format: 'YYYY-MM-DD',
     number_format: '1,234.56',
     quantity_precision: 2,
@@ -104,8 +104,8 @@ export const GeneralSettingsPage: React.FC = () => {
               onChange={(e) => setProfile({ ...profile, default_currency: e.target.value })}
               className="w-full px-3 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500"
             >
-              <option value="EUR">Euro (EUR - ₹)</option>
-              <option value="USD">US Dollar (USD - $)</option>
+              <option value="INR">Euro (INR - ₹)</option>
+              <option value="INR">US Dollar (INR - $)</option>
               <option value="GBP">British Pound (GBP - £)</option>
               <option value="INR">Indian Rupee (INR - ₹)</option>
               <option value="CNY">Chinese Yuan (CNY - ¥)</option>

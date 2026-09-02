@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Receipt,
-  DollarSign,
+  IndianRupee,
   Clock,
   CheckCircle,
   PlusCircle,
@@ -128,7 +128,7 @@ export const ExpenseDashboardPage: React.FC = () => {
               <div className="flex items-center justify-between mb-3">
                 <span className="text-xs font-semibold text-emerald-400 uppercase tracking-wider">Total Approved Claims</span>
                 <div className="p-2.5 rounded-lg bg-emerald-500/10 text-emerald-400">
-                  <DollarSign className="w-5 h-5" />
+                  <IndianRupee className="w-5 h-5" />
                 </div>
               </div>
               <div className="text-2xl font-bold text-slate-100">{formatCurrency(kpis.total_approved_amount)}</div>

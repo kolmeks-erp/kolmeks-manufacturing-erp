@@ -9,12 +9,19 @@ export const WorkflowSettingsPage: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    Promise.all([workflowService.getGroups(), workflowService.getDelegations()])
+    Promise.all([
+      workflowService.getGroups().catch(() => []),
+      workflowService.getDelegations().catch(() => []),
+    ])
       .then(([grpData, delData]) => {
-        setGroups(grpData);
-        setDelegations(delData);
+        setGroups(Array.isArray(grpData) ? grpData : []);
+        setDelegations(Array.isArray(delData) ? delData : []);
       })
-      .catch((err) => console.error('Failed to load workflow settings:', err))
+      .catch((err) => {
+        console.error('Failed to load workflow settings:', err);
+        setGroups([]);
+        setDelegations([]);
+      })
       .finally(() => setLoading(false));
   }, []);
 

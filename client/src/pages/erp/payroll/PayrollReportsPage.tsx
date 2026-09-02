@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { payrollService } from '../../../services/payroll.service';
-import { BarChart3, Download, Filter, Building2, DollarSign } from 'lucide-react';
+import { BarChart3, Download, Filter, Building2, IndianRupee } from 'lucide-react';
 
 export const PayrollReportsPage: React.FC = () => {
   const [selectedPeriodId, setSelectedPeriodId] = useState('');

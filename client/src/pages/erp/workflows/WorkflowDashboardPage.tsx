@@ -14,11 +14,11 @@ export const WorkflowDashboardPage: React.FC = () => {
     const loadData = async () => {
       try {
         const [telData, taskRes] = await Promise.all([
-          workflowService.getDashboardTelemetry(),
-          workflowService.getUserTasks({ tab: 'pending', limit: 5 }),
+          workflowService.getDashboardTelemetry().catch(() => null),
+          workflowService.getUserTasks({ tab: 'pending', limit: 5 }).catch(() => ({ data: [] })),
         ]);
-        setTelemetry(telData);
-        setPendingTasks(taskRes.data);
+        if (telData) setTelemetry(telData);
+        setPendingTasks(Array.isArray(taskRes?.data) ? taskRes.data : Array.isArray(taskRes) ? taskRes : []);
       } catch (err) {
         console.error('Failed to load workflow dashboard:', err);
       } finally {

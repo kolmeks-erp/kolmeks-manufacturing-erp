@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Settings, Save, CheckCircle2, AlertCircle, RefreshCw, Layers, DollarSign, Building2 } from 'lucide-react';
+import { Settings, Save, CheckCircle2, AlertCircle, RefreshCw, Layers, IndianRupee, Building2 } from 'lucide-react';
 import { costingService, CostingConfiguration } from '../../../../services/costing.service';
 import api from '../../../../services/api';
 
@@ -84,13 +84,13 @@ export const CostConfigurationPage: React.FC = () => {
   return (
     <div className="p-6 space-y-6 max-w-5xl mx-auto">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-900 border border-slate-800 p-6 rounded-2xl">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white dark:bg-[#0F2647] border border-slate-200 dark:border-slate-800 p-6 rounded-2xl shadow-sm">
         <div>
-          <h1 className="text-2xl font-bold text-white flex items-center gap-3">
-            <Settings className="w-7 h-7 text-emerald-400" />
+          <h1 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-3">
+            <Settings className="w-7 h-7 text-emerald-600 dark:text-emerald-400" />
             Manufacturing Cost Configuration
           </h1>
-          <p className="text-slate-400 text-sm mt-1">
+          <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">
             Setup Work Center hourly labor rates, overhead allocation bases & General Ledger account mappings
           </p>
         </div>
@@ -98,7 +98,7 @@ export const CostConfigurationPage: React.FC = () => {
         <button
           onClick={handleSave}
           disabled={saving}
-          className="flex items-center gap-2 px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-sm rounded-xl transition shadow-lg shadow-emerald-500/20"
+          className="flex items-center gap-2 px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-sm rounded-xl transition shadow-sm"
         >
           <Save className={`w-4 h-4 ${saving ? 'animate-spin' : ''}`} />
           {saving ? 'Saving Setup...' : 'Save Configuration'}
@@ -109,8 +109,8 @@ export const CostConfigurationPage: React.FC = () => {
         <div
           className={`p-4 rounded-xl border flex items-center gap-3 ${
             message.type === 'success'
-              ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'
-              : 'bg-rose-500/10 border-rose-500/20 text-rose-400'
+              ? 'bg-emerald-50 text-emerald-800 border-emerald-200 dark:bg-emerald-500/10 dark:border-emerald-500/20 dark:text-emerald-400'
+              : 'bg-rose-50 text-rose-800 border-rose-200 dark:bg-rose-500/10 dark:border-rose-500/20 dark:text-rose-400'
           }`}
         >
           {message.type === 'success' ? <CheckCircle2 className="w-5 h-5" /> : <AlertCircle className="w-5 h-5" />}
@@ -123,19 +123,19 @@ export const CostConfigurationPage: React.FC = () => {
       ) : (
         <form onSubmit={handleSave} className="space-y-6">
           {/* Section 1: Costing Method & Default Rates */}
-          <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl space-y-4">
-            <h3 className="text-lg font-semibold text-white flex items-center gap-2">
-              <DollarSign className="w-5 h-5 text-emerald-400" />
+          <div className="bg-white dark:bg-[#0F2647] border border-slate-200 dark:border-slate-800 p-6 rounded-2xl space-y-4 shadow-sm">
+            <h3 className="text-lg font-semibold text-slate-900 dark:text-white flex items-center gap-2">
+              <IndianRupee className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
               1. Valuation Method & Default Base Rates
             </h3>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-semibold text-slate-400 uppercase mb-1">Costing Method</label>
+                <label className="block text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase mb-1">Costing Method</label>
                 <select
                   value={config.costing_method}
                   onChange={(e) => setConfig({ ...config, costing_method: e.target.value as any })}
-                  className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-lg text-sm text-white focus:border-emerald-500 focus:outline-none"
+                  className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-sm text-slate-900 dark:text-white focus:border-emerald-500 focus:outline-none"
                 >
                   <option value="ACTUAL_COST">Actual Costing (Consumptions + Run Hours)</option>
                   <option value="STANDARD_COST">Standard Costing (BOM & Routing Rates)</option>
@@ -143,11 +143,11 @@ export const CostConfigurationPage: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-400 uppercase mb-1">Overhead Allocation Basis</label>
+                <label className="block text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase mb-1">Overhead Allocation Basis</label>
                 <select
                   value={config.overhead_allocation_basis}
                   onChange={(e) => setConfig({ ...config, overhead_allocation_basis: e.target.value as any })}
-                  className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-lg text-sm text-white focus:border-emerald-500 focus:outline-none"
+                  className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-sm text-slate-900 dark:text-white focus:border-emerald-500 focus:outline-none"
                 >
                   <option value="PER_HOUR">Per Direct Labor / Machine Hour</option>
                   <option value="PER_UNIT">Per Finished Unit Produced</option>
@@ -155,43 +155,43 @@ export const CostConfigurationPage: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-400 uppercase mb-1">Default Labor Rate (₹ / Hour)</label>
+                <label className="block text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase mb-1">Default Labor Rate (₹ / Hour)</label>
                 <input
                   type="number"
                   step="0.01"
                   value={config.default_hourly_labor_rate}
                   onChange={(e) => setConfig({ ...config, default_hourly_labor_rate: parseFloat(e.target.value) || 0 })}
-                  className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-lg text-sm text-white focus:border-emerald-500 focus:outline-none"
+                  className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-sm text-slate-900 dark:text-white focus:border-emerald-500 focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-400 uppercase mb-1">Default Overhead Rate (₹ / Hour)</label>
+                <label className="block text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase mb-1">Default Overhead Rate (₹ / Hour)</label>
                 <input
                   type="number"
                   step="0.01"
                   value={config.default_hourly_overhead_rate}
                   onChange={(e) => setConfig({ ...config, default_hourly_overhead_rate: parseFloat(e.target.value) || 0 })}
-                  className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-lg text-sm text-white focus:border-emerald-500 focus:outline-none"
+                  className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-sm text-slate-900 dark:text-white focus:border-emerald-500 focus:outline-none"
                 />
               </div>
             </div>
           </div>
 
           {/* Section 2: General Ledger Account Mappings */}
-          <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl space-y-4">
-            <h3 className="text-lg font-semibold text-white flex items-center gap-2">
-              <Layers className="w-5 h-5 text-blue-400" />
+          <div className="bg-white dark:bg-[#0F2647] border border-slate-200 dark:border-slate-800 p-6 rounded-2xl space-y-4 shadow-sm">
+            <h3 className="text-lg font-semibold text-slate-900 dark:text-white flex items-center gap-2">
+              <Layers className="w-5 h-5 text-blue-600 dark:text-blue-400" />
               2. General Ledger Chart of Accounts Integration
             </h3>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-semibold text-slate-400 uppercase mb-1">Raw Material Issue Account</label>
+                <label className="block text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase mb-1">Raw Material Issue Account</label>
                 <select
                   value={config.raw_material_account_id || ''}
                   onChange={(e) => setConfig({ ...config, raw_material_account_id: e.target.value })}
-                  className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-lg text-sm text-white focus:border-blue-500 focus:outline-none"
+                  className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-sm text-slate-900 dark:text-white focus:border-blue-500 focus:outline-none"
                 >
                   <option value="">-- Select GL Account --</option>
                   {accounts.map((a) => (
@@ -203,11 +203,11 @@ export const CostConfigurationPage: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-400 uppercase mb-1">Work In Progress (WIP) Account</label>
+                <label className="block text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase mb-1">Work In Progress (WIP) Account</label>
                 <select
                   value={config.wip_account_id || ''}
                   onChange={(e) => setConfig({ ...config, wip_account_id: e.target.value })}
-                  className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-lg text-sm text-white focus:border-blue-500 focus:outline-none"
+                  className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-sm text-slate-900 dark:text-white focus:border-blue-500 focus:outline-none"
                 >
                   <option value="">-- Select GL Account --</option>
                   {accounts.map((a) => (
@@ -219,11 +219,11 @@ export const CostConfigurationPage: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-400 uppercase mb-1">Finished Goods Inventory Account</label>
+                <label className="block text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase mb-1">Finished Goods Inventory Account</label>
                 <select
                   value={config.finished_goods_account_id || ''}
                   onChange={(e) => setConfig({ ...config, finished_goods_account_id: e.target.value })}
-                  className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-lg text-sm text-white focus:border-blue-500 focus:outline-none"
+                  className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-sm text-slate-900 dark:text-white focus:border-blue-500 focus:outline-none"
                 >
                   <option value="">-- Select GL Account --</option>
                   {accounts.map((a) => (
@@ -235,11 +235,11 @@ export const CostConfigurationPage: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-400 uppercase mb-1">Direct Labor Allocation Account</label>
+                <label className="block text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase mb-1">Direct Labor Allocation Account</label>
                 <select
                   value={config.labor_cost_account_id || ''}
                   onChange={(e) => setConfig({ ...config, labor_cost_account_id: e.target.value })}
-                  className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-lg text-sm text-white focus:border-blue-500 focus:outline-none"
+                  className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-sm text-slate-900 dark:text-white focus:border-blue-500 focus:outline-none"
                 >
                   <option value="">-- Select GL Account --</option>
                   {accounts.map((a) => (
@@ -251,11 +251,11 @@ export const CostConfigurationPage: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-400 uppercase mb-1">Manufacturing Overhead Account</label>
+                <label className="block text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase mb-1">Manufacturing Overhead Account</label>
                 <select
                   value={config.overhead_cost_account_id || ''}
                   onChange={(e) => setConfig({ ...config, overhead_cost_account_id: e.target.value })}
-                  className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-lg text-sm text-white focus:border-blue-500 focus:outline-none"
+                  className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-sm text-slate-900 dark:text-white focus:border-blue-500 focus:outline-none"
                 >
                   <option value="">-- Select GL Account --</option>
                   {accounts.map((a) => (
@@ -267,11 +267,11 @@ export const CostConfigurationPage: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-400 uppercase mb-1">Production Cost Variance Account</label>
+                <label className="block text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase mb-1">Production Cost Variance Account</label>
                 <select
                   value={config.variance_account_id || ''}
                   onChange={(e) => setConfig({ ...config, variance_account_id: e.target.value })}
-                  className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-lg text-sm text-white focus:border-blue-500 focus:outline-none"
+                  className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-sm text-slate-900 dark:text-white focus:border-blue-500 focus:outline-none"
                 >
                   <option value="">-- Select GL Account --</option>
                   {accounts.map((a) => (

@@ -4,7 +4,7 @@ import {
   FolderTree,
   ArrowLeft,
   BookOpen,
-  DollarSign,
+  IndianRupee,
   TrendingUp,
   TrendingDown,
   CheckCircle,
@@ -83,7 +83,7 @@ const AccountDetailPage: React.FC = () => {
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold text-slate-400 uppercase">Current Account Balance</span>
             <div className="p-2 bg-emerald-500/10 rounded-lg text-emerald-400">
-              <DollarSign className="w-5 h-5" />
+              <IndianRupee className="w-5 h-5" />
             </div>
           </div>
           <div className="mt-3">

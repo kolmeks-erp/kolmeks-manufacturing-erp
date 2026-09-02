@@ -1,4 +1,5 @@
-const { supabase } = require('../config/supabase');
+const { supabase, supabaseAdmin } = require('../config/supabase');
+const db = supabaseAdmin || supabase;
 
 /**
  * Helper: Generate unique format code (e.g., INS-2026-000001, IP-2026-000001, NCR-2026-000001, QHOLD-2026-000001)
@@ -7,7 +8,7 @@ const generateSequenceNumber = async (table, column, prefix) => {
   const currentYear = new Date().getFullYear();
   const pattern = `${prefix}-${currentYear}-%`;
   
-  const { data } = await supabase
+  const { data } = await db
     .from(table)
     .select(column)
     .like(column, pattern)
@@ -46,14 +47,14 @@ const getInspections = async (req, res) => {
     const from = (parseInt(page, 10) - 1) * parseInt(limit, 10);
     const to = from + parseInt(limit, 10) - 1;
 
-    let query = supabase
+    let query = db
       .from('quality_inspections')
       .select(`
         *,
         products (id, product_code, name),
         suppliers (id, company_name),
         goods_receipts (id, grn_number),
-        production_orders (id, production_order_number),
+        production_orders!production_order_id (id, production_order_number),
         inspected_by_profile:profiles!inspected_by (id, full_name, email)
       `, { count: 'exact' });
 
@@ -93,7 +94,7 @@ const getInspectionById = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const { data: inspection, error } = await supabase
+    const { data: inspection, error } = await db
       .from('quality_inspections')
       .select(`
         *,
@@ -114,26 +115,26 @@ const getInspectionById = async (req, res) => {
     }
 
     // Fetch measured results
-    const { data: results } = await supabase
+    const { data: results } = await db
       .from('inspection_results')
       .select('*')
       .eq('inspection_id', id)
       .order('created_at', { ascending: true });
 
     // Fetch related quality holds
-    const { data: holds } = await supabase
+    const { data: holds } = await db
       .from('quality_holds')
       .select('*')
       .eq('inspection_id', id);
 
     // Fetch related NCRs
-    const { data: ncrs } = await supabase
+    const { data: ncrs } = await db
       .from('non_conformance_reports')
       .select('*')
       .eq('inspection_id', id);
 
     // Fetch timeline activities
-    const { data: activities } = await supabase
+    const { data: activities } = await db
       .from('quality_activities')
       .select('*')
       .eq('inspection_id', id)
@@ -196,7 +197,7 @@ const createInspection = async (req, res) => {
       notes
     };
 
-    const { data, error } = await supabase
+    const { data, error } = await db
       .from('quality_inspections')
       .insert([newInspection])
       .select()
@@ -206,7 +207,7 @@ const createInspection = async (req, res) => {
 
     // If an inspection plan was selected, pre-populate characteristics
     if (inspection_plan_id) {
-      const { data: planItems } = await supabase
+      const { data: planItems } = await db
         .from('inspection_plan_items')
         .select('*')
         .eq('plan_id', inspection_plan_id)
@@ -225,12 +226,12 @@ const createInspection = async (req, res) => {
           result: 'PENDING'
         }));
 
-        await supabase.from('inspection_results').insert(resultsToInsert);
+        await db.from('inspection_results').insert(resultsToInsert);
       }
     }
 
     // Log Activity
-    await supabase.from('quality_activities').insert([{
+    await db.from('quality_activities').insert([{
       inspection_id: data.id,
       actor_id: req.user?.id || null,
       actor_name: req.user?.email || 'System User',
@@ -261,7 +262,7 @@ const updateInspection = async (req, res) => {
     if (notes !== undefined) updatePayload.notes = notes;
     if (status !== undefined) updatePayload.status = status;
 
-    const { data, error } = await supabase
+    const { data, error } = await db
       .from('quality_inspections')
       .update(updatePayload)
       .eq('id', id)
@@ -283,7 +284,7 @@ const updateInspection = async (req, res) => {
             charResult = (val >= min && val <= max) ? 'PASS' : 'FAIL';
           }
 
-          await supabase.from('inspection_results').update({
+          await db.from('inspection_results').update({
             measured_value: resItem.measured_value,
             text_value: resItem.text_value,
             boolean_value: resItem.boolean_value,
@@ -307,7 +308,7 @@ const completeInspection = async (req, res) => {
     const { id } = req.params;
     const { quantity_accepted = 0, quantity_rejected = 0, notes } = req.body;
 
-    const { data: inspection, error: fetchErr } = await supabase
+    const { data: inspection, error: fetchErr } = await db
       .from('quality_inspections')
       .select('*')
       .eq('id', id)
@@ -329,7 +330,7 @@ const completeInspection = async (req, res) => {
     }
 
     // Evaluate characteristics results
-    const { data: results } = await supabase
+    const { data: results } = await db
       .from('inspection_results')
       .select('*')
       .eq('inspection_id', id);
@@ -354,7 +355,7 @@ const completeInspection = async (req, res) => {
       finalStatus = 'PARTIALLY_ACCEPTED';
     }
 
-    const { data: updated, error: updateErr } = await supabase
+    const { data: updated, error: updateErr } = await db
       .from('quality_inspections')
       .update({
         quantity_accepted: accepted,
@@ -372,7 +373,7 @@ const completeInspection = async (req, res) => {
     if (updateErr) throw updateErr;
 
     // Log timeline
-    await supabase.from('quality_activities').insert([{
+    await db.from('quality_activities').insert([{
       inspection_id: id,
       actor_id: req.user?.id || null,
       actor_name: req.user?.email || 'Quality Inspector',
@@ -394,7 +395,7 @@ const getInspectionPlans = async (req, res) => {
   try {
     const { search = '', productId, status } = req.query;
 
-    let query = supabase
+    let query = db
       .from('inspection_plans')
       .select(`
         *,
@@ -424,7 +425,7 @@ const getInspectionPlanById = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const { data: plan, error } = await supabase
+    const { data: plan, error } = await db
       .from('inspection_plans')
       .select(`
         *,
@@ -455,7 +456,7 @@ const createInspectionPlan = async (req, res) => {
 
     const plan_number = await generateSequenceNumber('inspection_plans', 'plan_number', 'IP');
 
-    const { data: plan, error } = await supabase
+    const { data: plan, error } = await db
       .from('inspection_plans')
       .insert([{
         plan_number,
@@ -485,7 +486,7 @@ const createInspectionPlan = async (req, res) => {
         required: item.required !== false
       }));
 
-      await supabase.from('inspection_plan_items').insert(itemsToInsert);
+      await db.from('inspection_plan_items').insert(itemsToInsert);
     }
 
     return res.status(201).json({ success: true, data: plan, message: 'Inspection plan created successfully' });
@@ -502,7 +503,7 @@ const getNCRs = async (req, res) => {
   try {
     const { search = '', status, severity, sourceType, productId, supplierId } = req.query;
 
-    let query = supabase
+    let query = db
       .from('non_conformance_reports')
       .select(`
         *,
@@ -538,7 +539,7 @@ const getNCRById = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const { data: ncr, error } = await supabase
+    const { data: ncr, error } = await db
       .from('non_conformance_reports')
       .select(`
         *,
@@ -557,7 +558,7 @@ const getNCRById = async (req, res) => {
     }
 
     // Fetch timeline activities
-    const { data: activities } = await supabase
+    const { data: activities } = await db
       .from('quality_activities')
       .select('*')
       .eq('ncr_id', id)
@@ -609,7 +610,7 @@ const createNCR = async (req, res) => {
       created_by: req.user?.id || null
     };
 
-    const { data, error } = await supabase
+    const { data, error } = await db
       .from('non_conformance_reports')
       .insert([newNCR])
       .select()
@@ -618,7 +619,7 @@ const createNCR = async (req, res) => {
     if (error) throw error;
 
     // Log Activity
-    await supabase.from('quality_activities').insert([{
+    await db.from('quality_activities').insert([{
       ncr_id: data.id,
       actor_id: req.user?.id || null,
       actor_name: req.user?.email || 'Quality Engineer',
@@ -651,7 +652,7 @@ const updateNCR = async (req, res) => {
     if (due_date !== undefined) updatePayload.due_date = due_date;
     if (severity !== undefined) updatePayload.severity = severity;
 
-    const { data, error } = await supabase
+    const { data, error } = await db
       .from('non_conformance_reports')
       .update(updatePayload)
       .eq('id', id)
@@ -672,7 +673,7 @@ const closeNCR = async (req, res) => {
     const { id } = req.params;
     const { root_cause, corrective_action, preventive_action } = req.body;
 
-    const { data: ncr, error: fetchErr } = await supabase
+    const { data: ncr, error: fetchErr } = await db
       .from('non_conformance_reports')
       .select('*')
       .eq('id', id)
@@ -692,7 +693,7 @@ const closeNCR = async (req, res) => {
       });
     }
 
-    const { data: updated, error: updateErr } = await supabase
+    const { data: updated, error: updateErr } = await db
       .from('non_conformance_reports')
       .update({
         status: 'CLOSED',
@@ -710,7 +711,7 @@ const closeNCR = async (req, res) => {
     if (updateErr) throw updateErr;
 
     // Log Activity
-    await supabase.from('quality_activities').insert([{
+    await db.from('quality_activities').insert([{
       ncr_id: id,
       actor_id: req.user?.id || null,
       actor_name: req.user?.email || 'Quality Manager',
@@ -732,7 +733,7 @@ const getQualityHolds = async (req, res) => {
   try {
     const { search = '', status } = req.query;
 
-    let query = supabase
+    let query = db
       .from('quality_holds')
       .select(`
         *,
@@ -783,7 +784,7 @@ const createQualityHold = async (req, res) => {
       notes
     };
 
-    const { data, error } = await supabase
+    const { data, error } = await db
       .from('quality_holds')
       .insert([newHold])
       .select()
@@ -793,7 +794,7 @@ const createQualityHold = async (req, res) => {
 
     // If linked to inspection, update inspection status
     if (inspection_id) {
-      await supabase
+      await db
         .from('quality_inspections')
         .update({ status: 'ON_HOLD', result: 'FAIL' })
         .eq('id', inspection_id);
@@ -811,7 +812,7 @@ const releaseQualityHold = async (req, res) => {
     const { id } = req.params;
     const { release_quantity, notes } = req.body;
 
-    const { data: hold, error: fetchErr } = await supabase
+    const { data: hold, error: fetchErr } = await db
       .from('quality_holds')
       .select('*')
       .eq('id', id)
@@ -830,7 +831,7 @@ const releaseQualityHold = async (req, res) => {
 
     const newStatus = newReleasedTotal === parseFloat(hold.quantity) ? 'RELEASED' : 'ON_HOLD';
 
-    const { data: updated, error: updateErr } = await supabase
+    const { data: updated, error: updateErr } = await db
       .from('quality_holds')
       .update({
         released_quantity: newReleasedTotal,
@@ -857,15 +858,15 @@ const releaseQualityHold = async (req, res) => {
  */
 const getQualityKPIs = async (req, res) => {
   try {
-    const { data: inspections } = await supabase
+    const { data: inspections } = await db
       .from('quality_inspections')
       .select('status, result');
 
-    const { data: holds } = await supabase
+    const { data: holds } = await db
       .from('quality_holds')
       .select('status');
 
-    const { data: ncrs } = await supabase
+    const { data: ncrs } = await db
       .from('non_conformance_reports')
       .select('status, severity, due_date');
 
@@ -878,10 +879,13 @@ const getQualityKPIs = async (req, res) => {
       ? ((passedInspections / totalInspections) * 100).toFixed(1)
       : '100.0';
 
-    const { data: capas } = await supabase
+    const { data: capas } = await db
       .from('capa_records')
       .select('status');
 
+    const activeHolds = holds?.filter(h => h.status === 'ON_HOLD')?.length || 0;
+    const openNCRs = ncrs?.filter(n => n.status !== 'CLOSED' && n.status !== 'CANCELLED')?.length || 0;
+    const overdueNCRs = ncrs?.filter(n => n.status !== 'CLOSED' && n.due_date && new Date(n.due_date) < new Date())?.length || 0;
     const openCAPAs = capas?.filter(c => c.status !== 'CLOSED' && c.status !== 'CANCELLED')?.length || 0;
 
     return res.json({
@@ -910,7 +914,7 @@ const getQualityKPIs = async (req, res) => {
 const getQualityDefects = async (req, res) => {
   try {
     const { category, search } = req.query;
-    let query = supabase.from('quality_defects').select('*');
+    let query = db.from('quality_defects').select('*');
     if (category) query = query.eq('category', category);
     if (search) query = query.or(`defect_code.ilike.%${search}%,name.ilike.%${search}%`);
     query = query.order('defect_code', { ascending: true });
@@ -980,7 +984,7 @@ const saveNCRRootCause = async (req, res) => {
     if (!root_cause) return res.status(400).json({ success: false, message: 'Root cause summary is required' });
 
     // Insert or update RCA table
-    const { data: existing } = await supabase.from('root_cause_analyses').select('id').eq('ncr_id', id).single();
+    const { data: existing } = await db.from('root_cause_analyses').select('id').eq('ncr_id', id).single();
     let rcaData;
 
     const payload = {
@@ -996,24 +1000,24 @@ const saveNCRRootCause = async (req, res) => {
     };
 
     if (existing) {
-      const { data, error } = await supabase.from('root_cause_analyses').update(payload).eq('id', existing.id).select().single();
+      const { data, error } = await db.from('root_cause_analyses').update(payload).eq('id', existing.id).select().single();
       if (error) throw error;
       rcaData = data;
     } else {
-      const { data, error } = await supabase.from('root_cause_analyses').insert([payload]).select().single();
+      const { data, error } = await db.from('root_cause_analyses').insert([payload]).select().single();
       if (error) throw error;
       rcaData = data;
     }
 
     // Update NCR status & root_cause column
-    await supabase.from('non_conformance_reports').update({
+    await db.from('non_conformance_reports').update({
       root_cause,
       status: 'ROOT_CAUSE',
       updated_at: new Date().toISOString()
     }).eq('id', id);
 
     // Audit log
-    await supabase.from('quality_activities').insert([{
+    await db.from('quality_activities').insert([{
       ncr_id: id,
       actor_id: req.user?.id || null,
       actor_name: req.user?.email || 'Quality Engineer',
@@ -1034,7 +1038,7 @@ const saveNCRRootCause = async (req, res) => {
 const getCAPAs = async (req, res) => {
   try {
     const { search = '', status, priority, sourceType } = req.query;
-    let query = supabase.from('capa_records').select(`
+    let query = db.from('capa_records').select(`
       *,
       non_conformance_reports (id, ncr_number, title),
       owner_profile:profiles!owner_id (id, full_name, email)
@@ -1059,7 +1063,7 @@ const getCAPAs = async (req, res) => {
 const getCAPAById = async (req, res) => {
   try {
     const { id } = req.params;
-    const { data: capa, error } = await supabase.from('capa_records').select(`
+    const { data: capa, error } = await db.from('capa_records').select(`
       *,
       non_conformance_reports (*),
       owner_profile:profiles!owner_id (id, full_name, email)
@@ -1068,7 +1072,7 @@ const getCAPAById = async (req, res) => {
     if (error || !capa) return res.status(404).json({ success: false, message: 'CAPA not found' });
 
     // Fetch CAPA actions
-    const { data: actions } = await supabase.from('capa_actions').select(`
+    const { data: actions } = await db.from('capa_actions').select(`
       *,
       owner_profile:profiles!owner_id (id, full_name, email)
     `).eq('capa_id', id).order('created_at', { ascending: true });
@@ -1085,7 +1089,7 @@ const createCAPA = async (req, res) => {
     if (!title || !description) return res.status(400).json({ success: false, message: 'Title and description are required' });
 
     const capa_number = await generateSequenceNumber('capa_records', 'capa_number', 'CAPA');
-    const { data: capa, error } = await supabase.from('capa_records').insert([{
+    const { data: capa, error } = await db.from('capa_records').insert([{
       capa_number,
       title,
       description,
@@ -1110,7 +1114,7 @@ const createCAPA = async (req, res) => {
         due_date: act.due_date || due_date || null,
         status: 'OPEN'
       }));
-      await supabase.from('capa_actions').insert(actionItems);
+      await db.from('capa_actions').insert(actionItems);
     }
 
     return res.status(201).json({ success: true, data: capa, message: 'CAPA record created' });
@@ -1125,7 +1129,7 @@ const updateCAPA = async (req, res) => {
     const { id } = req.params;
     const { title, description, priority, status, due_date, owner_id } = req.body;
 
-    const { data, error } = await supabase.from('capa_records').update({
+    const { data, error } = await db.from('capa_records').update({
       title, description, priority, status, due_date, owner_id, updated_at: new Date().toISOString()
     }).eq('id', id).select().single();
 
@@ -1142,7 +1146,7 @@ const addCAPAAction = async (req, res) => {
     const { action_type = 'CORRECTIVE', description, owner_id, due_date } = req.body;
     if (!description) return res.status(400).json({ success: false, message: 'Action description is required' });
 
-    const { data, error } = await supabase.from('capa_actions').insert([{
+    const { data, error } = await db.from('capa_actions').insert([{
       capa_id: id,
       action_type,
       description,
@@ -1169,7 +1173,7 @@ const updateCAPAAction = async (req, res) => {
     if (evidence_url) updatePayload.evidence_url = evidence_url;
     if (status === 'COMPLETED') updatePayload.completed_at = new Date().toISOString();
 
-    const { data, error } = await supabase.from('capa_actions').update(updatePayload).eq('id', actionId).select().single();
+    const { data, error } = await db.from('capa_actions').update(updatePayload).eq('id', actionId).select().single();
     if (error) throw error;
     return res.json({ success: true, data, message: 'CAPA Action updated' });
   } catch (error) {
@@ -1180,7 +1184,7 @@ const updateCAPAAction = async (req, res) => {
 const verifyCAPA = async (req, res) => {
   try {
     const { id } = req.params;
-    const { data, error } = await supabase.from('capa_records').update({
+    const { data, error } = await db.from('capa_records').update({
       status: 'VERIFIED',
       verified_by: req.user?.id || null,
       verified_at: new Date().toISOString(),
@@ -1197,7 +1201,7 @@ const verifyCAPA = async (req, res) => {
 const closeCAPA = async (req, res) => {
   try {
     const { id } = req.params;
-    const { data, error } = await supabase.from('capa_records').update({
+    const { data, error } = await db.from('capa_records').update({
       status: 'CLOSED',
       closed_by: req.user?.id || null,
       closed_at: new Date().toISOString(),
@@ -1218,13 +1222,13 @@ const scrapQualityHold = async (req, res) => {
   try {
     const { id } = req.params;
     const { scrap_quantity, notes } = req.body;
-    const { data: hold, error: fetchErr } = await supabase.from('quality_holds').select('*').eq('id', id).single();
+    const { data: hold, error: fetchErr } = await db.from('quality_holds').select('*').eq('id', id).single();
     if (fetchErr || !hold) return res.status(404).json({ success: false, message: 'Hold record not found' });
 
     const qtyToScrap = parseFloat(scrap_quantity || hold.quantity);
     const newScrappedTotal = (parseFloat(hold.scrapped_quantity) || 0) + qtyToScrap;
 
-    const { data: updated, error } = await supabase.from('quality_holds').update({
+    const { data: updated, error } = await db.from('quality_holds').update({
       scrapped_quantity: newScrappedTotal,
       status: 'REJECTED',
       notes: notes || hold.notes,
@@ -1243,9 +1247,9 @@ const scrapQualityHold = async (req, res) => {
  */
 const getSupplierQualityPerformance = async (req, res) => {
   try {
-    const { data: suppliers } = await supabase.from('suppliers').select('id, company_name, supplier_code');
-    const { data: inspections } = await supabase.from('quality_inspections').select('supplier_id, result, status, quantity_inspected, quantity_rejected').not('supplier_id', 'is', null);
-    const { data: ncrs } = await supabase.from('non_conformance_reports').select('supplier_id').not('supplier_id', 'is', null);
+    const { data: suppliers } = await db.from('suppliers').select('id, company_name, supplier_code');
+    const { data: inspections } = await db.from('quality_inspections').select('supplier_id, result, status, quantity_inspected, quantity_rejected').not('supplier_id', 'is', null);
+    const { data: ncrs } = await db.from('non_conformance_reports').select('supplier_id').not('supplier_id', 'is', null);
 
     const performanceMap = {};
 
@@ -1305,7 +1309,7 @@ const getSupplierQualityPerformance = async (req, res) => {
 const getCustomerComplaints = async (req, res) => {
   try {
     const { search = '', status, severity, customerId } = req.query;
-    let query = supabase.from('customer_complaints').select(`
+    let query = db.from('customer_complaints').select(`
       *,
       customers (id, company_name),
       products (id, product_code, name),
@@ -1331,7 +1335,7 @@ const getCustomerComplaints = async (req, res) => {
 const getCustomerComplaintById = async (req, res) => {
   try {
     const { id } = req.params;
-    const { data, error } = await supabase.from('customer_complaints').select(`
+    const { data, error } = await db.from('customer_complaints').select(`
       *,
       customers (*),
       products (*),
@@ -1353,7 +1357,7 @@ const createCustomerComplaint = async (req, res) => {
     if (!description) return res.status(400).json({ success: false, message: 'Complaint description is required' });
 
     const complaint_number = await generateSequenceNumber('customer_complaints', 'complaint_number', 'CMP');
-    const { data, error } = await supabase.from('customer_complaints').insert([{
+    const { data, error } = await db.from('customer_complaints').insert([{
       complaint_number,
       customer_id: customer_id || null,
       product_id: product_id || null,
@@ -1377,7 +1381,7 @@ const updateCustomerComplaint = async (req, res) => {
   try {
     const { id } = req.params;
     const { status, ncr_id, capa_id, resolution_notes, assigned_to } = req.body;
-    const { data, error } = await supabase.from('customer_complaints').update({
+    const { data, error } = await db.from('customer_complaints').update({
       status, ncr_id, capa_id, resolution_notes, assigned_to, updated_at: new Date().toISOString()
     }).eq('id', id).select().single();
 
@@ -1393,8 +1397,8 @@ const updateCustomerComplaint = async (req, res) => {
  */
 const getQualityReportSummary = async (req, res) => {
   try {
-    const { data: inspections } = await supabase.from('quality_inspections').select('inspection_type, result, created_at');
-    const { data: ncrs } = await supabase.from('non_conformance_reports').select('source_type, severity, status');
+    const { data: inspections } = await db.from('quality_inspections').select('inspection_type, result, created_at');
+    const { data: ncrs } = await db.from('non_conformance_reports').select('source_type, severity, status');
 
     // Aggregate monthly pass rate
     const monthlyStats = {};
@@ -1420,7 +1424,7 @@ const getQualityReportSummary = async (req, res) => {
 
 const getDefectsParetoReport = async (req, res) => {
   try {
-    const { data: defects } = await supabase.from('quality_defects').select('category, name');
+    const { data: defects } = await db.from('quality_defects').select('category, name');
     const categories = ['DIMENSIONAL', 'SURFACE_FINISH', 'MATERIAL_DEFECT', 'ASSEMBLY', 'ELECTRICAL', 'PACKAGING', 'OTHER'];
     const pareto = categories.map((cat, idx) => ({
       category: cat,
@@ -1447,7 +1451,7 @@ const getDefectsParetoReport = async (req, res) => {
 
 const getSPCReport = async (req, res) => {
   try {
-    const { data: results } = await supabase.from('inspection_results').select('target_value, min_value, max_value, measured_value, created_at').not('measured_value', 'is', null).limit(50);
+    const { data: results } = await db.from('inspection_results').select('target_value, min_value, max_value, measured_value, created_at').not('measured_value', 'is', null).limit(50);
     return res.json({ success: true, data: results || [] });
   } catch (error) {
     return res.status(500).json({ success: false, message: 'Failed to generate SPC report', error: error.message });

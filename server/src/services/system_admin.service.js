@@ -51,7 +51,7 @@ class SystemAdminService {
       legal_name: 'Kolmeks Oy Ltd',
       company_code: 'KOLMEKS-HQ',
       country: 'Finland',
-      default_currency: 'EUR',
+      default_currency: 'INR',
       default_timezone: 'Europe/Helsinki'
     };
 
@@ -108,7 +108,7 @@ class SystemAdminService {
         website: 'https://www.kolmeks.com',
         logo_url: '/images/kolmeks-logo.png',
         default_timezone: 'Europe/Helsinki',
-        default_currency: 'EUR',
+        default_currency: 'INR',
         date_format: 'YYYY-MM-DD',
         number_format: '1,234.56',
         quantity_precision: 2,
@@ -168,8 +168,8 @@ class SystemAdminService {
     const { data, error } = await this.client().from('locations').select('*').order('code');
     if (error || !data || data.length === 0) {
       return [
-        { id: 'loc-1', code: 'LOC-FIN-01', name: 'Turenki Headquarters & Plant', address: 'Taimistotie 1', city: 'Turenki', country: 'Finland', timezone: 'Europe/Helsinki', currency: 'EUR', contact_email: 'turenki@kolmeks.com', status: 'Active' },
-        { id: 'loc-2', code: 'LOC-EST-01', name: 'Viljandi Operations Plant', address: 'Vabaduse 12', city: 'Viljandi', country: 'Estonia', timezone: 'Europe/Tallinn', currency: 'EUR', contact_email: 'estonia@kolmeks.com', status: 'Active' },
+        { id: 'loc-1', code: 'LOC-FIN-01', name: 'Turenki Headquarters & Plant', address: 'Taimistotie 1', city: 'Turenki', country: 'Finland', timezone: 'Europe/Helsinki', currency: 'INR', contact_email: 'turenki@kolmeks.com', status: 'Active' },
+        { id: 'loc-2', code: 'LOC-EST-01', name: 'Viljandi Operations Plant', address: 'Vabaduse 12', city: 'Viljandi', country: 'Estonia', timezone: 'Europe/Tallinn', currency: 'INR', contact_email: 'estonia@kolmeks.com', status: 'Active' },
         { id: 'loc-3', code: 'LOC-CHN-01', name: 'Suzhou Manufacturing Hub', address: 'Industrial Park 88', city: 'Suzhou', country: 'China', timezone: 'Asia/Shanghai', currency: 'CNY', contact_email: 'china@kolmeks.com', status: 'Active' },
         { id: 'loc-4', code: 'LOC-IND-01', name: 'Pune Precision Tech Center', address: 'Chakan MIDC Phase 2', city: 'Pune', country: 'India', timezone: 'Asia/Kolkata', currency: 'INR', contact_email: 'india@kolmeks.com', status: 'Active' }
       ];
@@ -477,8 +477,8 @@ class SystemAdminService {
     const { data, error } = await this.client().from('currencies').select('*').order('code');
     if (error || !data || data.length === 0) {
       return [
-        { id: 'cur-1', code: 'EUR', name: 'Euro', symbol: '₹', decimal_precision: 2, is_default: true, exchange_rate_to_default: 1.0, status: 'Active' },
-        { id: 'cur-2', code: 'USD', name: 'US Dollar', symbol: '$', decimal_precision: 2, is_default: false, exchange_rate_to_default: 1.085, status: 'Active' },
+        { id: 'cur-1', code: 'INR', name: 'Euro', symbol: '₹', decimal_precision: 2, is_default: true, exchange_rate_to_default: 1.0, status: 'Active' },
+        { id: 'cur-2', code: 'INR', name: 'US Dollar', symbol: '$', decimal_precision: 2, is_default: false, exchange_rate_to_default: 1.085, status: 'Active' },
         { id: 'cur-3', code: 'GBP', name: 'British Pound', symbol: '£', decimal_precision: 2, is_default: false, exchange_rate_to_default: 0.854, status: 'Active' },
         { id: 'cur-4', code: 'INR', name: 'Indian Rupee', symbol: '₹', decimal_precision: 2, is_default: false, exchange_rate_to_default: 90.15, status: 'Active' },
         { id: 'cur-5', code: 'CNY', name: 'Chinese Yuan', symbol: '¥', decimal_precision: 2, is_default: false, exchange_rate_to_default: 7.82, status: 'Active' }

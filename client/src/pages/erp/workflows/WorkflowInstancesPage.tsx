@@ -18,9 +18,10 @@ export const WorkflowInstancesPage: React.FC = () => {
         status: statusFilter || undefined,
         search: search || undefined,
       });
-      setInstances(res.data);
+      setInstances(Array.isArray(res?.data) ? res.data : Array.isArray(res) ? res : []);
     } catch (err) {
       console.error('Failed to load workflow instances:', err);
+      setInstances([]);
     } finally {
       setLoading(false);
     }

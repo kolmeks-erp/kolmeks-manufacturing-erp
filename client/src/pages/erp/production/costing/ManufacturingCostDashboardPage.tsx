@@ -8,7 +8,7 @@ import {
   TrendingUp,
   Settings,
   FileText,
-  DollarSign,
+  IndianRupee,
   Layers,
   ArrowRight,
   RefreshCw,
@@ -103,21 +103,21 @@ export const ManufacturingCostDashboardPage: React.FC = () => {
   return (
     <div className="p-6 space-y-6 max-w-7xl mx-auto">
       {/* Page Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white dark:bg-[#0F2647] border border-slate-200 dark:border-slate-800 p-6 rounded-2xl shadow-sm">
         <div className="flex items-center gap-4">
-          <div className="p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-xl text-emerald-400">
+          <div className="p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-xl text-emerald-600 dark:text-emerald-400">
             <Coins className="w-8 h-8" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-white">Manufacturing Costing & WIP Accounting</h1>
-            <p className="text-slate-400 text-sm">
+            <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Manufacturing Costing & WIP Accounting</h1>
+            <p className="text-slate-500 dark:text-slate-400 text-sm">
               Real-time absorption costing, WIP tracking, labor foundation, overhead allocation & GL journal integration
             </p>
           </div>
         </div>
         <button
           onClick={fetchMetrics}
-          className="flex items-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-medium rounded-xl border border-slate-700 transition"
+          className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-sm font-medium rounded-xl border border-slate-200 dark:border-slate-700 transition"
         >
           <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
           Refresh Metrics
@@ -127,96 +127,96 @@ export const ManufacturingCostDashboardPage: React.FC = () => {
       {/* KPI Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Open WIP Value */}
-        <div className="bg-slate-900 border border-slate-800 p-5 rounded-2xl">
-          <div className="flex items-center justify-between text-slate-400 mb-2">
+        <div className="bg-white dark:bg-[#0F2647] border border-slate-200 dark:border-slate-800 p-5 rounded-2xl shadow-sm">
+          <div className="flex items-center justify-between text-slate-500 dark:text-slate-400 mb-2">
             <span className="text-sm font-medium">Open WIP Value</span>
-            <Activity className="w-5 h-5 text-amber-400" />
+            <Activity className="w-5 h-5 text-amber-500 dark:text-amber-400" />
           </div>
-          <div className="text-2xl font-bold text-white mb-1">
+          <div className="text-2xl font-bold text-slate-900 dark:text-white mb-1">
             {loading ? '...' : formatCurrency(metrics?.total_wip_value || 0)}
           </div>
-          <div className="text-xs text-amber-400 font-medium">
+          <div className="text-xs text-amber-600 dark:text-amber-400 font-medium">
             {metrics?.open_wip_orders || 0} Open Orders In Progress
           </div>
         </div>
 
         {/* Completed Production Cost */}
-        <div className="bg-slate-900 border border-slate-800 p-5 rounded-2xl">
-          <div className="flex items-center justify-between text-slate-400 mb-2">
+        <div className="bg-white dark:bg-[#0F2647] border border-slate-200 dark:border-slate-800 p-5 rounded-2xl shadow-sm">
+          <div className="flex items-center justify-between text-slate-500 dark:text-slate-400 mb-2">
             <span className="text-sm font-medium">Completed Cost</span>
-            <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+            <CheckCircle2 className="w-5 h-5 text-emerald-500 dark:text-emerald-400" />
           </div>
-          <div className="text-2xl font-bold text-white mb-1">
+          <div className="text-2xl font-bold text-slate-900 dark:text-white mb-1">
             {loading ? '...' : formatCurrency(metrics?.completed_production_cost || 0)}
           </div>
-          <div className="text-xs text-emerald-400 font-medium">
+          <div className="text-xs text-emerald-600 dark:text-emerald-400 font-medium">
             {metrics?.completed_orders_count || 0} Posted / Closed Orders
           </div>
         </div>
 
         {/* Average Unit Cost */}
-        <div className="bg-slate-900 border border-slate-800 p-5 rounded-2xl">
-          <div className="flex items-center justify-between text-slate-400 mb-2">
+        <div className="bg-white dark:bg-[#0F2647] border border-slate-200 dark:border-slate-800 p-5 rounded-2xl shadow-sm">
+          <div className="flex items-center justify-between text-slate-500 dark:text-slate-400 mb-2">
             <span className="text-sm font-medium">Average Unit Cost</span>
-            <DollarSign className="w-5 h-5 text-blue-400" />
+            <IndianRupee className="w-5 h-5 text-blue-500 dark:text-blue-400" />
           </div>
-          <div className="text-2xl font-bold text-white mb-1">
+          <div className="text-2xl font-bold text-slate-900 dark:text-white mb-1">
             {loading ? '...' : formatCurrency(metrics?.average_unit_cost || 0)}
           </div>
-          <div className="text-xs text-slate-400 font-medium">Per Finished Goods Unit</div>
+          <div className="text-xs text-slate-500 dark:text-slate-400 font-medium">Per Finished Goods Unit</div>
         </div>
 
         {/* Total Cost Variance */}
-        <div className="bg-slate-900 border border-slate-800 p-5 rounded-2xl">
-          <div className="flex items-center justify-between text-slate-400 mb-2">
+        <div className="bg-white dark:bg-[#0F2647] border border-slate-200 dark:border-slate-800 p-5 rounded-2xl shadow-sm">
+          <div className="flex items-center justify-between text-slate-500 dark:text-slate-400 mb-2">
             <span className="text-sm font-medium">Production Variance</span>
-            <TrendingUp className="w-5 h-5 text-purple-400" />
+            <TrendingUp className="w-5 h-5 text-purple-500 dark:text-purple-400" />
           </div>
-          <div className={`text-2xl font-bold mb-1 ${(metrics?.breakdown?.total_variance || 0) >= 0 ? 'text-rose-400' : 'text-emerald-400'}`}>
+          <div className={`text-2xl font-bold mb-1 ${(metrics?.breakdown?.total_variance || 0) >= 0 ? 'text-rose-600 dark:text-rose-400' : 'text-emerald-600 dark:text-emerald-400'}`}>
             {loading ? '...' : formatCurrency(metrics?.breakdown?.total_variance || 0)}
           </div>
-          <div className="text-xs text-slate-400 font-medium">Actual vs Planned Baseline</div>
+          <div className="text-xs text-slate-500 dark:text-slate-400 font-medium">Actual vs Planned Baseline</div>
         </div>
       </div>
 
       {/* Cost Distribution & Quick Nav Cards */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Cost Element Breakdown */}
-        <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl lg:col-span-1">
-          <h3 className="text-lg font-semibold text-white mb-4">Cost Absorption Distribution</h3>
+        <div className="bg-white dark:bg-[#0F2647] border border-slate-200 dark:border-slate-800 p-6 rounded-2xl lg:col-span-1 shadow-sm">
+          <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">Cost Absorption Distribution</h3>
           <div className="space-y-4">
             <div>
               <div className="flex justify-between text-sm mb-1">
-                <span className="text-slate-400">Direct Material Cost</span>
-                <span className="text-white font-medium">
+                <span className="text-slate-500 dark:text-slate-400">Direct Material Cost</span>
+                <span className="text-slate-900 dark:text-white font-medium">
                   {formatCurrency(metrics?.breakdown?.material_cost || 0)}
                 </span>
               </div>
-              <div className="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+              <div className="w-full bg-slate-100 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
                 <div className="bg-blue-500 h-full rounded-full" style={{ width: '60%' }} />
               </div>
             </div>
 
             <div>
               <div className="flex justify-between text-sm mb-1">
-                <span className="text-slate-400">Direct Labor Cost</span>
-                <span className="text-white font-medium">
+                <span className="text-slate-500 dark:text-slate-400">Direct Labor Cost</span>
+                <span className="text-slate-900 dark:text-white font-medium">
                   {formatCurrency(metrics?.breakdown?.labor_cost || 0)}
                 </span>
               </div>
-              <div className="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+              <div className="w-full bg-slate-100 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
                 <div className="bg-emerald-500 h-full rounded-full" style={{ width: '25%' }} />
               </div>
             </div>
 
             <div>
               <div className="flex justify-between text-sm mb-1">
-                <span className="text-slate-400">Manufacturing Overhead</span>
-                <span className="text-white font-medium">
+                <span className="text-slate-500 dark:text-slate-400">Manufacturing Overhead</span>
+                <span className="text-slate-900 dark:text-white font-medium">
                   {formatCurrency(metrics?.breakdown?.overhead_cost || 0)}
                 </span>
               </div>
-              <div className="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+              <div className="w-full bg-slate-100 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
                 <div className="bg-purple-500 h-full rounded-full" style={{ width: '15%' }} />
               </div>
             </div>
@@ -224,8 +224,8 @@ export const ManufacturingCostDashboardPage: React.FC = () => {
         </div>
 
         {/* Navigation Quick Links */}
-        <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl lg:col-span-2 space-y-4">
-          <h3 className="text-lg font-semibold text-white mb-2">Cost Management Modules</h3>
+        <div className="bg-white dark:bg-[#0F2647] border border-slate-200 dark:border-slate-800 p-6 rounded-2xl lg:col-span-2 space-y-4 shadow-sm">
+          <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">Cost Management Modules</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {navCards.map((card, idx) => {
               const Icon = card.icon;
@@ -233,19 +233,19 @@ export const ManufacturingCostDashboardPage: React.FC = () => {
                 <div
                   key={idx}
                   onClick={() => navigate(card.path)}
-                  className="p-4 bg-slate-950/60 border border-slate-800 hover:border-slate-700 rounded-xl cursor-pointer transition flex items-start gap-4 group"
+                  className="p-4 bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 hover:border-blue-500 dark:hover:border-slate-700 rounded-xl cursor-pointer transition flex items-start gap-4 group"
                 >
                   <div className={`p-3 rounded-lg border ${card.color}`}>
                     <Icon className="w-6 h-6" />
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center justify-between">
-                      <h4 className="text-white font-medium group-hover:text-emerald-400 transition">
+                      <h4 className="text-slate-900 dark:text-white font-medium group-hover:text-blue-600 dark:group-hover:text-emerald-400 transition">
                         {card.title}
                       </h4>
-                      <ArrowRight className="w-4 h-4 text-slate-500 group-hover:text-emerald-400 transition" />
+                      <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600 dark:group-hover:text-emerald-400 transition" />
                     </div>
-                    <p className="text-slate-400 text-xs mt-1">{card.desc}</p>
+                    <p className="text-slate-500 dark:text-slate-400 text-xs mt-1">{card.desc}</p>
                   </div>
                 </div>
               );

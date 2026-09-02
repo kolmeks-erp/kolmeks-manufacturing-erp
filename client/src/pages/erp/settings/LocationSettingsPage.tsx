@@ -35,7 +35,7 @@ export const LocationSettingsPage: React.FC = () => {
         name: '',
         country: 'Finland',
         timezone: 'Europe/Helsinki',
-        currency: 'EUR',
+        currency: 'INR',
         status: 'Active'
       }
     );
@@ -119,7 +119,7 @@ export const LocationSettingsPage: React.FC = () => {
                   </td>
                   <td className="py-3 px-4 text-gray-700 dark:text-gray-300">{item.country}</td>
                   <td className="py-3 px-4 text-gray-500 dark:text-gray-400 text-xs">{item.timezone || 'Europe/Helsinki'}</td>
-                  <td className="py-3 px-4 font-medium text-gray-800 dark:text-gray-200">{item.currency || 'EUR'}</td>
+                  <td className="py-3 px-4 font-medium text-gray-800 dark:text-gray-200">{item.currency || 'INR'}</td>
                   <td className="py-3 px-4">
                     <span
                       className={`px-2.5 py-0.5 text-xs font-semibold rounded-full ${
@@ -231,7 +231,7 @@ export const LocationSettingsPage: React.FC = () => {
                   <label className="block font-semibold text-gray-700 dark:text-gray-300 mb-1">Currency</label>
                   <input
                     type="text"
-                    value={editingItem.currency || 'EUR'}
+                    value={editingItem.currency || 'INR'}
                     onChange={(e) => setEditingItem({ ...editingItem, currency: e.target.value })}
                     className="w-full px-3 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white"
                   />
