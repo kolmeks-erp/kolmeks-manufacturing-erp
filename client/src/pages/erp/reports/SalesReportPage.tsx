@@ -48,13 +48,13 @@ export const SalesReportPage: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Page Title */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-slate-800/80 backdrop-blur-sm p-6 rounded-2xl border border-slate-700/60 shadow-lg">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
         <div>
-          <h1 className="text-2xl font-bold text-white flex items-center space-x-3">
-            <ShoppingCart className="w-7 h-7 text-emerald-400" />
+          <h1 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center space-x-3">
+            <ShoppingCart className="w-7 h-7 text-emerald-600 dark:text-emerald-400" />
             <span>Sales & Commercial Performance Analytics</span>
           </h1>
-          <p className="text-slate-400 text-sm mt-1">
+          <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">
             Revenue trends, customer purchasing power, order volume distribution, and fulfillment stats.
           </p>
         </div>
@@ -129,16 +129,16 @@ export const SalesReportPage: React.FC = () => {
       </div>
 
       {/* Orders Table */}
-      <div className="bg-slate-800/80 backdrop-blur-sm border border-slate-700/60 rounded-2xl shadow-lg overflow-hidden">
-        <div className="p-5 border-b border-slate-700/60 flex items-center justify-between">
-          <h2 className="text-base font-bold text-white flex items-center space-x-2">
-            <Users className="w-5 h-5 text-indigo-400" />
+      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm overflow-hidden">
+        <div className="p-5 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+          <h2 className="text-base font-bold text-slate-900 dark:text-white flex items-center space-x-2">
+            <Users className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
             <span>Recent Sales Orders & Fulfillment Status</span>
           </h2>
         </div>
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm text-slate-300">
-            <thead className="bg-slate-900/80 text-xs uppercase font-semibold text-slate-400 border-b border-slate-700">
+          <table className="w-full text-left text-sm text-slate-700 dark:text-slate-300">
+            <thead className="bg-slate-50 dark:bg-slate-950 text-xs uppercase font-semibold text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-800">
               <tr>
                 <th className="px-6 py-4">Order Code</th>
                 <th className="px-6 py-4">Customer</th>
@@ -147,7 +147,7 @@ export const SalesReportPage: React.FC = () => {
                 <th className="px-6 py-4">Status</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-700/60">
+            <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
               {loading ? (
                 <tr>
                   <td colSpan={5} className="text-center py-10 text-slate-400">Loading sales records...</td>
@@ -158,13 +158,13 @@ export const SalesReportPage: React.FC = () => {
                 </tr>
               ) : (
                 reportData.ordersTable.map((o: any) => (
-                  <tr key={o.id} className="hover:bg-slate-700/30 transition">
-                    <td className="px-6 py-4 font-mono font-bold text-blue-400">{o.order_number || o.id.slice(0, 8)}</td>
-                    <td className="px-6 py-4 font-semibold text-white">{o.customer?.name || 'Standard Client'}</td>
-                    <td className="px-6 py-4 text-slate-300">{new Date(o.created_at).toLocaleDateString()}</td>
-                    <td className="px-6 py-4 font-bold text-emerald-400">₹{Number(o.total_amount || 0).toFixed(2)}</td>
+                  <tr key={o.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition">
+                    <td className="px-6 py-4 font-mono font-bold text-blue-600 dark:text-blue-400">{o.order_number || o.id.slice(0, 8)}</td>
+                    <td className="px-6 py-4 font-semibold text-slate-900 dark:text-white">{o.customer?.name || 'Standard Client'}</td>
+                    <td className="px-6 py-4 text-slate-600 dark:text-slate-300">{new Date(o.created_at).toLocaleDateString()}</td>
+                    <td className="px-6 py-4 font-bold text-emerald-600 dark:text-emerald-400">₹{Number(o.total_amount || 0).toFixed(2)}</td>
                     <td className="px-6 py-4">
-                      <span className="px-2.5 py-1 bg-blue-500/10 text-blue-400 border border-blue-500/20 rounded-full text-xs font-semibold uppercase">
+                      <span className="px-2.5 py-1 bg-blue-50 text-blue-600 border border-blue-200 dark:bg-blue-500/10 dark:text-blue-400 dark:border-blue-500/20 rounded-full text-xs font-semibold uppercase">
                         {o.status}
                       </span>
                     </td>

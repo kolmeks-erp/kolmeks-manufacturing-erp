@@ -71,13 +71,13 @@ export const ReportsExecutiveDashboardPage: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-slate-800/80 backdrop-blur-sm p-6 rounded-2xl border border-slate-700/60 shadow-lg">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
         <div>
-          <h1 className="text-2xl font-bold text-white flex items-center space-x-3">
-            <BarChart3 className="w-7 h-7 text-blue-400" />
+          <h1 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center space-x-3">
+            <BarChart3 className="w-7 h-7 text-blue-600 dark:text-blue-400" />
             <span>Executive ERP Performance Dashboard</span>
           </h1>
-          <p className="text-slate-400 text-sm mt-1">
+          <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">
             Real-time cross-functional metrics across sales, procurement, inventory, manufacturing, quality, and finances.
           </p>
         </div>

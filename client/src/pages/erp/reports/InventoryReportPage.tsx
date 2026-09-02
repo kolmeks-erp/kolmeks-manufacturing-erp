@@ -45,13 +45,13 @@ export const InventoryReportPage: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-slate-800/80 backdrop-blur-sm p-6 rounded-2xl border border-slate-700/60 shadow-lg">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
         <div>
-          <h1 className="text-2xl font-bold text-white flex items-center space-x-3">
-            <Boxes className="w-7 h-7 text-purple-400" />
+          <h1 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center space-x-3">
+            <Boxes className="w-7 h-7 text-purple-600 dark:text-purple-400" />
             <span>Inventory Valuation & Stock Analytics</span>
           </h1>
-          <p className="text-slate-400 text-sm mt-1">
+          <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">
             Warehouse stock levels, inventory asset valuation, low stock warnings, and reorder levels.
           </p>
         </div>
@@ -98,13 +98,13 @@ export const InventoryReportPage: React.FC = () => {
         />
       </div>
 
-      <div className="bg-slate-800/80 backdrop-blur-sm border border-slate-700/60 rounded-2xl shadow-lg overflow-hidden">
-        <div className="p-5 border-b border-slate-700/60 flex items-center justify-between">
-          <h2 className="text-base font-bold text-white">Stock Items Valuation Catalog</h2>
+      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm overflow-hidden">
+        <div className="p-5 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+          <h2 className="text-base font-bold text-slate-900 dark:text-white">Stock Items Valuation Catalog</h2>
         </div>
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm text-slate-300">
-            <thead className="bg-slate-900/80 text-xs uppercase font-semibold text-slate-400 border-b border-slate-700">
+          <table className="w-full text-left text-sm text-slate-700 dark:text-slate-300">
+            <thead className="bg-slate-50 dark:bg-slate-950 text-xs uppercase font-semibold text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-800">
               <tr>
                 <th className="px-6 py-4">SKU / Code</th>
                 <th className="px-6 py-4">Product Name</th>
@@ -114,7 +114,7 @@ export const InventoryReportPage: React.FC = () => {
                 <th className="px-6 py-4">Total Valuation</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-700/60">
+            <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
               {loading ? (
                 <tr><td colSpan={6} className="text-center py-10 text-slate-400">Loading stock items...</td></tr>
               ) : !reportData?.productsTable || reportData.productsTable.length === 0 ? (
@@ -123,13 +123,13 @@ export const InventoryReportPage: React.FC = () => {
                 reportData.productsTable.map((p: any) => {
                   const valuation = Number(p.stock_quantity || 0) * Number(p.unit_cost || p.unit_price || 0);
                   return (
-                    <tr key={p.id} className="hover:bg-slate-700/30 transition">
-                      <td className="px-6 py-4 font-mono font-bold text-purple-400">{p.sku || p.code || p.id.slice(0, 8)}</td>
-                      <td className="px-6 py-4 font-semibold text-white">{p.name}</td>
-                      <td className="px-6 py-4 text-slate-300">{p.category || 'General'}</td>
-                      <td className="px-6 py-4 font-medium text-slate-200">{p.stock_quantity || 0}</td>
-                      <td className="px-6 py-4 text-slate-300">₹{Number(p.unit_cost || p.unit_price || 0).toFixed(2)}</td>
-                      <td className="px-6 py-4 font-bold text-emerald-400">₹{valuation.toFixed(2)}</td>
+                    <tr key={p.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition">
+                      <td className="px-6 py-4 font-mono font-bold text-purple-600 dark:text-purple-400">{p.sku || p.code || p.id.slice(0, 8)}</td>
+                      <td className="px-6 py-4 font-semibold text-slate-900 dark:text-white">{p.name}</td>
+                      <td className="px-6 py-4 text-slate-600 dark:text-slate-300">{p.category || 'General'}</td>
+                      <td className="px-6 py-4 font-medium text-slate-900 dark:text-slate-200">{p.stock_quantity || 0}</td>
+                      <td className="px-6 py-4 text-slate-600 dark:text-slate-300">₹{Number(p.unit_cost || p.unit_price || 0).toFixed(2)}</td>
+                      <td className="px-6 py-4 font-bold text-emerald-600 dark:text-emerald-400">₹{valuation.toFixed(2)}</td>
                     </tr>
                   );
                 })
