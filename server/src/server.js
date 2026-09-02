@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
+const compression = require('compression');
 const dotenv = require('dotenv');
 
 dotenv.config();
@@ -53,6 +54,7 @@ const PORT = process.env.PORT || 5000;
 
 // Security & Logging Middlewares
 app.use(helmet());
+app.use(compression());
 app.use(morgan(process.env.NODE_ENV === 'development' ? 'dev' : 'combined'));
 
 // CORS Configuration

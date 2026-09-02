@@ -15,4 +15,15 @@ export default defineConfig({
     strictPort: true,
     host: true,
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vendor-icons': ['lucide-react'],
+          'vendor-supabase': ['@supabase/supabase-js'],
+          'vendor-charts': ['recharts'],
+        },
+      },
+    },
+  },
 });
