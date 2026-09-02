@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { ShieldCheck, Lock, Mail, AlertCircle, KeyRound } from 'lucide-react';
+import { ShieldCheck, Lock, Mail, AlertCircle, KeyRound, Eye, EyeOff } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { ERP_BASE_PATH } from '../../constants/navigation';
 import { KolmeksLogo } from '../../components/ui/KolmeksLogo';
@@ -18,6 +18,7 @@ export const ERPLoginPage: React.FC = () => {
 
   const [authError, setAuthError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showForgotModal, setShowForgotModal] = useState<boolean>(false);
   const [resetEmail, setResetEmail] = useState<string>('');
   const [resetMessage, setResetMessage] = useState<string | null>(null);
@@ -143,10 +144,10 @@ export const ERPLoginPage: React.FC = () => {
                   <Lock className="h-4 w-4" />
                 </div>
                 <input
-                  type="password"
+                  type={showPassword ? 'text' : 'password'}
                   disabled={isSubmitting}
                   placeholder="••••••••••••"
-                  className={`block w-full pl-10 pr-3 py-2.5 bg-[#0B1E36] border text-white text-sm rounded focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-colors ${
+                  className={`block w-full pl-10 pr-10 py-2.5 bg-[#0B1E36] border text-white text-sm rounded focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-colors ${
                     errors.password ? 'border-red-500' : 'border-slate-600 focus:border-emerald-500'
                   }`}
                   {...register('password', {
@@ -157,6 +158,15 @@ export const ERPLoginPage: React.FC = () => {
                     },
                   })}
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  tabIndex={-1}
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-200 transition-colors focus:outline-none"
+                  aria-label={showPassword ? 'Hide password' : 'Show password'}
+                >
+                  {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                </button>
               </div>
               {errors.password && <p className="mt-1 text-xs text-red-400 font-medium">{errors.password.message}</p>}
             </div>
