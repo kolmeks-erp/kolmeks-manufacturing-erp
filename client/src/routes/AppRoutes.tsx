@@ -52,9 +52,28 @@ import { SalesOrderListPage } from '../pages/erp/sales-orders/SalesOrderListPage
 import { SalesOrderFormPage } from '../pages/erp/sales-orders/SalesOrderFormPage';
 import { SalesOrderDetailPage } from '../pages/erp/sales-orders/SalesOrderDetailPage';
 
+import { SalesDashboardPage } from '../pages/erp/sales/SalesDashboardPage';
+import { AdvancedQuotationListPage } from '../pages/erp/sales/AdvancedQuotationListPage';
+import { AdvancedQuotationDetailPage } from '../pages/erp/sales/AdvancedQuotationDetailPage';
+import { OrderFulfillmentPage } from '../pages/erp/sales/OrderFulfillmentPage';
+import { PickingListPage } from '../pages/erp/sales/PickingListPage';
+import { PackingListPage } from '../pages/erp/sales/PackingListPage';
+import { DeliveryListPage } from '../pages/erp/sales/DeliveryListPage';
+import { DeliveryDetailPage } from '../pages/erp/sales/DeliveryDetailPage';
+import { SalesReturnListPage } from '../pages/erp/sales/SalesReturnListPage';
+import { CreditNotesListPage } from '../pages/erp/sales/CreditNotesListPage';
+import { PricingManagementPage } from '../pages/erp/sales/PricingManagementPage';
+import { SalesReportsPage } from '../pages/erp/sales/SalesReportsPage';
+
 import { PurchaseRequisitionListPage } from '../pages/erp/procurement/PurchaseRequisitionListPage';
 import { PurchaseRequisitionFormPage } from '../pages/erp/procurement/PurchaseRequisitionFormPage';
 import { PurchaseRequisitionDetailPage } from '../pages/erp/procurement/PurchaseRequisitionDetailPage';
+
+import { ProcurementDashboardPage } from '../pages/erp/procurement/ProcurementDashboardPage';
+import { QuotationComparisonPage } from '../pages/erp/procurement/QuotationComparisonPage';
+import { SupplierReturnsPage } from '../pages/erp/procurement/SupplierReturnsPage';
+import { ThreeWayMatchPage } from '../pages/erp/procurement/ThreeWayMatchPage';
+import { ProcurementReportsPage } from '../pages/erp/procurement/ProcurementReportsPage';
 import { PurchaseOrderListPage } from '../pages/erp/procurement/PurchaseOrderListPage';
 import { PurchaseOrderFormPage } from '../pages/erp/procurement/PurchaseOrderFormPage';
 import { PurchaseOrderDetailPage } from '../pages/erp/procurement/PurchaseOrderDetailPage';
@@ -437,11 +456,29 @@ export const AppRoutes: React.FC = () => {
           </Route>
 
           {/* Commercial Quotations Authorized Routes */}
-          <Route element={<ProtectedRoute allowedRoles={['admin', 'sales_manager']} />}>
-            <Route path="quotations" element={<QuotationListPage />} />
+          <Route element={<ProtectedRoute allowedRoles={['admin', 'sales_manager', 'executive']} />}>
+            <Route path="quotations" element={<AdvancedQuotationListPage />} />
             <Route path="quotations/new" element={<QuotationFormPage />} />
-            <Route path="quotations/:id" element={<QuotationDetailPage />} />
+            <Route path="quotations/:id" element={<AdvancedQuotationDetailPage />} />
             <Route path="quotations/:id/edit" element={<QuotationFormPage />} />
+          </Route>
+
+          {/* Advanced Sales & Distribution Order-to-Cash Authorized Routes */}
+          <Route element={<ProtectedRoute allowedRoles={['admin', 'sales_manager', 'warehouse_manager', 'finance', 'accountant', 'executive']} />}>
+            <Route path="sales" element={<SalesDashboardPage />} />
+            <Route path="sales/dashboard" element={<SalesDashboardPage />} />
+            <Route path="sales/quotations" element={<AdvancedQuotationListPage />} />
+            <Route path="sales/quotations/new" element={<QuotationFormPage />} />
+            <Route path="sales/quotations/:id" element={<AdvancedQuotationDetailPage />} />
+            <Route path="sales/fulfillment" element={<OrderFulfillmentPage />} />
+            <Route path="sales/picking" element={<PickingListPage />} />
+            <Route path="sales/packing" element={<PackingListPage />} />
+            <Route path="sales/deliveries" element={<DeliveryListPage />} />
+            <Route path="sales/deliveries/:id" element={<DeliveryDetailPage />} />
+            <Route path="sales/returns" element={<SalesReturnListPage />} />
+            <Route path="sales/credit-notes" element={<CreditNotesListPage />} />
+            <Route path="sales/pricing" element={<PricingManagementPage />} />
+            <Route path="sales/reports" element={<SalesReportsPage />} />
           </Route>
 
           {/* Sales Orders Authorized Routes */}
@@ -453,7 +490,12 @@ export const AppRoutes: React.FC = () => {
           </Route>
 
           {/* Suppliers & Contacts Authorized Routes */}
-          <Route element={<ProtectedRoute allowedRoles={['admin', 'purchase_manager', 'warehouse_manager']} />}>
+          <Route element={<ProtectedRoute allowedRoles={['admin', 'purchase_manager', 'warehouse_manager', 'quality_manager', 'finance', 'executive']} />}>
+            <Route path="procurement/dashboard" element={<ProcurementDashboardPage />} />
+            <Route path="procurement/comparison" element={<QuotationComparisonPage />} />
+            <Route path="procurement/returns" element={<SupplierReturnsPage />} />
+            <Route path="procurement/three-way-match" element={<ThreeWayMatchPage />} />
+            <Route path="procurement/reports" element={<ProcurementReportsPage />} />
             <Route path="suppliers" element={<SupplierListPage />} />
             <Route path="suppliers/new" element={<SupplierCreatePage />} />
             <Route path="suppliers/:id" element={<SupplierDetailPage />} />

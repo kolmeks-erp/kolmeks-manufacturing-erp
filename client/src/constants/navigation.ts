@@ -41,11 +41,20 @@ export const ERP_SIDEBAR_MENU: ERPMenuItem[] = [
   // Dashboard Core
   { id: 'dashboard', label: 'Executive Dashboard', path: `${ERP_BASE_PATH}/dashboard`, iconName: 'LayoutDashboard', category: 'core', roles: ALL_ROLES },
   
-  // Sales Section
+  // Sales & Distribution ERP Section
+  { id: 'sales-dashboard', label: 'Sales & Distribution Telemetry', path: `${ERP_BASE_PATH}/sales/dashboard`, iconName: 'LayoutDashboard', category: 'Sales', badge: 'Live', roles: ALL_ROLES },
   { id: 'rfqs', label: 'RFQs Management', path: `${ERP_BASE_PATH}/rfqs`, iconName: 'FileText', category: 'Sales', badge: 'Live', roles: ['admin', 'sales_manager', 'production_manager', 'quality_manager'] },
-  { id: 'quotations', label: 'Quotations', path: `${ERP_BASE_PATH}/quotations`, iconName: 'FileSpreadsheet', category: 'Sales', badge: 'Live', roles: ['admin', 'sales_manager'] },
+  { id: 'quotations', label: 'Quotations', path: `${ERP_BASE_PATH}/quotations`, iconName: 'FileSpreadsheet', category: 'Sales', badge: 'Live', roles: ['admin', 'sales_manager', 'executive'] },
   { id: 'sales-orders', label: 'Sales Orders', path: `${ERP_BASE_PATH}/sales-orders`, iconName: 'FileCheck', category: 'Sales', badge: 'Live', roles: ['admin', 'sales_manager', 'executive'] },
+  { id: 'sales-fulfillment', label: 'Order Fulfillment & Reservations', path: `${ERP_BASE_PATH}/sales/fulfillment`, iconName: 'PackageCheck', category: 'Sales', badge: 'Live', roles: ['admin', 'sales_manager', 'warehouse_manager', 'executive'] },
+  { id: 'sales-picking', label: 'Picking Lists', path: `${ERP_BASE_PATH}/sales/picking`, iconName: 'TrendingUp', category: 'Sales', badge: 'Live', roles: ['admin', 'sales_manager', 'warehouse_manager', 'executive'] },
+  { id: 'sales-packing', label: 'Packing Slips', path: `${ERP_BASE_PATH}/sales/packing`, iconName: 'Layers', category: 'Sales', badge: 'Live', roles: ['admin', 'sales_manager', 'warehouse_manager', 'executive'] },
+  { id: 'sales-deliveries', label: 'Delivery Orders', path: `${ERP_BASE_PATH}/sales/deliveries`, iconName: 'Truck', category: 'Sales', badge: 'Live', roles: ['admin', 'sales_manager', 'warehouse_manager', 'executive'] },
+  { id: 'sales-returns', label: 'Sales Returns & RMA', path: `${ERP_BASE_PATH}/sales/returns`, iconName: 'RotateCcw', category: 'Sales', badge: 'Live', roles: ['admin', 'sales_manager', 'quality_manager', 'executive'] },
+  { id: 'credit-notes', label: 'Credit Notes', path: `${ERP_BASE_PATH}/sales/credit-notes`, iconName: 'DollarSign', category: 'Sales', badge: 'Live', roles: ['admin', 'sales_manager', 'finance', 'accountant', 'executive'] },
+  { id: 'sales-pricing', label: 'Customer Pricing Rules', path: `${ERP_BASE_PATH}/sales/pricing`, iconName: 'Tag', category: 'Sales', badge: 'Live', roles: ['admin', 'sales_manager', 'executive'] },
   { id: 'sales-invoices', label: 'Sales Invoices', path: `${ERP_BASE_PATH}/sales/invoices`, iconName: 'FileText', category: 'Sales', badge: 'Live', roles: ['admin', 'sales_manager', 'finance', 'accountant', 'executive'] },
+  { id: 'sales-reports', label: 'Sales Analytics Reports', path: `${ERP_BASE_PATH}/sales/reports`, iconName: 'BarChart3', category: 'Sales', badge: 'Live', roles: ['admin', 'sales_manager', 'finance', 'executive'] },
   { id: 'customers', label: 'Customers', path: `${ERP_BASE_PATH}/customers`, iconName: 'Users', category: 'Sales', badge: 'Live', roles: ['admin', 'sales_manager'] },
 
   // CRM & Sales Operations Section
@@ -59,11 +68,16 @@ export const ERP_SIDEBAR_MENU: ERPMenuItem[] = [
   { id: 'crm-reports', label: 'CRM Sales Analytics', path: `${ERP_BASE_PATH}/crm/reports`, iconName: 'BarChart3', category: 'CRM & Sales', badge: 'Live', roles: ['admin', 'sales_manager', 'finance', 'executive'] },
 
   // Procurement Section
+  { id: 'procurement-dashboard', label: 'Procurement Telemetry', path: `${ERP_BASE_PATH}/procurement/dashboard`, iconName: 'LayoutDashboard', category: 'Procurement', badge: 'Live', roles: ['admin', 'purchase_manager', 'warehouse_manager', 'executive', 'finance'] },
   { id: 'suppliers', label: 'Suppliers', path: `${ERP_BASE_PATH}/suppliers`, iconName: 'Truck', category: 'Procurement', badge: 'Live', roles: ['admin', 'purchase_manager', 'warehouse_manager'] },
   { id: 'purchase-requisitions', label: 'Purchase Requisitions', path: `${ERP_BASE_PATH}/purchase-requisitions`, iconName: 'ClipboardList', category: 'Procurement', badge: 'Live', roles: ['admin', 'purchase_manager', 'warehouse_manager', 'executive'] },
+  { id: 'quotation-comparison', label: 'RFQ Quote Comparison', path: `${ERP_BASE_PATH}/procurement/comparison`, iconName: 'Award', category: 'Procurement', badge: 'Live', roles: ['admin', 'purchase_manager', 'executive'] },
   { id: 'purchase-orders', label: 'Purchase Orders', path: `${ERP_BASE_PATH}/purchase-orders`, iconName: 'Receipt', category: 'Procurement', badge: 'Live', roles: ['admin', 'purchase_manager', 'warehouse_manager', 'executive'] },
   { id: 'goods-receipts', label: 'Goods Receipts (GRN)', path: `${ERP_BASE_PATH}/goods-receipts`, iconName: 'PackageCheck', category: 'Procurement', badge: 'Live', roles: ['admin', 'purchase_manager', 'warehouse_manager', 'executive'] },
+  { id: 'supplier-returns', label: 'Supplier Returns (RMA)', path: `${ERP_BASE_PATH}/procurement/returns`, iconName: 'RotateCcw', category: 'Procurement', badge: 'Live', roles: ['admin', 'purchase_manager', 'quality_manager', 'warehouse_manager'] },
+  { id: 'three-way-match', label: 'Three-Way Matching', path: `${ERP_BASE_PATH}/procurement/three-way-match`, iconName: 'ShieldCheck', category: 'Procurement', badge: 'Live', roles: ['admin', 'purchase_manager', 'finance', 'accountant'] },
   { id: 'purchase-invoices', label: 'Purchase Invoices', path: `${ERP_BASE_PATH}/purchases/invoices`, iconName: 'FileText', category: 'Procurement', badge: 'Live', roles: ['admin', 'purchase_manager', 'finance', 'accountant', 'executive'] },
+  { id: 'procurement-reports', label: 'Procurement Analytics', path: `${ERP_BASE_PATH}/procurement/reports`, iconName: 'BarChart3', category: 'Procurement', badge: 'Live', roles: ['admin', 'purchase_manager', 'finance', 'executive'] },
 
   // Products Section
   { id: 'products', label: 'Products Master', path: `${ERP_BASE_PATH}/products`, iconName: 'Package', category: 'Products', badge: 'Live', roles: ['admin', 'production_manager', 'sales_manager', 'quality_manager'] },
