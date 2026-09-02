@@ -301,6 +301,23 @@ import { ERP_BASE_PATH } from '../constants/navigation';
 import { SystemSettingsProvider, useSystemSettings } from '../context/SystemSettingsContext';
 import { MasterAdminControlPage } from '../pages/erp/admin/MasterAdminControlPage';
 
+// System Administration & Settings Pages
+import { SettingsDashboardPage } from '../pages/erp/settings/SettingsDashboardPage';
+import { GeneralSettingsPage } from '../pages/erp/settings/GeneralSettingsPage';
+import { OrganizationSettingsPage } from '../pages/erp/settings/OrganizationSettingsPage';
+import { LocationSettingsPage } from '../pages/erp/settings/LocationSettingsPage';
+import { DepartmentSettingsPage } from '../pages/erp/settings/DepartmentSettingsPage';
+import { UserSettingsPage } from '../pages/erp/settings/UserSettingsPage';
+import { RoleSettingsPage } from '../pages/erp/settings/RoleSettingsPage';
+import { PermissionSettingsPage } from '../pages/erp/settings/PermissionSettingsPage';
+import { NumberingSettingsPage } from '../pages/erp/settings/NumberingSettingsPage';
+import { CurrencySettingsPage } from '../pages/erp/settings/CurrencySettingsPage';
+import { UnitSettingsPage } from '../pages/erp/settings/UnitSettingsPage';
+import { StatusSettingsPage } from '../pages/erp/settings/StatusSettingsPage';
+import { MasterSettingsPage } from '../pages/erp/settings/MasterSettingsPage';
+import { SecuritySettingsPage } from '../pages/erp/settings/SecuritySettingsPage';
+import { AuditSettingsPage } from '../pages/erp/settings/AuditSettingsPage';
+
 export const AppRoutes: React.FC = () => {
   return (
     <SystemSettingsProvider>
@@ -715,10 +732,24 @@ export const AppRoutes: React.FC = () => {
             <Route path="finance/balance-sheet" element={<BalanceSheetPage />} />
           </Route>
 
-          {/* Admin Restricted Routes */}
-          <Route element={<ProtectedRoute allowedRoles={['admin']} />}>
-            <Route path="users" element={<ERPModuleShellPage />} />
-            <Route path="settings" element={<ERPModuleShellPage />} />
+          {/* Admin & System Settings Restricted Routes */}
+          <Route element={<ProtectedRoute allowedRoles={['admin', 'master_admin', 'executive', 'sales_manager', 'finance', 'hr']} />}>
+            <Route path="users" element={<UserSettingsPage />} />
+            <Route path="settings" element={<SettingsDashboardPage />} />
+            <Route path="settings/general" element={<GeneralSettingsPage />} />
+            <Route path="settings/organization" element={<OrganizationSettingsPage />} />
+            <Route path="settings/locations" element={<LocationSettingsPage />} />
+            <Route path="settings/departments" element={<DepartmentSettingsPage />} />
+            <Route path="settings/users" element={<UserSettingsPage />} />
+            <Route path="settings/roles" element={<RoleSettingsPage />} />
+            <Route path="settings/permissions" element={<PermissionSettingsPage />} />
+            <Route path="settings/numbering" element={<NumberingSettingsPage />} />
+            <Route path="settings/currencies" element={<CurrencySettingsPage />} />
+            <Route path="settings/units" element={<UnitSettingsPage />} />
+            <Route path="settings/statuses" element={<StatusSettingsPage />} />
+            <Route path="settings/masters" element={<MasterSettingsPage />} />
+            <Route path="settings/security" element={<SecuritySettingsPage />} />
+            <Route path="settings/audit" element={<AuditSettingsPage />} />
             <Route path="master-admin" element={<MasterAdminControlPage />} />
           </Route>
         </Route>

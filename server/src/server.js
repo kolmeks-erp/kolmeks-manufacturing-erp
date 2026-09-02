@@ -40,6 +40,7 @@ const procurementP2PRoutes = require('./routes/procurement_p2p.routes');
 const documentRoutes = require('./routes/document.routes');
 const notificationRoutes = require('./routes/notification.routes');
 const workflowRoutes = require('./routes/workflow.routes');
+const settingsRoutes = require('./routes/settings.routes');
 const { publicRouter: rfqPublicRoutes, erpRouter: rfqErpRoutes } = require('./routes/rfq.routes');
 const errorHandler = require('./middleware/errorHandler');
 
@@ -125,6 +126,7 @@ app.use('/api/procurement/p2p', procurementP2PRoutes);
 app.use('/api/documents', documentRoutes);
 app.use('/api/notifications', notificationRoutes);
 app.use('/api/workflows', workflowRoutes);
+app.use('/api/settings', settingsRoutes);
 
 // Root Endpoint
 app.get('/', (req, res) => {
