@@ -145,21 +145,21 @@ const TrialBalancePage: React.FC = () => {
               ) : (
                 data.items.map(item => (
                   <tr key={item.id} className="hover:bg-slate-50/80 transition-colors">
-                    <td className="p-3.5 font-mono text-emerald-700 font-bold">{item.account_code}</td>
+                    <td className="p-3.5 font-mono text-emerald-800 font-bold">{item.account_code}</td>
                     <td className="p-3.5 font-semibold text-slate-900">{item.account_name}</td>
                     <td className="p-3.5 text-slate-600">{item.account_type}</td>
                     <td className="p-3.5 text-center">
-                      <span className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold ${item.normal_balance === 'DEBIT' ? 'bg-cyan-50 text-cyan-700 border border-cyan-200' : 'bg-purple-50 text-purple-700 border border-purple-200'}`}>
+                      <span className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold ${item.normal_balance === 'DEBIT' ? 'bg-cyan-50 text-cyan-800 border border-cyan-200' : 'bg-purple-50 text-purple-800 border border-purple-200'}`}>
                         {item.normal_balance}
                       </span>
                     </td>
-                    <td className="p-3.5 text-right font-mono text-cyan-700 font-semibold">
+                    <td className="p-3.5 text-right font-mono text-cyan-800 font-semibold">
                       {item.total_debit > 0 ? `₹${item.total_debit.toLocaleString('en-IN', { minimumFractionDigits: 2 })}` : '—'}
                     </td>
-                    <td className="p-3.5 text-right font-mono text-purple-700 font-semibold">
+                    <td className="p-3.5 text-right font-mono text-purple-800 font-semibold">
                       {item.total_credit > 0 ? `₹${item.total_credit.toLocaleString('en-IN', { minimumFractionDigits: 2 })}` : '—'}
                     </td>
-                    <td className="p-3.5 text-right font-mono text-emerald-700 font-bold">
+                    <td className="p-3.5 text-right font-mono text-emerald-800 font-bold">
                       ₹{item.net_balance.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                     </td>
                   </tr>
@@ -170,13 +170,13 @@ const TrialBalancePage: React.FC = () => {
               <tfoot className="bg-slate-50 font-mono text-xs border-t-2 border-slate-200 font-bold text-slate-900">
                 <tr>
                   <td colSpan={4} className="p-4 text-right uppercase text-slate-600">Total Trial Balance:</td>
-                  <td className="p-4 text-right text-cyan-700 text-sm">
+                  <td className="p-4 text-right text-cyan-800 text-sm">
                     ₹{data.totalDebit.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                   </td>
-                  <td className="p-4 text-right text-purple-700 text-sm">
+                  <td className="p-4 text-right text-purple-800 text-sm">
                     ₹{data.totalCredit.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                   </td>
-                  <td className="p-4 text-right text-emerald-700 text-sm">
+                  <td className="p-4 text-right text-emerald-800 text-sm">
                     {data.isBalanced ? 'BALANCED' : `DIFF: ₹${data.difference.toFixed(2)}`}
                   </td>
                 </tr>

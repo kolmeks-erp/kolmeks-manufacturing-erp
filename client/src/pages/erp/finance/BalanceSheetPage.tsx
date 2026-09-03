@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { PieChart, ArrowLeft, Printer, ShieldCheck, AlertTriangle } from 'lucide-react';
+import { PieChart, ArrowLeft, Printer } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { financeService } from '../../../services/finance.service';
 import { BalanceSheetData } from '../../../types/finance';
@@ -79,10 +79,10 @@ const BalanceSheetPage: React.FC = () => {
         {/* LEFT COLUMN: ASSETS */}
         <div className="p-5 bg-white border border-slate-200/80 rounded-xl shadow-xs space-y-4">
           <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-            <h3 className="text-base font-bold text-emerald-700 uppercase tracking-wider">
+            <h3 className="text-base font-bold text-emerald-800 uppercase tracking-wider">
               1. ASSETS
             </h3>
-            <span className="font-mono text-emerald-700 font-bold text-lg">
+            <span className="font-mono text-emerald-800 font-extrabold text-lg">
               ₹{(data?.totalAssets || 0).toLocaleString('en-IN', { minimumFractionDigits: 2 })}
             </span>
           </div>
@@ -106,9 +106,9 @@ const BalanceSheetPage: React.FC = () => {
                 ) : (
                   data.assets.map(item => (
                     <tr key={item.id} className="hover:bg-slate-50/80 transition-colors">
-                      <td className="p-2.5 font-mono text-emerald-700 font-bold">{item.account_code}</td>
+                      <td className="p-2.5 font-mono text-emerald-800 font-bold">{item.account_code}</td>
                       <td className="p-2.5 font-semibold text-slate-900">{item.account_name}</td>
-                      <td className="p-2.5 text-right font-mono text-emerald-700 font-bold">
+                      <td className="p-2.5 text-right font-mono text-emerald-800 font-bold">
                         ₹{item.balance.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                       </td>
                     </tr>
@@ -118,7 +118,7 @@ const BalanceSheetPage: React.FC = () => {
               <tfoot className="bg-slate-50 font-mono text-xs border-t-2 border-slate-200 font-bold text-slate-900">
                 <tr>
                   <td colSpan={2} className="p-3 text-right uppercase text-slate-600">Total Assets:</td>
-                  <td className="p-3 text-right text-emerald-700 text-sm">
+                  <td className="p-3 text-right text-emerald-800 text-sm">
                     ₹{(data?.totalAssets || 0).toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                   </td>
                 </tr>
@@ -132,10 +132,10 @@ const BalanceSheetPage: React.FC = () => {
           {/* LIABILITIES */}
           <div className="p-5 bg-white border border-slate-200/80 rounded-xl shadow-xs space-y-4">
             <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-              <h3 className="text-base font-bold text-amber-700 uppercase tracking-wider">
+              <h3 className="text-base font-bold text-amber-800 uppercase tracking-wider">
                 2. LIABILITIES
               </h3>
-              <span className="font-mono text-amber-700 font-bold text-lg">
+              <span className="font-mono text-amber-800 font-extrabold text-lg">
                 ₹{(data?.totalLiabilities || 0).toLocaleString('en-IN', { minimumFractionDigits: 2 })}
               </span>
             </div>
@@ -159,9 +159,9 @@ const BalanceSheetPage: React.FC = () => {
                   ) : (
                     data.liabilities.map(item => (
                       <tr key={item.id} className="hover:bg-slate-50/80 transition-colors">
-                        <td className="p-2.5 font-mono text-amber-700 font-bold">{item.account_code}</td>
+                        <td className="p-2.5 font-mono text-amber-800 font-bold">{item.account_code}</td>
                         <td className="p-2.5 font-semibold text-slate-900">{item.account_name}</td>
-                        <td className="p-2.5 text-right font-mono text-amber-700 font-bold">
+                        <td className="p-2.5 text-right font-mono text-amber-800 font-bold">
                           ₹{item.balance.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                         </td>
                       </tr>
@@ -171,7 +171,7 @@ const BalanceSheetPage: React.FC = () => {
                 <tfoot className="bg-slate-50 font-mono text-xs border-t border-slate-200 font-bold text-slate-900">
                   <tr>
                     <td colSpan={2} className="p-3 text-right uppercase text-slate-600">Total Liabilities:</td>
-                    <td className="p-3 text-right text-amber-700 text-sm">
+                    <td className="p-3 text-right text-amber-800 text-sm">
                       ₹{(data?.totalLiabilities || 0).toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                     </td>
                   </tr>
@@ -183,10 +183,10 @@ const BalanceSheetPage: React.FC = () => {
           {/* EQUITY */}
           <div className="p-5 bg-white border border-slate-200/80 rounded-xl shadow-xs space-y-4">
             <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-              <h3 className="text-base font-bold text-purple-700 uppercase tracking-wider">
+              <h3 className="text-base font-bold text-purple-800 uppercase tracking-wider">
                 3. SHAREHOLDER EQUITY
               </h3>
-              <span className="font-mono text-purple-700 font-bold text-lg">
+              <span className="font-mono text-purple-800 font-extrabold text-lg">
                 ₹{(data?.totalEquity || 0).toLocaleString('en-IN', { minimumFractionDigits: 2 })}
               </span>
             </div>
@@ -210,9 +210,9 @@ const BalanceSheetPage: React.FC = () => {
                   ) : (
                     data.equity.map(item => (
                       <tr key={item.id} className="hover:bg-slate-50/80 transition-colors">
-                        <td className="p-2.5 font-mono text-purple-700 font-bold">{item.account_code}</td>
+                        <td className="p-2.5 font-mono text-purple-800 font-bold">{item.account_code}</td>
                         <td className="p-2.5 font-semibold text-slate-900">{item.account_name}</td>
-                        <td className="p-2.5 text-right font-mono text-purple-700 font-bold">
+                        <td className="p-2.5 text-right font-mono text-purple-800 font-bold">
                           ₹{item.balance.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                         </td>
                       </tr>
@@ -222,7 +222,7 @@ const BalanceSheetPage: React.FC = () => {
                 <tfoot className="bg-slate-50 font-mono text-xs border-t-2 border-slate-200 font-bold text-slate-900">
                   <tr>
                     <td colSpan={2} className="p-3 text-right uppercase text-slate-600">Total Liabilities + Equity:</td>
-                    <td className="p-3 text-right text-indigo-700 text-sm">
+                    <td className="p-3 text-right text-indigo-800 text-sm">
                       ₹{(data?.totalLiabilitiesAndEquity || 0).toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                     </td>
                   </tr>

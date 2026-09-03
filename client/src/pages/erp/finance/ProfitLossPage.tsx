@@ -112,17 +112,17 @@ const ProfitLossPage: React.FC = () => {
 
       {/* Net Income Summary Header Card */}
       {data && (
-        <div className={`p-6 border rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xs ${data.netProfit >= 0 ? 'bg-emerald-50/80 border-emerald-200' : 'bg-rose-50/80 border-rose-200'}`}>
+        <div className={`p-6 border rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xs ${data.netProfit >= 0 ? 'bg-emerald-50 border-emerald-200' : 'bg-rose-50 border-rose-200'}`}>
           <div>
-            <span className="text-xs uppercase font-bold text-slate-500">Net Financial Income / (Loss)</span>
-            <div className={`text-3xl font-extrabold font-mono mt-1 ${data.netProfit >= 0 ? 'text-emerald-700' : 'text-rose-700'}`}>
+            <span className="text-xs uppercase font-bold text-slate-600 tracking-wider">Net Financial Income / (Loss)</span>
+            <div className={`text-3xl font-extrabold font-mono mt-1 ${data.netProfit >= 0 ? 'text-emerald-900' : 'text-rose-900'}`}>
               ₹{data.netProfit.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
             </div>
-            <p className="text-xs text-slate-500 mt-1">
+            <p className="text-xs text-slate-600 font-medium mt-1">
               Total Revenue (₹{data.totalRevenue.toLocaleString('en-IN')}) minus Expenses (₹{data.totalExpenses.toLocaleString('en-IN')})
             </p>
           </div>
-          <div className={`p-4 rounded-xl ${data.netProfit >= 0 ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700'}`}>
+          <div className={`p-4 rounded-xl ${data.netProfit >= 0 ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'}`}>
             {data.netProfit >= 0 ? <TrendingUp className="w-8 h-8" /> : <TrendingDown className="w-8 h-8" />}
           </div>
         </div>
@@ -130,8 +130,8 @@ const ProfitLossPage: React.FC = () => {
 
       {/* Revenue Section */}
       <div className="p-5 bg-white border border-slate-200/80 rounded-xl shadow-xs space-y-3">
-        <h3 className="text-sm font-bold text-emerald-700 uppercase tracking-wider flex items-center gap-2">
-          <TrendingUp className="w-4 h-4" />
+        <h3 className="text-sm font-bold text-emerald-800 uppercase tracking-wider flex items-center gap-2">
+          <TrendingUp className="w-4 h-4 text-emerald-600" />
           Operating & Services Revenue
         </h3>
 
@@ -154,9 +154,9 @@ const ProfitLossPage: React.FC = () => {
               ) : (
                 data.revenueItems.map(item => (
                   <tr key={item.id} className="hover:bg-slate-50/80 transition-colors">
-                    <td className="p-3 font-mono text-emerald-700 font-bold">{item.account_code}</td>
+                    <td className="p-3 font-mono text-emerald-800 font-bold">{item.account_code}</td>
                     <td className="p-3 font-semibold text-slate-900">{item.account_name}</td>
-                    <td className="p-3 text-right font-mono text-emerald-700 font-bold text-sm">
+                    <td className="p-3 text-right font-mono text-emerald-800 font-bold text-sm">
                       ₹{item.amount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                     </td>
                   </tr>
@@ -166,7 +166,7 @@ const ProfitLossPage: React.FC = () => {
             <tfoot className="bg-slate-50 font-mono text-xs border-t border-slate-200 font-bold text-slate-900">
               <tr>
                 <td colSpan={2} className="p-3 text-right uppercase text-slate-600">Total Operating Revenue:</td>
-                <td className="p-3 text-right text-emerald-700 text-sm">
+                <td className="p-3 text-right text-emerald-800 text-sm">
                   ₹{(data?.totalRevenue || 0).toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                 </td>
               </tr>
@@ -177,8 +177,8 @@ const ProfitLossPage: React.FC = () => {
 
       {/* Expenses Section */}
       <div className="p-5 bg-white border border-slate-200/80 rounded-xl shadow-xs space-y-3">
-        <h3 className="text-sm font-bold text-rose-700 uppercase tracking-wider flex items-center gap-2">
-          <TrendingDown className="w-4 h-4" />
+        <h3 className="text-sm font-bold text-rose-800 uppercase tracking-wider flex items-center gap-2">
+          <TrendingDown className="w-4 h-4 text-rose-600" />
           Direct Production & Operating Expenses
         </h3>
 
@@ -201,9 +201,9 @@ const ProfitLossPage: React.FC = () => {
               ) : (
                 data.expenseItems.map(item => (
                   <tr key={item.id} className="hover:bg-slate-50/80 transition-colors">
-                    <td className="p-3 font-mono text-rose-700 font-bold">{item.account_code}</td>
+                    <td className="p-3 font-mono text-rose-800 font-bold">{item.account_code}</td>
                     <td className="p-3 font-semibold text-slate-900">{item.account_name}</td>
-                    <td className="p-3 text-right font-mono text-rose-700 font-bold text-sm">
+                    <td className="p-3 text-right font-mono text-rose-800 font-bold text-sm">
                       ₹{item.amount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                     </td>
                   </tr>
@@ -213,7 +213,7 @@ const ProfitLossPage: React.FC = () => {
             <tfoot className="bg-slate-50 font-mono text-xs border-t border-slate-200 font-bold text-slate-900">
               <tr>
                 <td colSpan={2} className="p-3 text-right uppercase text-slate-600">Total Operating Expenses:</td>
-                <td className="p-3 text-right text-rose-700 text-sm">
+                <td className="p-3 text-right text-rose-800 text-sm">
                   ₹{(data?.totalExpenses || 0).toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                 </td>
               </tr>
