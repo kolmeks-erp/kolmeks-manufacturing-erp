@@ -286,7 +286,7 @@ export const ERPLayout: React.FC<ERPLayoutProps> = ({ children }) => {
                       key={item.id}
                       to={item.path}
                       onClick={() => setMobileOpen(false)}
-                      className={`flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all group focus:outline-hidden ${
+                      className={`flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all group outline-none focus:outline-none focus:ring-0 focus-visible:outline-none select-none ${
                         isActive
                           ? 'bg-blue-600 text-white shadow-xs font-semibold'
                           : 'text-slate-300 hover:bg-slate-800/80 hover:text-white'

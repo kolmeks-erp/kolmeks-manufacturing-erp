@@ -131,135 +131,144 @@ export const ExpenseCategoryListPage: React.FC = () => {
   );
 
   return (
-    <ERPLayout activeTab="finance">
-      <div className="space-y-6">
-        <ERPPageHeader
-          title="Expense Categories & Accounting Mapping"
-          subtitle="Configure default GL account mappings, business category rules, and active expense codes."
-          actions={
-            <div className="flex items-center space-x-3">
-              <button
-                onClick={fetchCategories}
-                className="inline-flex items-center px-3 py-2 border border-slate-700 rounded-lg text-sm font-medium text-slate-300 bg-slate-800 hover:bg-slate-700 transition"
-              >
-                <RefreshCw className="w-4 h-4 mr-2" />
-                Refresh
-              </button>
-              <button
-                onClick={handleOpenAddModal}
-                className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-lg text-sm font-semibold hover:from-emerald-500 hover:to-teal-500 shadow-md transition"
-              >
-                <Plus className="w-4 h-4 mr-2" />
-                Add Category
-              </button>
-            </div>
-          }
-        />
-
-        {/* Search Bar */}
-        <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 flex items-center justify-between">
-          <div className="relative flex-1 max-w-md">
-            <Search className="w-4 h-4 absolute left-3.5 top-3 text-slate-500" />
-            <input
-              type="text"
-              placeholder="Search category code or name..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-slate-950 border border-slate-800 text-slate-200 placeholder-slate-500 pl-10 pr-4 py-2 rounded-lg text-sm focus:outline-none focus:border-emerald-500 transition"
-            />
+    <div className="space-y-5">
+      {/* Header */}
+      <div className="bg-white p-5 sm:p-6 rounded-xl border border-slate-200/80 shadow-xs flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <div className="p-2.5 bg-emerald-50 text-emerald-600 rounded-lg border border-emerald-100">
+            <FolderTree className="w-7 h-7" />
           </div>
-          <span className="text-xs text-slate-400">Total {filteredCategories.length} categories</span>
+          <div>
+            <h1 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
+              Expense Categories & Accounting Mapping
+            </h1>
+            <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
+              Configure default GL account mappings, business category rules, and active expense codes
+            </p>
+          </div>
         </div>
 
-        {/* Table */}
-        {loading ? (
-          <LoadingState message="Loading expense categories..." />
-        ) : error ? (
-          <ErrorState message={error} onRetry={fetchCategories} />
-        ) : (
-          <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden shadow-sm">
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-sm text-slate-300">
-                <thead className="bg-slate-800/60 text-xs uppercase text-slate-400 font-semibold border-b border-slate-700">
-                  <tr>
-                    <th className="py-3.5 px-4">Code</th>
-                    <th className="py-3.5 px-4">Category Name</th>
-                    <th className="py-3.5 px-4">Description</th>
-                    <th className="py-3.5 px-4">Default GL Account</th>
-                    <th className="py-3.5 px-4 text-center">Status</th>
-                    <th className="py-3.5 px-4 text-right">Actions</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-800">
-                  {filteredCategories.map((cat) => (
-                    <tr key={cat.id} className="hover:bg-slate-800/40 transition">
-                      <td className="py-3.5 px-4 font-mono text-emerald-400 font-semibold">{cat.code}</td>
-                      <td className="py-3.5 px-4 text-slate-200 font-medium">{cat.name}</td>
-                      <td className="py-3.5 px-4 text-slate-400 max-w-xs truncate">{cat.description || '-'}</td>
-                      <td className="py-3.5 px-4 text-slate-300">
-                        {cat.default_account ? (
-                          <span className="inline-flex items-center text-xs font-mono bg-slate-950 px-2.5 py-1 rounded border border-slate-800 text-teal-300">
-                            <BookOpen className="w-3 h-3 mr-1 text-teal-400" />
-                            {cat.default_account.account_code} - {cat.default_account.account_name}
-                          </span>
-                        ) : (
-                          <span className="text-xs text-slate-500 font-italic">Default GL 5500</span>
-                        )}
-                      </td>
-                      <td className="py-3.5 px-4 text-center">
-                        {cat.is_active ? (
-                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
-                            Active
-                          </span>
-                        ) : (
-                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-slate-800 text-slate-400 border border-slate-700">
-                            Inactive
-                          </span>
-                        )}
-                      </td>
-                      <td className="py-3.5 px-4 text-right">
-                        <button
-                          onClick={() => handleOpenEditModal(cat)}
-                          className="inline-flex items-center text-xs text-amber-400 hover:text-amber-300 bg-amber-500/10 hover:bg-amber-500/20 px-3 py-1.5 rounded transition font-medium"
-                        >
-                          <Edit className="w-3.5 h-3.5 mr-1" /> Edit
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        )}
+        <div className="flex items-center gap-2.5">
+          <button
+            onClick={fetchCategories}
+            className="inline-flex items-center px-3 py-2 border border-slate-200/80 rounded-lg text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 transition-all cursor-pointer"
+          >
+            <RefreshCw className="w-3.5 h-3.5 mr-1.5" />
+            Refresh
+          </button>
+          <button
+            onClick={handleOpenAddModal}
+            className="inline-flex items-center px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-semibold shadow-xs transition-all cursor-pointer"
+          >
+            <Plus className="w-4 h-4 mr-1.5" />
+            Add Category
+          </button>
+        </div>
       </div>
+
+      {/* Search Bar */}
+      <div className="bg-white border border-slate-200/80 rounded-xl p-4 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-xs">
+        <div className="relative flex-1 w-full max-w-md">
+          <Search className="w-4 h-4 absolute left-3.5 top-2.5 text-slate-400" />
+          <input
+            type="text"
+            placeholder="Search category code or name..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 pl-9 pr-4 py-2 rounded-lg text-xs focus:outline-hidden focus:ring-2 focus:ring-emerald-500 transition-all"
+          />
+        </div>
+        <span className="text-xs font-semibold text-slate-500">Total {filteredCategories.length} categories</span>
+      </div>
+
+      {/* Table */}
+      {loading ? (
+        <LoadingState message="Loading expense categories..." />
+      ) : error ? (
+        <ErrorState message={error} onRetry={fetchCategories} />
+      ) : (
+        <div className="bg-white border border-slate-200/80 rounded-xl overflow-hidden shadow-xs">
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-xs text-slate-600">
+              <thead className="bg-slate-50/80 text-slate-700 uppercase font-bold text-[11px] tracking-wider border-b border-slate-200/80">
+                <tr>
+                  <th className="py-3.5 px-5">Code</th>
+                  <th className="py-3.5 px-5">Category Name</th>
+                  <th className="py-3.5 px-5">Description</th>
+                  <th className="py-3.5 px-5">Default GL Account</th>
+                  <th className="py-3.5 px-5 text-center">Status</th>
+                  <th className="py-3.5 px-5 text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100">
+                {filteredCategories.map((cat) => (
+                  <tr key={cat.id} className="hover:bg-slate-50/80 transition-colors">
+                    <td className="py-3.5 px-5 font-mono text-emerald-600 font-bold">{cat.code}</td>
+                    <td className="py-3.5 px-5 text-slate-900 font-semibold">{cat.name}</td>
+                    <td className="py-3.5 px-5 text-slate-500 max-w-xs truncate">{cat.description || '-'}</td>
+                    <td className="py-3.5 px-5 text-slate-700">
+                      {cat.default_account ? (
+                        <span className="inline-flex items-center text-[11px] font-mono bg-slate-100 px-2.5 py-1 rounded border border-slate-200/80 text-slate-700 font-semibold">
+                          <BookOpen className="w-3 h-3 mr-1 text-emerald-600" />
+                          {cat.default_account.account_code} - {cat.default_account.account_name}
+                        </span>
+                      ) : (
+                        <span className="text-xs text-slate-400 italic">Default GL 5500</span>
+                      )}
+                    </td>
+                    <td className="py-3.5 px-5 text-center">
+                      {cat.is_active ? (
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200/80">
+                          Active
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-500 border border-slate-200">
+                          Inactive
+                        </span>
+                      )}
+                    </td>
+                    <td className="py-3.5 px-5 text-right">
+                      <button
+                        onClick={() => handleOpenEditModal(cat)}
+                        className="inline-flex items-center text-xs text-amber-700 hover:text-amber-800 bg-amber-50 hover:bg-amber-100 border border-amber-200/80 px-3 py-1 rounded-lg transition-all font-semibold cursor-pointer"
+                      >
+                        <Edit className="w-3.5 h-3.5 mr-1" /> Edit
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
 
       {/* Add / Edit Category Modal */}
       {showModal && (
-        <div className="fixed inset-0 z-50 bg-black/75 flex items-center justify-center p-4">
-          <form onSubmit={handleSaveCategory} className="bg-slate-900 border border-slate-800 rounded-xl max-w-md w-full p-6 space-y-4 shadow-2xl relative">
+        <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4">
+          <form onSubmit={handleSaveCategory} className="bg-white border border-slate-200 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl relative">
             <button
               type="button"
               onClick={() => setShowModal(false)}
-              className="absolute top-4 right-4 text-slate-400 hover:text-white transition"
+              className="absolute top-4 right-4 text-slate-400 hover:text-slate-700 transition-colors"
             >
               <X className="w-5 h-5" />
             </button>
 
-            <h3 className="text-base font-semibold text-slate-100 flex items-center border-b border-slate-800 pb-3">
-              <FolderTree className="w-4 h-4 mr-2 text-emerald-400" />
+            <h3 className="text-base font-bold text-slate-900 flex items-center border-b border-slate-100 pb-3">
+              <FolderTree className="w-4 h-4 mr-2 text-emerald-600" />
               {editingCategory ? `Edit Category (${editingCategory.code})` : 'Create Expense Category'}
             </h3>
 
             {modalError && (
-              <div className="bg-rose-500/10 border border-rose-500/30 text-rose-300 p-3 rounded-lg text-xs">
+              <div className="bg-rose-50 border border-rose-200 text-rose-700 p-3 rounded-xl text-xs font-medium">
                 {modalError}
               </div>
             )}
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1">
-                Category Code <span className="text-rose-400">*</span>
+              <label className="block text-xs font-semibold text-slate-700 mb-1">
+                Category Code <span className="text-rose-500">*</span>
               </label>
               <input
                 type="text"
@@ -267,31 +276,31 @@ export const ExpenseCategoryListPage: React.FC = () => {
                 placeholder="e.g. TRAVEL, MEALS, SUPPLIES"
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
-                className="w-full bg-slate-950 border border-slate-800 text-slate-200 px-3 py-2 rounded-lg text-sm font-mono focus:outline-none focus:border-emerald-500 disabled:opacity-50"
+                className="w-full bg-slate-50 border border-slate-200 text-slate-900 px-3 py-2 rounded-xl text-xs font-mono focus:outline-hidden focus:ring-2 focus:ring-emerald-500 disabled:opacity-50"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1">
-                Category Name <span className="text-rose-400">*</span>
+              <label className="block text-xs font-semibold text-slate-700 mb-1">
+                Category Name <span className="text-rose-500">*</span>
               </label>
               <input
                 type="text"
                 placeholder="e.g. Travel & Transport Expenses"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full bg-slate-950 border border-slate-800 text-slate-200 px-3 py-2 rounded-lg text-sm focus:outline-none focus:border-emerald-500"
+                className="w-full bg-slate-50 border border-slate-200 text-slate-900 px-3 py-2 rounded-xl text-xs focus:outline-hidden focus:ring-2 focus:ring-emerald-500"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1">
+              <label className="block text-xs font-semibold text-slate-700 mb-1">
                 Default GL Account (Chart of Accounts)
               </label>
               <select
                 value={defaultAccountId}
                 onChange={(e) => setDefaultAccountId(e.target.value)}
-                className="w-full bg-slate-950 border border-slate-800 text-slate-200 px-3 py-2 rounded-lg text-sm focus:outline-none focus:border-emerald-500"
+                className="w-full bg-slate-50 border border-slate-200 text-slate-900 px-3 py-2 rounded-xl text-xs focus:outline-hidden focus:ring-2 focus:ring-emerald-500"
               >
                 <option value="">-- General Expense GL Account --</option>
                 {accounts.map((acc) => (
@@ -303,7 +312,7 @@ export const ExpenseCategoryListPage: React.FC = () => {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1">
+              <label className="block text-xs font-semibold text-slate-700 mb-1">
                 Description
               </label>
               <input
@@ -311,7 +320,7 @@ export const ExpenseCategoryListPage: React.FC = () => {
                 placeholder="Optional summary of category scope..."
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                className="w-full bg-slate-950 border border-slate-800 text-slate-200 px-3 py-2 rounded-lg text-sm"
+                className="w-full bg-slate-50 border border-slate-200 text-slate-900 px-3 py-2 rounded-xl text-xs focus:outline-hidden focus:ring-2 focus:ring-emerald-500"
               />
             </div>
 
@@ -322,26 +331,26 @@ export const ExpenseCategoryListPage: React.FC = () => {
                   id="isActiveToggle"
                   checked={isActive}
                   onChange={(e) => setIsActive(e.target.checked)}
-                  className="rounded bg-slate-950 border-slate-800 text-emerald-600 focus:ring-0"
+                  className="rounded bg-slate-50 border-slate-300 text-emerald-600 focus:ring-0 cursor-pointer"
                 />
-                <label htmlFor="isActiveToggle" className="text-xs text-slate-300 font-medium cursor-pointer">
+                <label htmlFor="isActiveToggle" className="text-xs text-slate-700 font-semibold cursor-pointer">
                   Active Category
                 </label>
               </div>
             )}
 
-            <div className="flex items-center justify-end space-x-3 pt-3">
+            <div className="flex items-center justify-end space-x-2.5 pt-3">
               <button
                 type="button"
                 onClick={() => setShowModal(false)}
-                className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-sm font-medium"
+                className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold transition-all cursor-pointer"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={formSubmitting}
-                className="px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-sm font-semibold"
+                className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-semibold transition-all shadow-xs cursor-pointer"
               >
                 {formSubmitting ? 'Saving...' : 'Save Category'}
               </button>
@@ -349,7 +358,7 @@ export const ExpenseCategoryListPage: React.FC = () => {
           </form>
         </div>
       )}
-    </ERPLayout>
+    </div>
   );
 };
 
