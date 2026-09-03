@@ -520,21 +520,6 @@ export const RawMaterialsPage: React.FC = () => {
 
       {/* Materials Table Container */}
       <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden">
-        {/* TOP DEDICATED HIGH-VISIBILITY SCROLLBAR BAR */}
-        <div className="bg-slate-50/90 px-4 py-2 border-b border-slate-200/80 flex items-center justify-between gap-3 text-[11px] font-bold text-slate-700">
-          <div className="flex items-center gap-1.5 shrink-0 bg-indigo-50 text-indigo-700 px-2.5 py-1 rounded-lg border border-indigo-100 font-extrabold text-[10px] uppercase tracking-wider">
-            <ArrowLeftRight className="w-3.5 h-3.5" />
-            <span>Table Horizontal Scroll (Top Control)</span>
-          </div>
-          <div
-            ref={topScrollRef}
-            onScroll={handleTopScroll}
-            className="overflow-x-auto custom-table-scrollbar flex-1 py-1"
-          >
-            <div style={{ width: `${tableWidth}px` }} className="h-1.5" />
-          </div>
-        </div>
-
         {/* MAIN TABLE CONTAINER WITH SYNCED SCROLL */}
         <div
           ref={tableScrollRef}
@@ -556,6 +541,19 @@ export const RawMaterialsPage: React.FC = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 text-slate-800">
+              {/* TOP SCROLLBAR LINE (INTEGRATED DIRECTLY ON THE DIVIDER LINE BELOW TABLE HEADER) */}
+              <tr className="bg-slate-100/60 border-b border-slate-200/80">
+                <td colSpan={9} className="p-0">
+                  <div
+                    ref={topScrollRef}
+                    onScroll={handleTopScroll}
+                    className="overflow-x-auto custom-table-scrollbar w-full py-0.5"
+                  >
+                    <div style={{ width: `${tableWidth}px` }} className="h-1.5" />
+                  </div>
+                </td>
+              </tr>
+
               {filteredMaterials.length === 0 ? (
                 <tr>
                   <td colSpan={9} className="py-12 text-center text-slate-400">
