@@ -163,7 +163,7 @@ export const StockAdjustmentFormPage: React.FC = () => {
   };
 
   return (
-    <div className="p-4 lg:p-6 max-w-4xl mx-auto space-y-6 text-slate-800">
+    <div className="space-y-6 text-slate-800 w-full max-w-5xl mx-auto">
       {/* Top Breadcrumb Header */}
       <button
         onClick={() => navigate(`${ERP_BASE_PATH}/inventory`)}

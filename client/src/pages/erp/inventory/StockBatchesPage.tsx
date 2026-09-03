@@ -81,7 +81,7 @@ export const StockBatchesPage: React.FC = () => {
   };
 
   return (
-    <div className="p-4 lg:p-6 space-y-6 max-w-7xl mx-auto text-slate-800">
+    <div className="space-y-6 text-slate-800 w-full">
       {/* Header Banner */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-slate-200 shadow-xs">
         <div className="flex items-center gap-3">

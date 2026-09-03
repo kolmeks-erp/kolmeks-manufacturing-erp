@@ -78,7 +78,7 @@ export const InventoryDetailPage: React.FC = () => {
   }
 
   return (
-    <div className="p-4 lg:p-6 max-w-7xl mx-auto space-y-6 text-slate-800">
+    <div className="space-y-6 text-slate-800 w-full">
       {/* Navigation Breadcrumb */}
       <button
         onClick={() => navigate(`${ERP_BASE_PATH}/inventory`)}

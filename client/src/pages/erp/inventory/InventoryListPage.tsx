@@ -89,7 +89,7 @@ export const InventoryListPage: React.FC = () => {
   };
 
   return (
-    <div className="p-4 lg:p-6 max-w-7xl mx-auto space-y-6 text-slate-800">
+    <div className="space-y-6 text-slate-800 w-full">
       {/* Header & Quick Action Bar */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 pb-5">
         <div>
