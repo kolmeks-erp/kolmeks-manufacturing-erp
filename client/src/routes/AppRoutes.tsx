@@ -382,12 +382,8 @@ export const AppRoutes: React.FC = () => {
           <Route index element={<Navigate to={`${ERP_BASE_PATH}/dashboard`} replace />} />
           <Route path="dashboard" element={<ERPDashboardPage />} />
           <Route path="materials" element={<RawMaterialsPage />} />
-          <Route path="production" element={<ERPModuleShellPage />} />
           <Route path="cnc-machines" element={<ERPModuleShellPage />} />
-          <Route path="inventory" element={<ERPModuleShellPage />} />
-          <Route path="quality-control" element={<ERPModuleShellPage />} />
           <Route path="cmm" element={<ERPModuleShellPage />} />
-          <Route path="maintenance" element={<ERPModuleShellPage />} />
           <Route path="deliveries" element={<ERPModuleShellPage />} />
 
           {/* Purchase Requisitions Authorized Routes */}
