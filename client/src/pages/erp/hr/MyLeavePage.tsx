@@ -78,13 +78,13 @@ const MyLeavePage: React.FC = () => {
     {
       header: 'Request No.',
       accessor: (row: LeaveRequest) => (
-        <span className="font-mono text-cyan-400 font-bold">{row.request_number}</span>
+        <span className="font-mono text-indigo-600 font-bold text-xs">{row.request_number}</span>
       ),
     },
     {
       header: 'Leave Category',
       accessor: (row: LeaveRequest) => (
-        <span className="px-2.5 py-1 text-xs font-semibold rounded-full bg-slate-800 text-slate-200 border border-slate-700">
+        <span className="px-2.5 py-1 text-xs font-semibold rounded-full bg-slate-100 text-slate-700 border border-slate-200">
           {row.leave_type?.name}
         </span>
       ),
@@ -93,17 +93,17 @@ const MyLeavePage: React.FC = () => {
       header: 'Dates Duration',
       accessor: (row: LeaveRequest) => (
         <div>
-          <span className="font-medium text-white text-xs block">
+          <span className="font-semibold text-slate-900 text-xs block">
             {row.start_date} to {row.end_date}
           </span>
-          <span className="text-slate-400 text-xs">{row.leave_days} Day(s) {row.half_day !== 'NONE' ? `(${row.half_day})` : ''}</span>
+          <span className="text-slate-500 text-xs">{row.leave_days} Day(s) {row.half_day !== 'NONE' ? `(${row.half_day})` : ''}</span>
         </div>
       ),
     },
     {
       header: 'Reason',
       accessor: (row: LeaveRequest) => (
-        <span className="text-slate-300 text-xs italic max-w-xs block truncate">{row.reason}</span>
+        <span className="text-slate-600 text-xs italic max-w-xs block truncate">{row.reason}</span>
       ),
     },
     {
@@ -115,7 +115,7 @@ const MyLeavePage: React.FC = () => {
     {
       header: 'Manager Comments',
       accessor: (row: LeaveRequest) => (
-        <span className="text-slate-400 text-xs">{row.rejection_reason || 'N/A'}</span>
+        <span className="text-slate-500 text-xs">{row.rejection_reason || 'N/A'}</span>
       ),
     },
   ];
@@ -151,18 +151,18 @@ const MyLeavePage: React.FC = () => {
 
           {/* Apply Leave Modal */}
           {showModal && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
-              <div className="bg-slate-900 border border-slate-800 rounded-xl p-6 w-full max-w-md shadow-2xl">
-                <h3 className="text-lg font-bold text-white mb-2">Apply For Leave</h3>
-                <p className="text-xs text-slate-400 mb-4">Submit a leave application for approval by your HR manager.</p>
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-xs p-4">
+              <div className="bg-white border border-slate-200 rounded-xl p-6 w-full max-w-md shadow-xl">
+                <h3 className="text-lg font-bold text-slate-900 mb-1">Apply For Leave</h3>
+                <p className="text-xs text-slate-500 mb-4">Submit a leave application for approval by your HR manager.</p>
 
                 <form onSubmit={handleApplyLeave} className="space-y-4">
                   <div>
-                    <label className="block text-xs font-semibold text-slate-300 mb-1.5">Leave Type Policy</label>
+                    <label className="block text-xs font-semibold text-slate-700 mb-1.5">Leave Type Policy</label>
                     <select
                       value={leaveTypeId}
                       onChange={(e) => setLeaveTypeId(e.target.value)}
-                      className="w-full bg-slate-800 border border-slate-700 text-white rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-emerald-500"
+                      className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
                       required
                     >
                       {leaveTypes.map((lt) => (
@@ -175,34 +175,34 @@ const MyLeavePage: React.FC = () => {
 
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-semibold text-slate-300 mb-1.5">Start Date</label>
+                      <label className="block text-xs font-semibold text-slate-700 mb-1.5">Start Date</label>
                       <input
                         type="date"
                         value={startDate}
                         onChange={(e) => setStartDate(e.target.value)}
-                        className="w-full bg-slate-800 border border-slate-700 text-white rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-emerald-500"
+                        className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
                         required
                       />
                     </div>
 
                     <div>
-                      <label className="block text-xs font-semibold text-slate-300 mb-1.5">End Date</label>
+                      <label className="block text-xs font-semibold text-slate-700 mb-1.5">End Date</label>
                       <input
                         type="date"
                         value={endDate}
                         onChange={(e) => setEndDate(e.target.value)}
-                        className="w-full bg-slate-800 border border-slate-700 text-white rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-emerald-500"
+                        className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
                         required
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-slate-300 mb-1.5">Half Day Option</label>
+                    <label className="block text-xs font-semibold text-slate-700 mb-1.5">Half Day Option</label>
                     <select
                       value={halfDay}
                       onChange={(e) => setHalfDay(e.target.value as any)}
-                      className="w-full bg-slate-800 border border-slate-700 text-white rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-emerald-500"
+                      className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
                     >
                       <option value="NONE">Full Day(s)</option>
                       <option value="FIRST_HALF">First Half Only</option>
@@ -211,29 +211,29 @@ const MyLeavePage: React.FC = () => {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-slate-300 mb-1.5">Reason / Description</label>
+                    <label className="block text-xs font-semibold text-slate-700 mb-1.5">Reason / Description</label>
                     <textarea
                       rows={3}
                       value={reason}
                       onChange={(e) => setReason(e.target.value)}
                       placeholder="e.g. Personal family engagement or medical leave requirement"
-                      className="w-full bg-slate-800 border border-slate-700 text-white rounded-lg p-3 text-sm focus:outline-none focus:border-emerald-500"
+                      className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-lg p-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
                       required
                     />
                   </div>
 
-                  <div className="flex justify-end gap-3 pt-4 border-t border-slate-800">
+                  <div className="flex justify-end gap-3 pt-4 border-t border-slate-200">
                     <button
                       type="button"
                       onClick={() => setShowModal(false)}
-                      className="px-4 py-2 bg-slate-800 text-slate-300 text-sm font-medium rounded-lg hover:bg-slate-700"
+                      className="px-4 py-2 bg-slate-100 text-slate-700 text-sm font-medium rounded-lg hover:bg-slate-200 transition-all"
                     >
                       Cancel
                     </button>
                     <button
                       type="submit"
                       disabled={submitting}
-                      className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-medium rounded-lg disabled:opacity-50"
+                      className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-medium rounded-lg shadow-sm transition-all disabled:opacity-50"
                     >
                       {submitting ? 'Submitting...' : 'Submit Application'}
                     </button>

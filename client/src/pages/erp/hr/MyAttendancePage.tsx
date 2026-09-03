@@ -64,24 +64,24 @@ const MyAttendancePage: React.FC = () => {
     {
       header: 'Date',
       accessor: (row: AttendanceRecord) => (
-        <span className="font-mono text-cyan-400 font-bold">{row.attendance_date}</span>
+        <span className="font-mono text-indigo-600 font-bold text-xs">{row.attendance_date}</span>
       ),
     },
     {
       header: 'Shift',
       accessor: (row: AttendanceRecord) => (
-        <span className="text-slate-300 font-medium text-xs">{(row.shift as any)?.name || 'General Shift'}</span>
+        <span className="text-slate-700 font-medium text-xs">{(row.shift as any)?.name || 'General Shift'}</span>
       ),
     },
     {
       header: 'Check-In Time',
       accessor: (row: AttendanceRecord) => (
         row.check_in ? (
-          <span className="text-emerald-400 font-mono text-xs font-semibold">
+          <span className="text-emerald-700 font-mono text-xs font-semibold">
             {new Date(row.check_in).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
           </span>
         ) : (
-          <span className="text-slate-500 text-xs italic">Absent / Pending</span>
+          <span className="text-slate-400 text-xs italic">Absent / Pending</span>
         )
       ),
     },
@@ -89,29 +89,31 @@ const MyAttendancePage: React.FC = () => {
       header: 'Check-Out Time',
       accessor: (row: AttendanceRecord) => (
         row.check_out ? (
-          <span className="text-cyan-400 font-mono text-xs font-semibold">
+          <span className="text-indigo-600 font-mono text-xs font-semibold">
             {new Date(row.check_out).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
           </span>
         ) : (
-          <span className="text-slate-500 text-xs italic">On Duty</span>
+          <span className="text-amber-600 text-xs font-semibold italic">On Duty</span>
         )
       ),
     },
     {
       header: 'Hours Worked',
       accessor: (row: AttendanceRecord) => (
-        <span className="font-bold text-white text-xs">{(row.worked_minutes / 60).toFixed(1)} hrs</span>
+        <span className="px-2.5 py-1 text-xs font-bold font-mono bg-indigo-50 text-indigo-700 rounded-md border border-indigo-200/80">
+          {(row.worked_minutes / 60).toFixed(1)} hrs
+        </span>
       ),
     },
     {
       header: 'Late Mins',
       accessor: (row: AttendanceRecord) => (
         row.late_minutes > 0 ? (
-          <span className="px-2 py-0.5 text-xs font-bold bg-amber-500/10 text-amber-400 rounded-md border border-amber-500/20">
+          <span className="px-2 py-0.5 text-xs font-bold bg-amber-50 text-amber-700 rounded-md border border-amber-200/80">
             +{row.late_minutes} mins
           </span>
         ) : (
-          <span className="text-slate-500 font-mono text-xs">0</span>
+          <span className="text-slate-400 font-mono text-xs">0</span>
         )
       ),
     },
@@ -149,8 +151,8 @@ const MyAttendancePage: React.FC = () => {
                 {actionLoading ? 'Recording...' : 'Check-Out Now'}
               </button>
             ) : (
-              <span className="inline-flex items-center px-3 py-1.5 bg-slate-800 text-emerald-400 text-xs font-semibold rounded-lg border border-slate-700">
-                <CheckCircle2 className="w-3.5 h-3.5 mr-1.5" /> Shift Completed Today
+              <span className="inline-flex items-center px-3.5 py-2 bg-emerald-50 text-emerald-700 text-xs font-semibold rounded-lg border border-emerald-200/80 shadow-xs">
+                <CheckCircle2 className="w-4 h-4 mr-1.5 text-emerald-600" /> Shift Completed Today
               </span>
             )}
           </div>
