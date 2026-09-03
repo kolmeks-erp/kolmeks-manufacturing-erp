@@ -97,20 +97,24 @@ export const MachineListPage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6 animate-fadeIn">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-cyan-50 text-cyan-700 border border-cyan-200 mb-2">
-            <Cpu className="w-3.5 h-3.5" />
-            <span>Plant Assets & Telemetry</span>
+    <div className="space-y-6 animate-fadeIn w-full text-slate-800">
+      {/* Header Banner */}
+      <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <div className="p-3 bg-cyan-50 text-cyan-600 rounded-xl border border-cyan-200 shrink-0">
+            <Cpu className="w-7 h-7" />
           </div>
-          <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Machine Master</h1>
-          <p className="text-slate-500 text-sm">Register CNC machines, monitor operational status, and assign to work centers.</p>
+          <div>
+            <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Machine Master</h1>
+            <p className="text-sm text-slate-500 mt-0.5">
+              Register CNC machines, monitor operational status, and assign shop floor work centers
+            </p>
+          </div>
         </div>
 
         <button
           onClick={() => setShowModal(true)}
-          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-cyan-600 hover:bg-cyan-700 text-white font-medium text-sm transition-all shadow-sm"
+          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-cyan-600 hover:bg-cyan-700 text-white font-semibold text-xs transition-all shadow-xs shrink-0"
         >
           <Plus className="w-4 h-4" />
           <span>Register Machine</span>

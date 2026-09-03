@@ -52,27 +52,35 @@ const MaintenanceDashboardPage: React.FC = () => {
   if (error) return <ErrorState message={error} onRetry={fetchDashboardData} />;
 
   return (
-    <div className="space-y-6">
-      <ERPPageHeader
-        title="Maintenance & Asset Operations"
-        subtitle="Real-time machinery readiness, preventive routines, breakdown logs & work order execution"
-        actions={
-          <div className="flex gap-2">
-            <Link
-              to="/secure-kolmeks-x0y0/maintenance/requests"
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 text-sm font-medium text-amber-700 bg-amber-50 rounded-lg hover:bg-amber-100 transition-colors border border-amber-200"
-            >
-              <AlertTriangle className="w-4 h-4" /> Log Issue Request
-            </Link>
-            <Link
-              to="/secure-kolmeks-x0y0/maintenance/work-orders/new"
-              className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition-colors shadow-sm"
-            >
-              <PlusCircle className="w-4 h-4" /> New Work Order
-            </Link>
+    <div className="space-y-6 animate-fadeIn w-full text-slate-800">
+      {/* Modern Header Banner */}
+      <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <div className="p-3 bg-indigo-50 text-indigo-600 rounded-xl border border-indigo-200 shrink-0">
+            <Wrench className="w-7 h-7" />
           </div>
-        }
-      />
+          <div>
+            <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Maintenance & Asset Operations</h1>
+            <p className="text-sm text-slate-500 mt-0.5">
+              Real-time machinery readiness, preventive routines, breakdown logs & work order execution
+            </p>
+          </div>
+        </div>
+        <div className="flex items-center gap-2.5 shrink-0">
+          <Link
+            to="/secure-kolmeks-x0y0/maintenance/requests"
+            className="inline-flex items-center gap-1.5 px-3.5 py-2.5 text-xs font-semibold text-amber-700 bg-amber-50 rounded-xl hover:bg-amber-100 transition-colors border border-amber-200 shadow-xs"
+          >
+            <AlertTriangle className="w-4 h-4" /> Log Issue Request
+          </Link>
+          <Link
+            to="/secure-kolmeks-x0y0/maintenance/work-orders/new"
+            className="inline-flex items-center gap-1.5 px-4 py-2.5 text-xs font-semibold text-white bg-indigo-600 rounded-xl hover:bg-indigo-700 transition-colors shadow-xs"
+          >
+            <PlusCircle className="w-4 h-4" /> New Work Order
+          </Link>
+        </div>
+      </div>
 
       {/* KPI Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">

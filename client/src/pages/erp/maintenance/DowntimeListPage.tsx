@@ -74,19 +74,27 @@ const DowntimeListPage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6">
-      <ERPPageHeader
-        title="Asset Breakdown & Downtime Monitoring"
-        subtitle="Track equipment stoppage duration, active breakdown events & MTTR metrics"
-        actions={
-          <button
-            onClick={() => setShowCreateModal(true)}
-            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white bg-red-600 rounded-lg hover:bg-red-700 transition-colors shadow-sm"
-          >
-            <AlertTriangle className="w-4 h-4" /> Record Asset Stoppage
-          </button>
-        }
-      />
+    <div className="space-y-6 animate-fadeIn w-full text-slate-800">
+      {/* Modern Header Banner */}
+      <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <div className="p-3 bg-rose-50 text-rose-600 rounded-xl border border-rose-200 shrink-0">
+            <Timer className="w-7 h-7" />
+          </div>
+          <div>
+            <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Asset Breakdown & Downtime Monitoring</h1>
+            <p className="text-sm text-slate-500 mt-0.5">
+              Track equipment stoppage duration, active breakdown events & MTTR metrics
+            </p>
+          </div>
+        </div>
+        <button
+          onClick={() => setShowCreateModal(true)}
+          className="inline-flex items-center justify-center gap-2 px-4 py-2.5 text-xs font-semibold text-white bg-rose-600 rounded-xl hover:bg-rose-700 transition-colors shadow-xs shrink-0"
+        >
+          <AlertTriangle className="w-4 h-4" /> Record Asset Stoppage
+        </button>
+      </div>
 
       {loading ? (
         <LoadingState message="Loading downtime records..." />
@@ -100,9 +108,9 @@ const DowntimeListPage: React.FC = () => {
           onAction={() => setShowCreateModal(true)}
         />
       ) : (
-        <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+        <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-x-auto">
           <table className="w-full text-left text-sm">
-            <thead className="bg-slate-50 text-slate-600 font-semibold border-b border-slate-200 uppercase text-xs">
+            <thead className="bg-slate-50 text-slate-600 font-semibold border-b border-slate-200 uppercase text-xs whitespace-nowrap">
               <tr>
                 <th className="py-3.5 px-4">Asset Equipment</th>
                 <th className="py-3.5 px-4">Start Time</th>
@@ -115,24 +123,24 @@ const DowntimeListPage: React.FC = () => {
             </thead>
             <tbody className="divide-y divide-slate-100">
               {downtimes.map((d) => (
-                <tr key={d.id} className="hover:bg-slate-50 transition-colors">
-                  <td className="py-3 px-4 font-medium text-slate-900">{d.assets?.name || 'Asset'}</td>
-                  <td className="py-3 px-4 text-xs">{new Date(d.start_time).toLocaleString()}</td>
-                  <td className="py-3 px-4 text-xs">{d.end_time ? new Date(d.end_time).toLocaleString() : 'Ongoing'}</td>
-                  <td className="py-3 px-4 font-mono font-bold text-slate-800">{d.duration_minutes || '—'}</td>
+                <tr key={d.id} className="hover:bg-slate-50/80 transition-colors">
+                  <td className="py-3 px-4 font-medium text-slate-900 whitespace-nowrap">{d.assets?.name || 'Asset'}</td>
+                  <td className="py-3 px-4 text-xs whitespace-nowrap">{new Date(d.start_time).toLocaleString()}</td>
+                  <td className="py-3 px-4 text-xs whitespace-nowrap">{d.end_time ? new Date(d.end_time).toLocaleString() : 'Ongoing'}</td>
+                  <td className="py-3 px-4 font-mono font-bold text-slate-800 whitespace-nowrap">{d.duration_minutes || '—'}</td>
                   <td className="py-3 px-4 text-xs font-medium text-slate-800">{d.reason}</td>
-                  <td className="py-3 px-4">
-                    <span className={`px-2 py-0.5 text-xs font-semibold rounded ${
-                      d.status === 'COMPLETED' ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-800 animate-pulse'
+                  <td className="py-3 px-4 whitespace-nowrap">
+                    <span className={`inline-flex items-center px-2.5 py-1 text-xs font-semibold rounded-lg whitespace-nowrap ${
+                      d.status === 'COMPLETED' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-rose-50 text-rose-700 border border-rose-200 animate-pulse'
                     }`}>
-                      {d.status}
+                      {d.status.replace(/_/g, ' ')}
                     </span>
                   </td>
-                  <td className="py-3 px-4 text-right">
+                  <td className="py-3 px-4 text-right whitespace-nowrap">
                     {d.status === 'ACTIVE' && (
                       <button
                         onClick={() => handleCloseDowntime(d.id)}
-                        className="px-3 py-1.5 text-xs font-semibold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 rounded-lg transition-colors"
+                        className="px-3 py-1.5 text-xs font-semibold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 rounded-lg transition-colors border border-emerald-200"
                       >
                         Close Downtime
                       </button>

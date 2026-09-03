@@ -85,13 +85,13 @@ const SparePartsPage: React.FC = () => {
     {
       header: 'Work Order #',
       accessor: (row: any) => (
-        <span className="font-semibold text-slate-900 font-mono text-sm">{row.work_order_number}</span>
+        <span className="font-semibold text-slate-900 font-mono text-sm whitespace-nowrap">{row.work_order_number}</span>
       )
     },
     {
       header: 'Title / Equipment',
       accessor: (row: any) => (
-        <div>
+        <div className="whitespace-nowrap">
           <div className="font-medium text-slate-900">{row.title}</div>
           <div className="text-xs text-slate-500">{row.assets?.name || 'N/A'}</div>
         </div>
@@ -100,7 +100,7 @@ const SparePartsPage: React.FC = () => {
     {
       header: 'Assigned Technician',
       accessor: (row: any) => (
-        <span className="text-slate-700 text-xs font-medium">
+        <span className="text-slate-700 text-xs font-medium whitespace-nowrap">
           {row.assigned_profile?.full_name || row.assigned_profile?.email || 'Unassigned'}
         </span>
       )
@@ -108,7 +108,7 @@ const SparePartsPage: React.FC = () => {
     {
       header: 'Parts Consumed',
       accessor: (row: any) => (
-        <span className="font-mono text-xs font-semibold text-slate-800">
+        <span className="font-mono text-xs font-semibold text-slate-800 whitespace-nowrap">
           {row.parts?.length || 0} Parts Issued
         </span>
       )
@@ -116,27 +116,35 @@ const SparePartsPage: React.FC = () => {
     {
       header: 'WO Status',
       accessor: (row: any) => (
-        <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200">
-          {row.status}
+        <span className="inline-flex items-center text-xs font-semibold px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 border border-slate-200 whitespace-nowrap">
+          {row.status ? row.status.replace(/_/g, ' ') : 'OPEN'}
         </span>
       )
     }
   ];
 
   return (
-    <div className="space-y-6">
-      <ERPPageHeader
-        title="Maintenance Spare Parts & Inventory Issue"
-        subtitle="Issue spare parts directly from plant warehouses for work order repairs with strict stock validation."
-        actions={
-          <button
-            onClick={() => setIsModalOpen(true)}
-            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-lg shadow-sm hover:bg-indigo-700"
-          >
-            <Plus className="w-4 h-4" /> Issue Spare Part to WO
-          </button>
-        }
-      />
+    <div className="space-y-6 animate-fadeIn w-full text-slate-800">
+      {/* Modern Header Banner */}
+      <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <div className="p-3 bg-indigo-50 text-indigo-600 rounded-xl border border-indigo-200 shrink-0">
+            <Package className="w-7 h-7" />
+          </div>
+          <div>
+            <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Maintenance Spare Parts & Inventory Issue</h1>
+            <p className="text-sm text-slate-500 mt-0.5">
+              Issue spare parts directly from plant warehouses for work order repairs with strict stock validation
+            </p>
+          </div>
+        </div>
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="inline-flex items-center justify-center gap-2 px-4 py-2.5 text-xs font-semibold text-white bg-indigo-600 rounded-xl hover:bg-indigo-700 transition-colors shadow-xs shrink-0"
+        >
+          <Plus className="w-4 h-4" /> Issue Spare Part to WO
+        </button>
+      </div>
 
       {loading ? (
         <LoadingState message="Loading work order spare parts consumption..." />

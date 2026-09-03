@@ -109,7 +109,7 @@ export const RoutingFormPage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6 animate-fadeIn max-w-4xl mx-auto text-slate-800">
+    <div className="space-y-6 animate-fadeIn w-full text-slate-800">
       <div className="flex items-center gap-3">
         <button
           onClick={() => navigate(`${ERP_BASE_PATH}/production/routings`)}

@@ -132,7 +132,7 @@ const ProductionPlanFormPage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6 max-w-5xl mx-auto">
+    <div className="space-y-6 animate-fadeIn w-full text-slate-800">
       <ERPPageHeader
         title="Create Master Production Plan"
         subtitle="Define planning window, select products, and allocate sales order demand"

@@ -31,7 +31,7 @@ export const RoutingDetailPage: React.FC = () => {
   if (!routing) return <div className="p-12 text-center text-slate-400">Routing not found.</div>;
 
   return (
-    <div className="space-y-6 animate-fadeIn max-w-4xl mx-auto">
+    <div className="space-y-6 animate-fadeIn w-full text-slate-800">
       <div className="flex items-center gap-3">
         <button
           onClick={() => navigate(`${ERP_BASE_PATH}/production/routings`)}

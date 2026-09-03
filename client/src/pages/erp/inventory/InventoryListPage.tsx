@@ -254,19 +254,19 @@ export const InventoryListPage: React.FC = () => {
       <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-xs">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs text-slate-700">
-            <thead className="bg-slate-50 text-[11px] font-bold uppercase tracking-wider text-slate-500 border-b border-slate-200">
+            <thead className="bg-slate-50 dark:bg-[#0B1E36] text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-800">
               <tr>
-                <th className="px-4 py-3.5">Product Code</th>
-                <th className="px-4 py-3.5">Product Name</th>
-                <th className="px-4 py-3.5">Warehouse / Location</th>
-                <th className="px-4 py-3.5 text-right">On Hand</th>
-                <th className="px-4 py-3.5 text-right">Reserved</th>
-                <th className="px-4 py-3.5 text-right">Available</th>
-                <th className="px-4 py-3.5 text-center">Status</th>
-                <th className="px-4 py-3.5 text-right">Actions</th>
+                <th className="px-4 py-3.5 whitespace-nowrap">Product Code</th>
+                <th className="px-4 py-3.5 whitespace-nowrap">Product Name</th>
+                <th className="px-4 py-3.5 whitespace-nowrap">Warehouse / Location</th>
+                <th className="px-4 py-3.5 text-right whitespace-nowrap">On Hand</th>
+                <th className="px-4 py-3.5 text-right whitespace-nowrap">Reserved</th>
+                <th className="px-4 py-3.5 text-right whitespace-nowrap">Available</th>
+                <th className="px-4 py-3.5 text-center whitespace-nowrap">Status</th>
+                <th className="px-4 py-3.5 text-right whitespace-nowrap">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
               {loading ? (
                 <tr>
                   <td colSpan={8} className="px-4 py-12 text-center text-slate-500">
@@ -298,56 +298,58 @@ export const InventoryListPage: React.FC = () => {
                     <tr
                       key={item.id}
                       onClick={() => navigate(`${ERP_BASE_PATH}/inventory/${item.product_id}`)}
-                      className="hover:bg-slate-50/60 cursor-pointer transition"
+                      className="hover:bg-slate-50/60 dark:hover:bg-[#163761]/50 cursor-pointer transition"
                     >
-                      <td className="px-4 py-3 font-mono font-bold text-indigo-700">
-                        {prod?.product_code || '—'}
+                      <td className="px-4 py-3 font-mono font-bold text-indigo-700 dark:text-indigo-400 whitespace-nowrap">
+                        <span className="inline-block bg-indigo-50 dark:bg-indigo-950/50 px-2.5 py-1 rounded-lg border border-indigo-100 dark:border-indigo-800 whitespace-nowrap">
+                          {prod?.product_code || '—'}
+                        </span>
                       </td>
-                      <td className="px-4 py-3 font-bold text-slate-900">
+                      <td className="px-4 py-3 font-bold text-slate-900 dark:text-white whitespace-nowrap">
                         <div>{prod?.name || 'Unknown Product'}</div>
                         {prod?.drawing_number && (
-                          <div className="text-[11px] text-slate-500 font-mono">Drawing: {prod.drawing_number}</div>
+                          <div className="text-[11px] text-slate-500 dark:text-slate-400 font-mono">Drawing: {prod.drawing_number}</div>
                         )}
                       </td>
-                      <td className="px-4 py-3">
-                        <div className="font-semibold text-slate-800">{wh?.name || 'Main Warehouse'}</div>
-                        <div className="text-[11px] text-slate-500 flex items-center gap-1 font-mono">
-                          <span className="text-indigo-700 font-semibold">{wh?.code}</span>
+                      <td className="px-4 py-3 whitespace-nowrap">
+                        <div className="font-semibold text-slate-800 dark:text-slate-200">{wh?.name || 'Main Warehouse'}</div>
+                        <div className="text-[11px] text-slate-500 dark:text-slate-400 flex items-center gap-1 font-mono">
+                          <span className="text-indigo-700 dark:text-indigo-400 font-semibold">{wh?.code}</span>
                           {loc && <span className="text-slate-400">/ {loc.location_code}</span>}
                         </div>
                       </td>
-                      <td className="px-4 py-3 text-right font-bold text-slate-900">
+                      <td className="px-4 py-3 text-right font-bold text-slate-900 dark:text-white whitespace-nowrap">
                         {item.on_hand_quantity.toLocaleString()}{' '}
-                        <span className="text-xs text-slate-500 font-normal">{prod?.unit || 'pcs'}</span>
+                        <span className="text-xs text-slate-500 dark:text-slate-400 font-normal">{prod?.unit || 'pcs'}</span>
                       </td>
-                      <td className="px-4 py-3 text-right text-slate-500 font-medium">
+                      <td className="px-4 py-3 text-right text-slate-500 dark:text-slate-400 font-medium whitespace-nowrap">
                         {item.reserved_quantity.toLocaleString()}
                       </td>
-                      <td className="px-4 py-3 text-right font-bold text-emerald-700">
+                      <td className="px-4 py-3 text-right font-bold text-emerald-700 dark:text-emerald-400 whitespace-nowrap">
                         {item.available_quantity.toLocaleString()}
                       </td>
-                      <td className="px-4 py-3 text-center">
+                      <td className="px-4 py-3 text-center whitespace-nowrap">
                         {item.status === 'in_stock' && (
-                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 whitespace-nowrap">
+                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 whitespace-nowrap">
                             <CheckCircle2 className="w-3 h-3" />
                             In Stock
                           </span>
                         )}
                         {item.status === 'low_stock' && (
-                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-amber-50 text-amber-700 border border-amber-200 whitespace-nowrap">
+                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-amber-50 dark:bg-amber-950/50 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800 whitespace-nowrap">
                             <AlertTriangle className="w-3 h-3" />
                             Low Stock
                           </span>
                         )}
                         {item.status === 'out_of_stock' && (
-                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-rose-50 text-rose-700 border border-rose-200 whitespace-nowrap">
+                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-rose-50 dark:bg-rose-950/50 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800 whitespace-nowrap">
                             <XCircle className="w-3 h-3" />
                             Out of Stock
                           </span>
                         )}
                       </td>
-                      <td className="px-4 py-3 text-right">
-                        <span className="inline-flex items-center gap-1 text-xs text-indigo-600 hover:text-indigo-700 font-semibold">
+                      <td className="px-4 py-3 text-right whitespace-nowrap">
+                        <span className="inline-flex items-center gap-1 text-xs text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 font-semibold">
                           <span>Details</span>
                           <ChevronRight className="w-3.5 h-3.5" />
                         </span>

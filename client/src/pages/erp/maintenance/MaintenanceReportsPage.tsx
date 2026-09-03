@@ -33,37 +33,45 @@ const MaintenanceReportsPage: React.FC = () => {
   }, [reportType]);
 
   const historyColumns = [
-    { header: 'WO Number', accessor: (row: any) => <span className="font-mono text-sm font-semibold text-slate-900">{row.work_order_number}</span> },
-    { header: 'Title', accessor: (row: any) => <span className="text-slate-900 font-medium">{row.title}</span> },
-    { header: 'Asset', accessor: (row: any) => <span className="text-slate-700">{row.assets?.name || 'N/A'}</span> },
-    { header: 'Type', accessor: (row: any) => <span className="text-xs bg-slate-100 border border-slate-200 px-2 py-0.5 rounded-full font-medium">{row.maintenance_type}</span> },
-    { header: 'Status', accessor: (row: any) => <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">{row.status}</span> },
-    { header: 'Completed Date', accessor: (row: any) => <span className="text-xs text-slate-500">{row.actual_end ? new Date(row.actual_end).toLocaleDateString() : 'N/A'}</span> }
+    { header: 'WO Number', accessor: (row: any) => <span className="font-mono text-sm font-semibold text-slate-900 whitespace-nowrap">{row.work_order_number}</span> },
+    { header: 'Title', accessor: (row: any) => <span className="text-slate-900 font-medium whitespace-nowrap">{row.title}</span> },
+    { header: 'Asset', accessor: (row: any) => <span className="text-slate-700 whitespace-nowrap">{row.assets?.name || 'N/A'}</span> },
+    { header: 'Type', accessor: (row: any) => <span className="text-xs bg-slate-100 border border-slate-200 px-2.5 py-1 rounded-lg font-semibold whitespace-nowrap">{row.maintenance_type ? row.maintenance_type.replace(/_/g, ' ') : ''}</span> },
+    { header: 'Status', accessor: (row: any) => <span className="text-xs font-semibold px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200 whitespace-nowrap">{row.status ? row.status.replace(/_/g, ' ') : ''}</span> },
+    { header: 'Completed Date', accessor: (row: any) => <span className="text-xs text-slate-500 whitespace-nowrap">{row.actual_end ? new Date(row.actual_end).toLocaleDateString() : 'N/A'}</span> }
   ];
 
   return (
-    <div className="space-y-6">
-      <ERPPageHeader
-        title="Maintenance Analytical Reports & Audits"
-        subtitle="Generate, filter, and export comprehensive equipment history, breakdown frequency, downtime impact, and cost analytics."
-        actions={
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => window.print()}
-              className="inline-flex items-center gap-2 px-3.5 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-50"
-            >
-              <Printer className="w-4 h-4" /> Print / Export PDF
-            </button>
-            <button
-              onClick={fetchReport}
-              className="p-2 text-slate-600 border border-slate-200 rounded-lg hover:bg-slate-50"
-              title="Refresh Report"
-            >
-              <RefreshCw className="w-4 h-4" />
-            </button>
+    <div className="space-y-6 animate-fadeIn w-full text-slate-800">
+      {/* Modern Header Banner */}
+      <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <div className="p-3 bg-indigo-50 text-indigo-600 rounded-xl border border-indigo-200 shrink-0">
+            <BarChart2 className="w-7 h-7" />
           </div>
-        }
-      />
+          <div>
+            <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Maintenance Analytical Reports & Audits</h1>
+            <p className="text-sm text-slate-500 mt-0.5">
+              Generate, filter, and export comprehensive equipment history, breakdown frequency, downtime impact, and cost analytics
+            </p>
+          </div>
+        </div>
+        <div className="flex items-center gap-3 shrink-0">
+          <button
+            onClick={() => window.print()}
+            className="inline-flex items-center gap-2 px-4 py-2.5 text-xs font-semibold text-slate-700 bg-slate-100 border border-slate-200 rounded-xl hover:bg-slate-200 transition-colors"
+          >
+            <Printer className="w-4 h-4" /> Print / Export PDF
+          </button>
+          <button
+            onClick={fetchReport}
+            className="p-2 text-slate-600 border border-slate-200 rounded-xl hover:bg-slate-50 transition-colors"
+            title="Refresh Report"
+          >
+            <RefreshCw className="w-4 h-4" />
+          </button>
+        </div>
+      </div>
 
       {/* Report Selection Bar */}
       <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-wrap gap-4 items-center justify-between">

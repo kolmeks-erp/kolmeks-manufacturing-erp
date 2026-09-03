@@ -113,7 +113,7 @@ const BreakdownListPage: React.FC = () => {
     {
       header: 'Breakdown #',
       accessor: (row: Breakdown) => (
-        <span className="font-semibold text-slate-900 font-mono text-sm">
+        <span className="font-semibold text-slate-900 font-mono text-sm whitespace-nowrap">
           {row.breakdown_number}
         </span>
       )
@@ -121,7 +121,7 @@ const BreakdownListPage: React.FC = () => {
     {
       header: 'Asset / Machine',
       accessor: (row: Breakdown) => (
-        <div>
+        <div className="whitespace-nowrap">
           <div className="font-medium text-slate-900">{row.assets?.name || 'N/A'}</div>
           <div className="text-xs text-slate-500 font-mono">{row.assets?.asset_code}</div>
         </div>
@@ -130,7 +130,7 @@ const BreakdownListPage: React.FC = () => {
     {
       header: 'Type',
       accessor: (row: Breakdown) => (
-        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-800 border border-slate-200">
+        <span className="inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-800 border border-slate-200 whitespace-nowrap">
           {row.failure_type}
         </span>
       )
@@ -139,13 +139,13 @@ const BreakdownListPage: React.FC = () => {
       header: 'Severity',
       accessor: (row: Breakdown) => {
         const severityMap: Record<string, string> = {
-          CRITICAL: 'bg-red-100 text-red-800 border-red-200',
-          HIGH: 'bg-amber-100 text-amber-800 border-amber-200',
-          MEDIUM: 'bg-blue-100 text-blue-800 border-blue-200',
+          CRITICAL: 'bg-rose-50 text-rose-700 border-rose-200',
+          HIGH: 'bg-amber-50 text-amber-700 border-amber-200',
+          MEDIUM: 'bg-blue-50 text-blue-700 border-blue-200',
           LOW: 'bg-slate-100 text-slate-700 border-slate-200'
         };
         return (
-          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold border ${severityMap[row.severity] || severityMap.MEDIUM}`}>
+          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-semibold border whitespace-nowrap ${severityMap[row.severity] || severityMap.MEDIUM}`}>
             {row.severity}
           </span>
         );
@@ -154,7 +154,7 @@ const BreakdownListPage: React.FC = () => {
     {
       header: 'Downtime (Mins)',
       accessor: (row: Breakdown) => (
-        <span className="font-mono text-sm font-medium text-slate-700">
+        <span className="font-mono text-sm font-medium text-slate-700 whitespace-nowrap">
           {row.downtime_minutes || 0} mins
         </span>
       )
@@ -162,17 +162,23 @@ const BreakdownListPage: React.FC = () => {
     {
       header: 'Status',
       accessor: (row: Breakdown) => (
-        <StatusBadge status={row.status} />
+        <span className={`inline-flex items-center px-2.5 py-1 text-xs font-semibold rounded-lg whitespace-nowrap ${
+          row.status === 'CONVERTED_TO_WORK_ORDER' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' :
+          row.status === 'OPEN' ? 'bg-rose-50 text-rose-700 border border-rose-200' :
+          'bg-slate-100 text-slate-700 border border-slate-200'
+        }`}>
+          {row.status === 'CONVERTED_TO_WORK_ORDER' ? 'CONVERTED TO WORK ORDER' : row.status.replace(/_/g, ' ')}
+        </span>
       )
     },
     {
       header: 'Actions',
       accessor: (row: Breakdown) => (
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 whitespace-nowrap">
           {row.status === 'OPEN' && (
             <button
               onClick={() => { setSelectedBreakdown(row); setIsConvertModalOpen(true); }}
-              className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium text-indigo-700 bg-indigo-50 border border-indigo-200 rounded-md hover:bg-indigo-100"
+              className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-semibold text-indigo-700 bg-indigo-50 border border-indigo-200 rounded-lg hover:bg-indigo-100 whitespace-nowrap"
             >
               <ArrowRight className="w-3.5 h-3.5" /> Convert to WO
             </button>
@@ -183,22 +189,30 @@ const BreakdownListPage: React.FC = () => {
   ];
 
   return (
-    <div className="space-y-6">
-      <ERPPageHeader
-        title="Equipment Breakdowns & Downtime Tracking"
-        subtitle="Record unplanned machine breakdowns, classify failure roots, and auto-dispatch emergency maintenance work orders."
-        actions={
-          <button
-            onClick={() => setIsCreateModalOpen(true)}
-            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-lg shadow-sm hover:bg-red-700 transition-colors"
-          >
-            <Plus className="w-4 h-4" /> Report Equipment Breakdown
-          </button>
-        }
-      />
+    <div className="space-y-6 animate-fadeIn w-full text-slate-800">
+      {/* Modern Header Banner */}
+      <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <div className="p-3 bg-rose-50 text-rose-600 rounded-xl border border-rose-200 shrink-0">
+            <ZapOff className="w-7 h-7" />
+          </div>
+          <div>
+            <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Equipment Breakdowns & Downtime Tracking</h1>
+            <p className="text-sm text-slate-500 mt-0.5">
+              Record unplanned machine breakdowns, classify failure roots, and auto-dispatch emergency maintenance work orders
+            </p>
+          </div>
+        </div>
+        <button
+          onClick={() => setIsCreateModalOpen(true)}
+          className="inline-flex items-center justify-center gap-2 px-4 py-2.5 text-xs font-semibold text-white bg-rose-600 rounded-xl hover:bg-rose-700 transition-colors shadow-xs shrink-0"
+        >
+          <Plus className="w-4 h-4" /> Report Equipment Breakdown
+        </button>
+      </div>
 
       {/* Filter Controls */}
-      <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-wrap gap-4 items-center justify-between">
+      <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs flex flex-wrap gap-4 items-center justify-between">
         <div className="flex items-center gap-3 flex-1 min-w-[280px]">
           <div className="relative flex-1">
             <Search className="w-4 h-4 absolute left-3 top-3 text-slate-400" />
@@ -207,7 +221,7 @@ const BreakdownListPage: React.FC = () => {
               placeholder="Search breakdown #, asset name, root cause..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-9 pr-4 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full pl-9 pr-4 py-2 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
           </div>
         </div>
@@ -215,7 +229,7 @@ const BreakdownListPage: React.FC = () => {
           <select
             value={failureTypeFilter}
             onChange={(e) => setFailureTypeFilter(e.target.value)}
-            className="text-sm border border-slate-200 rounded-lg px-3 py-2 bg-white text-slate-700 focus:ring-2 focus:ring-indigo-500"
+            className="text-sm border border-slate-200 rounded-xl px-3 py-2 bg-slate-50 text-slate-700 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
           >
             <option value="">All Failure Types</option>
             <option value="MECHANICAL">Mechanical</option>
@@ -229,19 +243,19 @@ const BreakdownListPage: React.FC = () => {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="text-sm border border-slate-200 rounded-lg px-3 py-2 bg-white text-slate-700 focus:ring-2 focus:ring-indigo-500"
+            className="text-sm border border-slate-200 rounded-xl px-3 py-2 bg-slate-50 text-slate-700 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
           >
             <option value="">All Statuses</option>
-            <option value="OPEN">OPEN</option>
-            <option value="INVESTIGATING">INVESTIGATING</option>
-            <option value="CONVERTED_TO_WORK_ORDER">CONVERTED_TO_WORK_ORDER</option>
-            <option value="RESOLVED">RESOLVED</option>
-            <option value="CLOSED">CLOSED</option>
+            <option value="OPEN">Open</option>
+            <option value="INVESTIGATING">Investigating</option>
+            <option value="CONVERTED_TO_WORK_ORDER">Converted to Work Order</option>
+            <option value="RESOLVED">Resolved</option>
+            <option value="CLOSED">Closed</option>
           </select>
 
           <button
             onClick={fetchBreakdowns}
-            className="p-2 text-slate-600 border border-slate-200 rounded-lg hover:bg-slate-50"
+            className="p-2 text-slate-600 border border-slate-200 rounded-xl hover:bg-slate-50 transition-colors"
             title="Refresh"
           >
             <RefreshCw className="w-4 h-4" />

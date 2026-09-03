@@ -98,44 +98,58 @@ export const ProductDetailPage: React.FC = () => {
   }
 
   return (
-    <div className="space-y-6 max-w-5xl mx-auto">
-      {/* PAGE HEADER */}
-      <PageHeader
-        title={`${product.name}`}
-        description={`Product Code: ${product.product_code}`}
-        badge="Product Detail"
-        actions={
+    <div className="space-y-6 max-w-5xl mx-auto animate-fadeIn text-slate-800 dark:text-slate-100">
+      {/* Modern Header Banner */}
+      <div className="bg-white dark:bg-[#0F2647] p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <div className="p-3 bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 rounded-xl border border-blue-100 dark:border-blue-800 shrink-0">
+            <Package className="w-7 h-7" />
+          </div>
+          <div>
+            <div className="flex items-center gap-2">
+              <h1 className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">{product.name}</h1>
+              <span className="text-xs font-semibold px-2.5 py-0.5 rounded-md bg-blue-50 dark:bg-blue-950/50 text-blue-800 dark:text-blue-300 border border-blue-200 dark:border-blue-800 whitespace-nowrap">
+                Product Profile
+              </span>
+            </div>
+            <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">
+              Code: <span className="font-mono font-bold text-blue-700 dark:text-blue-400">{product.product_code}</span> • Detailed specification, revision logs, and master item telemetry.
+            </p>
+          </div>
+        </div>
+
+        <div className="shrink-0">
           <button
             type="button"
             onClick={() => navigate(`${ERP_BASE_PATH}/products`)}
-            className="inline-flex items-center gap-2 px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-lg transition-colors"
+            className="inline-flex items-center gap-2 px-3.5 py-2.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-bold rounded-xl transition-colors cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>Back to Products</span>
           </button>
-        }
-      />
+        </div>
+      </div>
 
       {/* HERO HEADER CARD */}
-      <div className="bg-white p-6 rounded-xl shadow-xs border border-slate-200 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+      <div className="bg-white dark:bg-[#0F2647] p-6 rounded-2xl shadow-xs border border-slate-200 dark:border-slate-800 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         <div className="flex items-center gap-4">
-          <div className="w-16 h-16 rounded-xl bg-blue-50 border border-blue-200 flex items-center justify-center shrink-0">
-            <Package className="w-8 h-8 text-blue-600" />
+          <div className="w-16 h-16 rounded-xl bg-blue-50 dark:bg-blue-950/50 border border-blue-200 dark:border-blue-800 flex items-center justify-center shrink-0">
+            <Package className="w-8 h-8 text-blue-600 dark:text-blue-400" />
           </div>
 
           <div>
             <div className="flex flex-wrap items-center gap-2 mb-1">
-              <span className="font-mono text-xs font-bold text-blue-700 bg-blue-50 px-2.5 py-0.5 rounded border border-blue-200">
+              <span className="font-mono text-xs font-bold text-blue-700 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/50 px-2.5 py-0.5 rounded-lg border border-blue-200 dark:border-blue-800 whitespace-nowrap inline-block">
                 {product.product_code}
               </span>
               <StatusBadge status={product.status} />
-              <span className="text-xs font-mono font-bold bg-slate-100 text-slate-700 px-2 py-0.5 rounded border border-slate-200">
+              <span className="text-xs font-mono font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-2.5 py-0.5 rounded-lg border border-slate-200 dark:border-slate-700 whitespace-nowrap inline-block">
                 REV: {product.revision || 'R0'}
               </span>
             </div>
 
-            <h1 className="text-xl font-bold text-slate-900">{product.name}</h1>
-            <p className="text-xs text-slate-500 font-mono mt-0.5">
+            <h2 className="text-xl font-bold text-slate-900 dark:text-white">{product.name}</h2>
+            <p className="text-xs text-slate-500 dark:text-slate-400 font-mono mt-0.5">
               Category: {product.category?.name || 'Unassigned'} • Type: {product.product_type}
             </p>
           </div>

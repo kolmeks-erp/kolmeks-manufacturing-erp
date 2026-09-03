@@ -36,15 +36,19 @@ export const OperationBoardPage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6 animate-fadeIn">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200 mb-2">
-            <GitFork className="w-3.5 h-3.5" />
-            <span>Shop Floor Dispatch</span>
+    <div className="space-y-6 animate-fadeIn w-full text-slate-800">
+      {/* Header Banner */}
+      <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <div className="p-3 bg-indigo-50 text-indigo-600 rounded-xl border border-indigo-200 shrink-0">
+            <GitFork className="w-7 h-7" />
           </div>
-          <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Active Operation Dispatch Board</h1>
-          <p className="text-slate-500 text-sm">Real-time status updates for in-progress shop floor machine operations.</p>
+          <div>
+            <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Active Operation Dispatch Board</h1>
+            <p className="text-sm text-slate-500 mt-0.5">
+              Real-time status updates for in-progress shop floor machine operations
+            </p>
+          </div>
         </div>
       </div>
 

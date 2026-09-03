@@ -213,7 +213,7 @@ export const ProductionOrderDetailPage: React.FC = () => {
   const pct = planned > 0 ? Math.min(100, Math.round((completed / planned) * 100)) : 0;
 
   return (
-    <div className="space-y-6 animate-fadeIn max-w-6xl mx-auto">
+    <div className="space-y-6 animate-fadeIn w-full text-slate-800">
       {/* Top Bar */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div className="flex items-center gap-3">

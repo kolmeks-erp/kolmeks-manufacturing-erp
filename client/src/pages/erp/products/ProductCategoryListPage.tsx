@@ -149,51 +149,63 @@ export const ProductCategoryListPage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6">
-      {/* PAGE HEADER */}
-      <PageHeader
-        title="Product Categories"
-        description="Organize engineered products and components into structured manufacturing categories."
-        badge="Products Module"
-        actions={
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={() => navigate(`${ERP_BASE_PATH}/products`)}
-              className="inline-flex items-center gap-2 px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-lg transition-colors"
-            >
-              <Package className="w-4 h-4" />
-              <span>Products Master</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={handleOpenCreateModal}
-              className="inline-flex items-center gap-2 px-4 py-2 bg-[#0B1E36] hover:bg-[#0F2C59] text-white text-xs font-bold rounded-lg shadow-xs transition-colors"
-            >
-              <Plus className="w-4 h-4" />
-              <span>Add Category</span>
-            </button>
+    <div className="space-y-6 animate-fadeIn w-full text-slate-800 dark:text-slate-100">
+      {/* Modern Header Banner */}
+      <div className="bg-white dark:bg-[#0F2647] p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <div className="p-3 bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 rounded-xl border border-blue-100 dark:border-blue-800 shrink-0">
+            <FolderTree className="w-7 h-7" />
           </div>
-        }
-      />
+          <div>
+            <div className="flex items-center gap-2">
+              <h1 className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Product Categories</h1>
+              <span className="text-xs font-semibold px-2.5 py-0.5 rounded-md bg-blue-50 dark:bg-blue-950/50 text-blue-800 dark:text-blue-300 border border-blue-200 dark:border-blue-800 whitespace-nowrap">
+                Products Module
+              </span>
+            </div>
+            <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">
+              Organize engineered products and components into structured manufacturing categories.
+            </p>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-2.5 shrink-0">
+          <button
+            type="button"
+            onClick={() => navigate(`${ERP_BASE_PATH}/products`)}
+            className="inline-flex items-center gap-2 px-3.5 py-2.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-bold rounded-xl transition-colors cursor-pointer"
+          >
+            <Package className="w-4 h-4" />
+            <span>Products Master</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={handleOpenCreateModal}
+            className="inline-flex items-center gap-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl shadow-xs transition-colors cursor-pointer"
+          >
+            <Plus className="w-4 h-4" />
+            <span>Add Category</span>
+          </button>
+        </div>
+      </div>
 
       {/* SEARCH TOOLBAR */}
-      <div className="bg-white p-4 rounded-xl shadow-xs border border-slate-200 flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between">
+      <div className="bg-white dark:bg-[#0F2647] p-4 rounded-2xl shadow-xs border border-slate-200 dark:border-slate-800 flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between">
         <div className="relative flex-1 min-w-[240px]">
-          <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+          <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500" />
           <input
             type="text"
             placeholder="Search categories by name or description..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-9 pr-4 py-2 text-xs bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-medium"
+            className="w-full pl-9 pr-4 py-2 text-xs bg-slate-50 dark:bg-[#071220] border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 font-medium"
           />
           {searchTerm && (
             <button
               type="button"
               onClick={() => setSearchTerm('')}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300"
             >
               <XCircle className="w-4 h-4" />
             </button>
@@ -203,7 +215,7 @@ export const ProductCategoryListPage: React.FC = () => {
         <button
           type="button"
           onClick={fetchCategories}
-          className="p-2 text-slate-500 hover:text-slate-800 bg-slate-50 hover:bg-slate-100 border border-slate-300 rounded-lg transition-colors flex items-center justify-center shrink-0"
+          className="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-700 rounded-xl transition-colors flex items-center justify-center shrink-0 cursor-pointer"
           title="Refresh List"
         >
           <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} />
@@ -212,7 +224,7 @@ export const ProductCategoryListPage: React.FC = () => {
 
       {/* MAIN ERROR ALERT */}
       {error && (
-        <div className="p-4 bg-red-50 border border-red-200 rounded-xl text-red-700 text-xs flex items-center gap-3">
+        <div className="p-4 bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 rounded-xl text-red-700 dark:text-red-300 text-xs flex items-center gap-3">
           <AlertCircle className="w-5 h-5 shrink-0" />
           <span>{error}</span>
         </div>
@@ -220,8 +232,8 @@ export const ProductCategoryListPage: React.FC = () => {
 
       {/* DATA TABLE */}
       {isLoading ? (
-        <div className="bg-white p-8 rounded-2xl border border-slate-200 text-center text-xs text-slate-500">
-          <RefreshCw className="w-6 h-6 animate-spin mx-auto text-blue-600 mb-2" />
+        <div className="bg-white dark:bg-[#0F2647] p-8 rounded-2xl border border-slate-200 dark:border-slate-800 text-center text-xs text-slate-500 dark:text-slate-400">
+          <RefreshCw className="w-6 h-6 animate-spin mx-auto text-blue-600 dark:text-blue-400 mb-2" />
           Loading product categories...
         </div>
       ) : filteredCategories.length === 0 ? (
@@ -233,37 +245,37 @@ export const ProductCategoryListPage: React.FC = () => {
           onAction={handleOpenCreateModal}
         />
       ) : (
-        <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
+        <div className="bg-white dark:bg-[#0F2647] rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
-              <thead className="bg-slate-50 text-slate-500 uppercase font-mono text-[10px] tracking-wider border-b border-slate-100">
+              <thead className="bg-slate-50 dark:bg-[#0B1E36] text-slate-500 dark:text-slate-400 uppercase font-mono text-[10px] tracking-wider border-b border-slate-100 dark:border-slate-800">
                 <tr>
-                  <th className="py-3.5 px-5">Category Name</th>
-                  <th className="py-3.5 px-5">Assigned Products</th>
-                  <th className="py-3.5 px-5">Status</th>
-                  <th className="py-3.5 px-5">Updated Date</th>
-                  <th className="py-3.5 px-5 text-right">Actions</th>
+                  <th className="py-3.5 px-5 whitespace-nowrap font-bold">Category Name</th>
+                  <th className="py-3.5 px-5 whitespace-nowrap font-bold">Assigned Products</th>
+                  <th className="py-3.5 px-5 whitespace-nowrap font-bold">Status</th>
+                  <th className="py-3.5 px-5 whitespace-nowrap font-bold">Updated Date</th>
+                  <th className="py-3.5 px-5 text-right whitespace-nowrap font-bold">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100 font-sans text-slate-800">
+              <tbody className="divide-y divide-slate-100 dark:divide-slate-800 font-sans text-slate-800 dark:text-slate-200">
                 {filteredCategories.map((cat) => (
-                  <tr key={cat.id} className="hover:bg-slate-50/80 transition-colors">
-                    <td className="py-3.5 px-5">
-                      <span className="font-bold text-slate-900 block">{cat.name}</span>
+                  <tr key={cat.id} className="hover:bg-slate-50/80 dark:hover:bg-[#163761]/50 transition-colors">
+                    <td className="py-3.5 px-5 whitespace-nowrap">
+                      <span className="font-bold text-slate-900 dark:text-white block">{cat.name}</span>
                       {cat.description && (
-                        <span className="text-[11px] text-slate-500 line-clamp-1">{cat.description}</span>
+                        <span className="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-1">{cat.description}</span>
                       )}
                     </td>
-                    <td className="py-3.5 px-5">
-                      <div className="flex items-center gap-1.5 font-medium text-xs text-slate-700">
+                    <td className="py-3.5 px-5 whitespace-nowrap">
+                      <div className="flex items-center gap-1.5 font-medium text-xs text-slate-700 dark:text-slate-300">
                         <Package className="w-3.5 h-3.5 text-slate-400" />
                         <span>{cat.product_count ?? 0} Products</span>
                       </div>
                     </td>
-                    <td className="py-3.5 px-5">
+                    <td className="py-3.5 px-5 whitespace-nowrap">
                       <StatusBadge status={cat.status} />
                     </td>
-                    <td className="py-3.5 px-5 text-slate-600 font-mono">
+                    <td className="py-3.5 px-5 text-slate-600 dark:text-slate-400 font-mono whitespace-nowrap">
                       {cat.updated_at
                         ? new Date(cat.updated_at).toLocaleDateString('en-US', {
                             year: 'numeric',
@@ -272,11 +284,11 @@ export const ProductCategoryListPage: React.FC = () => {
                           })
                         : '—'}
                     </td>
-                    <td className="py-3.5 px-5 text-right space-x-1">
+                    <td className="py-3.5 px-5 text-right whitespace-nowrap space-x-1">
                       <button
                         type="button"
                         onClick={() => handleOpenEditModal(cat)}
-                        className="inline-flex items-center gap-1 p-1.5 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-lg transition-colors"
+                        className="inline-flex items-center gap-1 p-1.5 bg-blue-50 dark:bg-blue-950/50 hover:bg-blue-100 dark:hover:bg-blue-900/50 text-blue-700 dark:text-blue-300 rounded-lg transition-colors cursor-pointer"
                         title="Edit Category"
                       >
                         <Edit className="w-3.5 h-3.5" />
@@ -284,10 +296,10 @@ export const ProductCategoryListPage: React.FC = () => {
                       <button
                         type="button"
                         onClick={() => handleOpenStatusModal(cat)}
-                        className={`inline-flex items-center gap-1 p-1.5 rounded-lg transition-colors ${
+                        className={`inline-flex items-center gap-1 p-1.5 rounded-lg transition-colors cursor-pointer ${
                           cat.status === 'active'
-                            ? 'bg-red-50 hover:bg-red-100 text-red-600'
-                            : 'bg-emerald-50 hover:bg-emerald-100 text-emerald-700'
+                            ? 'bg-red-50 dark:bg-red-950/50 hover:bg-red-100 dark:hover:bg-red-900/50 text-red-600 dark:text-red-400'
+                            : 'bg-emerald-50 dark:bg-emerald-950/50 hover:bg-emerald-100 dark:hover:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300'
                         }`}
                         title={cat.status === 'active' ? 'Deactivate Category' : 'Activate Category'}
                       >

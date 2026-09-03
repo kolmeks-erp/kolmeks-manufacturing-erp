@@ -108,7 +108,7 @@ export const ProductionCostDetailPage: React.FC = () => {
   const ovhComponents = components.filter((c) => c.component_type === 'OVERHEAD');
 
   return (
-    <div className="p-6 space-y-6 max-w-7xl mx-auto">
+    <div className="space-y-6 animate-fadeIn w-full text-slate-800">
       {/* Top Bar Navigation */}
       <div className="flex items-center justify-between">
         <button

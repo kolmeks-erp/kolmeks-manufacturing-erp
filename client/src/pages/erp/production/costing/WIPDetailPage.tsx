@@ -46,7 +46,7 @@ export const WIPDetailPage: React.FC = () => {
   }
 
   return (
-    <div className="p-6 space-y-6 max-w-5xl mx-auto">
+    <div className="space-y-6 animate-fadeIn w-full text-slate-800">
       <button
         onClick={() => navigate('/secure-kolmeks-x0y0/production/wip')}
         className="flex items-center gap-2 text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white transition text-sm font-medium"

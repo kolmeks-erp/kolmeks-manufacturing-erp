@@ -28,20 +28,24 @@ export const RoutingListPage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6 animate-fadeIn text-slate-800">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-cyan-50 text-cyan-700 border border-cyan-200 mb-2">
-            <GitFork className="w-3.5 h-3.5" />
-            <span>Process Engineering</span>
+    <div className="space-y-6 animate-fadeIn w-full text-slate-800">
+      {/* Header Banner */}
+      <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <div className="p-3 bg-cyan-50 text-cyan-600 rounded-xl border border-cyan-200 shrink-0">
+            <GitFork className="w-7 h-7" />
           </div>
-          <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Manufacturing Routings</h1>
-          <p className="text-slate-500 text-sm">Sequence of work center operations, setup times, and machine routings.</p>
+          <div>
+            <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Manufacturing Routings</h1>
+            <p className="text-sm text-slate-500 mt-0.5">
+              Sequence of work center operations, setup times, and machine process engineering
+            </p>
+          </div>
         </div>
 
         <button
           onClick={() => navigate(`${ERP_BASE_PATH}/production/routings/new`)}
-          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-cyan-600 hover:bg-cyan-700 text-white font-semibold text-xs transition-all shadow-xs"
+          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-cyan-600 hover:bg-cyan-700 text-white font-semibold text-xs transition-all shadow-xs shrink-0"
         >
           <Plus className="w-4 h-4" />
           <span>New Routing Definition</span>
