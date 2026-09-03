@@ -232,7 +232,7 @@ export const WorkflowReportsPage: React.FC = () => {
           </span>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3.5">
           {(() => {
             const rawModules = reportData?.moduleCounts && Object.keys(reportData.moduleCounts).length > 0
               ? Object.entries(reportData.moduleCounts)
@@ -268,13 +268,13 @@ export const WorkflowReportsPage: React.FC = () => {
               return (
                 <div
                   key={mod}
-                  className="p-4.5 rounded-xl bg-slate-50/60 border border-slate-200/80 hover:border-indigo-300 hover:shadow-xs transition-all space-y-3"
+                  className="p-3.5 rounded-xl bg-slate-50/60 border border-slate-200/80 hover:border-indigo-300 hover:shadow-xs transition-all space-y-2.5 overflow-hidden"
                 >
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs text-slate-700 font-bold uppercase tracking-wider">
+                  <div className="flex items-center justify-between gap-2 min-w-0">
+                    <span className="text-xs text-slate-700 font-bold uppercase tracking-wider truncate" title={mod}>
                       {mod}
                     </span>
-                    <span className="text-xs font-bold text-slate-900 font-mono">
+                    <span className="text-xs font-bold text-slate-900 font-mono shrink-0 whitespace-nowrap">
                       {numCount} <span className="text-[10px] text-slate-400 font-normal">({sharePct}%)</span>
                     </span>
                   </div>
