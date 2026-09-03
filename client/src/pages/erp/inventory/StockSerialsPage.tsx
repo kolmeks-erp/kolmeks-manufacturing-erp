@@ -157,7 +157,7 @@ export const StockSerialsPage: React.FC = () => {
                     </td>
 
                     <td className="py-3.5 px-4 text-center">
-                      <span className="px-2.5 py-1 text-xs font-mono font-bold bg-emerald-50 text-emerald-700 rounded-full border border-emerald-200">
+                      <span className="inline-flex items-center justify-center whitespace-nowrap px-2.5 py-1 text-xs font-mono font-bold bg-emerald-50 text-emerald-700 rounded-full border border-emerald-200">
                         {s.status}
                       </span>
                     </td>

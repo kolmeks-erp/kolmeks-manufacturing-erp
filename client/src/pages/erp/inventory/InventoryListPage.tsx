@@ -328,19 +328,19 @@ export const InventoryListPage: React.FC = () => {
                       </td>
                       <td className="px-4 py-3 text-center">
                         {item.status === 'in_stock' && (
-                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 whitespace-nowrap">
                             <CheckCircle2 className="w-3 h-3" />
                             In Stock
                           </span>
                         )}
                         {item.status === 'low_stock' && (
-                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-amber-50 text-amber-700 border border-amber-200">
+                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-amber-50 text-amber-700 border border-amber-200 whitespace-nowrap">
                             <AlertTriangle className="w-3 h-3" />
                             Low Stock
                           </span>
                         )}
                         {item.status === 'out_of_stock' && (
-                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-rose-50 text-rose-700 border border-rose-200">
+                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-rose-50 text-rose-700 border border-rose-200 whitespace-nowrap">
                             <XCircle className="w-3 h-3" />
                             Out of Stock
                           </span>

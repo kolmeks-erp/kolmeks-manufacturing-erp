@@ -272,7 +272,7 @@ export const InventoryDashboardPage: React.FC = () => {
                 >
                   <div className="flex items-center gap-3">
                     <span
-                      className={`px-2 py-1 text-xs font-bold rounded ${
+                      className={`inline-flex items-center justify-center whitespace-nowrap px-2.5 py-1 text-xs font-bold rounded-full ${
                         item.status === 'OUT_OF_STOCK'
                           ? 'bg-rose-50 dark:bg-rose-500/20 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-500/30'
                           : 'bg-amber-50 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400 border border-amber-200 dark:border-amber-500/30'

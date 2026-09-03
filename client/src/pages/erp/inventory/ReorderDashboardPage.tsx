@@ -202,7 +202,7 @@ export const ReorderDashboardPage: React.FC = () => {
 
                     <td className="py-3.5 px-4 text-center">
                       <span
-                        className={`px-2.5 py-1 text-xs font-mono font-bold rounded-full ${
+                        className={`inline-flex items-center justify-center whitespace-nowrap px-2.5 py-1 text-xs font-mono font-bold rounded-full ${
                           item.status === 'HEALTHY'
                             ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
                             : item.status === 'REORDER_NEEDED'

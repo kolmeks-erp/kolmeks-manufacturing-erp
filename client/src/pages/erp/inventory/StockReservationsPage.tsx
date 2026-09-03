@@ -177,7 +177,7 @@ export const StockReservationsPage: React.FC = () => {
 
                     <td className="py-3.5 px-4 text-center">
                       <span
-                        className={`px-2.5 py-1 text-xs font-mono font-bold rounded-full ${
+                        className={`inline-flex items-center justify-center whitespace-nowrap px-2.5 py-1 text-xs font-mono font-bold rounded-full ${
                           resItem.status === 'RELEASED'
                             ? 'bg-slate-100 text-slate-600 border border-slate-200'
                             : 'bg-amber-50 text-amber-700 border border-amber-200'
