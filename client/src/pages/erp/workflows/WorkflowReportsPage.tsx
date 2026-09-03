@@ -271,7 +271,7 @@ export const WorkflowReportsPage: React.FC = () => {
                   className="p-3.5 rounded-xl bg-slate-50/60 border border-slate-200/80 hover:border-indigo-300 hover:shadow-xs transition-all space-y-2.5 overflow-hidden"
                 >
                   <div className="flex items-center justify-between gap-2 min-w-0">
-                    <span className="text-xs text-slate-700 font-bold uppercase tracking-wider truncate" title={mod}>
+                    <span className="text-xs text-slate-700 font-bold uppercase tracking-wider truncate" title={String(mod)}>
                       {mod}
                     </span>
                     <span className="text-xs font-bold text-slate-900 font-mono shrink-0 whitespace-nowrap">

@@ -230,8 +230,9 @@ export const RawMaterialsPage: React.FC = () => {
 
       if (apiProducts?.data && apiProducts.data.length > 0) {
         const mappedApiItems: RawMaterialItem[] = apiProducts.data.map((p: Product, idx: number) => {
-          const stock = p.current_stock ?? p.stock_quantity ?? (100 + idx * 50);
-          const minStk = p.min_stock_level ?? p.reorder_level ?? 200;
+          const itemAny = p as any;
+          const stock = itemAny.current_stock ?? itemAny.stock_quantity ?? (100 + idx * 50);
+          const minStk = itemAny.min_stock_level ?? itemAny.reorder_level ?? 200;
           let status: RawMaterialItem['status'] = 'in_stock';
           if (stock <= 0) status = 'out_of_stock';
           else if (stock < minStk / 2) status = 'reorder_required';
@@ -242,7 +243,7 @@ export const RawMaterialsPage: React.FC = () => {
             code: p.product_code || `RM-${idx + 100}`,
             name: p.name,
             category: p.category?.name || 'Metals & Alloys',
-            grade: p.material || p.grade || 'Standard Grade',
+            grade: p.material || itemAny.grade || 'Standard Grade',
             specification: p.part_number || p.description || 'Industrial Specification',
             warehouse: 'Main Metal Depot',
             binLocation: `Bin #${(idx % 10) + 1}`,
@@ -250,7 +251,7 @@ export const RawMaterialsPage: React.FC = () => {
             minStock: minStk,
             reorderPoint: minStk * 1.5,
             unit: p.unit || 'kg',
-            unitPrice: p.cost_price || p.unit_price || 250,
+            unitPrice: itemAny.cost_price || itemAny.unit_price || 250,
             status,
             lastRestocked: p.updated_at ? new Date(p.updated_at).toISOString().split('T')[0] : '2026-08-25',
           };
