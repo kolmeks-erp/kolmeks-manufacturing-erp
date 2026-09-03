@@ -176,17 +176,18 @@ export const RawMaterialsPage: React.FC = () => {
   const [reorderModalItem, setReorderModalItem] = useState<RawMaterialItem | null>(null);
   const [reorderQty, setReorderQty] = useState<number>(0);
 
-  // Scroll Synchronization refs for Dual Top & Bottom High-Visibility Scrollbars
+  // Scroll Synchronization refs for Header, Mid-Line Scrollbar, and Data Table
+  const headerScrollRef = React.useRef<HTMLDivElement>(null);
   const topScrollRef = React.useRef<HTMLDivElement>(null);
   const tableScrollRef = React.useRef<HTMLDivElement>(null);
   const tableElRef = React.useRef<HTMLTableElement>(null);
-  const [tableWidth, setTableWidth] = useState<number>(1150);
+  const [tableWidth, setTableWidth] = useState<number>(1250);
 
   // Sync scroll width dynamically
   useEffect(() => {
     const updateWidth = () => {
       if (tableElRef.current) {
-        setTableWidth(Math.max(tableElRef.current.scrollWidth, 1150));
+        setTableWidth(Math.max(tableElRef.current.scrollWidth, 1250));
       }
     };
     updateWidth();
@@ -199,14 +200,18 @@ export const RawMaterialsPage: React.FC = () => {
   }, [materials]);
 
   const handleTopScroll = () => {
-    if (topScrollRef.current && tableScrollRef.current) {
-      tableScrollRef.current.scrollLeft = topScrollRef.current.scrollLeft;
+    if (topScrollRef.current) {
+      const scrollLeft = topScrollRef.current.scrollLeft;
+      if (headerScrollRef.current) headerScrollRef.current.scrollLeft = scrollLeft;
+      if (tableScrollRef.current) tableScrollRef.current.scrollLeft = scrollLeft;
     }
   };
 
   const handleTableScroll = () => {
-    if (topScrollRef.current && tableScrollRef.current) {
-      topScrollRef.current.scrollLeft = tableScrollRef.current.scrollLeft;
+    if (tableScrollRef.current) {
+      const scrollLeft = tableScrollRef.current.scrollLeft;
+      if (headerScrollRef.current) headerScrollRef.current.scrollLeft = scrollLeft;
+      if (topScrollRef.current) topScrollRef.current.scrollLeft = scrollLeft;
     }
   };
 
@@ -389,56 +394,80 @@ export const RawMaterialsPage: React.FC = () => {
       </div>
 
       {/* KPI Telemetry Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
-        <div className="bg-white p-4.5 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between hover:border-indigo-200 transition-all">
-          <div>
-            <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Total Raw Materials</span>
-            <div className="text-2xl font-black text-slate-900 mt-1 font-mono tracking-tight">
-              {materials.length} <span className="text-xs font-medium text-slate-400">SKUs</span>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {/* Total Raw Materials Card */}
+        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:border-indigo-300 transition-all flex flex-col justify-between min-h-[120px]">
+          <div className="flex items-center justify-between gap-2">
+            <span className="text-[11px] font-extrabold text-slate-400 uppercase tracking-wider truncate">
+              Total Raw Materials
+            </span>
+            <div className="p-2.5 bg-indigo-50 text-indigo-600 rounded-xl border border-indigo-100 shrink-0">
+              <Layers className="w-4 h-4" />
             </div>
-            <div className="text-[11px] text-slate-400 mt-0.5">Active stock items</div>
           </div>
-          <div className="p-3 bg-indigo-50 text-indigo-600 rounded-xl border border-indigo-100">
-            <Layers className="w-5 h-5" />
+          <div>
+            <div className="text-2xl sm:text-3xl font-black text-slate-900 font-mono tracking-tight flex items-baseline gap-1.5">
+              <span>{materials.length}</span>
+              <span className="text-xs font-semibold text-slate-400">SKUs</span>
+            </div>
+            <div className="text-[11px] font-medium text-slate-500 mt-1 truncate">Active stock items</div>
           </div>
         </div>
 
-        <div className="bg-white p-4.5 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between hover:border-emerald-200 transition-all">
-          <div>
-            <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Stock Valuation</span>
-            <div className="text-2xl font-black text-emerald-700 mt-1 font-mono tracking-tight">
-              ₹{(totalValuation / 100000).toFixed(2)} <span className="text-xs font-medium text-emerald-600">Lakh</span>
+        {/* Stock Valuation Card */}
+        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:border-emerald-300 transition-all flex flex-col justify-between min-h-[120px]">
+          <div className="flex items-center justify-between gap-2">
+            <span className="text-[11px] font-extrabold text-slate-400 uppercase tracking-wider truncate">
+              Stock Valuation
+            </span>
+            <div className="p-2.5 bg-emerald-50 text-emerald-600 rounded-xl border border-emerald-100 shrink-0">
+              <IndianRupee className="w-4 h-4" />
             </div>
-            <div className="text-[11px] text-emerald-600 mt-0.5 font-medium">Current inventory worth</div>
           </div>
-          <div className="p-3 bg-emerald-50 text-emerald-600 rounded-xl border border-emerald-100">
-            <IndianRupee className="w-5 h-5" />
+          <div>
+            <div className="text-2xl sm:text-3xl font-black text-emerald-700 font-mono tracking-tight flex items-baseline gap-1.5">
+              <span>₹{(totalValuation / 100000).toFixed(2)}</span>
+              <span className="text-xs font-semibold text-emerald-600">Lakh</span>
+            </div>
+            <div className="text-[11px] font-medium text-emerald-600 mt-1 truncate">Current inventory worth</div>
           </div>
         </div>
 
-        <div className="bg-white p-4.5 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between hover:border-amber-200 transition-all">
-          <div>
-            <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Low Stock Alerts</span>
-            <div className="text-2xl font-black text-amber-600 mt-1 font-mono tracking-tight">
-              {lowStockCount} <span className="text-xs font-medium text-amber-600">Items</span>
+        {/* Low Stock Alerts Card */}
+        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:border-amber-300 transition-all flex flex-col justify-between min-h-[120px]">
+          <div className="flex items-center justify-between gap-2">
+            <span className="text-[11px] font-extrabold text-slate-400 uppercase tracking-wider truncate">
+              Low Stock Alerts
+            </span>
+            <div className="p-2.5 bg-amber-50 text-amber-600 rounded-xl border border-amber-100 shrink-0">
+              <AlertTriangle className="w-4 h-4" />
             </div>
-            <div className="text-[11px] text-amber-600 mt-0.5 font-medium">Near min reorder point</div>
           </div>
-          <div className="p-3 bg-amber-50 text-amber-600 rounded-xl border border-amber-100">
-            <AlertTriangle className="w-5 h-5" />
+          <div>
+            <div className="text-2xl sm:text-3xl font-black text-amber-600 font-mono tracking-tight flex items-baseline gap-1.5">
+              <span>{lowStockCount}</span>
+              <span className="text-xs font-semibold text-amber-600">Items</span>
+            </div>
+            <div className="text-[11px] font-medium text-amber-600 mt-1 truncate">Near min reorder point</div>
           </div>
         </div>
 
-        <div className="bg-white p-4.5 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between hover:border-rose-200 transition-all">
-          <div>
-            <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Critical Reorders</span>
-            <div className="text-2xl font-black text-rose-600 mt-1 font-mono tracking-tight">
-              {criticalCount} <span className="text-xs font-medium text-rose-600">Action Req.</span>
+        {/* Critical Reorders Card */}
+        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:border-rose-300 transition-all flex flex-col justify-between min-h-[120px]">
+          <div className="flex items-center justify-between gap-2">
+            <span className="text-[11px] font-extrabold text-slate-400 uppercase tracking-wider truncate">
+              Critical Reorders
+            </span>
+            <div className="p-2.5 bg-rose-50 text-rose-600 rounded-xl border border-rose-100 shrink-0">
+              <ShoppingCart className="w-4 h-4" />
             </div>
-            <div className="text-[11px] text-rose-600 mt-0.5 font-medium">Immediate PR required</div>
           </div>
-          <div className="p-3 bg-rose-50 text-rose-600 rounded-xl border border-rose-100">
-            <ShoppingCart className="w-5 h-5" />
+          <div>
+            <div className="text-2xl sm:text-3xl font-black text-rose-600 font-mono tracking-tight flex items-baseline gap-1.5">
+              <span>{criticalCount}</span>
+              <span className="text-xs font-semibold text-rose-600">Action Req.</span>
+            </div>
+            <div className="text-[11px] font-medium text-rose-600 mt-1 truncate">Immediate PR required</div>
           </div>
         </div>
       </div>
@@ -520,40 +549,45 @@ export const RawMaterialsPage: React.FC = () => {
 
       {/* Materials Table Container */}
       <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden">
-        {/* MAIN TABLE CONTAINER WITH SYNCED SCROLL */}
+        {/* 1. TABLE HEADER (FIXED ALIGNMENT) */}
+        <div
+          ref={headerScrollRef}
+          className="overflow-x-hidden bg-slate-50 border-b border-slate-200/80"
+        >
+          <table className="w-full text-left text-xs min-w-[1250px] table-fixed">
+            <thead className="bg-slate-50 text-slate-500 uppercase font-mono text-[10px] tracking-wider">
+              <tr>
+                <th className="py-3.5 px-4 font-bold w-[140px]">Material Code</th>
+                <th className="py-3.5 px-4 font-bold w-[260px]">Material Name & Specification</th>
+                <th className="py-3.5 px-4 font-bold w-[170px]">Category & Grade</th>
+                <th className="py-3.5 px-4 font-bold w-[160px]">Warehouse / Bin</th>
+                <th className="py-3.5 px-4 font-bold w-[150px]">Stock Balance</th>
+                <th className="py-3.5 px-4 font-bold w-[120px]">Unit Price</th>
+                <th className="py-3.5 px-4 font-bold w-[120px]">Valuation</th>
+                <th className="py-3.5 px-4 font-bold w-[130px]">Status</th>
+                <th className="py-3.5 px-4 text-right font-bold w-[100px]">Action</th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+
+        {/* 2. HIGH-VISIBILITY SCROLLBAR LINE LOCATED IN BETWEEN HEADER AND BODY */}
+        <div
+          ref={topScrollRef}
+          onScroll={handleTopScroll}
+          className="overflow-x-auto custom-table-scrollbar bg-slate-100/90 border-b border-slate-200/80 py-1 px-1"
+        >
+          <div style={{ width: `${tableWidth}px` }} className="h-2" />
+        </div>
+
+        {/* 3. TABLE BODY DATA ROWS */}
         <div
           ref={tableScrollRef}
           onScroll={handleTableScroll}
           className="overflow-x-auto custom-table-scrollbar"
         >
-          <table ref={tableElRef} className="w-full text-left text-xs min-w-[1150px]">
-            <thead className="bg-slate-50 text-slate-500 uppercase font-mono text-[10px] tracking-wider border-b border-slate-200/80">
-              <tr>
-                <th className="py-3.5 px-5 font-bold">Material Code</th>
-                <th className="py-3.5 px-5 font-bold">Material Name & Specification</th>
-                <th className="py-3.5 px-5 font-bold">Category & Grade</th>
-                <th className="py-3.5 px-5 font-bold">Warehouse / Bin</th>
-                <th className="py-3.5 px-5 font-bold">Stock Balance</th>
-                <th className="py-3.5 px-5 font-bold">Unit Price</th>
-                <th className="py-3.5 px-5 font-bold">Valuation</th>
-                <th className="py-3.5 px-5 font-bold">Status</th>
-                <th className="py-3.5 px-5 text-right font-bold">Action</th>
-              </tr>
-            </thead>
+          <table ref={tableElRef} className="w-full text-left text-xs min-w-[1250px] table-fixed">
             <tbody className="divide-y divide-slate-100 text-slate-800">
-              {/* TOP SCROLLBAR LINE (INTEGRATED DIRECTLY ON THE DIVIDER LINE BELOW TABLE HEADER) */}
-              <tr className="bg-slate-100/60 border-b border-slate-200/80">
-                <td colSpan={9} className="p-0">
-                  <div
-                    ref={topScrollRef}
-                    onScroll={handleTopScroll}
-                    className="overflow-x-auto custom-table-scrollbar w-full py-0.5"
-                  >
-                    <div style={{ width: `${tableWidth}px` }} className="h-1.5" />
-                  </div>
-                </td>
-              </tr>
-
               {filteredMaterials.length === 0 ? (
                 <tr>
                   <td colSpan={9} className="py-12 text-center text-slate-400">
@@ -570,40 +604,42 @@ export const RawMaterialsPage: React.FC = () => {
                   return (
                     <tr key={row.id} className="hover:bg-slate-50/80 transition-colors">
                       {/* Code */}
-                      <td className="py-3.5 px-5 font-mono font-extrabold text-indigo-600 whitespace-nowrap">
+                      <td className="py-3.5 px-4 font-mono font-extrabold text-indigo-600 whitespace-nowrap w-[140px]">
                         <span className="bg-indigo-50 px-2.5 py-1 rounded-lg border border-indigo-100">
                           {row.code}
                         </span>
                       </td>
 
                       {/* Name & Specification */}
-                      <td className="py-3.5 px-5 max-w-xs">
-                        <div className="font-extrabold text-slate-900 leading-tight">{row.name}</div>
+                      <td className="py-3.5 px-4 w-[260px]">
+                        <div className="font-extrabold text-slate-900 leading-tight truncate" title={row.name}>
+                          {row.name}
+                        </div>
                         <div className="text-[11px] text-slate-500 mt-0.5 truncate" title={row.specification}>
                           {row.specification}
                         </div>
                       </td>
 
                       {/* Category & Grade */}
-                      <td className="py-3.5 px-5 whitespace-nowrap">
-                        <div className="font-bold text-slate-800 flex items-center gap-1.5">
-                          <Tag className="w-3 h-3 text-slate-400" />
-                          <span>{row.category}</span>
+                      <td className="py-3.5 px-4 whitespace-nowrap w-[170px]">
+                        <div className="font-bold text-slate-800 flex items-center gap-1.5 truncate">
+                          <Tag className="w-3 h-3 text-slate-400 shrink-0" />
+                          <span className="truncate">{row.category}</span>
                         </div>
-                        <div className="text-[11px] font-mono text-slate-500 mt-0.5">Grade: {row.grade}</div>
+                        <div className="text-[11px] font-mono text-slate-500 mt-0.5 truncate">Grade: {row.grade}</div>
                       </td>
 
                       {/* Warehouse & Bin */}
-                      <td className="py-3.5 px-5 whitespace-nowrap">
-                        <div className="text-slate-800 font-medium flex items-center gap-1.5">
-                          <Building2 className="w-3 h-3 text-slate-400" />
-                          <span>{row.warehouse}</span>
+                      <td className="py-3.5 px-4 whitespace-nowrap w-[160px]">
+                        <div className="text-slate-800 font-medium flex items-center gap-1.5 truncate">
+                          <Building2 className="w-3 h-3 text-slate-400 shrink-0" />
+                          <span className="truncate">{row.warehouse}</span>
                         </div>
-                        <div className="text-[11px] text-slate-400 font-mono mt-0.5">{row.binLocation}</div>
+                        <div className="text-[11px] text-slate-400 font-mono mt-0.5 truncate">{row.binLocation}</div>
                       </td>
 
                       {/* Stock Balance & Gauge */}
-                      <td className="py-3.5 px-5 min-w-[140px]">
+                      <td className="py-3.5 px-4 w-[150px]">
                         <div className="flex items-center justify-between font-mono font-bold text-slate-900">
                           <span>
                             {row.currentStock.toLocaleString()}{' '}
@@ -626,17 +662,17 @@ export const RawMaterialsPage: React.FC = () => {
                       </td>
 
                       {/* Unit Price */}
-                      <td className="py-3.5 px-5 font-mono font-semibold text-slate-700 whitespace-nowrap">
+                      <td className="py-3.5 px-4 font-mono font-semibold text-slate-700 whitespace-nowrap w-[120px]">
                         ₹{row.unitPrice.toLocaleString()} / {row.unit}
                       </td>
 
                       {/* Total Valuation */}
-                      <td className="py-3.5 px-5 font-mono font-extrabold text-slate-900 whitespace-nowrap">
+                      <td className="py-3.5 px-4 font-mono font-extrabold text-slate-900 whitespace-nowrap w-[120px]">
                         ₹{valuation.toLocaleString()}
                       </td>
 
                       {/* Status Badge */}
-                      <td className="py-3.5 px-5 whitespace-nowrap">
+                      <td className="py-3.5 px-4 whitespace-nowrap w-[130px]">
                         {row.status === 'in_stock' && (
                           <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-extrabold bg-emerald-50 text-emerald-700 border border-emerald-200/80">
                             <CheckCircle className="w-3 h-3" /> In Stock
@@ -660,7 +696,7 @@ export const RawMaterialsPage: React.FC = () => {
                       </td>
 
                       {/* Actions */}
-                      <td className="py-3.5 px-5 text-right whitespace-nowrap">
+                      <td className="py-3.5 px-4 text-right whitespace-nowrap w-[100px]">
                         <button
                           onClick={() => handleOpenReorder(row)}
                           className="px-3 py-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200/80 rounded-lg text-xs font-bold transition-all cursor-pointer inline-flex items-center gap-1"

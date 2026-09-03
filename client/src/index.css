@@ -41,13 +41,13 @@
     width: 10px;
   }
   .custom-table-scrollbar::-webkit-scrollbar-track {
-    background: #e2e8f0;
+    background: #cbd5e1;
     border-radius: 9999px;
   }
   .custom-table-scrollbar::-webkit-scrollbar-thumb {
     background: #4f46e5;
     border-radius: 9999px;
-    border: 2px solid #e2e8f0;
+    border: 2px solid #cbd5e1;
   }
   .custom-table-scrollbar::-webkit-scrollbar-thumb:hover {
     background: #3730a3;
