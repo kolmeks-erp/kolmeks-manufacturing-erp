@@ -180,8 +180,8 @@ const assetController = {
           category:fixed_asset_categories!category_id(id, code, name),
           cost_center:cost_centers!cost_center_id(id, code, name),
           operational_asset:assets!operational_asset_id(id, asset_code, name, status),
-          purchase_invoice:purchase_invoices!purchase_invoice_id(id, invoice_number),
-          supplier:suppliers!supplier_id(id, supplier_code, name)
+          purchase_invoice:purchase_invoices!purchase_invoice_id(id, internal_invoice_number),
+          supplier:suppliers!supplier_id(id, company_name, email)
         `)
         .order('created_at', { ascending: false });
 
