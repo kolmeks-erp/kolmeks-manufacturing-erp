@@ -956,7 +956,7 @@ const expenseController = {
         .select(`
           *,
           claim:expense_claims(id, claim_number, description, total_amount, approved_amount),
-          employee:employees(id, first_name, last_name, employee_code, department:departments(name))
+          employee:employees(id, first_name, last_name, employee_code, department:departments!employees_department_id_fkey(name))
         `)
         .order('created_at', { ascending: false });
 
@@ -989,7 +989,7 @@ const expenseController = {
         .select(`
           *,
           claim:expense_claims(id, claim_number, description, approved_amount, reimbursed_amount, outstanding_amount),
-          employee:employees(id, first_name, last_name, employee_code, email, department:departments(name)),
+          employee:employees(id, first_name, last_name, employee_code, email, department:departments!employees_department_id_fkey(name)),
           journal_entry:journal_entries(id, entry_number, status)
         `)
         .eq('id', id)
@@ -1339,7 +1339,7 @@ const expenseController = {
         .from('expense_claims')
         .select(`
           *,
-          employee:employees(id, first_name, last_name, department:departments(name)),
+          employee:employees(id, first_name, last_name, department:departments!employees_department_id_fkey(name)),
           cost_center:cost_centers(id, code, name, allocated_budget)
         `);
 
