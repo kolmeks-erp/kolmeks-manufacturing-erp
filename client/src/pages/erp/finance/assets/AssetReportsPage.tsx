@@ -92,122 +92,174 @@ export const AssetReportsPage: React.FC = () => {
   };
 
   return (
-    <div className="p-6 max-w-7xl mx-auto space-y-6 print:p-0">
-      {/* Integrated Unified Header Card */}
-      <div className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-xs space-y-6">
-        {/* Top Header Row */}
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-          <div>
-            <button
-              onClick={() => navigate('/secure-kolmeks-x0y0/finance/assets')}
-              className="inline-flex items-center space-x-1.5 px-3 py-1.5 text-xs font-bold text-slate-600 bg-slate-50 border border-slate-200/80 rounded-xl hover:bg-slate-100 hover:text-slate-900 transition-all shadow-2xs mb-3 print:hidden"
-            >
-              <ArrowLeft className="w-3.5 h-3.5" />
-              <span>Back to Asset Dashboard</span>
-            </button>
-            <div className="flex items-center space-x-3">
-              <div className="p-3 bg-purple-50 text-purple-600 border border-purple-100 rounded-xl shadow-2xs">
-                <BarChart2 className="w-6 h-6" />
-              </div>
-              <div>
-                <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight">
-                  Fixed Asset Financial Reports
-                </h1>
-                <p className="text-sm text-slate-500 mt-0.5">
-                  Valuation reports by category, cost center allocation, and asset register schedule
-                </p>
-              </div>
+    <div className="p-4 sm:p-6 max-w-7xl mx-auto space-y-4 print:p-0">
+      {/* Top Header Card */}
+      <div className="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div>
+          <button
+            onClick={() => navigate('/secure-kolmeks-x0y0/finance/assets')}
+            className="inline-flex items-center space-x-1.5 px-2.5 py-1 text-xs font-bold text-slate-600 bg-slate-50 border border-slate-200/80 rounded-lg hover:bg-slate-100 hover:text-slate-900 transition-all shadow-2xs mb-1.5 print:hidden"
+          >
+            <ArrowLeft className="w-3.5 h-3.5" />
+            <span>Back to Asset Dashboard</span>
+          </button>
+          <div className="flex items-center space-x-3">
+            <div className="p-2.5 bg-purple-50 text-purple-600 border border-purple-100 rounded-xl shadow-2xs shrink-0">
+              <BarChart2 className="w-5 h-5" />
+            </div>
+            <div>
+              <h1 className="text-xl font-extrabold text-slate-900 tracking-tight">
+                Fixed Asset Financial Reports
+              </h1>
+              <p className="text-xs text-slate-500 mt-0.5">
+                Valuation reports by category, cost center allocation, and asset register schedule
+              </p>
             </div>
           </div>
+        </div>
 
-          {/* Action Controls */}
-          <div className="flex items-center space-x-2.5 shrink-0 print:hidden">
-            <button
-              onClick={fetchReports}
-              disabled={refreshing}
-              className="flex items-center space-x-1.5 px-3.5 py-2 text-xs font-bold text-slate-700 bg-white border border-slate-200/80 rounded-xl hover:bg-slate-50 shadow-2xs transition-all disabled:opacity-50"
-            >
-              <RefreshCw className={`w-3.5 h-3.5 text-slate-500 ${refreshing ? 'animate-spin' : ''}`} />
-              <span>Refresh</span>
-            </button>
+        {/* Action Controls */}
+        <div className="flex items-center space-x-2 shrink-0 print:hidden">
+          <button
+            onClick={fetchReports}
+            disabled={refreshing}
+            className="flex items-center space-x-1.5 px-3 py-1.5 text-xs font-bold text-slate-700 bg-white border border-slate-200/80 rounded-xl hover:bg-slate-50 shadow-2xs transition-all disabled:opacity-50"
+          >
+            <RefreshCw className={`w-3.5 h-3.5 text-slate-500 ${refreshing ? 'animate-spin' : ''}`} />
+            <span>Refresh</span>
+          </button>
 
-            <button
-              onClick={handlePrint}
-              className="flex items-center space-x-1.5 px-3.5 py-2 text-xs font-bold text-slate-700 bg-white border border-slate-200/80 rounded-xl hover:bg-slate-50 shadow-2xs transition-all"
-            >
-              <Printer className="w-3.5 h-3.5 text-slate-500" />
-              <span>Print Report</span>
-            </button>
+          <button
+            onClick={handlePrint}
+            className="flex items-center space-x-1.5 px-3 py-1.5 text-xs font-bold text-slate-700 bg-white border border-slate-200/80 rounded-xl hover:bg-slate-50 shadow-2xs transition-all"
+          >
+            <Printer className="w-3.5 h-3.5 text-slate-500" />
+            <span>Print</span>
+          </button>
 
-            <button
-              onClick={handleExportCSV}
-              className="flex items-center space-x-1.5 px-4 py-2 text-xs font-bold text-white bg-purple-600 rounded-xl hover:bg-purple-700 shadow-xs transition-all"
-            >
-              <Download className="w-3.5 h-3.5" />
-              <span>Export CSV</span>
-            </button>
+          <button
+            onClick={handleExportCSV}
+            className="flex items-center space-x-1.5 px-3.5 py-1.5 text-xs font-bold text-white bg-purple-600 rounded-xl hover:bg-purple-700 shadow-2xs transition-all"
+          >
+            <Download className="w-3.5 h-3.5" />
+            <span>Export CSV</span>
+          </button>
+        </div>
+      </div>
+
+      {/* Summary KPI Cards Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 print:grid-cols-4">
+        <div className="bg-white p-3.5 sm:p-4 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
+          <div>
+            <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Gross Asset Valuation</span>
+            <div className="text-xl font-black text-slate-900 mt-0.5 font-mono tracking-tight">
+              {loading ? '...' : formatCurrency(totalGrossCost)}
+            </div>
+            <div className="text-[11px] text-slate-400 mt-0.5">Acquisition Cost Basis</div>
+          </div>
+          <div className="p-2.5 bg-purple-50 text-purple-600 rounded-xl border border-purple-100">
+            <DollarSign className="w-4 h-4" />
           </div>
         </div>
 
-        {/* Integrated Segmented Pill Navigation */}
-        <div className="pt-4 border-t border-slate-100 flex flex-wrap items-center gap-2 print:hidden">
-          <button
-            onClick={() => setActiveTab('category')}
-            className={`flex items-center space-x-2 px-4 py-2.5 text-xs font-bold rounded-xl transition-all ${
-              activeTab === 'category'
-                ? 'bg-purple-600 text-white shadow-xs'
-                : 'bg-slate-50 text-slate-600 hover:bg-slate-100 hover:text-slate-900 border border-slate-200/60'
-            }`}
-          >
-            <PieChart className="w-4 h-4" />
-            <span>By Category Summary</span>
-            <span
-              className={`px-2 py-0.5 text-[10px] rounded-full font-mono font-bold ${
-                activeTab === 'category' ? 'bg-purple-700/80 text-white' : 'bg-slate-200/70 text-slate-700'
-              }`}
-            >
-              {reports?.by_category?.length || 0}
-            </span>
-          </button>
-
-          <button
-            onClick={() => setActiveTab('cost_center')}
-            className={`flex items-center space-x-2 px-4 py-2.5 text-xs font-bold rounded-xl transition-all ${
-              activeTab === 'cost_center'
-                ? 'bg-purple-600 text-white shadow-xs'
-                : 'bg-slate-50 text-slate-600 hover:bg-slate-100 hover:text-slate-900 border border-slate-200/60'
-            }`}
-          >
-            <Building2 className="w-4 h-4" />
-            <span>By Cost Center Allocation</span>
-            <span
-              className={`px-2 py-0.5 text-[10px] rounded-full font-mono font-bold ${
-                activeTab === 'cost_center' ? 'bg-purple-700/80 text-white' : 'bg-slate-200/70 text-slate-700'
-              }`}
-            >
-              {reports?.by_cost_center?.length || 0}
-            </span>
-          </button>
-
-          <button
-            onClick={() => setActiveTab('register')}
-            className={`flex items-center space-x-2 px-4 py-2.5 text-xs font-bold rounded-xl transition-all ${
-              activeTab === 'register'
-                ? 'bg-purple-600 text-white shadow-xs'
-                : 'bg-slate-50 text-slate-600 hover:bg-slate-100 hover:text-slate-900 border border-slate-200/60'
-            }`}
-          >
-            <FileSpreadsheet className="w-4 h-4" />
-            <span>Full Asset Register Schedule</span>
-            <span
-              className={`px-2 py-0.5 text-[10px] rounded-full font-mono font-bold ${
-                activeTab === 'register' ? 'bg-purple-700/80 text-white' : 'bg-slate-200/70 text-slate-700'
-              }`}
-            >
-              {reports?.asset_register?.length || 0}
-            </span>
-          </button>
+        <div className="bg-white p-3.5 sm:p-4 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
+          <div>
+            <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Accumulated Dep</span>
+            <div className="text-xl font-black text-amber-600 mt-0.5 font-mono tracking-tight">
+              {loading ? '...' : formatCurrency(totalAccumDep)}
+            </div>
+            <div className="text-[11px] text-amber-600 mt-0.5 font-medium">Total Depreciated Value</div>
+          </div>
+          <div className="p-2.5 bg-amber-50 text-amber-600 rounded-xl border border-amber-100">
+            <TrendingUp className="w-4 h-4" />
+          </div>
         </div>
+
+        <div className="bg-white p-3.5 sm:p-4 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
+          <div>
+            <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Net Book Value (NBV)</span>
+            <div className="text-xl font-black text-emerald-600 mt-0.5 font-mono tracking-tight">
+              {loading ? '...' : formatCurrency(totalNetBookValue)}
+            </div>
+            <div className="text-[11px] text-emerald-600 mt-0.5 font-medium">Carrying Balance Sheet Value</div>
+          </div>
+          <div className="p-2.5 bg-emerald-50 text-emerald-600 rounded-xl border border-emerald-100">
+            <ShieldCheck className="w-4 h-4" />
+          </div>
+        </div>
+
+        <div className="bg-white p-3.5 sm:p-4 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
+          <div>
+            <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Total Registered Assets</span>
+            <div className="text-xl font-black text-indigo-600 mt-0.5 font-mono tracking-tight">
+              {loading ? '...' : totalAssetUnits} <span className="text-xs text-slate-400 font-normal">units</span>
+            </div>
+            <div className="text-[11px] text-slate-400 mt-0.5">Across active categories</div>
+          </div>
+          <div className="p-2.5 bg-indigo-50 text-indigo-600 rounded-xl border border-indigo-100">
+            <Package className="w-4 h-4" />
+          </div>
+        </div>
+      </div>
+
+      {/* Segmented Pill Navigation Bar */}
+      <div className="flex flex-wrap items-center gap-2 print:hidden">
+        <button
+          onClick={() => setActiveTab('category')}
+          className={`flex items-center space-x-2 px-3.5 py-2 text-xs font-bold rounded-xl transition-all ${
+            activeTab === 'category'
+              ? 'bg-purple-600 text-white shadow-xs'
+              : 'bg-white text-slate-600 hover:bg-slate-50 border border-slate-200/80'
+          }`}
+        >
+          <PieChart className="w-3.5 h-3.5" />
+          <span>By Category Summary</span>
+          <span
+            className={`px-2 py-0.5 text-[10px] rounded-full font-mono font-bold ${
+              activeTab === 'category' ? 'bg-purple-700/80 text-white' : 'bg-slate-100 text-slate-600'
+            }`}
+          >
+            {reports?.by_category?.length || 0}
+          </span>
+        </button>
+
+        <button
+          onClick={() => setActiveTab('cost_center')}
+          className={`flex items-center space-x-2 px-3.5 py-2 text-xs font-bold rounded-xl transition-all ${
+            activeTab === 'cost_center'
+              ? 'bg-purple-600 text-white shadow-xs'
+              : 'bg-white text-slate-600 hover:bg-slate-50 border border-slate-200/80'
+          }`}
+        >
+          <Building2 className="w-3.5 h-3.5" />
+          <span>By Cost Center Allocation</span>
+          <span
+            className={`px-2 py-0.5 text-[10px] rounded-full font-mono font-bold ${
+              activeTab === 'cost_center' ? 'bg-purple-700/80 text-white' : 'bg-slate-100 text-slate-600'
+            }`}
+          >
+            {reports?.by_cost_center?.length || 0}
+          </span>
+        </button>
+
+        <button
+          onClick={() => setActiveTab('register')}
+          className={`flex items-center space-x-2 px-3.5 py-2 text-xs font-bold rounded-xl transition-all ${
+            activeTab === 'register'
+              ? 'bg-purple-600 text-white shadow-xs'
+              : 'bg-white text-slate-600 hover:bg-slate-50 border border-slate-200/80'
+          }`}
+        >
+          <FileSpreadsheet className="w-3.5 h-3.5" />
+          <span>Full Asset Register Schedule</span>
+          <span
+            className={`px-2 py-0.5 text-[10px] rounded-full font-mono font-bold ${
+              activeTab === 'register' ? 'bg-purple-700/80 text-white' : 'bg-slate-100 text-slate-600'
+            }`}
+          >
+            {reports?.asset_register?.length || 0}
+          </span>
+        </button>
       </div>
 
       {loading ? (
