@@ -177,11 +177,11 @@ const assetController = {
         .from('fixed_assets')
         .select(`
           *,
-          category:fixed_asset_categories(id, code, name),
-          cost_center:cost_centers(id, code, name),
-          operational_asset:assets(id, asset_code, name, status),
-          purchase_invoice:purchase_invoices(id, invoice_number),
-          supplier:suppliers(id, supplier_code, name)
+          category:fixed_asset_categories!category_id(id, code, name),
+          cost_center:cost_centers!cost_center_id(id, code, name),
+          operational_asset:assets!operational_asset_id(id, asset_code, name, status),
+          purchase_invoice:purchase_invoices!purchase_invoice_id(id, invoice_number),
+          supplier:suppliers!supplier_id(id, supplier_code, name)
         `)
         .order('created_at', { ascending: false });
 
@@ -1205,9 +1205,11 @@ const assetController = {
   // ==========================================================================
   getDashboardSummary: async (req, res) => {
     try {
-      const { data: assets } = await supabaseAdmin
+      const { data: assets, error: assetsErr } = await supabaseAdmin
         .from('fixed_assets')
         .select('acquisition_cost, accumulated_depreciation, net_book_value, status');
+
+      if (assetsErr) throw assetsErr;
 
       let totalGrossCost = 0;
       let totalAccumDep = 0;
@@ -1231,13 +1233,15 @@ const assetController = {
       });
 
       // Latest monthly depreciation run total
-      const { data: latestRun } = await supabaseAdmin
+      const { data: latestRun, error: runErr } = await supabaseAdmin
         .from('depreciation_runs')
         .select('total_depreciation_amount, period_name')
         .eq('status', 'POSTED')
         .order('created_at', { ascending: false })
         .limit(1)
         .maybeSingle();
+
+      if (runErr && runErr.code !== 'PGRST116') throw runErr;
 
       return res.status(200).json({
         success: true,
@@ -1262,19 +1266,23 @@ const assetController = {
   getReports: async (req, res) => {
     try {
       // 1. Asset Register
-      const { data: assets } = await supabaseAdmin
+      const { data: assets, error: assetsErr } = await supabaseAdmin
         .from('fixed_assets')
         .select(`
           *,
-          category:fixed_asset_categories(name),
-          cost_center:cost_centers(name)
+          category:fixed_asset_categories!category_id(name),
+          cost_center:cost_centers!cost_center_id(name)
         `)
         .order('asset_number', { ascending: true });
 
+      if (assetsErr) throw assetsErr;
+
       // 2. Category Summary
-      const { data: categories } = await supabaseAdmin
+      const { data: categories, error: catErr } = await supabaseAdmin
         .from('fixed_asset_categories')
         .select('*');
+
+      if (catErr) throw catErr;
 
       const catSummaryMap = {};
       (categories || []).forEach((c) => {
@@ -1298,9 +1306,11 @@ const assetController = {
       });
 
       // 3. Cost Center Summary
-      const { data: costCenters } = await supabaseAdmin
+      const { data: costCenters, error: ccErr } = await supabaseAdmin
         .from('cost_centers')
         .select('id, code, name');
+
+      if (ccErr) throw ccErr;
 
       const ccSummaryMap = {};
       (costCenters || []).forEach((cc) => {
