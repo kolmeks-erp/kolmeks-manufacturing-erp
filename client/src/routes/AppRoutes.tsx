@@ -31,6 +31,7 @@ import { ProductCreatePage } from '../pages/erp/products/ProductCreatePage';
 import { ProductDetailPage } from '../pages/erp/products/ProductDetailPage';
 import { ProductEditPage } from '../pages/erp/products/ProductEditPage';
 import { ProductCategoryListPage } from '../pages/erp/products/ProductCategoryListPage';
+import { RawMaterialsPage } from '../pages/erp/products/RawMaterialsPage';
 import { CustomerListPage } from '../pages/erp/customers/CustomerListPage';
 import { CustomerCreatePage } from '../pages/erp/customers/CustomerCreatePage';
 import { CustomerDetailPage } from '../pages/erp/customers/CustomerDetailPage';
@@ -380,7 +381,7 @@ export const AppRoutes: React.FC = () => {
         <Route path={ERP_BASE_PATH} element={<ERPLayout />}>
           <Route index element={<Navigate to={`${ERP_BASE_PATH}/dashboard`} replace />} />
           <Route path="dashboard" element={<ERPDashboardPage />} />
-          <Route path="materials" element={<ERPModuleShellPage />} />
+          <Route path="materials" element={<RawMaterialsPage />} />
           <Route path="production" element={<ERPModuleShellPage />} />
           <Route path="cnc-machines" element={<ERPModuleShellPage />} />
           <Route path="inventory" element={<ERPModuleShellPage />} />
