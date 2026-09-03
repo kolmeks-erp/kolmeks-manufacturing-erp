@@ -147,34 +147,34 @@ export const DocumentLibraryPage: React.FC = () => {
 
   const getStatusBadge = (status: string) => {
     const styles: Record<string, string> = {
-      DRAFT: 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300',
-      SUBMITTED: 'bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300',
-      UNDER_REVIEW: 'bg-purple-100 text-purple-800 dark:bg-purple-900/40 dark:text-purple-300',
-      APPROVED: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300',
-      PUBLISHED: 'bg-teal-100 text-teal-800 dark:bg-teal-900/40 dark:text-teal-300',
-      REJECTED: 'bg-rose-100 text-rose-800 dark:bg-rose-900/40 dark:text-rose-300',
-      CHANGES_REQUESTED: 'bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300',
-      ARCHIVED: 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-400',
+      DRAFT: 'bg-slate-100 text-slate-700 border-slate-200/80',
+      SUBMITTED: 'bg-blue-50 text-blue-700 border-blue-200/80',
+      UNDER_REVIEW: 'bg-indigo-50 text-indigo-700 border-indigo-200/80',
+      APPROVED: 'bg-emerald-50 text-emerald-700 border-emerald-200/80',
+      PUBLISHED: 'bg-teal-50 text-teal-700 border-teal-200/80',
+      REJECTED: 'bg-rose-50 text-rose-700 border-rose-200/80',
+      CHANGES_REQUESTED: 'bg-amber-50 text-amber-800 border-amber-200/80',
+      ARCHIVED: 'bg-slate-100 text-slate-600 border-slate-200/80',
     };
     return (
-      <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${styles[status] || styles.DRAFT}`}>
+      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold border ${styles[status] || styles.DRAFT}`}>
         {status.replace('_', ' ')}
       </span>
     );
   };
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="space-y-6">
       {/* Page Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 bg-white p-6 rounded-2xl border border-slate-200 shadow-xs">
         <div>
           <div className="flex items-center gap-3">
-            <div className="p-2.5 bg-blue-500/10 text-blue-600 dark:text-blue-400 rounded-xl">
-              <FileText className="w-7 h-7" />
+            <div className="p-3 bg-blue-50 text-blue-600 rounded-xl border border-blue-100 shadow-xs">
+              <FileText className="w-6 h-6" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-slate-900 dark:text-white">ERP Document Library</h1>
-              <p className="text-sm text-slate-500 dark:text-slate-400">
+              <h1 className="text-xl font-bold text-slate-900 tracking-tight">ERP Document Library</h1>
+              <p className="text-xs text-slate-500 font-medium">
                 Search, filter, categorize, and upload enterprise documents across modules
               </p>
             </div>
@@ -183,7 +183,7 @@ export const DocumentLibraryPage: React.FC = () => {
 
         <button
           onClick={() => setShowUploadModal(true)}
-          className="px-4 py-2.5 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-xl transition-colors shadow-sm flex items-center gap-2"
+          className="px-4 py-2.5 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl transition-all shadow-xs flex items-center justify-center gap-2 cursor-pointer"
         >
           <Upload className="w-4 h-4" />
           Upload New Document
@@ -191,7 +191,7 @@ export const DocumentLibraryPage: React.FC = () => {
       </div>
 
       {/* Filter Controls Bar */}
-      <div className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+      <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs space-y-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
           {/* Search */}
           <div className="relative">
@@ -201,7 +201,7 @@ export const DocumentLibraryPage: React.FC = () => {
               placeholder="Search title, DOC #..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 text-sm bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full pl-10 pr-4 py-2 text-xs font-medium bg-slate-50 border border-slate-200 rounded-xl text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all"
             />
           </div>
 
@@ -209,7 +209,7 @@ export const DocumentLibraryPage: React.FC = () => {
           <select
             value={typeFilter}
             onChange={(e) => setTypeFilter(e.target.value)}
-            className="py-2 px-3 text-sm bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="py-2 px-3 text-xs font-medium bg-slate-50 border border-slate-200 rounded-xl text-slate-800 focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all"
           >
             <option value="">All Document Types</option>
             {types.map((t) => (
@@ -223,7 +223,7 @@ export const DocumentLibraryPage: React.FC = () => {
           <select
             value={categoryFilter}
             onChange={(e) => setCategoryFilter(e.target.value)}
-            className="py-2 px-3 text-sm bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="py-2 px-3 text-xs font-medium bg-slate-50 border border-slate-200 rounded-xl text-slate-800 focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all"
           >
             <option value="">All Categories</option>
             {categories.map((c) => (
@@ -237,7 +237,7 @@ export const DocumentLibraryPage: React.FC = () => {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="py-2 px-3 text-sm bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="py-2 px-3 text-xs font-medium bg-slate-50 border border-slate-200 rounded-xl text-slate-800 focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all"
           >
             <option value="">All Statuses</option>
             <option value="DRAFT">Draft</option>
@@ -253,69 +253,71 @@ export const DocumentLibraryPage: React.FC = () => {
           {/* Archive Toggle */}
           <button
             onClick={() => setArchivedFilter(!archivedFilter)}
-            className={`py-2 px-4 text-sm font-medium rounded-xl border transition-colors flex items-center justify-center gap-2 ${
+            className={`py-2 px-4 text-xs font-semibold rounded-xl border transition-all flex items-center justify-center gap-2 cursor-pointer ${
               archivedFilter
-                ? 'bg-purple-600 text-white border-purple-600'
-                : 'bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700'
+                ? 'bg-indigo-600 text-white border-indigo-600 shadow-xs'
+                : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
             }`}
           >
-            <Filter className="w-4 h-4" />
+            <Filter className="w-3.5 h-3.5" />
             {archivedFilter ? 'Showing Archived' : 'Show Active Only'}
           </button>
         </div>
       </div>
 
       {/* Document Library Table */}
-      <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+      <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm text-slate-600 dark:text-slate-300">
-            <thead className="bg-slate-50 dark:bg-slate-800/50 text-slate-700 dark:text-slate-300 uppercase text-xs tracking-wider">
+          <table className="w-full text-left text-xs text-slate-700">
+            <thead className="bg-slate-50 border-b border-slate-200 text-slate-700 font-bold uppercase text-[11px] tracking-wider">
               <tr>
-                <th className="px-6 py-4">Doc #</th>
-                <th className="px-6 py-4">Title / Description</th>
-                <th className="px-6 py-4">Type & Category</th>
-                <th className="px-6 py-4">Version</th>
-                <th className="px-6 py-4">Status</th>
-                <th className="px-6 py-4">Owner</th>
-                <th className="px-6 py-4 text-right">Actions</th>
+                <th className="px-5 py-3.5">Doc #</th>
+                <th className="px-5 py-3.5">Title / Description</th>
+                <th className="px-5 py-3.5">Type & Category</th>
+                <th className="px-5 py-3.5">Version</th>
+                <th className="px-5 py-3.5">Status</th>
+                <th className="px-5 py-3.5">Owner</th>
+                <th className="px-5 py-3.5 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-200 dark:divide-slate-800">
+            <tbody className="divide-y divide-slate-100">
               {loading ? (
                 <tr>
-                  <td colSpan={7} className="px-6 py-8 text-center text-slate-500">
+                  <td colSpan={7} className="px-5 py-10 text-center text-slate-500 font-medium">
                     Loading document library...
                   </td>
                 </tr>
               ) : documents.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="px-6 py-8 text-center text-slate-500">
+                  <td colSpan={7} className="px-5 py-10 text-center text-slate-500 font-medium">
                     No documents found matching the filter criteria.
                   </td>
                 </tr>
               ) : (
                 documents.map((doc) => (
-                  <tr key={doc.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors">
-                    <td className="px-6 py-4 font-semibold text-slate-900 dark:text-white">{doc.document_number}</td>
-                    <td className="px-6 py-4 max-w-sm">
-                      <div className="font-semibold text-slate-900 dark:text-white">{doc.title}</div>
-                      {doc.description && <div className="text-xs text-slate-500 truncate mt-0.5">{doc.description}</div>}
+                  <tr key={doc.id} className="hover:bg-slate-50/80 transition-colors">
+                    <td className="px-5 py-4 font-mono font-bold text-indigo-600">{doc.document_number}</td>
+                    <td className="px-5 py-4 max-w-xs">
+                      <div className="font-bold text-slate-900 leading-tight">{doc.title}</div>
+                      {doc.description && <div className="text-xs text-slate-500 font-medium truncate mt-0.5">{doc.description}</div>}
                     </td>
-                    <td className="px-6 py-4">
-                      <div>{doc.type?.name || 'General'}</div>
-                      <div className="text-xs text-slate-400">{doc.category?.name || 'Uncategorized'}</div>
+                    <td className="px-5 py-4">
+                      <div className="font-semibold text-slate-800">{doc.type?.name || 'General'}</div>
+                      <div className="text-[11px] text-slate-500 font-medium">{doc.category?.name || 'Uncategorized'}</div>
                     </td>
-                    <td className="px-6 py-4 font-mono text-xs">
-                      v{doc.current_version?.version_number || '1.0'}
+                    <td className="px-5 py-4">
+                      <span className="px-2 py-0.5 font-mono text-[11px] font-bold text-slate-700 bg-slate-100 border border-slate-200/80 rounded">
+                        v{doc.current_version?.version_number || '1.0'}
+                      </span>
                     </td>
-                    <td className="px-6 py-4">{getStatusBadge(doc.status)}</td>
-                    <td className="px-6 py-4 text-xs">{doc.owner?.full_name || 'System Admin'}</td>
-                    <td className="px-6 py-4 text-right space-x-2">
+                    <td className="px-5 py-4">{getStatusBadge(doc.status)}</td>
+                    <td className="px-5 py-4 text-xs font-medium text-slate-700">{doc.owner?.full_name || doc.owner?.email || 'System Admin'}</td>
+                    <td className="px-5 py-4 text-right space-x-2">
                       <button
                         onClick={() => navigate(`${ERP_BASE_PATH}/documents/${doc.id}`)}
-                        className="px-3 py-1.5 text-xs font-medium text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 hover:bg-blue-100 rounded-lg transition-colors inline-flex items-center gap-1"
+                        className="px-3 py-1.5 text-xs font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200/80 rounded-lg transition-all inline-flex items-center gap-1.5 cursor-pointer"
                       >
-                        <Eye className="w-3.5 h-3.5" />
+                        <Eye className="w-3.5 h-3.5 text-blue-600" />
                         Details
                       </button>
                     </td>
