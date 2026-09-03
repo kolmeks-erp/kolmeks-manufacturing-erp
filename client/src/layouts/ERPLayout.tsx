@@ -264,7 +264,7 @@ export const ERPLayout: React.FC<ERPLayoutProps> = ({ children }) => {
         </div>
 
         {/* SIDEBAR NAVIGATION ITEMS */}
-        <div className="flex-1 overflow-y-auto py-4 px-3 space-y-6 custom-scrollbar pb-6">
+        <div className="flex-1 overflow-y-auto py-4 px-3 space-y-5 custom-scrollbar pb-6">
           {categories.map((cat) => {
             const catItems = visibleMenuItems.filter((item) => (item.category || 'Core') === cat);
             if (catItems.length === 0) return null;
@@ -272,7 +272,7 @@ export const ERPLayout: React.FC<ERPLayoutProps> = ({ children }) => {
             return (
               <div key={cat} className="space-y-1">
                 {!collapsed && cat !== 'core' && (
-                  <div className="px-3 text-[10px] font-mono font-bold uppercase tracking-widest text-slate-400 mb-2">
+                  <div className="px-3 text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 mb-1.5">
                     {cat}
                   </div>
                 )}
@@ -286,14 +286,14 @@ export const ERPLayout: React.FC<ERPLayoutProps> = ({ children }) => {
                       key={item.id}
                       to={item.path}
                       onClick={() => setMobileOpen(false)}
-                      className={`flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-semibold transition-all group focus:outline-hidden ${
+                      className={`flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all group focus:outline-hidden ${
                         isActive
-                          ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30 font-bold'
+                          ? 'bg-blue-600 text-white shadow-xs font-semibold'
                           : 'text-slate-300 hover:bg-slate-800/80 hover:text-white'
                       }`}
                       title={collapsed ? item.label : undefined}
                     >
-                      <div className="flex items-center gap-3 min-w-0">
+                      <div className="flex items-center gap-2.5 min-w-0">
                         <Icon
                           className={`w-4 h-4 shrink-0 transition-colors ${
                             isActive ? 'text-white' : 'text-slate-400 group-hover:text-blue-400'

@@ -64,7 +64,7 @@ export interface DocumentVersion {
   storage_url: string;
   change_summary?: string;
   created_by?: string;
-  creator?: { full_name?: string };
+  creator?: { full_name?: string; email?: string };
   status: DocumentStatus;
   is_current: boolean;
   created_at: string;
@@ -84,7 +84,7 @@ export interface DocumentApprovalStep {
   approval_id: string;
   step_number: number;
   approver_id?: string;
-  approver?: { full_name?: string };
+  approver?: { full_name?: string; email?: string };
   approver_role?: string;
   decision: 'PENDING' | 'APPROVED' | 'REJECTED' | 'CHANGES_REQUESTED';
   comments?: string;
@@ -97,7 +97,7 @@ export interface DocumentApproval {
   document_id: string;
   version_id: string;
   requester_id?: string;
-  requester?: { full_name?: string };
+  requester?: { full_name?: string; email?: string };
   approval_type: 'SEQUENTIAL' | 'PARALLEL';
   target_role?: string;
   status: 'PENDING' | 'APPROVED' | 'REJECTED' | 'CHANGES_REQUESTED';
@@ -116,7 +116,7 @@ export interface DocumentAuditLog {
   document_id?: string;
   version_id?: string;
   actor_id?: string;
-  actor?: { full_name?: string };
+  actor?: { full_name?: string; email?: string };
   action: string;
   old_value?: any;
   new_value?: any;

@@ -35,29 +35,29 @@ export const WorkflowInstancesPage: React.FC = () => {
     switch (status) {
       case 'Approved':
       case 'Completed':
-        return 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300';
+        return 'bg-emerald-50 text-emerald-700 border border-emerald-200/80';
       case 'In Progress':
       case 'Pending':
-        return 'bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300';
+        return 'bg-blue-50 text-blue-700 border border-blue-200/80';
       case 'Rejected':
-        return 'bg-rose-100 text-rose-800 dark:bg-rose-900/40 dark:text-rose-300';
+        return 'bg-rose-50 text-rose-700 border border-rose-200/80';
       case 'Changes Requested':
-        return 'bg-purple-100 text-purple-800 dark:bg-purple-900/40 dark:text-purple-300';
+        return 'bg-purple-50 text-purple-700 border border-purple-200/80';
       default:
-        return 'bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-300';
+        return 'bg-slate-100 text-slate-700 border border-slate-200';
     }
   };
 
   return (
-    <div className="p-6 space-y-6">
-      <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+    <div className="space-y-5">
+      <div className="bg-white p-5 sm:p-6 rounded-xl border border-slate-200/80 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="flex items-center gap-3">
-          <div className="p-2.5 bg-blue-500/10 text-blue-600 dark:text-blue-400 rounded-xl">
+          <div className="p-2.5 bg-blue-50 text-blue-600 rounded-lg border border-blue-100">
             <GitBranch className="w-7 h-7" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Workflow Instances Monitor</h1>
-            <p className="text-sm text-slate-500 dark:text-slate-400">
+            <h1 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">Workflow Instances Monitor</h1>
+            <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
               Live tracking and status audit of active, completed, and pending workflow executions across all modules
             </p>
           </div>
@@ -65,16 +65,16 @@ export const WorkflowInstancesPage: React.FC = () => {
       </div>
 
       {/* Filters Bar */}
-      <div className="bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div className="bg-white p-3.5 rounded-xl border border-slate-200/80 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-3">
         <div className="relative w-full sm:w-80">
-          <Search className="w-4 h-4 absolute left-3 top-3 text-slate-400" />
+          <Search className="w-4 h-4 absolute left-3 top-2.5 text-slate-400" />
           <input
             type="text"
             placeholder="Search Instance Number..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && fetchInstances()}
-            className="w-full pl-9 pr-4 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200"
+            className="w-full pl-9 pr-4 py-2 text-xs rounded-lg border border-slate-200 bg-white text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
           />
         </div>
 
@@ -83,7 +83,7 @@ export const WorkflowInstancesPage: React.FC = () => {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200"
+            className="px-3 py-2 text-xs rounded-lg border border-slate-200 bg-white text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 cursor-pointer"
           >
             <option value="">All Workflow Statuses</option>
             <option value="In Progress">In Progress</option>
@@ -96,63 +96,63 @@ export const WorkflowInstancesPage: React.FC = () => {
       </div>
 
       {/* Instances Table */}
-      <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+      <div className="bg-white rounded-xl border border-slate-200/80 shadow-xs overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm text-slate-600 dark:text-slate-300">
-            <thead className="bg-slate-50 dark:bg-slate-800/50 text-slate-700 dark:text-slate-300 uppercase text-xs">
+          <table className="w-full text-left text-xs text-slate-600">
+            <thead className="bg-slate-50/80 text-slate-700 uppercase text-[11px] font-bold tracking-wider border-b border-slate-200/80">
               <tr>
-                <th className="px-6 py-4">Instance Number</th>
-                <th className="px-6 py-4">Workflow & Module</th>
-                <th className="px-6 py-4">Entity Reference</th>
-                <th className="px-6 py-4">Current Stage</th>
-                <th className="px-6 py-4">Status</th>
-                <th className="px-6 py-4">Started Date</th>
-                <th className="px-6 py-4 text-right">Actions</th>
+                <th className="px-5 py-3.5">Instance Number</th>
+                <th className="px-5 py-3.5">Workflow & Module</th>
+                <th className="px-5 py-3.5">Entity Reference</th>
+                <th className="px-5 py-3.5">Current Stage</th>
+                <th className="px-5 py-3.5">Status</th>
+                <th className="px-5 py-3.5">Started Date</th>
+                <th className="px-5 py-3.5 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-200 dark:divide-slate-800">
+            <tbody className="divide-y divide-slate-200/70">
               {loading ? (
                 <tr>
-                  <td colSpan={7} className="px-6 py-8 text-center text-slate-500">
+                  <td colSpan={7} className="px-5 py-8 text-center text-slate-400">
                     Loading workflow instances...
                   </td>
                 </tr>
               ) : instances.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="px-6 py-8 text-center text-slate-500">
+                  <td colSpan={7} className="px-5 py-8 text-center text-slate-400">
                     No matching workflow instances found.
                   </td>
                 </tr>
               ) : (
                 instances.map((inst) => (
-                  <tr key={inst.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/40">
-                    <td className="px-6 py-4 font-mono font-bold text-slate-900 dark:text-white">
+                  <tr key={inst.id} className="hover:bg-slate-50/80 transition-colors">
+                    <td className="px-5 py-3.5 font-mono font-bold text-slate-900">
                       {inst.instance_number}
                     </td>
-                    <td className="px-6 py-4">
-                      <div className="font-semibold text-slate-900 dark:text-white">{inst.workflow_definitions?.name}</div>
-                      <span className="text-[10px] font-bold uppercase text-blue-600 dark:text-blue-400">
+                    <td className="px-5 py-3.5">
+                      <div className="font-semibold text-slate-900">{inst.workflow_definitions?.name}</div>
+                      <span className="text-[10px] font-bold uppercase text-blue-600">
                         {inst.workflow_definitions?.module}
                       </span>
                     </td>
-                    <td className="px-6 py-4 font-mono text-xs text-slate-700 dark:text-slate-300">
+                    <td className="px-5 py-3.5 font-mono text-xs text-slate-700">
                       {inst.entity_reference || inst.entity_id}
                     </td>
-                    <td className="px-6 py-4 text-xs font-semibold text-slate-800 dark:text-slate-200">
+                    <td className="px-5 py-3.5 text-xs font-semibold text-slate-800">
                       {inst.workflow_stages?.name || 'In Progress'}
                     </td>
-                    <td className="px-6 py-4">
-                      <span className={`px-2.5 py-0.5 rounded-full text-xs font-bold ${getStatusBadge(inst.status)}`}>
+                    <td className="px-5 py-3.5">
+                      <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold ${getStatusBadge(inst.status)}`}>
                         {inst.status}
                       </span>
                     </td>
-                    <td className="px-6 py-4 text-xs font-mono">
+                    <td className="px-5 py-3.5 text-xs font-mono text-slate-500">
                       {new Date(inst.started_at).toLocaleDateString()}
                     </td>
-                    <td className="px-6 py-4 text-right">
+                    <td className="px-5 py-3.5 text-right">
                       <button
                         onClick={() => navigate(`/secure-kolmeks-x0y0/workflows/instances/${inst.id}`)}
-                        className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-lg"
+                        className="p-1.5 hover:bg-slate-100 text-slate-600 rounded-lg transition-all cursor-pointer"
                         title="View Timeline"
                       >
                         <Eye className="w-4 h-4" />

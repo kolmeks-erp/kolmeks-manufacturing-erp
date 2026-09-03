@@ -165,16 +165,16 @@ export const ExpenseClaimDetailPage: React.FC = () => {
 
   const getStatusBadge = (status: string) => {
     const colors: Record<string, string> = {
-      DRAFT: 'bg-slate-800 text-slate-300 border-slate-700',
-      SUBMITTED: 'bg-amber-500/10 text-amber-400 border-amber-500/30',
-      APPROVED: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30',
-      REJECTED: 'bg-rose-500/10 text-rose-400 border-rose-500/30',
-      RETURNED: 'bg-orange-500/10 text-orange-400 border-orange-500/30',
-      PARTIALLY_REIMBURSED: 'bg-blue-500/10 text-blue-400 border-blue-500/30',
-      REIMBURSED: 'bg-purple-500/10 text-purple-400 border-purple-500/30',
+      DRAFT: 'bg-slate-100 text-slate-700 border-slate-200/80',
+      SUBMITTED: 'bg-amber-50 text-amber-800 border-amber-200/80',
+      APPROVED: 'bg-emerald-50 text-emerald-700 border-emerald-200/80',
+      REJECTED: 'bg-rose-50 text-rose-700 border-rose-200/80',
+      RETURNED: 'bg-orange-50 text-orange-800 border-orange-200/80',
+      PARTIALLY_REIMBURSED: 'bg-blue-50 text-blue-700 border-blue-200/80',
+      REIMBURSED: 'bg-purple-50 text-purple-700 border-purple-200/80',
     };
     return (
-      <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide border ${colors[status] || 'bg-slate-800 text-slate-400'}`}>
+      <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide border ${colors[status] || 'bg-slate-100 text-slate-600 border-slate-200'}`}>
         {status.replace('_', ' ')}
       </span>
     );
@@ -190,16 +190,16 @@ export const ExpenseClaimDetailPage: React.FC = () => {
             <div className="flex items-center space-x-3">
               <button
                 onClick={() => navigate(-1)}
-                className="inline-flex items-center px-3 py-2 border border-slate-700 rounded-lg text-sm font-medium text-slate-300 bg-slate-800 hover:bg-slate-700 transition"
+                className="inline-flex items-center px-3.5 py-2 border border-slate-200/80 rounded-xl text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 transition-all shadow-xs cursor-pointer"
               >
-                <ArrowLeft className="w-4 h-4 mr-2" />
+                <ArrowLeft className="w-3.5 h-3.5 mr-1.5 text-slate-500" />
                 Back
               </button>
 
               {['DRAFT', 'RETURNED'].includes(claim.status) && (
                 <button
                   onClick={() => navigate(`${ERP_BASE_PATH}/finance/expenses/claims/${claim.id}/edit`)}
-                  className="inline-flex items-center px-4 py-2 bg-amber-600 hover:bg-amber-500 text-white rounded-lg text-sm font-semibold transition"
+                  className="inline-flex items-center px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-xl text-xs font-semibold shadow-xs transition-all cursor-pointer"
                 >
                   Edit Claim
                 </button>
@@ -209,23 +209,23 @@ export const ExpenseClaimDetailPage: React.FC = () => {
                 <>
                   <button
                     onClick={() => setShowReturnModal(true)}
-                    className="inline-flex items-center px-3 py-2 border border-amber-500/40 text-amber-400 bg-amber-500/10 hover:bg-amber-500/20 rounded-lg text-sm font-medium transition"
+                    className="inline-flex items-center px-3.5 py-2 border border-amber-200/80 text-amber-800 bg-amber-50 hover:bg-amber-100 rounded-xl text-xs font-semibold transition-all cursor-pointer"
                   >
-                    <RotateCcw className="w-4 h-4 mr-1.5" />
+                    <RotateCcw className="w-3.5 h-3.5 mr-1.5" />
                     Return for Edit
                   </button>
                   <button
                     onClick={() => setShowRejectModal(true)}
-                    className="inline-flex items-center px-3 py-2 border border-rose-500/40 text-rose-400 bg-rose-500/10 hover:bg-rose-500/20 rounded-lg text-sm font-medium transition"
+                    className="inline-flex items-center px-3.5 py-2 border border-rose-200/80 text-rose-700 bg-rose-50 hover:bg-rose-100 rounded-xl text-xs font-semibold transition-all cursor-pointer"
                   >
-                    <XCircle className="w-4 h-4 mr-1.5" />
+                    <XCircle className="w-3.5 h-3.5 mr-1.5" />
                     Reject
                   </button>
                   <button
                     onClick={handleApprove}
-                    className="inline-flex items-center px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-sm font-semibold shadow-md transition"
+                    className="inline-flex items-center px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-semibold shadow-xs transition-all cursor-pointer"
                   >
-                    <CheckCircle className="w-4 h-4 mr-2" />
+                    <CheckCircle className="w-3.5 h-3.5 mr-1.5" />
                     Approve Claim
                   </button>
                 </>
@@ -234,9 +234,9 @@ export const ExpenseClaimDetailPage: React.FC = () => {
               {['APPROVED', 'REIMBURSEMENT_PENDING', 'PARTIALLY_REIMBURSED'].includes(claim.status) && claim.outstanding_amount > 0 && (
                 <button
                   onClick={() => setShowReimbModal(true)}
-                  className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white rounded-lg text-sm font-semibold shadow-md transition"
+                  className="inline-flex items-center px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-xl text-xs font-semibold shadow-xs transition-all cursor-pointer"
                 >
-                  <CreditCard className="w-4 h-4 mr-2" />
+                  <CreditCard className="w-3.5 h-3.5 mr-1.5" />
                   Record Reimbursement
                 </button>
               )}
@@ -245,126 +245,126 @@ export const ExpenseClaimDetailPage: React.FC = () => {
         />
 
         {actionMsg && (
-          <div className="bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 p-4 rounded-xl text-sm flex items-center">
-            <CheckCircle className="w-5 h-5 mr-3 shrink-0" />
+          <div className="bg-emerald-50 border border-emerald-200 text-emerald-800 p-4 rounded-2xl text-xs font-semibold flex items-center shadow-xs">
+            <CheckCircle className="w-4 h-4 mr-2.5 shrink-0 text-emerald-600" />
             {actionMsg}
           </div>
         )}
 
         {budgetWarning && (
-          <div className="bg-amber-500/10 border border-amber-500/30 text-amber-300 p-4 rounded-xl text-sm flex items-center">
-            <AlertTriangle className="w-5 h-5 mr-3 shrink-0 text-amber-400" />
+          <div className="bg-amber-50 border border-amber-200 text-amber-800 p-4 rounded-2xl text-xs font-semibold flex items-center shadow-xs">
+            <AlertTriangle className="w-4 h-4 mr-2.5 shrink-0 text-amber-600" />
             {budgetWarning}
           </div>
         )}
 
         {/* Claim Summary Strip */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
-          <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-sm">
-            <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">Status</span>
+          <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs">
+            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-2">Status</span>
             <div>{getStatusBadge(claim.status)}</div>
             {claim.rejection_reason && (
-              <p className="mt-2 text-xs text-rose-400 bg-rose-500/10 p-2 rounded border border-rose-500/20">
+              <p className="mt-2 text-xs text-rose-700 bg-rose-50 p-2.5 rounded-xl border border-rose-200/80 font-medium">
                 Reason: {claim.rejection_reason}
               </p>
             )}
             {claim.return_reason && (
-              <p className="mt-2 text-xs text-amber-400 bg-amber-500/10 p-2 rounded border border-amber-500/20">
+              <p className="mt-2 text-xs text-amber-800 bg-amber-50 p-2.5 rounded-xl border border-amber-200/80 font-medium">
                 Returned: {claim.return_reason}
               </p>
             )}
           </div>
 
-          <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-sm">
-            <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">Total Claim Amount</span>
-            <div className="text-2xl font-bold text-slate-100">{formatCurrency(claim.total_amount)}</div>
-            <div className="text-xs text-slate-400 mt-1">{claim.items?.length || 0} line items</div>
+          <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs">
+            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-1">Total Claim Amount</span>
+            <div className="text-2xl font-bold text-slate-900 tracking-tight">{formatCurrency(claim.total_amount)}</div>
+            <div className="text-xs font-medium text-slate-500 mt-1">{claim.items?.length || 0} line items</div>
           </div>
 
-          <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-sm">
-            <span className="text-xs font-semibold text-emerald-400 uppercase tracking-wider block mb-1">Approved Amount</span>
-            <div className="text-2xl font-bold text-emerald-300">{formatCurrency(claim.approved_amount)}</div>
-            <div className="text-xs text-slate-400 mt-1">Verified claim total</div>
+          <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs">
+            <span className="text-xs font-bold text-emerald-700 uppercase tracking-wider block mb-1">Approved Amount</span>
+            <div className="text-2xl font-bold text-emerald-700 tracking-tight">{formatCurrency(claim.approved_amount)}</div>
+            <div className="text-xs font-medium text-slate-500 mt-1">Verified claim total</div>
           </div>
 
-          <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-sm">
-            <span className="text-xs font-semibold text-purple-400 uppercase tracking-wider block mb-1">Outstanding Reimbursement</span>
-            <div className="text-2xl font-bold text-purple-300">{formatCurrency(claim.outstanding_amount)}</div>
-            <div className="text-xs text-slate-400 mt-1">Reimbursed: {formatCurrency(claim.reimbursed_amount)}</div>
+          <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs">
+            <span className="text-xs font-bold text-purple-700 uppercase tracking-wider block mb-1">Outstanding Reimbursement</span>
+            <div className="text-2xl font-bold text-purple-700 tracking-tight">{formatCurrency(claim.outstanding_amount)}</div>
+            <div className="text-xs font-medium text-slate-500 mt-1">Reimbursed: {formatCurrency(claim.reimbursed_amount)}</div>
           </div>
         </div>
 
         {/* Claim Details Card */}
-        <div className="bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-sm space-y-4">
-          <h3 className="text-base font-semibold text-slate-100 border-b border-slate-800 pb-3 flex items-center justify-between">
+        <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs space-y-4">
+          <h3 className="text-sm font-bold text-slate-900 border-b border-slate-200 pb-3 flex items-center justify-between">
             <span className="flex items-center">
-              <UserCheck className="w-4 h-4 mr-2 text-emerald-400" />
+              <UserCheck className="w-4 h-4 mr-2 text-emerald-600" />
               Employee & Cost Center Mapping
             </span>
             {claim.journal_entry && (
-              <span className="text-xs text-slate-400 flex items-center font-normal">
-                <BookOpen className="w-4 h-4 mr-1 text-teal-400" />
+              <span className="text-xs text-slate-500 flex items-center font-medium">
+                <BookOpen className="w-4 h-4 mr-1 text-teal-600" />
                 Journal Entry:{' '}
-                <span className="font-mono font-semibold text-teal-300 ml-1">{claim.journal_entry.entry_number}</span>
+                <span className="font-mono font-bold text-teal-700 ml-1">{claim.journal_entry.entry_number}</span>
               </span>
             )}
           </h3>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 text-sm">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 text-xs">
             <div>
-              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider block">Employee Name</span>
-              <span className="text-slate-200 font-medium">{claim.employee ? `${claim.employee.first_name} ${claim.employee.last_name}` : 'N/A'}</span>
-              <span className="text-xs text-slate-400 block">{claim.employee?.department || 'Department N/A'}</span>
+              <span className="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-1">Employee Name</span>
+              <span className="text-slate-900 font-semibold">{claim.employee ? `${claim.employee.first_name} ${claim.employee.last_name}` : 'N/A'}</span>
+              <span className="text-xs text-slate-500 font-medium block mt-0.5">{claim.employee?.department || 'Department N/A'}</span>
             </div>
 
             <div>
-              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider block">Cost Center</span>
-              <span className="text-slate-200 font-medium">{claim.cost_center ? `${claim.cost_center.code} - ${claim.cost_center.name}` : 'General / Unallocated'}</span>
+              <span className="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-1">Cost Center</span>
+              <span className="text-slate-900 font-semibold">{claim.cost_center ? `${claim.cost_center.code} - ${claim.cost_center.name}` : 'General / Unallocated'}</span>
             </div>
 
             <div>
-              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider block">Claim Date</span>
-              <span className="text-slate-200 font-medium">{claim.claim_date}</span>
+              <span className="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-1">Claim Date</span>
+              <span className="text-slate-900 font-semibold">{claim.claim_date}</span>
             </div>
           </div>
 
           <div className="pt-2">
-            <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-1">Purpose / Description</span>
-            <p className="text-slate-300 bg-slate-950 p-3 rounded-lg border border-slate-800 text-sm">{claim.description}</p>
+            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-1">Purpose / Description</span>
+            <p className="text-slate-700 bg-slate-50 p-3 rounded-xl border border-slate-200 text-xs font-medium">{claim.description}</p>
           </div>
         </div>
 
         {/* Expense Items Breakdown Table */}
-        <div className="bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-sm">
-          <h3 className="text-base font-semibold text-slate-100 mb-4 flex items-center">
-            <IndianRupee className="w-4 h-4 mr-2 text-emerald-400" />
+        <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs">
+          <h3 className="text-sm font-bold text-slate-900 mb-4 flex items-center">
+            <IndianRupee className="w-4 h-4 mr-2 text-emerald-600" />
             Expense Line Items & Receipts ({claim.items?.length || 0})
           </h3>
 
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm text-slate-300">
-              <thead className="bg-slate-800/60 text-xs uppercase text-slate-400 font-semibold border-b border-slate-700">
+          <div className="overflow-x-auto rounded-xl border border-slate-200">
+            <table className="w-full text-left text-xs text-slate-700">
+              <thead className="bg-slate-50 border-b border-slate-200 text-slate-700 font-bold uppercase text-[11px] tracking-wider">
                 <tr>
-                  <th className="py-3 px-4">#</th>
-                  <th className="py-3 px-4">Date</th>
-                  <th className="py-3 px-4">Category</th>
-                  <th className="py-3 px-4">Description</th>
-                  <th className="py-3 px-4 text-right">Claim Amount</th>
-                  <th className="py-3 px-4 text-right">Approved Amt</th>
-                  <th className="py-3 px-4 text-center">Receipt</th>
+                  <th className="py-3.5 px-4">#</th>
+                  <th className="py-3.5 px-4">Date</th>
+                  <th className="py-3.5 px-4">Category</th>
+                  <th className="py-3.5 px-4">Description</th>
+                  <th className="py-3.5 px-4 text-right">Claim Amount</th>
+                  <th className="py-3.5 px-4 text-right">Approved Amt</th>
+                  <th className="py-3.5 px-4 text-center">Receipt</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800">
+              <tbody className="divide-y divide-slate-100">
                 {claim.items?.map((item, index) => (
-                  <tr key={item.id || index} className="hover:bg-slate-800/40 transition">
-                    <td className="py-3.5 px-4 font-mono text-slate-500">{index + 1}</td>
-                    <td className="py-3.5 px-4 text-slate-400">{item.expense_date}</td>
-                    <td className="py-3.5 px-4 text-emerald-400 font-medium">{item.category?.name || 'Category'}</td>
-                    <td className="py-3.5 px-4 text-slate-200">{item.description}</td>
-                    <td className="py-3.5 px-4 text-right font-semibold text-slate-100">
+                  <tr key={item.id || index} className="hover:bg-slate-50/80 transition-colors">
+                    <td className="py-3.5 px-4 font-mono text-slate-400 font-bold">{index + 1}</td>
+                    <td className="py-3.5 px-4 text-slate-500 font-medium">{item.expense_date}</td>
+                    <td className="py-3.5 px-4 text-emerald-700 font-semibold">{item.category?.name || 'Category'}</td>
+                    <td className="py-3.5 px-4 text-slate-900 font-medium">{item.description}</td>
+                    <td className="py-3.5 px-4 text-right font-bold text-slate-900">
                       {formatCurrency(item.amount)}
                     </td>
-                    <td className="py-3.5 px-4 text-right font-semibold text-emerald-400">
+                    <td className="py-3.5 px-4 text-right font-bold text-emerald-700">
                       {formatCurrency(item.approved_amount || item.amount)}
                     </td>
                     <td className="py-3.5 px-4 text-center">
@@ -372,12 +372,12 @@ export const ExpenseClaimDetailPage: React.FC = () => {
                         <button
                           type="button"
                           onClick={() => setPreviewReceiptUrl(item.receipt_url || null)}
-                          className="inline-flex items-center text-xs text-emerald-400 hover:text-emerald-300 bg-emerald-500/10 hover:bg-emerald-500/20 px-2.5 py-1 rounded transition font-medium"
+                          className="inline-flex items-center text-xs text-emerald-700 hover:text-emerald-800 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200/80 px-2.5 py-1 rounded-lg transition-all font-semibold cursor-pointer"
                         >
                           <Paperclip className="w-3.5 h-3.5 mr-1" /> View Receipt
                         </button>
                       ) : (
-                        <span className="text-xs text-slate-600">No Receipt</span>
+                        <span className="text-xs text-slate-400 font-medium">No Receipt</span>
                       )}
                     </td>
                   </tr>
@@ -389,35 +389,35 @@ export const ExpenseClaimDetailPage: React.FC = () => {
 
         {/* Reimbursement History Table */}
         {claim.reimbursements && claim.reimbursements.length > 0 && (
-          <div className="bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-sm">
-            <h3 className="text-base font-semibold text-slate-100 mb-4 flex items-center">
-              <CreditCard className="w-4 h-4 mr-2 text-purple-400" />
+          <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs">
+            <h3 className="text-sm font-bold text-slate-900 mb-4 flex items-center">
+              <CreditCard className="w-4 h-4 mr-2 text-purple-600" />
               Reimbursement Payment Settlements ({claim.reimbursements.length})
             </h3>
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-sm text-slate-300">
-                <thead className="bg-slate-800/60 text-xs uppercase text-slate-400 font-semibold border-b border-slate-700">
+            <div className="overflow-x-auto rounded-xl border border-slate-200">
+              <table className="w-full text-left text-xs text-slate-700">
+                <thead className="bg-slate-50 border-b border-slate-200 text-slate-700 font-bold uppercase text-[11px] tracking-wider">
                   <tr>
-                    <th className="py-3 px-4">Reimbursement #</th>
-                    <th className="py-3 px-4">Payment Date</th>
-                    <th className="py-3 px-4">Method</th>
-                    <th className="py-3 px-4">Reference #</th>
-                    <th className="py-3 px-4 text-right">Amount</th>
-                    <th className="py-3 px-4 text-center">Status</th>
+                    <th className="py-3.5 px-4">Reimbursement #</th>
+                    <th className="py-3.5 px-4">Payment Date</th>
+                    <th className="py-3.5 px-4">Method</th>
+                    <th className="py-3.5 px-4">Reference #</th>
+                    <th className="py-3.5 px-4 text-right">Amount</th>
+                    <th className="py-3.5 px-4 text-center">Status</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-800">
+                <tbody className="divide-y divide-slate-100">
                   {claim.reimbursements.map((reimb) => (
-                    <tr key={reimb.id} className="hover:bg-slate-800/40 transition">
-                      <td className="py-3.5 px-4 font-mono text-purple-400 font-medium">{reimb.reimbursement_number}</td>
-                      <td className="py-3.5 px-4 text-slate-400">{reimb.reimbursement_date}</td>
-                      <td className="py-3.5 px-4 text-slate-300 font-medium">{reimb.payment_method}</td>
-                      <td className="py-3.5 px-4 font-mono text-slate-400">{reimb.reference_number || '-'}</td>
-                      <td className="py-3.5 px-4 text-right font-semibold text-purple-300">
+                    <tr key={reimb.id} className="hover:bg-slate-50/80 transition-colors">
+                      <td className="py-3.5 px-4 font-mono text-purple-700 font-bold">{reimb.reimbursement_number}</td>
+                      <td className="py-3.5 px-4 text-slate-500 font-medium">{reimb.reimbursement_date}</td>
+                      <td className="py-3.5 px-4 text-slate-900 font-semibold">{reimb.payment_method}</td>
+                      <td className="py-3.5 px-4 font-mono text-slate-500 font-medium">{reimb.reference_number || '-'}</td>
+                      <td className="py-3.5 px-4 text-right font-bold text-purple-700">
                         {formatCurrency(reimb.amount)}
                       </td>
                       <td className="py-3.5 px-4 text-center">
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
                           {reimb.status}
                         </span>
                       </td>
@@ -431,24 +431,24 @@ export const ExpenseClaimDetailPage: React.FC = () => {
 
         {/* Audit Log History Timeline */}
         {claim.audit_logs && claim.audit_logs.length > 0 && (
-          <div className="bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-sm">
-            <h3 className="text-base font-semibold text-slate-100 mb-4 flex items-center">
-              <Clock className="w-4 h-4 mr-2 text-indigo-400" />
+          <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs">
+            <h3 className="text-sm font-bold text-slate-900 mb-4 flex items-center">
+              <Clock className="w-4 h-4 mr-2 text-indigo-600" />
               Audit Log & State Transition History
             </h3>
             <div className="space-y-3">
               {claim.audit_logs.map((log) => (
-                <div key={log.id} className="flex items-start space-x-3 text-xs bg-slate-950 p-3 rounded-lg border border-slate-800">
-                  <div className="p-1.5 rounded-full bg-slate-800 text-indigo-400 mt-0.5">
+                <div key={log.id} className="flex items-start space-x-3 text-xs bg-slate-50 p-3 rounded-xl border border-slate-200">
+                  <div className="p-1.5 rounded-full bg-white text-indigo-600 border border-indigo-100 shadow-xs mt-0.5">
                     <Clock className="w-3.5 h-3.5" />
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center justify-between">
-                      <span className="font-semibold text-slate-200">{log.action.replace('_', ' ')}</span>
-                      <span className="text-slate-500">{new Date(log.created_at).toLocaleString()}</span>
+                      <span className="font-bold text-slate-900">{log.action.replace('_', ' ')}</span>
+                      <span className="text-slate-400 font-medium">{new Date(log.created_at).toLocaleString()}</span>
                     </div>
                     {log.details && (
-                      <div className="text-slate-400 mt-1 font-mono text-[11px] truncate">
+                      <div className="text-slate-600 mt-1 font-mono text-[11px] truncate">
                         {JSON.stringify(log.details)}
                       </div>
                     )}
@@ -462,19 +462,19 @@ export const ExpenseClaimDetailPage: React.FC = () => {
 
       {/* Receipt Image Preview Modal */}
       {previewReceiptUrl && (
-        <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4">
-          <div className="bg-slate-900 border border-slate-800 rounded-xl max-w-3xl w-full p-5 relative shadow-2xl">
+        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white border border-slate-200 rounded-2xl max-w-3xl w-full p-5 relative shadow-xl">
             <button
               onClick={() => setPreviewReceiptUrl(null)}
-              className="absolute top-4 right-4 text-slate-400 hover:text-white transition"
+              className="absolute top-4 right-4 text-slate-400 hover:text-slate-700 transition cursor-pointer"
             >
               <X className="w-6 h-6" />
             </button>
-            <h3 className="text-base font-semibold text-slate-100 mb-4 flex items-center">
-              <Paperclip className="w-4 h-4 mr-2 text-emerald-400" /> Receipt Attachment Preview
+            <h3 className="text-sm font-bold text-slate-900 mb-4 flex items-center">
+              <Paperclip className="w-4 h-4 mr-2 text-emerald-600" /> Receipt Attachment Preview
             </h3>
-            <div className="max-h-[70vh] overflow-auto flex items-center justify-center bg-slate-950 rounded-lg p-2">
-              <img src={previewReceiptUrl} alt="Receipt Attachment" className="max-w-full h-auto object-contain rounded" />
+            <div className="max-h-[70vh] overflow-auto flex items-center justify-center bg-slate-50 rounded-xl p-2 border border-slate-200">
+              <img src={previewReceiptUrl} alt="Receipt Attachment" className="max-w-full h-auto object-contain rounded-lg" />
             </div>
           </div>
         </div>
@@ -482,12 +482,12 @@ export const ExpenseClaimDetailPage: React.FC = () => {
 
       {/* Reject Modal */}
       {showRejectModal && (
-        <div className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center p-4">
-          <div className="bg-slate-900 border border-slate-800 rounded-xl max-w-md w-full p-6 space-y-4 shadow-2xl">
-            <h3 className="text-base font-semibold text-slate-100 flex items-center">
-              <XCircle className="w-5 h-5 mr-2 text-rose-400" /> Reject Expense Claim
+        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white border border-slate-200 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-xl">
+            <h3 className="text-sm font-bold text-slate-900 flex items-center">
+              <XCircle className="w-5 h-5 mr-2 text-rose-600" /> Reject Expense Claim
             </h3>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-slate-500 font-medium">
               Please specify the rejection reason for record keeping and employee notification.
             </p>
             <textarea
@@ -495,20 +495,20 @@ export const ExpenseClaimDetailPage: React.FC = () => {
               placeholder="Reason for rejection..."
               value={rejectionReason}
               onChange={(e) => setRejectionReason(e.target.value)}
-              className="w-full bg-slate-950 border border-slate-800 text-slate-200 p-3 rounded-lg text-sm focus:outline-none focus:border-rose-500"
+              className="w-full bg-slate-50 border border-slate-200 text-slate-900 p-3 rounded-xl text-xs font-medium focus:outline-none focus:border-rose-500 focus:bg-white transition-all"
             />
             <div className="flex items-center justify-end space-x-3 pt-2">
               <button
                 type="button"
                 onClick={() => setShowRejectModal(false)}
-                className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-sm font-medium"
+                className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold transition-all cursor-pointer"
               >
                 Cancel
               </button>
               <button
                 type="button"
                 onClick={handleReject}
-                className="px-4 py-2 bg-rose-600 hover:bg-rose-500 text-white rounded-lg text-sm font-semibold"
+                className="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-semibold shadow-xs transition-all cursor-pointer"
               >
                 Confirm Rejection
               </button>
@@ -519,12 +519,12 @@ export const ExpenseClaimDetailPage: React.FC = () => {
 
       {/* Return Modal */}
       {showReturnModal && (
-        <div className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center p-4">
-          <div className="bg-slate-900 border border-slate-800 rounded-xl max-w-md w-full p-6 space-y-4 shadow-2xl">
-            <h3 className="text-base font-semibold text-slate-100 flex items-center">
-              <RotateCcw className="w-5 h-5 mr-2 text-amber-400" /> Return Claim for Correction
+        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white border border-slate-200 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-xl">
+            <h3 className="text-sm font-bold text-slate-900 flex items-center">
+              <RotateCcw className="w-5 h-5 mr-2 text-amber-600" /> Return Claim for Correction
             </h3>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-slate-500 font-medium">
               Specify what corrections or missing receipt attachments the employee must fix before resubmitting.
             </p>
             <textarea
@@ -532,20 +532,20 @@ export const ExpenseClaimDetailPage: React.FC = () => {
               placeholder="e.g. Please attach missing hotel receipt tax invoice..."
               value={returnReason}
               onChange={(e) => setReturnReason(e.target.value)}
-              className="w-full bg-slate-950 border border-slate-800 text-slate-200 p-3 rounded-lg text-sm focus:outline-none focus:border-amber-500"
+              className="w-full bg-slate-50 border border-slate-200 text-slate-900 p-3 rounded-xl text-xs font-medium focus:outline-none focus:border-amber-500 focus:bg-white transition-all"
             />
             <div className="flex items-center justify-end space-x-3 pt-2">
               <button
                 type="button"
                 onClick={() => setShowReturnModal(false)}
-                className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-sm font-medium"
+                className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold transition-all cursor-pointer"
               >
                 Cancel
               </button>
               <button
                 type="button"
                 onClick={handleReturn}
-                className="px-4 py-2 bg-amber-600 hover:bg-amber-500 text-white rounded-lg text-sm font-semibold"
+                className="px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-xl text-xs font-semibold shadow-xs transition-all cursor-pointer"
               >
                 Return Claim
               </button>
@@ -556,17 +556,17 @@ export const ExpenseClaimDetailPage: React.FC = () => {
 
       {/* Record Reimbursement Modal */}
       {showReimbModal && (
-        <div className="fixed inset-0 z-50 bg-black/75 flex items-center justify-center p-4">
-          <form onSubmit={handleCreateReimbursement} className="bg-slate-900 border border-slate-800 rounded-xl max-w-lg w-full p-6 space-y-4 shadow-2xl">
-            <h3 className="text-base font-semibold text-slate-100 flex items-center">
-              <CreditCard className="w-5 h-5 mr-2 text-purple-400" /> Record Reimbursement Payment
+        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <form onSubmit={handleCreateReimbursement} className="bg-white border border-slate-200 rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-xl">
+            <h3 className="text-sm font-bold text-slate-900 flex items-center">
+              <CreditCard className="w-5 h-5 mr-2 text-purple-600" /> Record Reimbursement Payment
             </h3>
-            <p className="text-xs text-slate-400">
-              Record cash/bank settlement for approved claim <span className="font-mono text-emerald-400">{claim.claim_number}</span>.
+            <p className="text-xs text-slate-500 font-medium">
+              Record cash/bank settlement for approved claim <span className="font-mono font-bold text-emerald-700">{claim.claim_number}</span>.
             </p>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1">
+              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
                 Reimbursement Amount (Max ₹{claim.outstanding_amount.toLocaleString()})
               </label>
               <input
@@ -577,19 +577,19 @@ export const ExpenseClaimDetailPage: React.FC = () => {
                 required
                 value={reimbAmount}
                 onChange={(e) => setReimbAmount(parseFloat(e.target.value) || 0)}
-                className="w-full bg-slate-950 border border-slate-800 text-purple-300 font-bold px-3 py-2 rounded-lg text-base"
+                className="w-full bg-slate-50 border border-slate-200 text-purple-700 font-bold px-3 py-2 rounded-xl text-base focus:outline-none focus:border-purple-500 focus:bg-white transition-all"
               />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1">
+                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
                   Payment Method
                 </label>
                 <select
                   value={reimbMethod}
                   onChange={(e) => setReimbMethod(e.target.value as any)}
-                  className="w-full bg-slate-950 border border-slate-800 text-slate-200 px-3 py-2 rounded-lg text-sm"
+                  className="w-full bg-slate-50 border border-slate-200 text-slate-900 px-3 py-2 rounded-xl text-xs font-medium focus:outline-none focus:border-purple-500 focus:bg-white transition-all"
                 >
                   <option value="BANK_TRANSFER">Bank Transfer (NEFT/RTGS)</option>
                   <option value="CASH">Petty Cash Payout</option>
@@ -599,7 +599,7 @@ export const ExpenseClaimDetailPage: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1">
+                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
                   Reference / UTR Number
                 </label>
                 <input
@@ -607,13 +607,13 @@ export const ExpenseClaimDetailPage: React.FC = () => {
                   placeholder="e.g. UTR1029384756"
                   value={reimbRef}
                   onChange={(e) => setReimbRef(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-800 text-slate-200 px-3 py-2 rounded-lg text-sm"
+                  className="w-full bg-slate-50 border border-slate-200 text-slate-900 px-3 py-2 rounded-xl text-xs font-medium focus:outline-none focus:border-purple-500 focus:bg-white transition-all"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1">
+              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
                 Remittance Notes
               </label>
               <input
@@ -621,7 +621,7 @@ export const ExpenseClaimDetailPage: React.FC = () => {
                 placeholder="Optional notes..."
                 value={reimbNotes}
                 onChange={(e) => setReimbNotes(e.target.value)}
-                className="w-full bg-slate-950 border border-slate-800 text-slate-200 px-3 py-2 rounded-lg text-sm"
+                className="w-full bg-slate-50 border border-slate-200 text-slate-900 px-3 py-2 rounded-xl text-xs font-medium focus:outline-none focus:border-purple-500 focus:bg-white transition-all"
               />
             </div>
 
@@ -629,14 +629,14 @@ export const ExpenseClaimDetailPage: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setShowReimbModal(false)}
-                className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-sm font-medium"
+                className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold transition-all cursor-pointer"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={reimbSubmitting}
-                className="px-5 py-2 bg-purple-600 hover:bg-purple-500 text-white rounded-lg text-sm font-semibold"
+                className="px-5 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-xl text-xs font-semibold shadow-xs transition-all cursor-pointer"
               >
                 {reimbSubmitting ? 'Posting...' : 'Post Reimbursement Entry'}
               </button>
