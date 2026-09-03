@@ -564,17 +564,6 @@ export const AppRoutes: React.FC = () => {
             <Route path="procurement/three-way-match" element={<ThreeWayMatchPage />} />
             <Route path="procurement/reports" element={<ProcurementReportsPage />} />
 
-            {/* Document Management & Digital Approvals Routes */}
-            <Route path="documents/dashboard" element={<DocumentDashboardPage />} />
-            <Route path="documents/library" element={<DocumentLibraryPage />} />
-            <Route path="documents/approvals" element={<DocumentApprovalsPage />} />
-            <Route path="documents/recent" element={<RecentDocumentsPage />} />
-            <Route path="documents/expiring" element={<ExpiringDocumentsPage />} />
-            <Route path="documents/types" element={<DocumentTypesPage />} />
-            <Route path="documents/categories" element={<DocumentCategoriesPage />} />
-            <Route path="documents/reports" element={<DocumentReportsPage />} />
-            <Route path="documents/:id" element={<DocumentDetailPage />} />
-
             <Route path="suppliers" element={<SupplierListPage />} />
             <Route path="suppliers/new" element={<SupplierCreatePage />} />
             <Route path="suppliers/:id" element={<SupplierDetailPage />} />
@@ -706,7 +695,7 @@ export const AppRoutes: React.FC = () => {
           </Route>
 
           {/* Finance & Accounting Authorized Routes */}
-          <Route element={<ProtectedRoute allowedRoles={['admin', 'finance', 'accountant', 'manager']} />}>
+          <Route element={<ProtectedRoute allowedRoles={['admin', 'finance', 'accountant', 'manager', 'hr']} />}>
             <Route path="finance" element={<FinanceDashboardPage />} />
 
             {/* Budgeting & Cost Management Routes */}

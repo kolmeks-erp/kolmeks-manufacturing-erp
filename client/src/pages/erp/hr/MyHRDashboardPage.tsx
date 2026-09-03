@@ -74,48 +74,48 @@ const MyHRDashboardPage: React.FC = () => {
       ) : (
         <div className="space-y-6">
           {/* Profile & Shift Overview Card */}
-          <div className="bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-sm">
+          <div className="bg-white border border-slate-200/80 rounded-xl p-6 shadow-xs">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
               <div className="flex items-center gap-4">
-                <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-cyan-600 to-indigo-600 flex items-center justify-center text-white font-bold text-xl shadow-lg border-2 border-slate-700">
+                <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-indigo-600 to-blue-600 flex items-center justify-center text-white font-bold text-xl shadow-md border-2 border-white">
                   {profileData?.employee.first_name[0]}{profileData?.employee.last_name[0]}
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
-                    <h2 className="text-xl font-bold text-white">
+                    <h2 className="text-xl font-bold text-slate-900">
                       {profileData?.employee.first_name} {profileData?.employee.last_name}
                     </h2>
-                    <span className="px-2.5 py-0.5 text-xs font-mono font-bold bg-cyan-500/10 text-cyan-400 rounded-md border border-cyan-500/20">
+                    <span className="px-2.5 py-0.5 text-xs font-mono font-bold bg-indigo-50 text-indigo-700 rounded-md border border-indigo-200/80">
                       {profileData?.employee.employee_code}
                     </span>
                   </div>
-                  <p className="text-sm text-slate-300 mt-0.5">
-                    {profileData?.employee.designation} • <span className="text-slate-400">{profileData?.employee.department?.name || 'Manufacturing'}</span>
+                  <p className="text-sm text-slate-600 mt-0.5">
+                    {profileData?.employee.designation} • <span className="text-slate-500 font-medium">{profileData?.employee.department?.name || 'Manufacturing'}</span>
                   </p>
-                  <p className="text-xs text-slate-400 mt-1">
-                    Joining Date: {profileData?.employee.joining_date} • Shift: <span className="text-indigo-400 font-medium">{profileData?.employee.shift?.name || 'General Shift'} ({profileData?.employee.shift?.start_time?.substring(0, 5) || '09:00'} - {profileData?.employee.shift?.end_time?.substring(0, 5) || '18:00'})</span>
+                  <p className="text-xs text-slate-500 mt-1">
+                    Joining Date: {profileData?.employee.joining_date} • Shift: <span className="text-indigo-600 font-semibold">{profileData?.employee.shift?.name || 'General Shift'} ({profileData?.employee.shift?.start_time?.substring(0, 5) || '09:00'} - {profileData?.employee.shift?.end_time?.substring(0, 5) || '18:00'})</span>
                   </p>
                 </div>
               </div>
 
               {/* Attendance Clock Action Box */}
-              <div className="bg-slate-800/80 border border-slate-700/60 rounded-xl p-4 flex flex-col items-center justify-center min-w-[280px]">
-                <span className="text-xs font-semibold text-slate-400 mb-2">TODAY'S SHIFT ATTENDANCE ({todayStr})</span>
+              <div className="bg-slate-50 border border-slate-200/80 rounded-xl p-4 flex flex-col items-center justify-center min-w-[280px]">
+                <span className="text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">TODAY'S SHIFT ATTENDANCE ({todayStr})</span>
                 {todayAtt?.check_in ? (
                   <div className="text-center space-y-2">
-                    <div className="flex items-center gap-2 text-emerald-400 font-mono text-sm font-bold justify-center">
+                    <div className="flex items-center gap-2 text-emerald-700 font-mono text-sm font-bold justify-center">
                       <CheckCircle2 className="w-4 h-4" />
                       Checked-In at {new Date(todayAtt.check_in).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                     </div>
                     {todayAtt.check_out ? (
-                      <div className="text-cyan-400 font-mono text-sm font-bold">
+                      <div className="text-indigo-700 font-mono text-sm font-bold">
                         Checked-Out at {new Date(todayAtt.check_out).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} ({(todayAtt.worked_minutes / 60).toFixed(1)} hrs)
                       </div>
                     ) : (
                       <button
                         onClick={handleCheckOut}
                         disabled={actionLoading}
-                        className="inline-flex items-center px-4 py-2 bg-rose-600 hover:bg-rose-500 text-white font-medium text-xs rounded-lg shadow transition-all disabled:opacity-50"
+                        className="inline-flex items-center px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white font-medium text-xs rounded-lg shadow-sm transition-all disabled:opacity-50"
                       >
                         <LogOut className="w-4 h-4 mr-1.5" />
                         {actionLoading ? 'Recording...' : 'Check-Out Now'}
@@ -126,7 +126,7 @@ const MyHRDashboardPage: React.FC = () => {
                   <button
                     onClick={handleCheckIn}
                     disabled={actionLoading}
-                    className="inline-flex items-center px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-sm rounded-lg shadow-lg transition-all disabled:opacity-50"
+                    className="inline-flex items-center px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm rounded-lg shadow-sm transition-all disabled:opacity-50"
                   >
                     <LogIn className="w-4 h-4 mr-2" />
                     {actionLoading ? 'Recording...' : 'Check-In Now'}
@@ -137,15 +137,15 @@ const MyHRDashboardPage: React.FC = () => {
           </div>
 
           {/* Leave Entitlements Summary */}
-          <div className="bg-slate-900 border border-slate-800 rounded-xl p-6">
+          <div className="bg-white border border-slate-200/80 rounded-xl p-6 shadow-xs">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-white flex items-center">
-                <Calendar className="w-5 h-5 mr-2 text-cyan-400" />
+              <h3 className="text-lg font-bold text-slate-900 flex items-center">
+                <Calendar className="w-5 h-5 mr-2 text-indigo-600" />
                 My Leave Entitlements & Balances ({new Date().getFullYear()})
               </h3>
               <button
                 onClick={() => navigate('/secure-kolmeks-x0y0/my-hr/leave')}
-                className="text-xs text-cyan-400 hover:underline font-medium flex items-center"
+                className="text-xs text-indigo-600 hover:text-indigo-700 font-semibold hover:underline flex items-center"
               >
                 Apply for Leave <ArrowRight className="w-3.5 h-3.5 ml-1" />
               </button>
@@ -154,19 +154,19 @@ const MyHRDashboardPage: React.FC = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {profileData?.leaveBalances && profileData.leaveBalances.length > 0 ? (
                 profileData.leaveBalances.map((b) => (
-                  <div key={b.id} className="bg-slate-800/60 border border-slate-700/60 rounded-xl p-4">
-                    <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block">{b.leave_type?.name}</span>
+                  <div key={b.id} className="bg-slate-50 border border-slate-200/80 rounded-xl p-4">
+                    <span className="text-xs font-bold text-slate-500 uppercase tracking-wider block">{b.leave_type?.name}</span>
                     <div className="flex items-baseline justify-between mt-2">
-                      <span className="text-2xl font-bold text-emerald-400">{b.remaining_days} <span className="text-xs font-normal text-slate-400">Left</span></span>
-                      <span className="text-xs text-slate-400">{b.used_days} / {b.allocated_days} Used</span>
+                      <span className="text-2xl font-bold text-emerald-700">{b.remaining_days} <span className="text-xs font-normal text-slate-500">Left</span></span>
+                      <span className="text-xs text-slate-500 font-medium">{b.used_days} / {b.allocated_days} Used</span>
                     </div>
                     {b.pending_days > 0 && (
-                      <span className="text-[11px] text-amber-400 font-medium block mt-1">({b.pending_days} days pending approval)</span>
+                      <span className="text-[11px] text-amber-700 font-medium block mt-1">({b.pending_days} days pending approval)</span>
                     )}
                   </div>
                 ))
               ) : (
-                <div className="col-span-4 p-4 text-center text-xs text-slate-400 italic bg-slate-800/30 rounded-lg">
+                <div className="col-span-4 p-4 text-center text-xs text-slate-500 italic bg-slate-50 border border-slate-200/60 rounded-lg">
                   No leave quotas allocated for the current year yet.
                 </div>
               )}
@@ -177,30 +177,30 @@ const MyHRDashboardPage: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div
               onClick={() => navigate('/secure-kolmeks-x0y0/my-hr/attendance')}
-              className="bg-slate-900 hover:bg-slate-800/80 border border-slate-800 rounded-xl p-5 cursor-pointer transition-all hover:border-cyan-500/50 group"
+              className="bg-white hover:bg-slate-50/80 border border-slate-200/80 rounded-xl p-5 cursor-pointer transition-all hover:border-indigo-500/40 hover:shadow-sm group"
             >
               <div className="flex items-center justify-between">
-                <h4 className="font-semibold text-white text-base flex items-center">
-                  <Clock className="w-5 h-5 mr-2 text-indigo-400" />
+                <h4 className="font-semibold text-slate-900 text-base flex items-center group-hover:text-indigo-600">
+                  <Clock className="w-5 h-5 mr-2 text-indigo-600" />
                   My Attendance Records
                 </h4>
-                <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-cyan-400 transform group-hover:translate-x-1 transition-all" />
+                <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-indigo-600 transform group-hover:translate-x-1 transition-all" />
               </div>
-              <p className="text-xs text-slate-400 mt-2">View monthly check-in history, late minutes, worked hours, and submit correction requests.</p>
+              <p className="text-xs text-slate-500 mt-2">View monthly check-in history, late minutes, worked hours, and submit correction requests.</p>
             </div>
 
             <div
               onClick={() => navigate('/secure-kolmeks-x0y0/my-hr/leave')}
-              className="bg-slate-900 hover:bg-slate-800/80 border border-slate-800 rounded-xl p-5 cursor-pointer transition-all hover:border-cyan-500/50 group"
+              className="bg-white hover:bg-slate-50/80 border border-slate-200/80 rounded-xl p-5 cursor-pointer transition-all hover:border-indigo-500/40 hover:shadow-sm group"
             >
               <div className="flex items-center justify-between">
-                <h4 className="font-semibold text-white text-base flex items-center">
-                  <FileText className="w-5 h-5 mr-2 text-emerald-400" />
+                <h4 className="font-semibold text-slate-900 text-base flex items-center group-hover:text-indigo-600">
+                  <FileText className="w-5 h-5 mr-2 text-emerald-600" />
                   My Leave Applications & History
                 </h4>
-                <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-cyan-400 transform group-hover:translate-x-1 transition-all" />
+                <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-indigo-600 transform group-hover:translate-x-1 transition-all" />
               </div>
-              <p className="text-xs text-slate-400 mt-2">Submit new leave requests, check approval progress, and view past leave history.</p>
+              <p className="text-xs text-slate-500 mt-2">Submit new leave requests, check approval progress, and view past leave history.</p>
             </div>
           </div>
         </div>

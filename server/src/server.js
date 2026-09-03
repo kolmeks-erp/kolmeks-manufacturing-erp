@@ -98,6 +98,17 @@ app.use((req, res, next) => {
 app.use('/api', healthRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/erp', erpRoutes);
+
+// System-wide Cross-Cutting Services (Notifications, Search, Activity, Documents)
+app.use('/api/notifications', notificationRoutes);
+app.use('/api/activity', activityRoutes);
+app.use('/api/search', searchRoutes);
+app.use('/api/documents', documentRoutes);
+app.use('/api/workflows', workflowRoutes);
+app.use('/api/settings', settingsRoutes);
+app.use('/api/security', securityRoutes);
+
+// Module Specific Feature Routes
 app.use('/api/rfq', rfqPublicRoutes);
 app.use('/api/rfqs', rfqErpRoutes);
 app.use('/api/employees', employeeRoutes);
@@ -129,14 +140,7 @@ app.use('/api/payroll', payrollRoutes);
 app.use('/api/crm', crmRoutes);
 app.use('/api/sales', salesDistributionRoutes);
 app.use('/api/procurement/p2p', procurementP2PRoutes);
-app.use('/api/documents', documentRoutes);
-app.use('/api/notifications', notificationRoutes);
-app.use('/api/workflows', workflowRoutes);
-app.use('/api/settings', settingsRoutes);
 app.use('/api/reports', reportsRoutes);
-app.use('/api/security', securityRoutes);
-app.use('/api/search', searchRoutes);
-app.use('/api/activity', activityRoutes);
 
 // Root Endpoint
 app.get('/', (req, res) => {
@@ -174,3 +178,6 @@ app.listen(PORT, () => {
   ═════════════════════════════════════════════════════════════════
   `);
 });
+
+// RBAC Middleware & FK Disambiguation Hot Reload Updated: 2026-09-03
+

@@ -96,9 +96,9 @@ export const ERP_SIDEBAR_MENU: ERPMenuItem[] = [
   { id: 'notifications-unread', label: 'Unread Alerts', path: `${ERP_BASE_PATH}/notifications/unread`, iconName: 'AlertTriangle', category: 'Notifications', badge: 'Live', roles: ALL_ROLES },
   { id: 'notifications-approvals', label: 'Approval Tasks', path: `${ERP_BASE_PATH}/notifications/approvals`, iconName: 'CheckSquare', category: 'Notifications', badge: 'Live', roles: ALL_ROLES },
   { id: 'notifications-reminders', label: 'My Reminders', path: `${ERP_BASE_PATH}/notifications/reminders`, iconName: 'Calendar', category: 'Notifications', badge: 'Live', roles: ALL_ROLES },
-  { id: 'notifications-settings', label: 'Alert Preferences', path: `${ERP_BASE_PATH}/notifications/settings`, iconName: 'Settings', category: 'Notifications', badge: 'Live', roles: ALL_ROLES },
+  { id: 'notifications-settings', label: 'Alert Preferences', path: `${ERP_BASE_PATH}/notifications/settings`, iconName: 'Settings', category: 'Notifications', badge: 'Live', roles: ['admin'] },
   { id: 'notifications-reports', label: 'Delivery Analytics', path: `${ERP_BASE_PATH}/notifications/reports`, iconName: 'BarChart2', category: 'Notifications', badge: 'Live', roles: ALL_ROLES },
-
+  
   // Workflow & Approval Engine Section
   { id: 'workflows-dashboard', label: 'Workflow Engine', path: `${ERP_BASE_PATH}/workflows`, iconName: 'GitMerge', category: 'Workflows', badge: 'Live', roles: ALL_ROLES },
   { id: 'workflows-definitions', label: 'Workflow Definitions', path: `${ERP_BASE_PATH}/workflows/definitions`, iconName: 'Layers', category: 'Workflows', badge: 'Live', roles: ['admin', 'executive', 'purchase_manager', 'quality_manager', 'hr', 'finance_manager'] },
@@ -204,7 +204,7 @@ export const ERP_SIDEBAR_MENU: ERPMenuItem[] = [
   // Finance & Accounting Section
   { id: 'finance-dashboard', label: 'Finance Dashboard', path: `${ERP_BASE_PATH}/finance`, iconName: 'IndianRupee', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'accountant', 'manager'] },
   { id: 'finance-expenses', label: 'Expense Management', path: `${ERP_BASE_PATH}/finance/expenses`, iconName: 'Receipt', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'accountant', 'manager'] },
-  { id: 'finance-expense-claims', label: 'Expense Claims', path: `${ERP_BASE_PATH}/finance/expenses/claims`, iconName: 'FileText', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'accountant', 'manager', 'hr'] },
+  { id: 'finance-expense-claims', label: 'Expense Claims', path: `${ERP_BASE_PATH}/finance/expenses/claims`, iconName: 'FileText', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'accountant', 'manager'] },
   { id: 'finance-expense-reimbursements', label: 'Reimbursements', path: `${ERP_BASE_PATH}/finance/expenses/reimbursements`, iconName: 'CreditCard', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'accountant', 'manager', 'executive'] },
   { id: 'finance-expense-reports', label: 'Expense Reports', path: `${ERP_BASE_PATH}/finance/expenses/reports`, iconName: 'BarChart2', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'accountant', 'manager', 'executive'] },
   { id: 'finance-expense-categories', label: 'Expense Categories', path: `${ERP_BASE_PATH}/finance/expenses/categories`, iconName: 'FolderTree', category: 'Finance & Accounting', badge: 'Live', roles: ['admin', 'finance', 'accountant'] },

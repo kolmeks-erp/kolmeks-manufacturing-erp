@@ -5,7 +5,24 @@
  */
 const authorizeRoles = (...allowedRoles) => {
   return (req, res, next) => {
-    if (!req.role || !req.role.name) {
+    let roleObj = req.role;
+    if (!roleObj && req.profile && req.profile.role) {
+      roleObj = req.profile.role;
+    }
+    if (!roleObj && req.user && req.user.user_metadata && req.user.user_metadata.role) {
+      roleObj = { name: req.user.user_metadata.role };
+    }
+
+    let roleName = '';
+    if (typeof roleObj === 'string') {
+      roleName = roleObj;
+    } else if (roleObj && roleObj.name) {
+      roleName = roleObj.name;
+    }
+
+    console.log(`[RBAC LOG] Path: ${req.originalUrl} | Role: ${roleName} | Allowed: ${JSON.stringify(allowedRoles)}`);
+
+    if (!roleName) {
       return res.status(403).json({
         success: false,
         error: 'Forbidden',
@@ -13,39 +30,40 @@ const authorizeRoles = (...allowedRoles) => {
       });
     }
 
-    const rawRole = (req.role.name || '').toLowerCase().trim();
+    const rawRole = roleName.toLowerCase().trim();
 
     // Superusers always have full access to all system modules
     if (rawRole === 'admin' || rawRole === 'master_admin' || rawRole === 'system_admin') {
       return next();
     }
 
-    const normalizedAllowed = allowedRoles.map((r) => r.toLowerCase().trim());
+    // Flatten allowedRoles (in case arrays are passed, e.g. authorizeRoles(['admin', 'hr']))
+    const flatAllowed = allowedRoles.flat(Infinity).map((r) => String(r).toLowerCase().trim());
 
-    // If 'hr' is allowed, allow all HR role variants
-    if (normalizedAllowed.includes('hr')) {
-      normalizedAllowed.push('hr_manager', 'hr_admin', 'hr_executive', 'human_resources', 'hr_officer');
+    // Expand HR role variants
+    const isHrAllowed = flatAllowed.includes('hr') || flatAllowed.some((r) => r.includes('hr') || r.includes('human'));
+    const isHrUser = rawRole === 'hr' || rawRole.includes('hr') || rawRole.includes('human');
+
+    if (isHrAllowed && isHrUser) {
+      return next();
     }
 
-    // If 'finance' is allowed, allow all Finance role variants
-    if (normalizedAllowed.includes('finance')) {
-      normalizedAllowed.push('finance_manager', 'accountant', 'finance_executive');
+    // Expand Finance role variants
+    const isFinanceAllowed = flatAllowed.includes('finance') || flatAllowed.some((r) => r.includes('finance') || r.includes('account'));
+    const isFinanceUser = rawRole === 'finance' || rawRole.includes('finance') || rawRole.includes('account');
+
+    if (isFinanceAllowed && isFinanceUser) {
+      return next();
     }
 
-    if (
-      normalizedAllowed.includes(rawRole) ||
-      (rawRole.includes('hr') && normalizedAllowed.includes('hr')) ||
-      (rawRole.includes('human') && normalizedAllowed.includes('hr')) ||
-      (rawRole.includes('finance') && normalizedAllowed.includes('finance')) ||
-      (rawRole.includes('account') && normalizedAllowed.includes('finance'))
-    ) {
+    if (flatAllowed.includes(rawRole)) {
       return next();
     }
 
     return res.status(403).json({
       success: false,
       error: 'Forbidden',
-      message: `Access denied. Role '${req.role.name}' is not authorized to access this resource.`,
+      message: `Access denied. Role '${roleName}' is not authorized to access this resource.`,
     });
   };
 };

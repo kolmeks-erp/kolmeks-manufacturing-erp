@@ -75,24 +75,24 @@ const HRLeaveRequestListPage: React.FC = () => {
     {
       header: 'Request No.',
       accessor: (row: LeaveRequest) => (
-        <span className="font-mono text-cyan-400 font-bold">{row.request_number}</span>
+        <span className="font-mono text-indigo-600 font-bold">{row.request_number}</span>
       ),
     },
     {
       header: 'Employee Name',
       accessor: (row: LeaveRequest) => (
         <div>
-          <span className="font-semibold text-white block">
+          <span className="font-semibold text-slate-900 block">
             {row.employee?.first_name} {row.employee?.last_name}
           </span>
-          <span className="text-slate-400 text-xs font-mono">{row.employee?.employee_code}</span>
+          <span className="text-slate-500 text-xs font-mono">{row.employee?.employee_code}</span>
         </div>
       ),
     },
     {
       header: 'Leave Type Policy',
       accessor: (row: LeaveRequest) => (
-        <span className="px-2.5 py-1 text-xs font-semibold rounded-full bg-slate-800 text-slate-200 border border-slate-700">
+        <span className="px-2.5 py-1 text-xs font-semibold rounded-full bg-slate-100 text-slate-700 border border-slate-200">
           {row.leave_type?.name}
         </span>
       ),
@@ -101,17 +101,17 @@ const HRLeaveRequestListPage: React.FC = () => {
       header: 'Duration & Days',
       accessor: (row: LeaveRequest) => (
         <div>
-          <span className="font-medium text-white text-xs block">
+          <span className="font-medium text-slate-900 text-xs block">
             {row.start_date} to {row.end_date}
           </span>
-          <span className="text-slate-400 text-xs">{row.leave_days} Day(s) {row.half_day !== 'NONE' ? `(${row.half_day})` : ''}</span>
+          <span className="text-slate-500 text-xs">{row.leave_days} Day(s) {row.half_day !== 'NONE' ? `(${row.half_day})` : ''}</span>
         </div>
       ),
     },
     {
       header: 'Reason',
       accessor: (row: LeaveRequest) => (
-        <span className="text-slate-300 text-xs italic max-w-xs block truncate">{row.reason}</span>
+        <span className="text-slate-600 text-xs italic max-w-xs block truncate">{row.reason}</span>
       ),
     },
     {
@@ -128,7 +128,7 @@ const HRLeaveRequestListPage: React.FC = () => {
             <button
               onClick={() => handleApprove(row)}
               disabled={actionLoading}
-              className="p-1.5 bg-emerald-600/20 text-emerald-400 border border-emerald-500/30 rounded-lg hover:bg-emerald-600/40 transition-all text-xs font-semibold flex items-center"
+              className="p-1.5 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-lg hover:bg-emerald-100 transition-all text-xs font-semibold flex items-center shadow-2xs"
               title="Approve Leave"
             >
               <Check className="w-3.5 h-3.5 mr-1" />
@@ -140,7 +140,7 @@ const HRLeaveRequestListPage: React.FC = () => {
                 setRejectReason('');
               }}
               disabled={actionLoading}
-              className="p-1.5 bg-rose-600/20 text-rose-400 border border-rose-500/30 rounded-lg hover:bg-rose-600/40 transition-all text-xs font-semibold flex items-center"
+              className="p-1.5 bg-rose-50 text-rose-700 border border-rose-200 rounded-lg hover:bg-rose-100 transition-all text-xs font-semibold flex items-center shadow-2xs"
               title="Reject Leave"
             >
               <X className="w-3.5 h-3.5 mr-1" />
@@ -148,7 +148,7 @@ const HRLeaveRequestListPage: React.FC = () => {
             </button>
           </div>
         ) : (
-          <span className="text-slate-500 text-xs italic">Reviewed</span>
+          <span className="text-slate-400 text-xs italic">Reviewed</span>
         )
       ),
     },
@@ -162,14 +162,14 @@ const HRLeaveRequestListPage: React.FC = () => {
       />
 
       {/* Filter Toolbar */}
-      <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 flex items-center justify-between">
+      <div className="bg-white border border-slate-200/80 rounded-xl p-4 shadow-xs flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <Filter className="w-4 h-4 text-cyan-400" />
-          <span className="text-xs font-semibold text-slate-300">Filter Queue:</span>
+          <Filter className="w-4 h-4 text-indigo-600" />
+          <span className="text-xs font-semibold text-slate-700">Filter Queue:</span>
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="bg-slate-800 border border-slate-700 text-white text-xs rounded-lg px-3 py-1.5 focus:outline-none focus:border-cyan-500"
+            className="bg-slate-50 border border-slate-200 text-slate-900 text-xs rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-indigo-500"
           >
             <option value="">All Applications</option>
             <option value="PENDING">PENDING (Action Required)</option>
@@ -195,38 +195,38 @@ const HRLeaveRequestListPage: React.FC = () => {
 
           {/* Reject Reason Modal */}
           {rejectModalReq && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
-              <div className="bg-slate-900 border border-slate-800 rounded-xl p-6 w-full max-w-md shadow-2xl">
-                <h3 className="text-lg font-bold text-white mb-2">Reject Leave Request</h3>
-                <p className="text-xs text-slate-400 mb-4">
-                  Please provide a reason for rejecting leave request <span className="text-rose-400 font-mono font-bold">{rejectModalReq.request_number}</span>.
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-xs p-4">
+              <div className="bg-white border border-slate-200 rounded-xl p-6 w-full max-w-md shadow-2xl">
+                <h3 className="text-lg font-bold text-slate-900 mb-2">Reject Leave Request</h3>
+                <p className="text-xs text-slate-600 mb-4">
+                  Please provide a reason for rejecting leave request <span className="text-rose-600 font-mono font-bold">{rejectModalReq.request_number}</span>.
                 </p>
 
                 <form onSubmit={handleRejectSubmit} className="space-y-4">
                   <div>
-                    <label className="block text-xs font-semibold text-slate-300 mb-1.5">Rejection Reason / Comments</label>
+                    <label className="block text-xs font-semibold text-slate-700 mb-1.5">Rejection Reason / Comments</label>
                     <textarea
                       rows={3}
                       value={rejectReason}
                       onChange={(e) => setRejectReason(e.target.value)}
                       placeholder="e.g. Critical production line coverage requirement on selected shift dates"
-                      className="w-full bg-slate-800 border border-slate-700 text-white rounded-lg p-3 text-sm focus:outline-none focus:border-rose-500"
+                      className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-lg p-3 text-sm focus:outline-none focus:ring-2 focus:ring-rose-500"
                       required
                     />
                   </div>
 
-                  <div className="flex justify-end gap-3 pt-4 border-t border-slate-800">
+                  <div className="flex justify-end gap-3 pt-4 border-t border-slate-100">
                     <button
                       type="button"
                       onClick={() => setRejectModalReq(null)}
-                      className="px-4 py-2 bg-slate-800 text-slate-300 text-sm font-medium rounded-lg hover:bg-slate-700"
+                      className="px-4 py-2 bg-slate-100 text-slate-700 text-sm font-semibold rounded-lg hover:bg-slate-200"
                     >
                       Cancel
                     </button>
                     <button
                       type="submit"
                       disabled={actionLoading}
-                      className="px-4 py-2 bg-rose-600 hover:bg-rose-500 text-white text-sm font-medium rounded-lg disabled:opacity-50"
+                      className="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white text-sm font-semibold rounded-lg shadow-sm disabled:opacity-50"
                     >
                       {actionLoading ? 'Rejecting...' : 'Confirm Rejection'}
                     </button>

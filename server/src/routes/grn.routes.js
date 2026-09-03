@@ -14,21 +14,21 @@ const {
 } = require('../controllers/grn.controller');
 
 const AUTHORIZED_ROLES = ['admin', 'warehouse_manager', 'purchase_manager', 'quality_manager', 'executive'];
+const grnAuth = authorizeRoles(...AUTHORIZED_ROLES);
 
-// Protect all GRN endpoints with Authentication & RBAC
+// Protect all GRN endpoints with Authentication
 router.use(authenticateUser);
-router.use(authorizeRoles(...AUTHORIZED_ROLES));
 
 // Eligible POs for GRN creation
-router.get('/purchase-orders/eligible-for-receiving', getEligiblePurchaseOrders);
+router.get('/purchase-orders/eligible-for-receiving', grnAuth, getEligiblePurchaseOrders);
 
 // Goods Receipt Endpoints
-router.get('/goods-receipts', getGoodsReceipts);
-router.get('/goods-receipts/:id', getGoodsReceiptById);
-router.post('/goods-receipts', createGoodsReceipt);
-router.patch('/goods-receipts/:id', updateGoodsReceipt);
-router.post('/goods-receipts/:id/complete', completeGoodsReceipt);
-router.post('/goods-receipts/:id/cancel', cancelGoodsReceipt);
-router.get('/goods-receipts/:id/activity', getGoodsReceiptActivities);
+router.get('/goods-receipts', grnAuth, getGoodsReceipts);
+router.get('/goods-receipts/:id', grnAuth, getGoodsReceiptById);
+router.post('/goods-receipts', grnAuth, createGoodsReceipt);
+router.patch('/goods-receipts/:id', grnAuth, updateGoodsReceipt);
+router.post('/goods-receipts/:id/complete', grnAuth, completeGoodsReceipt);
+router.post('/goods-receipts/:id/cancel', grnAuth, cancelGoodsReceipt);
+router.get('/goods-receipts/:id/activity', grnAuth, getGoodsReceiptActivities);
 
 module.exports = router;

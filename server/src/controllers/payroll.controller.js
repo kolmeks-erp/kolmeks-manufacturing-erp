@@ -5,23 +5,94 @@ const { supabaseAdmin } = require('../config/supabase');
  */
 const getEmployeeForUser = async (user) => {
   if (!user) return null;
-  let { data: emp } = await supabaseAdmin
-    .from('employees')
-    .select('*, department:departments!employees_department_id_fkey(id, code, name)')
-    .eq('auth_user_id', user.id)
-    .maybeSingle();
 
-  if (emp) return emp;
-
-  if (user.email) {
-    const { data: empByEmail } = await supabaseAdmin
+  try {
+    let { data: emp } = await supabaseAdmin
       .from('employees')
       .select('*, department:departments!employees_department_id_fkey(id, code, name)')
-      .eq('email', user.email.toLowerCase())
+      .eq('auth_user_id', user.id)
       .maybeSingle();
 
-    if (empByEmail) return empByEmail;
+    if (emp) return emp;
+
+    if (user.email) {
+      const emailLower = user.email.toLowerCase().trim();
+      const { data: empByEmail } = await supabaseAdmin
+        .from('employees')
+        .select('*, department:departments!employees_department_id_fkey(id, code, name)')
+        .ilike('email', emailLower)
+        .maybeSingle();
+
+      if (empByEmail) {
+        await supabaseAdmin
+          .from('employees')
+          .update({ auth_user_id: user.id })
+          .eq('id', empByEmail.id);
+        return { ...empByEmail, auth_user_id: user.id };
+      }
+    }
+
+    let { data: existingEmp } = await supabaseAdmin
+      .from('employees')
+      .select('*, department:departments!employees_department_id_fkey(id, code, name)')
+      .is('auth_user_id', null)
+      .neq('status', 'TERMINATED')
+      .limit(1)
+      .maybeSingle();
+
+    if (existingEmp) {
+      await supabaseAdmin
+        .from('employees')
+        .update({ auth_user_id: user.id })
+        .eq('id', existingEmp.id);
+      return { ...existingEmp, auth_user_id: user.id };
+    }
+
+    const email = user.email ? user.email.toLowerCase().trim() : 'hr@kolmeks.com';
+    const empCode = `EMP-${Math.floor(100000 + Math.random() * 900000)}`;
+    const nameParts = email.split('@')[0].split(/[\._]/);
+    const firstName = nameParts[0] ? nameParts[0].charAt(0).toUpperCase() + nameParts[0].slice(1) : 'HR';
+    const lastName = nameParts[1] ? nameParts[1].charAt(0).toUpperCase() + nameParts[1].slice(1) : 'Manager';
+
+    let { data: dept } = await supabaseAdmin
+      .from('departments')
+      .select('id')
+      .limit(1)
+      .maybeSingle();
+
+    if (!dept) {
+      const { data: newDept } = await supabaseAdmin
+        .from('departments')
+        .insert({ code: 'HR', name: 'Human Resources', description: 'Default HR Department' })
+        .select('id')
+        .single();
+      dept = newDept;
+    }
+
+    const newEmpPayload = {
+      auth_user_id: user.id,
+      employee_code: empCode,
+      first_name: firstName,
+      last_name: lastName,
+      email: email,
+      designation: 'HR Manager',
+      joining_date: new Date().toISOString().split('T')[0],
+      status: 'ACTIVE',
+      employment_type: 'FULL_TIME',
+      ...(dept?.id && { department_id: dept.id })
+    };
+
+    const { data: newEmp } = await supabaseAdmin
+      .from('employees')
+      .insert(newEmpPayload)
+      .select('*, department:departments!employees_department_id_fkey(id, code, name)')
+      .single();
+
+    if (newEmp) return newEmp;
+  } catch (err) {
+    console.error('Error resolving employee for user in payroll:', err.message);
   }
+
   return null;
 };
 

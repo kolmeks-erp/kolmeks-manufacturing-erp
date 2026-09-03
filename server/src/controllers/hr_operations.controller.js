@@ -10,18 +10,19 @@ const getEmployeeForUser = async (user) => {
     // 1. Match by auth_user_id
     let { data: emp } = await supabaseAdmin
       .from('employees')
-      .select('*, department:departments(id, code, name)')
+      .select('*, department:departments!employees_department_id_fkey(id, code, name), shift:shifts(id, name, start_time, end_time)')
       .eq('auth_user_id', user.id)
       .maybeSingle();
 
     if (emp) return emp;
 
-    // 2. Match by email
+    // 2. Match by email (case-insensitive)
     if (user.email) {
+      const emailLower = user.email.toLowerCase().trim();
       let { data: empByEmail } = await supabaseAdmin
         .from('employees')
-        .select('*, department:departments(id, code, name)')
-        .eq('email', user.email.toLowerCase())
+        .select('*, department:departments!employees_department_id_fkey(id, code, name), shift:shifts(id, name, start_time, end_time)')
+        .ilike('email', emailLower)
         .maybeSingle();
 
       if (empByEmail) {
@@ -33,10 +34,11 @@ const getEmployeeForUser = async (user) => {
       }
     }
 
-    // 3. Fallback: Auto-link to an existing active employee if present
+    // 3. Fallback: Auto-link to an existing unlinked active employee
     let { data: existingEmp } = await supabaseAdmin
       .from('employees')
-      .select('*, department:departments(id, code, name)')
+      .select('*, department:departments!employees_department_id_fkey(id, code, name), shift:shifts(id, name, start_time, end_time)')
+      .is('auth_user_id', null)
       .neq('status', 'TERMINATED')
       .limit(1)
       .maybeSingle();
@@ -49,14 +51,33 @@ const getEmployeeForUser = async (user) => {
       return { ...existingEmp, auth_user_id: user.id };
     }
 
-    // 4. Create new employee record in database
-    const email = user.email ? user.email.toLowerCase() : 'admin@kolmeks.com';
-    const empCode = `EMP-${Math.floor(1000 + Math.random() * 9000)}`;
-    const nameParts = email.split('@')[0].split('.');
-    const firstName = nameParts[0] ? nameParts[0].charAt(0).toUpperCase() + nameParts[0].slice(1) : 'Admin';
-    const lastName = nameParts[1] ? nameParts[1].charAt(0).toUpperCase() + nameParts[1].slice(1) : 'User';
+    // 4. Create new employee record with all required non-null fields
+    const email = user.email ? user.email.toLowerCase().trim() : 'hr@kolmeks.com';
+    const empCode = `EMP-${Math.floor(100000 + Math.random() * 900000)}`;
+    const nameParts = email.split('@')[0].split(/[\._]/);
+    const firstName = nameParts[0] ? nameParts[0].charAt(0).toUpperCase() + nameParts[0].slice(1) : 'HR';
+    const lastName = nameParts[1] ? nameParts[1].charAt(0).toUpperCase() + nameParts[1].slice(1) : 'Manager';
 
-    const { data: dept } = await supabaseAdmin.from('departments').select('id').limit(1).maybeSingle();
+    let { data: dept } = await supabaseAdmin
+      .from('departments')
+      .select('id')
+      .or(`code.eq.HR,code.eq.MGMT`)
+      .limit(1)
+      .maybeSingle();
+
+    if (!dept) {
+      const { data: anyDept } = await supabaseAdmin.from('departments').select('id').limit(1).maybeSingle();
+      dept = anyDept;
+    }
+
+    if (!dept) {
+      const { data: newDept } = await supabaseAdmin
+        .from('departments')
+        .insert({ code: 'HR', name: 'Human Resources', description: 'Default HR Department' })
+        .select('id')
+        .single();
+      dept = newDept;
+    }
 
     const newEmpPayload = {
       auth_user_id: user.id,
@@ -64,8 +85,8 @@ const getEmployeeForUser = async (user) => {
       first_name: firstName,
       last_name: lastName,
       email: email,
+      designation: 'HR Manager',
       joining_date: new Date().toISOString().split('T')[0],
-      hire_date: new Date().toISOString().split('T')[0],
       status: 'ACTIVE',
       employment_type: 'FULL_TIME',
       ...(dept?.id && { department_id: dept.id })
@@ -74,13 +95,13 @@ const getEmployeeForUser = async (user) => {
     const { data: newEmp, error: insErr } = await supabaseAdmin
       .from('employees')
       .insert(newEmpPayload)
-      .select('*, department:departments(id, code, name)')
+      .select('*, department:departments!employees_department_id_fkey(id, code, name), shift:shifts(id, name, start_time, end_time)')
       .single();
 
     if (newEmp) return newEmp;
-    if (insErr) console.warn('Insert employee error:', insErr.message);
+    if (insErr) console.error('Insert employee error:', insErr.message);
   } catch (err) {
-    console.warn('Error resolving employee for user:', err.message);
+    console.error('Error resolving employee for user:', err.message);
   }
 
   return null;

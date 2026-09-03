@@ -41,35 +41,35 @@ const HRAttendanceListPage: React.FC = () => {
     {
       header: 'Date',
       accessor: (row: AttendanceRecord) => (
-        <span className="font-mono text-cyan-400 font-bold">{row.attendance_date}</span>
+        <span className="font-mono text-indigo-600 font-bold">{row.attendance_date}</span>
       ),
     },
     {
       header: 'Employee Name',
       accessor: (row: AttendanceRecord) => (
         <div>
-          <span className="font-semibold text-white block">
+          <span className="font-semibold text-slate-900 block">
             {row.employee?.first_name} {row.employee?.last_name}
           </span>
-          <span className="text-slate-400 text-xs font-mono">{row.employee?.employee_code}</span>
+          <span className="text-slate-500 text-xs font-mono">{row.employee?.employee_code}</span>
         </div>
       ),
     },
     {
       header: 'Shift',
       accessor: (row: AttendanceRecord) => (
-        <span className="text-slate-300 font-medium text-xs">{(row.shift as any)?.name || 'General Shift'}</span>
+        <span className="text-slate-600 font-medium text-xs">{(row.shift as any)?.name || 'General Shift'}</span>
       ),
     },
     {
       header: 'Check-In',
       accessor: (row: AttendanceRecord) => (
         row.check_in ? (
-          <span className="text-emerald-400 font-mono text-xs font-semibold">
+          <span className="text-emerald-700 font-mono text-xs font-semibold">
             {new Date(row.check_in).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
           </span>
         ) : (
-          <span className="text-slate-500 text-xs italic">Absent / Pending</span>
+          <span className="text-slate-400 text-xs italic">Absent / Pending</span>
         )
       ),
     },
@@ -77,29 +77,29 @@ const HRAttendanceListPage: React.FC = () => {
       header: 'Check-Out',
       accessor: (row: AttendanceRecord) => (
         row.check_out ? (
-          <span className="text-cyan-400 font-mono text-xs font-semibold">
+          <span className="text-indigo-700 font-mono text-xs font-semibold">
             {new Date(row.check_out).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
           </span>
         ) : (
-          <span className="text-slate-500 text-xs italic">On Duty</span>
+          <span className="text-slate-400 text-xs italic">On Duty</span>
         )
       ),
     },
     {
       header: 'Worked Hours',
       accessor: (row: AttendanceRecord) => (
-        <span className="font-bold text-white text-xs">{(row.worked_minutes / 60).toFixed(1)} hrs</span>
+        <span className="font-bold text-slate-900 text-xs">{(row.worked_minutes / 60).toFixed(1)} hrs</span>
       ),
     },
     {
       header: 'Late Mins',
       accessor: (row: AttendanceRecord) => (
         row.late_minutes > 0 ? (
-          <span className="px-2 py-0.5 text-xs font-bold bg-amber-500/10 text-amber-400 rounded-md border border-amber-500/20">
+          <span className="px-2 py-0.5 text-xs font-bold bg-amber-50 text-amber-700 rounded-md border border-amber-200/80">
             +{row.late_minutes} mins
           </span>
         ) : (
-          <span className="text-slate-500 font-mono text-xs">0</span>
+          <span className="text-slate-400 font-mono text-xs">0</span>
         )
       ),
     },
@@ -119,15 +119,15 @@ const HRAttendanceListPage: React.FC = () => {
       />
 
       {/* Filter Controls Bar */}
-      <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 flex flex-wrap gap-4 items-center justify-between">
+      <div className="bg-white border border-slate-200/80 rounded-xl p-4 shadow-xs flex flex-wrap gap-4 items-center justify-between">
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2">
-            <Filter className="w-4 h-4 text-cyan-400" />
-            <span className="text-xs font-semibold text-slate-300">Status Filter:</span>
+            <Filter className="w-4 h-4 text-indigo-600" />
+            <span className="text-xs font-semibold text-slate-700">Status Filter:</span>
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="bg-slate-800 border border-slate-700 text-white text-xs rounded-lg px-3 py-1.5 focus:outline-none focus:border-cyan-500"
+              className="bg-slate-50 border border-slate-200 text-slate-900 text-xs rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             >
               <option value="">All Statuses</option>
               <option value="PRESENT">PRESENT</option>
@@ -139,12 +139,12 @@ const HRAttendanceListPage: React.FC = () => {
           </div>
 
           <div className="flex items-center gap-2">
-            <span className="text-xs font-semibold text-slate-300">Date:</span>
+            <span className="text-xs font-semibold text-slate-700">Date:</span>
             <input
               type="date"
               value={dateFilter}
               onChange={(e) => setDateFilter(e.target.value)}
-              className="bg-slate-800 border border-slate-700 text-white text-xs rounded-lg px-3 py-1.5 focus:outline-none focus:border-cyan-500"
+              className="bg-slate-50 border border-slate-200 text-slate-900 text-xs rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
           </div>
         </div>
@@ -155,7 +155,7 @@ const HRAttendanceListPage: React.FC = () => {
               setStatusFilter('');
               setDateFilter('');
             }}
-            className="text-xs text-slate-400 hover:text-cyan-400 underline"
+            className="text-xs text-slate-500 hover:text-indigo-600 font-medium underline"
           >
             Clear Filters
           </button>
