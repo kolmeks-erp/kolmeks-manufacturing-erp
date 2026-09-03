@@ -20,6 +20,7 @@ import {
   Link as LinkIcon,
   MessageSquare,
   FileCheck,
+  Trash2,
 } from 'lucide-react';
 import { documentService } from '../../../services/document.service';
 import { DocumentItem } from '../../../types/document';
@@ -146,49 +147,64 @@ export const DocumentDetailPage: React.FC = () => {
     }
   };
 
+  const handleDelete = async () => {
+    if (!id || !doc) return;
+    if (window.confirm(`Are you sure you want to permanently delete document "${doc.title}" (${doc.document_number})? This action cannot be undone.`)) {
+      try {
+        await documentService.deleteDocument(id);
+        alert('Document deleted successfully.');
+        navigate(`${ERP_BASE_PATH}/documents/library`);
+      } catch (err) {
+        console.error('Failed to delete document:', err);
+        alert('Failed to delete document.');
+      }
+    }
+  };
+
   const getStatusBadge = (status: string) => {
     const styles: Record<string, string> = {
-      DRAFT: 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300',
-      SUBMITTED: 'bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300',
-      UNDER_REVIEW: 'bg-purple-100 text-purple-800 dark:bg-purple-900/40 dark:text-purple-300',
-      APPROVED: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300',
-      PUBLISHED: 'bg-teal-100 text-teal-800 dark:bg-teal-900/40 dark:text-teal-300',
-      REJECTED: 'bg-rose-100 text-rose-800 dark:bg-rose-900/40 dark:text-rose-300',
-      CHANGES_REQUESTED: 'bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300',
-      ARCHIVED: 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-400',
+      DRAFT: 'bg-slate-100 text-slate-700 border-slate-200/80',
+      SUBMITTED: 'bg-blue-50 text-blue-700 border-blue-200/80',
+      UNDER_REVIEW: 'bg-indigo-50 text-indigo-700 border-indigo-200/80',
+      APPROVED: 'bg-emerald-50 text-emerald-700 border-emerald-200/80',
+      PUBLISHED: 'bg-teal-50 text-teal-700 border-teal-200/80',
+      REJECTED: 'bg-rose-50 text-rose-700 border-rose-200/80',
+      CHANGES_REQUESTED: 'bg-amber-50 text-amber-800 border-amber-200/80',
+      ARCHIVED: 'bg-slate-100 text-slate-600 border-slate-200/80',
     };
     return (
-      <span className={`px-3 py-1 rounded-full text-xs font-semibold ${styles[status] || styles.DRAFT}`}>
+      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold border ${styles[status] || styles.DRAFT}`}>
         {status.replace('_', ' ')}
       </span>
     );
   };
 
   if (loading || !doc) {
-    return <div className="p-8 text-center text-slate-500">Loading document details...</div>;
+    return <div className="p-8 text-center text-slate-500 font-medium">Loading document details...</div>;
   }
 
   const currentVer = doc.current_version;
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="space-y-5">
       {/* Top Navigation & Action Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
         <div className="flex items-center gap-3">
           <button
             onClick={() => navigate(`${ERP_BASE_PATH}/documents/library`)}
-            className="p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+            className="p-2 text-slate-400 hover:text-slate-700 rounded-lg hover:bg-slate-100 transition-all cursor-pointer"
+            title="Back to Library"
           >
             <ArrowLeft className="w-5 h-5" />
           </button>
           <div>
-            <div className="flex items-center gap-3">
-              <h1 className="text-2xl font-bold text-slate-900 dark:text-white">{doc.title}</h1>
+            <div className="flex items-center gap-2.5">
+              <h1 className="text-xl font-bold text-slate-900 tracking-tight">{doc.title}</h1>
               {getStatusBadge(doc.status)}
             </div>
-            <p className="text-sm font-mono text-slate-500 mt-1">
-              Doc #: <span className="font-semibold text-slate-700 dark:text-slate-300">{doc.document_number}</span> | Confidentiality:{' '}
-              <span className="font-semibold text-slate-700 dark:text-slate-300">{doc.confidentiality_level}</span>
+            <p className="text-xs font-mono text-slate-500 mt-0.5">
+              Doc #: <span className="font-semibold text-slate-700">{doc.document_number}</span> | Confidentiality:{' '}
+              <span className="font-semibold text-slate-700">{doc.confidentiality_level}</span>
             </p>
           </div>
         </div>
@@ -199,27 +215,27 @@ export const DocumentDetailPage: React.FC = () => {
               href={currentVer.storage_url}
               target="_blank"
               rel="noreferrer"
-              className="px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-xl transition-colors flex items-center gap-1.5"
+              className="px-3.5 py-2 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-200/80 rounded-xl transition-all flex items-center gap-1.5 cursor-pointer"
             >
-              <Download className="w-4 h-4" />
+              <Download className="w-3.5 h-3.5" />
               Download File
             </a>
           )}
 
           <button
             onClick={() => setShowVersionModal(true)}
-            className="px-4 py-2 text-sm font-medium text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 hover:bg-blue-100 rounded-xl transition-colors flex items-center gap-1.5"
+            className="px-3.5 py-2 text-xs font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200/80 rounded-xl transition-all flex items-center gap-1.5 cursor-pointer"
           >
-            <Upload className="w-4 h-4" />
+            <Upload className="w-3.5 h-3.5" />
             Upload Revision
           </button>
 
           {doc.status !== 'SUBMITTED' && doc.status !== 'APPROVED' && doc.status !== 'PUBLISHED' && (
             <button
               onClick={() => setShowApprovalModal(true)}
-              className="px-4 py-2 text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 rounded-xl transition-colors shadow-sm flex items-center gap-1.5"
+              className="px-3.5 py-2 text-xs font-semibold text-white bg-purple-600 hover:bg-purple-700 rounded-xl transition-all shadow-xs flex items-center gap-1.5 cursor-pointer"
             >
-              <Send className="w-4 h-4" />
+              <Send className="w-3.5 h-3.5" />
               Submit for Approval
             </button>
           )}
@@ -227,9 +243,9 @@ export const DocumentDetailPage: React.FC = () => {
           {doc.status === 'APPROVED' && (
             <button
               onClick={handlePublish}
-              className="px-4 py-2 text-sm font-medium text-white bg-teal-600 hover:bg-teal-700 rounded-xl transition-colors shadow-sm flex items-center gap-1.5"
+              className="px-3.5 py-2 text-xs font-semibold text-white bg-teal-600 hover:bg-teal-700 rounded-xl transition-all shadow-xs flex items-center gap-1.5 cursor-pointer"
             >
-              <Globe className="w-4 h-4" />
+              <Globe className="w-3.5 h-3.5" />
               Publish Document
             </button>
           )}
@@ -237,54 +253,63 @@ export const DocumentDetailPage: React.FC = () => {
           {doc.status !== 'ARCHIVED' && (
             <button
               onClick={handleArchive}
-              className="px-4 py-2 text-sm font-medium text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 rounded-xl transition-colors flex items-center gap-1.5"
+              className="px-3.5 py-2 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-200/80 rounded-xl transition-all flex items-center gap-1.5 cursor-pointer"
             >
-              <Archive className="w-4 h-4" />
+              <Archive className="w-3.5 h-3.5" />
               Archive
             </button>
           )}
+
+          <button
+            onClick={handleDelete}
+            className="px-3.5 py-2 text-xs font-semibold text-rose-700 bg-rose-50 hover:bg-rose-100 border border-rose-200/80 rounded-xl transition-all flex items-center gap-1.5 cursor-pointer"
+            title="Permanently Delete Document"
+          >
+            <Trash2 className="w-3.5 h-3.5 text-rose-600" />
+            Delete Document
+          </button>
         </div>
       </div>
 
       {/* Main Details & Workflows Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Left 2-Cols: Overview, Attachment, Version History & Related ERP Records */}
-        <div className="lg:col-span-2 space-y-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+        {/* Left 2-Cols: Overview, Attachment, Version History */}
+        <div className="lg:col-span-2 space-y-5">
           {/* Metadata Card */}
-          <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
-            <h2 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
-              <FileText className="w-5 h-5 text-blue-500" />
+          <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs space-y-4">
+            <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
+              <FileText className="w-4 h-4 text-blue-500" />
               Document Overview & Properties
             </h2>
 
-            <p className="text-sm text-slate-600 dark:text-slate-300">{doc.description || 'No description provided.'}</p>
+            <p className="text-xs text-slate-600 font-medium leading-relaxed">{doc.description || 'No description provided.'}</p>
 
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm pt-2">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs pt-1">
               <div>
-                <div className="text-xs text-slate-400">Document Type</div>
-                <div className="font-semibold text-slate-900 dark:text-white">{doc.type?.name || 'General'}</div>
+                <div className="text-[11px] text-slate-400 font-medium">Document Type</div>
+                <div className="font-bold text-slate-900 mt-0.5">{doc.type?.name || 'General'}</div>
               </div>
               <div>
-                <div className="text-xs text-slate-400">Category</div>
-                <div className="font-semibold text-slate-900 dark:text-white">{doc.category?.name || 'Uncategorized'}</div>
+                <div className="text-[11px] text-slate-400 font-medium">Category</div>
+                <div className="font-bold text-slate-900 mt-0.5">{doc.category?.name || 'Uncategorized'}</div>
               </div>
               <div>
-                <div className="text-xs text-slate-400">Review Date</div>
-                <div className="font-semibold text-slate-900 dark:text-white">{doc.review_date || 'N/A'}</div>
+                <div className="text-[11px] text-slate-400 font-medium">Review Date</div>
+                <div className="font-bold text-slate-900 mt-0.5">{doc.review_date || 'N/A'}</div>
               </div>
               <div>
-                <div className="text-xs text-slate-400">Expiry Date</div>
-                <div className="font-semibold text-slate-900 dark:text-white">{doc.expiry_date || 'N/A'}</div>
+                <div className="text-[11px] text-slate-400 font-medium">Expiry Date</div>
+                <div className="font-bold text-slate-900 mt-0.5">{doc.expiry_date || 'N/A'}</div>
               </div>
             </div>
 
             {/* Tags */}
             {doc.tags && doc.tags.length > 0 && (
-              <div className="flex items-center gap-2 pt-2">
-                <Tag className="w-4 h-4 text-slate-400" />
+              <div className="flex items-center gap-2 pt-2 border-t border-slate-100">
+                <Tag className="w-3.5 h-3.5 text-slate-400" />
                 <div className="flex flex-wrap gap-1.5">
                   {doc.tags.map((t, idx) => (
-                    <span key={idx} className="px-2.5 py-0.5 rounded-md text-xs font-medium bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300">
+                    <span key={idx} className="px-2.5 py-0.5 rounded-md text-[11px] font-semibold bg-blue-50 text-blue-700 border border-blue-100">
                       #{t}
                     </span>
                   ))}
@@ -294,17 +319,17 @@ export const DocumentDetailPage: React.FC = () => {
           </div>
 
           {/* Current File Attachment Card */}
-          <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
-            <h2 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
-              <FileCheck className="w-5 h-5 text-emerald-500" />
+          <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs space-y-3">
+            <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
+              <FileCheck className="w-4 h-4 text-emerald-500" />
               Active Attachment File (v{currentVer?.version_number || '1.0'})
             </h2>
 
             {currentVer ? (
-              <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 flex items-center justify-between">
+              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
                 <div>
-                  <div className="font-semibold text-slate-900 dark:text-white">{currentVer.file_name}</div>
-                  <div className="text-xs text-slate-400 mt-0.5">
+                  <div className="font-bold text-xs text-slate-900">{currentVer.file_name}</div>
+                  <div className="text-[11px] text-slate-500 mt-0.5 font-medium">
                     Format: {currentVer.file_type || 'Unknown'} | Uploaded by: {currentVer.creator?.full_name || 'System Admin'} | Date:{' '}
                     {new Date(currentVer.created_at).toLocaleDateString()}
                   </div>
@@ -313,27 +338,27 @@ export const DocumentDetailPage: React.FC = () => {
                   href={currentVer.storage_url}
                   target="_blank"
                   rel="noreferrer"
-                  className="px-3.5 py-2 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl transition-colors flex items-center gap-1.5"
+                  className="px-3.5 py-1.5 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-all flex items-center gap-1.5 shadow-xs cursor-pointer"
                 >
                   <Download className="w-3.5 h-3.5" />
                   View File
                 </a>
               </div>
             ) : (
-              <div className="p-4 text-center text-slate-400 text-sm">No active file attachment uploaded.</div>
+              <div className="p-4 text-center text-slate-400 text-xs font-medium">No active file attachment uploaded.</div>
             )}
           </div>
 
           {/* Version History Table */}
-          <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
-            <h2 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
-              <History className="w-5 h-5 text-purple-500" />
+          <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs space-y-3">
+            <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
+              <History className="w-4 h-4 text-purple-500" />
               Version Revision History
             </h2>
 
             <div className="overflow-x-auto">
-              <table className="w-full text-left text-sm text-slate-600 dark:text-slate-300">
-                <thead className="bg-slate-50 dark:bg-slate-800/50 text-slate-700 dark:text-slate-300 uppercase text-xs">
+              <table className="w-full text-left text-xs text-slate-700">
+                <thead className="bg-slate-50 border-b border-slate-200 text-slate-700 font-bold uppercase text-[11px] tracking-wider">
                   <tr>
                     <th className="px-4 py-3">Version</th>
                     <th className="px-4 py-3">File Name</th>
@@ -343,22 +368,22 @@ export const DocumentDetailPage: React.FC = () => {
                     <th className="px-4 py-3 text-right">Download</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-200 dark:divide-slate-800">
+                <tbody className="divide-y divide-slate-100">
                   {(doc.versions || []).map((ver) => (
-                    <tr key={ver.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/40">
-                      <td className="px-4 py-3 font-mono font-semibold text-slate-900 dark:text-white">
-                        v{ver.version_number} {ver.is_current && <span className="text-xs text-emerald-500 font-sans ml-1">(Current)</span>}
+                    <tr key={ver.id} className="hover:bg-slate-50/80 transition-colors">
+                      <td className="px-4 py-3 font-mono font-bold text-slate-900">
+                        v{ver.version_number} {ver.is_current && <span className="text-[11px] text-emerald-600 font-sans ml-1">(Current)</span>}
                       </td>
-                      <td className="px-4 py-3">{ver.file_name}</td>
-                      <td className="px-4 py-3 text-xs text-slate-500">{ver.change_summary || 'No revision notes.'}</td>
-                      <td className="px-4 py-3 text-xs">{ver.creator?.full_name || 'System Admin'}</td>
-                      <td className="px-4 py-3 text-xs">{new Date(ver.created_at).toLocaleDateString()}</td>
+                      <td className="px-4 py-3 font-semibold text-slate-800">{ver.file_name}</td>
+                      <td className="px-4 py-3 text-xs text-slate-500 font-medium">{ver.change_summary || 'No revision notes.'}</td>
+                      <td className="px-4 py-3 text-xs font-medium text-slate-700">{ver.creator?.full_name || 'System Admin'}</td>
+                      <td className="px-4 py-3 text-xs font-medium text-slate-600">{new Date(ver.created_at).toLocaleDateString()}</td>
                       <td className="px-4 py-3 text-right">
                         <a
                           href={ver.storage_url}
                           target="_blank"
                           rel="noreferrer"
-                          className="text-xs text-blue-600 dark:text-blue-400 hover:underline"
+                          className="text-xs font-semibold text-blue-600 hover:text-blue-800 hover:underline"
                         >
                           Download
                         </a>
@@ -372,34 +397,34 @@ export const DocumentDetailPage: React.FC = () => {
         </div>
 
         {/* Right 1-Col: Digital Approvals Pipeline & Audit Trail */}
-        <div className="space-y-6">
+        <div className="space-y-5">
           {/* Digital Approvals Section */}
-          <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
-            <h2 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
-              <CheckCircle className="w-5 h-5 text-purple-500" />
+          <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs space-y-3">
+            <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
+              <CheckCircle className="w-4 h-4 text-purple-500" />
               Digital Approvals Workflow
             </h2>
 
             {doc.approvals && doc.approvals.length > 0 ? (
-              <div className="space-y-4">
+              <div className="space-y-3">
                 {doc.approvals.map((app) => (
-                  <div key={app.id} className="p-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/40 space-y-3">
+                  <div key={app.id} className="p-3.5 rounded-xl border border-slate-200 bg-slate-50 space-y-2.5">
                     <div className="flex items-center justify-between text-xs">
-                      <span className="font-semibold text-slate-700 dark:text-slate-300">Target Role: {app.target_role}</span>
-                      <span className="px-2 py-0.5 rounded font-mono bg-purple-100 text-purple-800 dark:bg-purple-900/40 dark:text-purple-300">
+                      <span className="font-bold text-slate-800">Target Role: {app.target_role}</span>
+                      <span className="px-2 py-0.5 rounded font-mono text-[11px] font-bold bg-purple-100 text-purple-800 border border-purple-200">
                         {app.status}
                       </span>
                     </div>
 
-                    <p className="text-xs text-slate-600 dark:text-slate-300 italic font-mono">"{app.message}"</p>
+                    <p className="text-xs text-slate-600 italic font-mono">"{app.message}"</p>
 
                     {/* Step decisions */}
                     {app.steps && app.steps.length > 0 && (
-                      <div className="space-y-2 pt-2 border-t border-slate-200 dark:border-slate-700">
+                      <div className="space-y-1.5 pt-2 border-t border-slate-200">
                         {app.steps.map((step) => (
-                          <div key={step.id} className="text-xs text-slate-600 dark:text-slate-300 flex items-center justify-between">
+                          <div key={step.id} className="text-xs text-slate-600 flex items-center justify-between font-medium">
                             <span>Step {step.step_number}: {step.approver?.full_name || step.approver_role}</span>
-                            <span className="font-semibold text-emerald-600 dark:text-emerald-400">{step.decision}</span>
+                            <span className="font-bold text-emerald-600">{step.decision}</span>
                           </div>
                         ))}
                       </div>
@@ -411,7 +436,7 @@ export const DocumentDetailPage: React.FC = () => {
                           setSelectedApprovalId(app.id);
                           setShowDecisionModal(true);
                         }}
-                        className="w-full py-2 text-xs font-semibold text-white bg-purple-600 hover:bg-purple-700 rounded-xl transition-colors shadow-sm"
+                        className="w-full py-1.5 text-xs font-semibold text-white bg-purple-600 hover:bg-purple-700 rounded-lg transition-all shadow-xs cursor-pointer"
                       >
                         Record Approval Decision
                       </button>
@@ -420,26 +445,26 @@ export const DocumentDetailPage: React.FC = () => {
                 ))}
               </div>
             ) : (
-              <div className="p-4 text-center text-slate-400 text-sm">No active approval requests for this document.</div>
+              <div className="p-4 text-center text-slate-400 text-xs font-medium">No active approval requests for this document.</div>
             )}
           </div>
 
           {/* Audit Log Timeline */}
-          <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
-            <h2 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
-              <Clock className="w-5 h-5 text-indigo-500" />
+          <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs space-y-3">
+            <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
+              <Clock className="w-4 h-4 text-indigo-500" />
               Audit Log Timeline
             </h2>
 
-            <div className="space-y-3">
+            <div className="space-y-2.5 max-h-[400px] overflow-y-auto pr-1">
               {(doc.audit_trail || []).map((log) => (
-                <div key={log.id} className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800 text-xs space-y-1">
-                  <div className="flex items-center justify-between font-semibold text-slate-900 dark:text-white">
+                <div key={log.id} className="p-3 rounded-xl bg-slate-50 border border-slate-100 text-xs space-y-1">
+                  <div className="flex items-center justify-between font-bold text-slate-900">
                     <span>{log.action}</span>
-                    <span className="text-slate-400 font-mono">{new Date(log.created_at).toLocaleString()}</span>
+                    <span className="text-slate-400 font-mono text-[11px] font-medium">{new Date(log.created_at).toLocaleString()}</span>
                   </div>
-                  <div className="text-slate-500">By: {log.actor?.full_name || 'System'}</div>
-                  {log.reason && <div className="text-slate-600 dark:text-slate-400 italic">"{log.reason}"</div>}
+                  <div className="text-slate-600 font-medium">By: {log.actor?.full_name || 'System'}</div>
+                  {log.reason && <div className="text-slate-500 italic">"{log.reason}"</div>}
                 </div>
               ))}
             </div>
@@ -449,51 +474,51 @@ export const DocumentDetailPage: React.FC = () => {
 
       {/* Upload Version Modal */}
       {showVersionModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
-          <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xl max-w-md w-full p-6 space-y-4">
-            <h3 className="text-lg font-bold text-slate-900 dark:text-white">Upload New Revision</h3>
-            <form onSubmit={handleNewVersionSubmit} className="space-y-4 text-sm">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-xs">
+          <div className="bg-white rounded-2xl border border-slate-200 shadow-2xl max-w-md w-full p-6 space-y-4">
+            <h3 className="text-base font-bold text-slate-900">Upload New Revision</h3>
+            <form onSubmit={handleNewVersionSubmit} className="space-y-4 text-xs">
               <div>
-                <label className="block font-medium mb-1">Version Number (Optional)</label>
+                <label className="block font-semibold text-slate-700 mb-1">Version Number (Optional)</label>
                 <input
                   type="text"
                   placeholder="e.g. 1.1 or 2.0"
                   value={versionForm.version_number}
                   onChange={(e) => setVersionForm({ ...versionForm, version_number: e.target.value })}
-                  className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl"
+                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-slate-900"
                 />
               </div>
 
               <div>
-                <label className="block font-medium mb-1">Change Summary / Rationale *</label>
+                <label className="block font-semibold text-slate-700 mb-1">Change Summary / Rationale *</label>
                 <textarea
                   required
                   rows={3}
                   placeholder="Describe modifications in this revision..."
                   value={versionForm.change_summary}
                   onChange={(e) => setVersionForm({ ...versionForm, change_summary: e.target.value })}
-                  className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl"
+                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-slate-900"
                 />
               </div>
 
               <div>
-                <label className="block font-medium mb-1">Attachment File</label>
+                <label className="block font-semibold text-slate-700 mb-1">Attachment File</label>
                 <input
                   type="file"
                   onChange={(e) => setVersionFile(e.target.files?.[0] || null)}
-                  className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl"
+                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-slate-900"
                 />
               </div>
 
-              <div className="flex justify-end gap-3 pt-2">
+              <div className="flex justify-end gap-2.5 pt-2">
                 <button
                   type="button"
                   onClick={() => setShowVersionModal(false)}
-                  className="px-4 py-2 font-medium bg-slate-100 dark:bg-slate-800 rounded-xl"
+                  className="px-4 py-2 font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition-all cursor-pointer"
                 >
                   Cancel
                 </button>
-                <button type="submit" className="px-5 py-2 font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-xl">
+                <button type="submit" className="px-4 py-2 font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl transition-all shadow-xs cursor-pointer">
                   Save Revision
                 </button>
               </div>
@@ -504,16 +529,16 @@ export const DocumentDetailPage: React.FC = () => {
 
       {/* Submit Approval Modal */}
       {showApprovalModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
-          <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xl max-w-md w-full p-6 space-y-4">
-            <h3 className="text-lg font-bold text-slate-900 dark:text-white">Submit for Digital Approval</h3>
-            <form onSubmit={handleApprovalSubmit} className="space-y-4 text-sm">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-xs">
+          <div className="bg-white rounded-2xl border border-slate-200 shadow-2xl max-w-md w-full p-6 space-y-4">
+            <h3 className="text-base font-bold text-slate-900">Submit for Digital Approval</h3>
+            <form onSubmit={handleApprovalSubmit} className="space-y-4 text-xs">
               <div>
-                <label className="block font-medium mb-1">Target Approver Role</label>
+                <label className="block font-semibold text-slate-700 mb-1">Target Approver Role</label>
                 <select
                   value={approvalForm.target_role}
                   onChange={(e) => setApprovalForm({ ...approvalForm, target_role: e.target.value })}
-                  className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl"
+                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 font-semibold"
                 >
                   <option value="DEPARTMENT_MANAGER">Department Manager</option>
                   <option value="QUALITY_MANAGER">Quality Manager</option>
@@ -525,11 +550,11 @@ export const DocumentDetailPage: React.FC = () => {
               </div>
 
               <div>
-                <label className="block font-medium mb-1">Priority</label>
+                <label className="block font-semibold text-slate-700 mb-1">Priority</label>
                 <select
                   value={approvalForm.priority}
                   onChange={(e) => setApprovalForm({ ...approvalForm, priority: e.target.value })}
-                  className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl"
+                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 font-semibold"
                 >
                   <option value="LOW">Low</option>
                   <option value="MEDIUM">Medium</option>
@@ -539,25 +564,25 @@ export const DocumentDetailPage: React.FC = () => {
               </div>
 
               <div>
-                <label className="block font-medium mb-1">Review Message / Rationale</label>
+                <label className="block font-semibold text-slate-700 mb-1">Review Message / Rationale</label>
                 <textarea
                   rows={2}
                   placeholder="Review instructions for approver..."
                   value={approvalForm.message}
                   onChange={(e) => setApprovalForm({ ...approvalForm, message: e.target.value })}
-                  className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl"
+                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-slate-900"
                 />
               </div>
 
-              <div className="flex justify-end gap-3 pt-2">
+              <div className="flex justify-end gap-2.5 pt-2">
                 <button
                   type="button"
                   onClick={() => setShowApprovalModal(false)}
-                  className="px-4 py-2 font-medium bg-slate-100 dark:bg-slate-800 rounded-xl"
+                  className="px-4 py-2 font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition-all cursor-pointer"
                 >
                   Cancel
                 </button>
-                <button type="submit" className="px-5 py-2 font-medium text-white bg-purple-600 hover:bg-purple-700 rounded-xl">
+                <button type="submit" className="px-4 py-2 font-semibold text-white bg-purple-600 hover:bg-purple-700 rounded-xl transition-all shadow-xs cursor-pointer">
                   Submit Workflow
                 </button>
               </div>
@@ -568,16 +593,16 @@ export const DocumentDetailPage: React.FC = () => {
 
       {/* Process Decision Modal */}
       {showDecisionModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
-          <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xl max-w-md w-full p-6 space-y-4">
-            <h3 className="text-lg font-bold text-slate-900 dark:text-white">Record Digital Approval Decision</h3>
-            <form onSubmit={handleDecisionSubmit} className="space-y-4 text-sm">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-xs">
+          <div className="bg-white rounded-2xl border border-slate-200 shadow-2xl max-w-md w-full p-6 space-y-4">
+            <h3 className="text-base font-bold text-slate-900">Record Digital Approval Decision</h3>
+            <form onSubmit={handleDecisionSubmit} className="space-y-4 text-xs">
               <div>
-                <label className="block font-medium mb-1">Decision</label>
+                <label className="block font-semibold text-slate-700 mb-1">Decision</label>
                 <select
                   value={decisionForm.decision}
                   onChange={(e) => setDecisionForm({ ...decisionForm, decision: e.target.value })}
-                  className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl font-semibold"
+                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 font-semibold"
                 >
                   <option value="APPROVED">Approve Document</option>
                   <option value="REJECTED">Reject Document</option>
@@ -586,25 +611,25 @@ export const DocumentDetailPage: React.FC = () => {
               </div>
 
               <div>
-                <label className="block font-medium mb-1">Comments / Audit Rationale</label>
+                <label className="block font-semibold text-slate-700 mb-1">Comments / Audit Rationale</label>
                 <textarea
                   rows={3}
                   placeholder="Required for Rejection or Changes Requested..."
                   value={decisionForm.comments}
                   onChange={(e) => setDecisionForm({ ...decisionForm, comments: e.target.value })}
-                  className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl"
+                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-slate-900"
                 />
               </div>
 
-              <div className="flex justify-end gap-3 pt-2">
+              <div className="flex justify-end gap-2.5 pt-2">
                 <button
                   type="button"
                   onClick={() => setShowDecisionModal(false)}
-                  className="px-4 py-2 font-medium bg-slate-100 dark:bg-slate-800 rounded-xl"
+                  className="px-4 py-2 font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition-all cursor-pointer"
                 >
                   Cancel
                 </button>
-                <button type="submit" className="px-5 py-2 font-medium text-white bg-purple-600 hover:bg-purple-700 rounded-xl">
+                <button type="submit" className="px-4 py-2 font-semibold text-white bg-purple-600 hover:bg-purple-700 rounded-xl transition-all shadow-xs cursor-pointer">
                   Confirm Decision
                 </button>
               </div>

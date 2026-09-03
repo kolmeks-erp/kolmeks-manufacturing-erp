@@ -844,3 +844,42 @@ exports.getDocumentReports = async (req, res) => {
     return handleError(res, err, 'Failed to generate document reports.');
   }
 };
+
+// ==============================================================================
+// 14. DELETE DOCUMENT
+// ==============================================================================
+exports.deleteDocument = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // Check if document exists
+    const { data: doc, error: checkErr } = await supabase.from('documents').select('id, title, document_number').eq('id', id).single();
+    if (checkErr || !doc) {
+      return res.status(404).json({ success: false, error: { message: 'Document not found or already deleted.' } });
+    }
+
+    // Delete related child tables first to maintain database integrity
+    const { data: appData } = await supabase.from('document_approvals').select('id').eq('document_id', id);
+    if (appData && appData.length > 0) {
+      const appIds = appData.map((a) => a.id);
+      await supabase.from('document_approval_steps').delete().in('approval_id', appIds);
+      await supabase.from('document_approvals').delete().eq('document_id', id);
+    }
+
+    await Promise.all([
+      supabase.from('document_versions').delete().eq('document_id', id),
+      supabase.from('document_relationships').delete().eq('document_id', id),
+      supabase.from('document_audit_logs').delete().eq('document_id', id),
+    ]);
+
+    const { error: delErr } = await supabase.from('documents').delete().eq('id', id);
+    if (delErr) throw delErr;
+
+    return res.status(200).json({
+      success: true,
+      message: `Document ${doc.document_number} (${doc.title}) has been deleted successfully.`,
+    });
+  } catch (err) {
+    return handleError(res, err, 'Failed to delete document.');
+  }
+};

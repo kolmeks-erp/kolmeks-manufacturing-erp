@@ -48,4 +48,7 @@ router.post('/:id/publish', authorizeRoles('admin', 'quality_manager', 'purchase
 // Archive document
 router.post('/:id/archive', authorizeRoles('admin', 'quality_manager', 'purchase_manager', 'sales_manager', 'hr', 'executive'), documentController.archiveDocument);
 
+// Delete document
+router.delete('/:id', documentController.deleteDocument);
+
 module.exports = router;

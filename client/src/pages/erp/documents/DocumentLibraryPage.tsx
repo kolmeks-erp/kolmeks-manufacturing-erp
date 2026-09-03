@@ -15,6 +15,7 @@ import {
   CheckCircle,
   Clock,
   Shield,
+  Trash2,
 } from 'lucide-react';
 import { documentService } from '../../../services/document.service';
 import { DocumentItem, DocumentTypeItem, DocumentCategoryItem } from '../../../types/document';
@@ -89,9 +90,17 @@ export const DocumentLibraryPage: React.FC = () => {
     fetchMetadata();
   }, []);
 
-  useEffect(() => {
-    fetchDocuments();
-  }, [search, typeFilter, categoryFilter, statusFilter, archivedFilter]);
+  const handleDeleteDocument = async (id: string, title: string, docNum: string) => {
+    if (window.confirm(`Are you sure you want to permanently delete document "${title}" (${docNum})?`)) {
+      try {
+        await documentService.deleteDocument(id);
+        fetchDocuments();
+      } catch (err) {
+        console.error('Failed to delete document:', err);
+        alert('Failed to delete document.');
+      }
+    }
+  };
 
   const handleUploadSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -319,6 +328,14 @@ export const DocumentLibraryPage: React.FC = () => {
                       >
                         <Eye className="w-3.5 h-3.5 text-blue-600" />
                         Details
+                      </button>
+                      <button
+                        onClick={() => handleDeleteDocument(doc.id, doc.title, doc.document_number)}
+                        className="px-2.5 py-1.5 text-xs font-semibold text-rose-700 bg-rose-50 hover:bg-rose-100 border border-rose-200/80 rounded-lg transition-all inline-flex items-center gap-1 cursor-pointer"
+                        title="Delete Document"
+                      >
+                        <Trash2 className="w-3.5 h-3.5 text-rose-600" />
+                        Delete
                       </button>
                     </td>
                   </tr>

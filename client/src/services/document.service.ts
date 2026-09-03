@@ -113,4 +113,10 @@ export const documentService = {
     const response = await api.get('/documents/reports');
     return response.data.data;
   },
+
+  // Delete Document
+  deleteDocument: async (id: string): Promise<any> => {
+    const response = await api.delete(`/documents/${id}`);
+    return response.data;
+  },
 };
