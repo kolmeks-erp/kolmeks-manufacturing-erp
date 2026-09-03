@@ -11,18 +11,46 @@
 
   /* Custom scrollbar for tables, sidebars, and dialogs */
   ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 8px;
+    height: 8px;
   }
   ::-webkit-scrollbar-track {
-    background: #090d16;
+    background: #f1f5f9;
   }
   ::-webkit-scrollbar-thumb {
-    background: #1e293b;
-    border-radius: 3px;
+    background: #94a3b8;
+    border-radius: 4px;
   }
   ::-webkit-scrollbar-thumb:hover {
+    background: #64748b;
+  }
+
+  .dark ::-webkit-scrollbar-track {
+    background: #0f172a;
+  }
+  .dark ::-webkit-scrollbar-thumb {
     background: #334155;
+  }
+  .dark ::-webkit-scrollbar-thumb:hover {
+    background: #475569;
+  }
+
+  /* Dedicated High-Visibility Table Scrollbar */
+  .custom-table-scrollbar::-webkit-scrollbar {
+    height: 10px;
+    width: 10px;
+  }
+  .custom-table-scrollbar::-webkit-scrollbar-track {
+    background: #e2e8f0;
+    border-radius: 9999px;
+  }
+  .custom-table-scrollbar::-webkit-scrollbar-thumb {
+    background: #4f46e5;
+    border-radius: 9999px;
+    border: 2px solid #e2e8f0;
+  }
+  .custom-table-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #3730a3;
   }
 }
 

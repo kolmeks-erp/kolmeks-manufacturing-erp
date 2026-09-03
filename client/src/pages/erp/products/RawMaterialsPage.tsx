@@ -15,6 +15,7 @@ import {
   SlidersHorizontal,
   XCircle,
   ArrowUpDown,
+  ArrowLeftRight,
   Building2,
   Tag,
 } from 'lucide-react';
@@ -174,6 +175,40 @@ export const RawMaterialsPage: React.FC = () => {
   const [selectedStatus, setSelectedStatus] = useState<string>('all');
   const [reorderModalItem, setReorderModalItem] = useState<RawMaterialItem | null>(null);
   const [reorderQty, setReorderQty] = useState<number>(0);
+
+  // Scroll Synchronization refs for Dual Top & Bottom High-Visibility Scrollbars
+  const topScrollRef = React.useRef<HTMLDivElement>(null);
+  const tableScrollRef = React.useRef<HTMLDivElement>(null);
+  const tableElRef = React.useRef<HTMLTableElement>(null);
+  const [tableWidth, setTableWidth] = useState<number>(1150);
+
+  // Sync scroll width dynamically
+  useEffect(() => {
+    const updateWidth = () => {
+      if (tableElRef.current) {
+        setTableWidth(Math.max(tableElRef.current.scrollWidth, 1150));
+      }
+    };
+    updateWidth();
+    const timer = setTimeout(updateWidth, 100);
+    window.addEventListener('resize', updateWidth);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('resize', updateWidth);
+    };
+  }, [materials]);
+
+  const handleTopScroll = () => {
+    if (topScrollRef.current && tableScrollRef.current) {
+      tableScrollRef.current.scrollLeft = topScrollRef.current.scrollLeft;
+    }
+  };
+
+  const handleTableScroll = () => {
+    if (topScrollRef.current && tableScrollRef.current) {
+      topScrollRef.current.scrollLeft = tableScrollRef.current.scrollLeft;
+    }
+  };
 
   // Load Real Raw Material Products from API if available
   const fetchRawMaterials = useCallback(async () => {
@@ -485,8 +520,28 @@ export const RawMaterialsPage: React.FC = () => {
 
       {/* Materials Table Container */}
       <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs">
+        {/* TOP DEDICATED HIGH-VISIBILITY SCROLLBAR BAR */}
+        <div className="bg-slate-50/90 px-4 py-2 border-b border-slate-200/80 flex items-center justify-between gap-3 text-[11px] font-bold text-slate-700">
+          <div className="flex items-center gap-1.5 shrink-0 bg-indigo-50 text-indigo-700 px-2.5 py-1 rounded-lg border border-indigo-100 font-extrabold text-[10px] uppercase tracking-wider">
+            <ArrowLeftRight className="w-3.5 h-3.5" />
+            <span>Table Horizontal Scroll (Top Control)</span>
+          </div>
+          <div
+            ref={topScrollRef}
+            onScroll={handleTopScroll}
+            className="overflow-x-auto custom-table-scrollbar flex-1 py-1"
+          >
+            <div style={{ width: `${tableWidth}px` }} className="h-1.5" />
+          </div>
+        </div>
+
+        {/* MAIN TABLE CONTAINER WITH SYNCED SCROLL */}
+        <div
+          ref={tableScrollRef}
+          onScroll={handleTableScroll}
+          className="overflow-x-auto custom-table-scrollbar"
+        >
+          <table ref={tableElRef} className="w-full text-left text-xs min-w-[1150px]">
             <thead className="bg-slate-50 text-slate-500 uppercase font-mono text-[10px] tracking-wider border-b border-slate-200/80">
               <tr>
                 <th className="py-3.5 px-5 font-bold">Material Code</th>
