@@ -515,7 +515,7 @@ export const ERPLayout: React.FC<ERPLayoutProps> = ({ children }) => {
         </header>
 
         {/* MAIN OUTLET CONTENT */}
-        <main className="flex-1 p-4 lg:p-8">
+        <main className="flex-1 p-4 sm:p-5 lg:p-6 w-full">
           {children || <Outlet />}
         </main>
       </div>

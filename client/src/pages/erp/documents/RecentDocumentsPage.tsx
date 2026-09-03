@@ -19,60 +19,60 @@ export const RecentDocumentsPage: React.FC = () => {
   }, []);
 
   return (
-    <div className="p-6 space-y-6">
-      <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm flex items-center justify-between">
+    <div className="space-y-5">
+      <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="p-2.5 bg-blue-500/10 text-blue-600 dark:text-blue-400 rounded-xl">
-            <Clock className="w-7 h-7" />
+          <div className="p-2.5 bg-blue-50 text-blue-600 rounded-xl border border-blue-100 shadow-xs">
+            <Clock className="w-6 h-6" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Recent ERP Documents</h1>
-            <p className="text-sm text-slate-500 dark:text-slate-400">Recently uploaded, revised, or approved files in the ERP vault</p>
+            <h1 className="text-xl font-bold text-slate-900 tracking-tight">Recent ERP Documents</h1>
+            <p className="text-xs text-slate-500 font-medium">Recently uploaded, revised, or approved files in the ERP vault</p>
           </div>
         </div>
       </div>
 
-      <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+      <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm text-slate-600 dark:text-slate-300">
-            <thead className="bg-slate-50 dark:bg-slate-800/50 text-slate-700 dark:text-slate-300 uppercase text-xs">
+          <table className="w-full text-left text-xs text-slate-700">
+            <thead className="bg-slate-50 border-b border-slate-200 text-slate-700 font-bold uppercase text-[11px] tracking-wider">
               <tr>
-                <th className="px-6 py-4">Doc #</th>
-                <th className="px-6 py-4">Title</th>
-                <th className="px-6 py-4">Type / Category</th>
-                <th className="px-6 py-4">Status</th>
-                <th className="px-6 py-4">Created Date</th>
-                <th className="px-6 py-4 text-right">Action</th>
+                <th className="px-5 py-3.5">Doc #</th>
+                <th className="px-5 py-3.5">Title</th>
+                <th className="px-5 py-3.5">Type / Category</th>
+                <th className="px-5 py-3.5">Status</th>
+                <th className="px-5 py-3.5">Created Date</th>
+                <th className="px-5 py-3.5 text-right">Action</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-200 dark:divide-slate-800">
+            <tbody className="divide-y divide-slate-100">
               {loading ? (
                 <tr>
-                  <td colSpan={6} className="px-6 py-8 text-center text-slate-500">
+                  <td colSpan={6} className="px-5 py-8 text-center text-slate-500 font-medium">
                     Loading recent activity...
                   </td>
                 </tr>
               ) : recentDocs.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="px-6 py-8 text-center text-slate-500">
+                  <td colSpan={6} className="px-5 py-8 text-center text-slate-500 font-medium">
                     No recent document activity.
                   </td>
                 </tr>
               ) : (
                 recentDocs.map((doc) => (
-                  <tr key={doc.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/40">
-                    <td className="px-6 py-4 font-semibold text-slate-900 dark:text-white">{doc.document_number}</td>
-                    <td className="px-6 py-4 font-medium text-slate-900 dark:text-white max-w-xs truncate">{doc.title}</td>
-                    <td className="px-6 py-4">
-                      <div>{doc.type?.name || 'General'}</div>
-                      <div className="text-xs text-slate-400">{doc.category?.name || 'Uncategorized'}</div>
+                  <tr key={doc.id} className="hover:bg-slate-50/80 transition-colors">
+                    <td className="px-5 py-3.5 font-mono font-bold text-indigo-600">{doc.document_number}</td>
+                    <td className="px-5 py-3.5 font-bold text-slate-900 max-w-xs truncate">{doc.title}</td>
+                    <td className="px-5 py-3.5">
+                      <div className="font-semibold text-slate-800">{doc.type?.name || 'General'}</div>
+                      <div className="text-[11px] text-slate-500 font-medium">{doc.category?.name || 'Uncategorized'}</div>
                     </td>
-                    <td className="px-6 py-4 font-mono text-xs">{doc.status}</td>
-                    <td className="px-6 py-4">{new Date(doc.created_at).toLocaleDateString()}</td>
-                    <td className="px-6 py-4 text-right">
+                    <td className="px-5 py-3.5 font-mono text-[11px] font-bold text-slate-700">{doc.status}</td>
+                    <td className="px-5 py-3.5 font-medium text-slate-600">{new Date(doc.created_at).toLocaleDateString()}</td>
+                    <td className="px-5 py-3.5 text-right">
                       <button
                         onClick={() => navigate(`${ERP_BASE_PATH}/documents/${doc.id}`)}
-                        className="px-3 py-1.5 text-xs font-medium text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-lg"
+                        className="px-3 py-1.5 text-xs font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200/80 rounded-lg transition-all cursor-pointer"
                       >
                         View Details
                       </button>
