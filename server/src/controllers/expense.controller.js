@@ -281,7 +281,7 @@ const expenseController = {
         .select(`
           *,
           employee:employees(id, first_name, last_name, employee_code, email),
-          cost_center:cost_centers(id, code, name, allocated_budget),
+          cost_center:cost_centers(id, code, name),
           budget:budgets(id, budget_code, budget_name, total_budget_amount, status),
           journal_entry:journal_entries(id, entry_number, entry_date, status)
         `)
@@ -1340,7 +1340,8 @@ const expenseController = {
         .select(`
           *,
           employee:employees(id, first_name, last_name, department:departments!employees_department_id_fkey(name)),
-          cost_center:cost_centers(id, code, name, allocated_budget)
+          cost_center:cost_centers(id, code, name),
+          budget:budgets(id, total_budget_amount)
         `);
 
       if (start_date) claimQuery = claimQuery.gte('claim_date', start_date);
@@ -1421,7 +1422,7 @@ const expenseController = {
         if (!c.cost_center) return;
         const ccId = c.cost_center.id;
         const ccName = `${c.cost_center.code} - ${c.cost_center.name}`;
-        const allocatedBudget = parseFloat(c.cost_center.allocated_budget) || 0;
+        const allocatedBudget = parseFloat(c.budget?.total_budget_amount) || 0;
 
         if (!byCostCenterMap[ccId]) {
           byCostCenterMap[ccId] = {
