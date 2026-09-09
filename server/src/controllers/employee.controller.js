@@ -224,54 +224,91 @@ exports.getEmployeeById = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const [empRes, skillsRes, qualRes, certRes, historyRes, docsRes, notesRes, assetsRes] = await Promise.all([
-      supabaseAdmin
-        .from('employees')
-        .select(`
-          *,
-          department:departments!employees_department_id_fkey(id, code, name, description),
-          designation_rel:designations(id, code, name),
-          manager:employees!manager_id(id, employee_code, first_name, last_name, email),
-          cost_center:cost_centers(id, code, name)
-        `)
-        .eq('id', id)
-        .single(),
-      supabaseAdmin.from('employee_skills').select('*').eq('employee_id', id).order('skill_name'),
-      supabaseAdmin.from('employee_qualifications').select('*').eq('employee_id', id).order('year_completed', { ascending: false }),
-      supabaseAdmin.from('employee_certifications').select('*').eq('employee_id', id).order('issue_date', { ascending: false }),
-      supabaseAdmin.from('employee_history').select(`
-        *,
-        old_dept:departments!old_department_id(name),
-        new_dept:departments!new_department_id(name),
-        old_desig:designations!old_designation_id(name),
-        new_desig:designations!new_designation_id(name)
-      `).eq('employee_id', id).order('event_date', { ascending: false }),
-      supabaseAdmin.from('employee_documents').select('*').eq('employee_id', id).order('uploaded_at', { ascending: false }),
-      supabaseAdmin.from('employee_hr_notes').select('*, created_by_profile:profiles!created_by(full_name, email)').eq('employee_id', id).order('created_at', { ascending: false }),
-      supabaseAdmin.from('fixed_assets').select('id, asset_code, name, category, status').eq('assigned_to_employee_id', id)
-    ]);
+    // 1. Fetch base employee record first
+    const { data: employeeBase, error: baseErr } = await supabaseAdmin
+      .from('employees')
+      .select('*')
+      .eq('id', id)
+      .single();
 
-    if (empRes.error || !empRes.data) {
+    if (baseErr || !employeeBase) {
+      console.error('Error fetching base employee record:', baseErr);
       return res.status(404).json({
         success: false,
         error: { message: 'Employee record not found.', code: 'NOT_FOUND' },
       });
     }
 
-    const employee = empRes.data;
+    // 2. Safely fetch relational department, designation, manager, and cost_center
+    let department = null;
+    if (employeeBase.department_id) {
+      const { data: dept } = await supabaseAdmin
+        .from('departments')
+        .select('id, code, name, description')
+        .eq('id', employeeBase.department_id)
+        .maybeSingle();
+      department = dept;
+    }
+
+    let designation_rel = null;
+    if (employeeBase.designation_id) {
+      const { data: desig } = await supabaseAdmin
+        .from('designations')
+        .select('id, code, name')
+        .eq('id', employeeBase.designation_id)
+        .maybeSingle();
+      designation_rel = desig;
+    }
+
+    let manager = null;
+    if (employeeBase.manager_id) {
+      const { data: mgr } = await supabaseAdmin
+        .from('employees')
+        .select('id, employee_code, first_name, last_name, email')
+        .eq('id', employeeBase.manager_id)
+        .maybeSingle();
+      manager = mgr;
+    }
+
+    let cost_center = null;
+    if (employeeBase.cost_center_id) {
+      const { data: cc } = await supabaseAdmin
+        .from('cost_centers')
+        .select('id, code, name')
+        .eq('id', employeeBase.cost_center_id)
+        .maybeSingle();
+      cost_center = cc;
+    }
+
+    // 3. Fetch auxiliary tables safely
+    const [skillsRes, qualRes, certRes, historyRes, docsRes, notesRes, assetsRes] = await Promise.all([
+      supabaseAdmin.from('employee_skills').select('*').eq('employee_id', id).order('skill_name'),
+      supabaseAdmin.from('employee_qualifications').select('*').eq('employee_id', id).order('year_completed', { ascending: false }),
+      supabaseAdmin.from('employee_certifications').select('*').eq('employee_id', id).order('issue_date', { ascending: false }),
+      supabaseAdmin.from('employee_history').select('*').eq('employee_id', id).order('event_date', { ascending: false }),
+      supabaseAdmin.from('employee_documents').select('*').eq('employee_id', id).order('uploaded_at', { ascending: false }),
+      supabaseAdmin.from('employee_hr_notes').select('*').eq('employee_id', id).order('created_at', { ascending: false }),
+      supabaseAdmin.from('fixed_assets').select('id, asset_code, name, category, status').eq('assigned_to_employee_id', id)
+    ]);
+
+    const employee = {
+      ...employeeBase,
+      department,
+      designation_rel,
+      manager,
+      cost_center,
+      skills: skillsRes.data || [],
+      qualifications: qualRes.data || [],
+      certifications: certRes.data || [],
+      history: historyRes.data || [],
+      documents: docsRes.data || [],
+      notes: notesRes.data || [],
+      assets: assetsRes.data || []
+    };
 
     res.status(200).json({
       success: true,
-      data: {
-        ...employee,
-        skills: skillsRes.data || [],
-        qualifications: qualRes.data || [],
-        certifications: certRes.data || [],
-        history: historyRes.data || [],
-        documents: docsRes.data || [],
-        notes: notesRes.data || [],
-        assets: assetsRes.data || []
-      },
+      data: employee,
     });
   } catch (err) {
     console.error('Unhandled error in getEmployeeById:', err);
@@ -367,7 +404,7 @@ exports.createEmployee = async (req, res) => {
     const { data: createdEmployee, error: insertError } = await supabaseAdmin
       .from('employees')
       .insert(newEmployeePayload)
-      .select('*, department:departments!employees_department_id_fkey(id, code, name)')
+      .select('*')
       .single();
 
     if (insertError) {
@@ -438,7 +475,7 @@ exports.updateEmployee = async (req, res) => {
         updated_by: req.user ? req.user.id : null
       })
       .eq('id', id)
-      .select('*, department:departments!employees_department_id_fkey(id, code, name)')
+      .select('*')
       .single();
 
     if (updateError) throw updateError;

@@ -140,7 +140,32 @@ export const EmployeeDetailPage: React.FC = () => {
   };
 
   if (isLoading) return <LoadingState label="Fetching employee profile..." rows={8} />;
-  if (isError || !employee) return <ErrorState title="Employee Not Found" message="The requested record does not exist or you do not have permission." onRetry={() => refetch()} />;
+
+  if (isError || !employee) {
+    return (
+      <div className="max-w-3xl mx-auto space-y-4 pt-6">
+        <ErrorState
+          title="Employee Not Found"
+          message="The requested employee record does not exist in the database or may have been removed."
+        />
+        <div className="flex items-center gap-3">
+          <Link
+            to={`${ERP_BASE_PATH}/employees`}
+            className="inline-flex items-center gap-2 px-4 py-2.5 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-xl transition-all shadow-sm"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            <span>Go to Employees & HR Master</span>
+          </Link>
+          <Link
+            to={`${ERP_BASE_PATH}/employees/new`}
+            className="inline-flex items-center gap-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl transition-all shadow-sm"
+          >
+            <span>+ Create New Employee</span>
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   const initials = `${employee.first_name.charAt(0)}${employee.last_name.charAt(0)}`.toUpperCase();
   const formatDate = (dateStr?: string) => dateStr ? new Date(dateStr).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) : 'N/A';

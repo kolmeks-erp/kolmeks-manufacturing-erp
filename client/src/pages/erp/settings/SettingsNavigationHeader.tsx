@@ -33,7 +33,8 @@ const tabs = [
   { label: 'Statuses', path: '/secure-kolmeks-x0y0/settings/statuses', icon: Activity },
   { label: 'Master Data', path: '/secure-kolmeks-x0y0/settings/masters', icon: Database },
   { label: 'Security', path: '/secure-kolmeks-x0y0/settings/security', icon: Lock },
-  { label: 'Audit Log', path: '/secure-kolmeks-x0y0/settings/audit', icon: FileCheck }
+  { label: 'Audit Log', path: '/secure-kolmeks-x0y0/settings/audit', icon: FileCheck },
+  { label: 'Demo Data', path: '/secure-kolmeks-x0y0/settings/demo-data', icon: Database }
 ];
 
 export const SettingsNavigationHeader: React.FC = () => {

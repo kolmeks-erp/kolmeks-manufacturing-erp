@@ -318,6 +318,7 @@ import { StatusSettingsPage } from '../pages/erp/settings/StatusSettingsPage';
 import { MasterSettingsPage } from '../pages/erp/settings/MasterSettingsPage';
 import { SecuritySettingsPage } from '../pages/erp/settings/SecuritySettingsPage';
 import { AuditSettingsPage } from '../pages/erp/settings/AuditSettingsPage';
+import { DemoDataManagementPage } from '../pages/erp/settings/DemoDataManagementPage';
 
 // Advanced Reporting & Analytics Pages
 import { ReportsExecutiveDashboardPage } from '../pages/erp/reports/ReportsExecutiveDashboardPage';
@@ -779,6 +780,7 @@ export const AppRoutes: React.FC = () => {
             <Route path="settings/masters" element={<MasterSettingsPage />} />
             <Route path="settings/security" element={<SecuritySettingsPage />} />
             <Route path="settings/audit" element={<AuditSettingsPage />} />
+            <Route path="settings/demo-data" element={<DemoDataManagementPage />} />
             <Route path="master-admin" element={<MasterAdminControlPage />} />
           </Route>
 

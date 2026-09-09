@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { ArrowLeft, Save, User, Briefcase, Phone, AlertCircle } from 'lucide-react';
 
@@ -142,10 +142,27 @@ export const EmployeeEditPage: React.FC = () => {
 
   if (isEmployeeError || !employee) {
     return (
-      <ErrorState
-        title="Employee Not Found"
-        message="The requested employee record does not exist or cannot be accessed."
-      />
+      <div className="max-w-3xl mx-auto space-y-4 pt-6">
+        <ErrorState
+          title="Employee Not Found"
+          message="The requested employee record does not exist in the database or may have been removed."
+        />
+        <div className="flex items-center gap-3">
+          <Link
+            to={`${ERP_BASE_PATH}/employees`}
+            className="inline-flex items-center gap-2 px-4 py-2.5 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-xl transition-all shadow-sm"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            <span>Go to Employees & HR Master</span>
+          </Link>
+          <Link
+            to={`${ERP_BASE_PATH}/employees/new`}
+            className="inline-flex items-center gap-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl transition-all shadow-sm"
+          >
+            <span>+ Create New Employee</span>
+          </Link>
+        </div>
+      </div>
     );
   }
 
